@@ -87,6 +87,48 @@ const SignUp = () => {
       title: "Creator, New Delhi",
       grad: "from-card-amber to-card-orange",
     },
+    {
+      quote:
+        "Workshops and mentorships get booked in minutes—super convenient!",
+      name: "Ankur Warikoo",
+      title: "Entrepreneur & Mentor",
+      grad: "from-card-purple to-card-blue",
+    },
+    {
+      quote:
+        "My community sessions are smoother with built-in reminders.",
+      name: "Raj Shamani",
+      title: "Creator & Founder",
+      grad: "from-card-green to-card-cyan",
+    },
+    {
+      quote:
+        "Great fit for masterclasses—from payments to scheduling, all-in-one.",
+      name: "Kunal Shah",
+      title: "Founder & Investor",
+      grad: "from-card-blue to-card-purple",
+    },
+    {
+      quote:
+        "Perfect for managing live cohorts across multiple timezones.",
+      name: "Tanmay Bhat",
+      title: "Creator & Educator",
+      grad: "from-card-pink to-card-purple",
+    },
+    {
+      quote:
+        "My students love the frictionless booking experience.",
+      name: "Arvind Arora",
+      title: "Educator, India",
+      grad: "from-card-cyan to-card-green",
+    },
+    {
+      quote:
+        "Scheduling recipe workshops is so easy now!",
+      name: "Nisha Madhulika",
+      title: "Creator, India",
+      grad: "from-card-purple to-card-blue",
+    },
   ];
 
   const containerRef = useRef<HTMLDivElement | null>(null);
