@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { verifyToken } from '../utils/jwt';
+import { JwtPayload } from 'jsonwebtoken';
 import { User } from '../models';
 
 export interface AuthRequest extends Request {
@@ -19,7 +20,11 @@ export const authenticate = async (
     }
 
     const decoded = verifyToken(token);
-    const user = await User.findById(decoded.id).select('-password');
+    if (typeof decoded === 'string') {
+      return res.status(401).json({ message: 'Invalid token' });
+    }
+    const { id } = decoded as JwtPayload & { id: string };
+    const user = await User.findById(id).select('-password');
 
     if (!user) {
       return res.status(401).json({ message: 'User not found' });
