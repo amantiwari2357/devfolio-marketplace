@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { BaseController } from './base.controller';
-import { User, IUser } from '../models';
+import { User, IUser, Project, Course, Service } from '../models';
 
 export class ExpertController extends BaseController<IUser> {
   constructor() {
@@ -71,9 +71,9 @@ export class ExpertController extends BaseController<IUser> {
 
       // Get expert's projects, courses, and services counts
       const [projectCount, courseCount, serviceCount] = await Promise.all([
-        this.model.countDocuments({ author: expertId }),
-        this.model.countDocuments({ instructor: expertId }),
-        this.model.countDocuments({ provider: expertId }),
+        Project.countDocuments({ author: expertId }),
+        Course.countDocuments({ instructor: expertId }),
+        Service.countDocuments({ provider: expertId }),
       ]);
 
       res.json({
@@ -161,17 +161,11 @@ export class ExpertController extends BaseController<IUser> {
       const expertId = req.params.id;
 
       const [projects, courses, services, reviews] = await Promise.all([
-        this.model.find({ author: expertId }).select('rating downloads'),
-        this.model.find({ instructor: expertId }).select('rating enrollments'),
-        this.model.find({ provider: expertId }).select('rating'),
-        this.model.find({ 
-          $or: [
-            { 'reviews.user': expertId },
-            { 'author': expertId },
-            { 'instructor': expertId },
-            { 'provider': expertId }
-          ]
-        }).select('reviews'),
+        Project.find({ author: expertId }).select('rating downloads reviews'),
+        Course.find({ instructor: expertId }).select('rating enrollments reviews'),
+        Service.find({ provider: expertId }).select('rating reviews'),
+        // Aggregate reviews involving this expert across entities if needed; as a simple proxy we reuse above
+        Project.find({ 'reviews.user': expertId }).select('reviews'),
       ]);
 
       const stats = {

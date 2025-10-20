@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { Model, Document } from 'mongoose';
 
 export class BaseController<T extends Document> {
-  constructor(private model: Model<T>) {}
+  constructor(protected model: Model<T>) {}
 
   // Create a new document
   create = async (req: Request, res: Response): Promise<void> => {

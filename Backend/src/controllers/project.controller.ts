@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { AuthRequest } from '../middleware/auth';
 import { BaseController } from './base.controller';
 import { Project, IProject } from '../models';
 
@@ -37,7 +38,7 @@ export class ProjectController extends BaseController<IProject> {
   };
 
   // Add review to project
-  addReview = async (req: Request, res: Response): Promise<void> => {
+  addReview = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
       const { rating, comment } = req.body;
       const userId = req.user.id;
@@ -60,8 +61,9 @@ export class ProjectController extends BaseController<IProject> {
       // Add review
       project.reviews.push({
         user: userId,
-        rating,
-        comment,
+        rating: Number(rating),
+        comment: String(comment),
+        createdAt: new Date(),
       });
 
       // Update average rating

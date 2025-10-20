@@ -16,6 +16,10 @@ export interface IUser extends Document {
     twitter?: string;
     website?: string;
   };
+  availability?: Array<{
+    day: string;
+    slots: Array<{ start: string; end: string }>;
+  }>;
   isVerified: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -68,6 +72,13 @@ const userSchema = new Schema<IUser>(
       twitter: String,
       website: String,
     },
+    availability: [{
+      day: { type: String },
+      slots: [{
+        start: { type: String },
+        end: { type: String },
+      }],
+    }],
     isVerified: {
       type: Boolean,
       default: false,
