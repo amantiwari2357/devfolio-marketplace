@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { AuthRequest } from '../middleware/auth';
 import { User } from '../models';
 import { generateToken } from '../utils/jwt';
 
@@ -79,7 +80,7 @@ export class AuthController {
   };
 
   // Get current user profile
-  getProfile = async (req: Request, res: Response): Promise<void> => {
+  getProfile = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
       const user = await User.findById(req.user.id).select('-password');
       if (!user) {
@@ -93,7 +94,7 @@ export class AuthController {
   };
 
   // Update user profile
-  updateProfile = async (req: Request, res: Response): Promise<void> => {
+  updateProfile = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
       const updates = {
         firstName: req.body.firstName,
@@ -121,7 +122,7 @@ export class AuthController {
   };
 
   // Change password
-  changePassword = async (req: Request, res: Response): Promise<void> => {
+  changePassword = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
       const { currentPassword, newPassword } = req.body;
 

@@ -9,14 +9,22 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const API_BASE = process.env.API_BASE || '/api';
+const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:3000';
+const ADMIN_URL = process.env.ADMIN_URL || 'http://localhost:5173';
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: [CLIENT_URL, ADMIN_URL],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use('/api', routes);
+app.use(API_BASE, routes);
 
 // Error handling
 app.use(errorHandler);
