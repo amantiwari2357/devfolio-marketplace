@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
@@ -15,6 +15,130 @@ const SignUp = () => {
     email: "",
     password: "",
   });
+
+  const testimonials = [
+    {
+      quote:
+        "Love the integrations with Calendar, Zoom and WhatsApp. Makes my life easier!",
+      name: "Aishwarya Srinivasan",
+      title: "LinkedIn Top Voice",
+      grad: "from-card-purple to-card-blue",
+    },
+    {
+      quote:
+        "devfolio-marketplace is my go-to platform for scheduling 1:1 sessions and hosting webinars!",
+      name: "Xinran Waibel",
+      title: "Founder of Data Engineer Things",
+      grad: "from-card-green to-card-cyan",
+    },
+    {
+      quote:
+        "I love devfolio-marketplace! It has made it seamless to schedule mentoring sessions!",
+      name: "Jessica",
+      title: "Global Data Lead in Energy Industry",
+      grad: "from-card-pink to-card-purple",
+    },
+    {
+      quote:
+        "The entire experience is just so seamless. My followers love it",
+      name: "Joerg Storm",
+      title: "300K on LinkedIn",
+      grad: "from-card-blue to-card-purple",
+    },
+    {
+      quote: "All my monetisation now happens in one place",
+      name: "Payal & Gaurav",
+      title: "110K+ on Instagram",
+      grad: "from-card-cyan to-card-green",
+    },
+    // India-focused additions
+    {
+      quote:
+        "Scheduling workshops with cohorts across India is effortless now.",
+      name: "Tanvi Sharma",
+      title: "Educator, IIT Delhi Alumna",
+      grad: "from-card-orange to-card-pink",
+    },
+    {
+      quote:
+        "My D2C founder community prefers the simple booking flow.",
+      name: "Rohit Agarwal",
+      title: "Startup Mentor, Bengaluru",
+      grad: "from-card-green to-card-emerald",
+    },
+    {
+      quote:
+        "Great for AMA sessions and office hours with my product teams.",
+      name: "Ankita Jain",
+      title: "Product Lead, Mumbai",
+      grad: "from-card-purple to-card-fuchsia",
+    },
+    {
+      quote:
+        "Seamless payments and reminders—reduced no-shows by a lot.",
+      name: "Sanjay Gupta",
+      title: "Educator, Pune",
+      grad: "from-card-cyan to-card-blue",
+    },
+    {
+      quote:
+        "Perfect for managing mentorship slots after work hours.",
+      name: "Priya Verma",
+      title: "Creator, New Delhi",
+      grad: "from-card-amber to-card-orange",
+    },
+  ];
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    const content = contentRef.current;
+    if (!el || !content) return;
+
+    let rafId: number | null = null;
+    let lastTime = performance.now();
+    const speed = 20; // pixels per second (slow)
+
+    const step = (timestamp: number) => {
+      if (!el || !content) return;
+      const delta = (timestamp - lastTime) / 1000; // seconds
+      lastTime = timestamp;
+
+      el.scrollTop += speed * delta;
+      const halfHeight = content.scrollHeight / 2;
+      if (el.scrollTop >= halfHeight) {
+        el.scrollTop = 0; // seamless loop
+      }
+
+      rafId = requestAnimationFrame(step);
+    };
+
+    // Ensure starting position on mount
+    el.scrollTop = 0;
+
+    // Start animation
+    rafId = requestAnimationFrame(step);
+
+    const handleVisibility = () => {
+      if (document.visibilityState === "visible") {
+        // Reset timing to avoid jump and ensure it resumes
+        lastTime = performance.now();
+        if (!rafId) {
+          rafId = requestAnimationFrame(step);
+        }
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibility);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibility);
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = null;
+    };
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -152,13 +276,13 @@ const SignUp = () => {
 
             <p className="text-xs text-center text-muted-foreground">
               By Signing up, you agree to our{" "}
-              <a href="#terms" className="text-primary hover:underline">
+              <Link to="/terms" className="text-primary hover:underline">
                 Terms of Use
-              </a>{" "}
+              </Link>{" "}
               and{" "}
-              <a href="#privacy" className="text-primary hover:underline">
+              <Link to="/privacy" className="text-primary hover:underline">
                 Privacy Policy
-              </a>
+              </Link>
             </p>
           </form>
         </div>
@@ -166,71 +290,21 @@ const SignUp = () => {
 
       {/* Right Side - Testimonials */}
       <div className="hidden lg:flex items-center justify-center p-8 bg-card-beige">
-        <div className="max-w-md space-y-6">
-          <Card className="bg-card border-none p-6">
-            <p className="text-foreground mb-4 italic">
-              "Love the integrations with Calendar, Zoom and WhatsApp. Makes my life easier!"
-            </p>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-card-purple to-card-blue" />
-              <div>
-                <p className="font-semibold text-sm">Aishwarya Srinivasan</p>
-                <p className="text-xs text-muted-foreground">LinkedIn Top Voice</p>
-              </div>
-            </div>
-          </Card>
-
-          <Card className="bg-card border-none p-6">
-            <p className="text-foreground mb-4 italic">
-              "devfolio-marketplace is my go-to platform for scheduling 1:1 sessions and hosting webinars!"
-            </p>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-card-green to-card-cyan" />
-              <div>
-                <p className="font-semibold text-sm">Xinran Waibel</p>
-                <p className="text-xs text-muted-foreground">Founder of Data Engineer Things</p>
-              </div>
-            </div>
-          </Card>
-
-          <Card className="bg-card border-none p-6">
-            <p className="text-foreground mb-4 italic">
-              "I love devfolio-marketplace! It has made it seamless to schedule mentoring sessions!"
-            </p>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-card-pink to-card-purple" />
-              <div>
-                <p className="font-semibold text-sm">Jessica</p>
-                <p className="text-xs text-muted-foreground">Global Data Lead in Energy Industry</p>
-              </div>
-            </div>
-          </Card>
-
-          <Card className="bg-card border-none p-6">
-            <p className="text-foreground mb-4 italic">
-              "The entire experience is just so seamless. My followers love it"
-            </p>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-card-blue to-card-purple" />
-              <div>
-                <p className="font-semibold text-sm">Joerg Storm</p>
-                <p className="text-xs text-muted-foreground">300K on LinkedIn</p>
-              </div>
-            </div>
-          </Card>
-
-          <Card className="bg-card border-none p-6">
-            <p className="text-foreground mb-4 italic">
-              "All my monetisation now happens in one place"
-            </p>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-card-cyan to-card-green" />
-              <div>
-                <p className="font-semibold text-sm">Payal & Gaurav</p>
-                <p className="text-xs text-muted-foreground">110K+ on Instagram</p>
-              </div>
-            </div>
-          </Card>
+        <div ref={containerRef} className="max-w-md relative h-[560px] overflow-hidden">
+          <div ref={contentRef} className="space-y-6">
+            {[...testimonials, ...testimonials].map((t, idx) => (
+              <Card key={idx} className="bg-card border-none p-6">
+                <p className="text-foreground mb-4 italic">"{t.quote}"</p>
+                <div className="flex items-center gap-3">
+                  <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${t.grad}`} />
+                  <div>
+                    <p className="font-semibold text-sm">{t.name}</p>
+                    <p className="text-xs text-muted-foreground">{t.title}</p>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     </div>
