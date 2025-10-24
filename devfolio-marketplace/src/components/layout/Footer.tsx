@@ -1,5 +1,6 @@
 import { Linkedin, Twitter, Instagram, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logo from "../../../public/Images/logo.png";
 
 const Footer = () => {
   return (
@@ -8,10 +9,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           <div>
             <div className="flex items-center gap-2 mb-6">
-              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-xl">T</span>
-              </div>
-              <span className="text-2xl font-bold">devfolio-marketplace</span>
+              <a href="/" className="flex items-center gap-2">
+                <img src={logo} alt="Devfolio Logo" className="h-36 md:h-40 top-10 w-auto" />
+              </a>
             </div>
             
             <Button 
