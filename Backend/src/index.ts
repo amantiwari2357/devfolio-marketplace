@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5000;
 const API_BASE = process.env.API_BASE || '/api';
 const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:3000';
 const ADMIN_URL = process.env.ADMIN_URL || 'http://localhost:5173';
-const MONGO_URI = process.env.MONGO_URI || process.env.MONGODB_URI || 'mongodb://localhost:27017/devfolio';
+const MONGO_URI = process.env.MONGO_URI ?? process.env.MONGODB_URI ?? 'mongodb://localhost:27017/devfolio';
 
 console.log('Env loaded:', {
   PORT: process.env.PORT,
@@ -41,8 +41,13 @@ app.use(API_BASE, routes);
 app.use(errorHandler);
 
 // Database connection
+const redactedUri = typeof MONGO_URI === 'string' ? MONGO_URI.replace(/\/\/.*@/, 'mongodb+srv://amankumartiwari5255:amankumartiwari5255@cluster0.qcwxko5.mongodb.net/?appName=Cluster0') : '';
+console.log('Connecting to MongoDB with URI:', redactedUri);
+
 mongoose
-  .connect(MONGO_URI)
+  .connect(MONGO_URI, {
+    serverSelectionTimeoutMS: 8000,
+  })
   .then(() => {
     console.log('Connected to MongoDB');
     app.listen(PORT, () => {
