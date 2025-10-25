@@ -124,7 +124,7 @@ const ExpertsSection = () => {
             Experts from every niche use devfolio-marketplace to build trust, grow revenue, and stay booked.
           </p>
         </div>
-
+    
         <div className="flex flex-wrap justify-center gap-3 mb-12">
           {categories.map((category) => (
             <Button
