@@ -8,6 +8,59 @@ export class ProjectController extends BaseController<IProject> {
     super(Project);
   }
 
+  // Override create method to set author from authenticated user
+  create = async (req: AuthRequest, res: Response): Promise<void> => {
+    try {
+      const doc = await this.model.create({
+        ...req.body,
+        author: req.user.id
+      });
+      res.status(201).json(doc);
+    } catch (error: any) {
+      res.status(400).json({ message: error.message });
+    }
+  };
+
+  // Override getAll to populate author
+  getAll = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parseInt(req.query.limit as string) || 10;
+      const skip = (page - 1) * limit;
+
+      const [docs, total] = await Promise.all([
+        this.model.find().populate('author', 'firstName lastName email profileImage').skip(skip).limit(limit),
+        this.model.countDocuments(),
+      ]);
+
+      res.json({
+        data: docs,
+        pagination: {
+          current: page,
+          limit,
+          total,
+          pages: Math.ceil(total / limit),
+        },
+      });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+
+  // Override getById to populate author
+  getById = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const doc = await this.model.findById(req.params.id).populate('author', 'firstName lastName email profileImage');
+      if (!doc) {
+        res.status(404).json({ message: 'Document not found' });
+        return;
+      }
+      res.json(doc);
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+
   // Get projects by author
   getByAuthor = async (req: Request, res: Response): Promise<void> => {
     try {

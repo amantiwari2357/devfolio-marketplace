@@ -24,8 +24,8 @@ interface ProjectForm {
   thumbnail: string;
   category: string;
   price: number;
-  technologies: string[];
-  features: string[];
+  technologies: string;
+  features: string;
   status: 'draft' | 'published' | 'archived';
 }
 
@@ -117,8 +117,8 @@ const Projects = () => {
         thumbnail: project.thumbnail,
         category: project.category,
         price: project.price,
-        technologies: project.technologies,
-        features: project.features,
+        technologies: project.technologies?.join(', ') || '',
+        features: project.features?.join('\n') || '',
         status: project.status,
       });
     } else {
@@ -129,8 +129,8 @@ const Projects = () => {
         thumbnail: '',
         category: '',
         price: 0,
-        technologies: [],
-        features: [],
+        technologies: '',
+        features: '',
         status: 'draft',
       });
     }
@@ -264,7 +264,9 @@ const Projects = () => {
                   fullWidth
                   label="Technologies"
                   placeholder="Enter technologies separated by commas"
-                  {...register('technologies')}
+                  {...register('technologies', {
+                    setValueAs: (value: string) => value ? value.split(',').map((tech: string) => tech.trim()) : []
+                  })}
                 />
               </Grid>
 
@@ -275,7 +277,9 @@ const Projects = () => {
                   rows={3}
                   label="Features"
                   placeholder="Enter features separated by new lines"
-                  {...register('features')}
+                  {...register('features', {
+                    setValueAs: (value: string) => value ? value.split('\n').map((feature: string) => feature.trim()).filter(f => f) : []
+                  })}
                 />
               </Grid>
 
