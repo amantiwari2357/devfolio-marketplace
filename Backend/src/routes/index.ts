@@ -34,4 +34,7 @@ router.use('/services', serviceRoutes);
 // Analytics routes
 router.use('/analytics', analyticsRoutes);
 
+// Admin dashboard routes
+router.use('/admin', analyticsRoutes);
+
 export default router;

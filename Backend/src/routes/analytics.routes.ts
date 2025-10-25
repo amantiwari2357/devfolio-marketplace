@@ -19,5 +19,6 @@ router.get('/admin/overview', authorize('admin'), analyticsController.getAdminOv
 router.get('/admin/users', authorize('admin'), analyticsController.getUserAnalyticsAdmin);
 router.get('/admin/services', authorize('admin'), analyticsController.getServiceAnalyticsAdmin);
 router.get('/admin/revenue', authorize('admin'), analyticsController.getRevenueAnalytics);
+router.get('/dashboard/stats', authorize('admin'), analyticsController.getAdminOverview);
 
 export default router;
