@@ -13,8 +13,8 @@ const projectValidation = [
   body('description').notEmpty().withMessage('Description is required'),
   body('thumbnail').notEmpty().withMessage('Thumbnail is required'),
   body('category').notEmpty().withMessage('Category is required'),
-  body('technologies').isArray().withMessage('Technologies must be an array'),
-  body('features').isArray().withMessage('Features must be an array'),
+  body('technologies').isString().withMessage('Technologies must be a string'),
+  body('features').isString().withMessage('Features must be a string'),
   body('price').isNumeric().withMessage('Price must be a number'),
 ];
 

@@ -34,6 +34,7 @@ const Projects = () => {
   const [loading, setLoading] = React.useState(true);
   const [open, setOpen] = React.useState(false);
   const [selectedProject, setSelectedProject] = React.useState<any>(null);
+  const [searchTerm, setSearchTerm] = React.useState('');
 
   const {
     register,
@@ -96,7 +97,7 @@ const Projects = () => {
   const fetchProjects = async () => {
     try {
       const response = await api.get('/projects');
-      setProjects(response.data.data);
+      setProjects(response.data.data.map((p: any) => ({ ...p, id: p._id })));
     } catch (error) {
       console.error('Error fetching projects:', error);
     } finally {
@@ -107,6 +108,14 @@ const Projects = () => {
   React.useEffect(() => {
     fetchProjects();
   }, []);
+
+  const filteredProjects = React.useMemo(() => {
+    if (!searchTerm) return projects;
+    return projects.filter((project: any) =>
+      project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.category.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [projects, searchTerm]);
 
   const handleOpen = (project?: any) => {
     if (project) {
@@ -177,8 +186,18 @@ const Projects = () => {
         </Button>
       </Box>
 
+      <Box sx={{ mb: 2 }}>
+        <TextField
+          fullWidth
+          label="Search projects by title or category"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          variant="outlined"
+        />
+      </Box>
+
       <DataTable
-        rows={projects}
+        rows={filteredProjects}
         columns={columns}
         loading={loading}
         onRowClick={(params) => handleOpen(params.row)}
@@ -264,9 +283,7 @@ const Projects = () => {
                   fullWidth
                   label="Technologies"
                   placeholder="Enter technologies separated by commas"
-                  {...register('technologies', {
-                    setValueAs: (value: string) => value ? value.split(',').map((tech: string) => tech.trim()) : []
-                  })}
+                  {...register('technologies')}
                 />
               </Grid>
 
@@ -277,9 +294,7 @@ const Projects = () => {
                   rows={3}
                   label="Features"
                   placeholder="Enter features separated by new lines"
-                  {...register('features', {
-                    setValueAs: (value: string) => value ? value.split('\n').map((feature: string) => feature.trim()).filter(f => f) : []
-                  })}
+                  {...register('features')}
                 />
               </Grid>
 

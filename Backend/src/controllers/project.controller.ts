@@ -11,10 +11,17 @@ export class ProjectController extends BaseController<IProject> {
   // Override create method to set author from authenticated user
   create = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
-      const doc = await this.model.create({
-        ...req.body,
-        author: req.user.id
-      });
+      const data = { ...req.body, author: req.user.id };
+
+      // Convert technologies and features from strings to arrays if needed
+      if (typeof data.technologies === 'string') {
+        data.technologies = data.technologies.split(',').map((tech: string) => tech.trim()).filter(Boolean);
+      }
+      if (typeof data.features === 'string') {
+        data.features = data.features.split('\n').map((feature: string) => feature.trim()).filter(Boolean);
+      }
+
+      const doc = await this.model.create(data);
       res.status(201).json(doc);
     } catch (error: any) {
       res.status(400).json({ message: error.message });

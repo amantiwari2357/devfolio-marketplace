@@ -6,6 +6,7 @@ import api from "@/services/api";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userRole, setUserRole] = useState<string | null>(null);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -13,15 +14,18 @@ const Header = () => {
       if (token) {
         try {
           // Verify token by making a request to profile endpoint
-          await api.get('/auth/profile');
+          const response = await api.get('/auth/profile');
           setIsLoggedIn(true);
+          setUserRole(response.data.role);
         } catch (error) {
           // Token is invalid, remove it
           localStorage.removeItem('token');
           setIsLoggedIn(false);
+          setUserRole(null);
         }
       } else {
         setIsLoggedIn(false);
+        setUserRole(null);
       }
     };
     checkAuth();
@@ -46,9 +50,19 @@ const Header = () => {
           </nav>
         </div>
         
-        <Button 
+        <Button
           className="bg-foreground text-background hover:bg-foreground/90"
-          onClick={() => window.location.href = isLoggedIn ? "/dashboard" : "/login"}
+          onClick={() => {
+            if (isLoggedIn) {
+              if (userRole === 'admin') {
+                window.location.href = "/admin";
+              } else {
+                window.location.href = "/dashboard";
+              }
+            } else {
+              window.location.href = "/login";
+            }
+          }}
         >
           {isLoggedIn ? "Dashboard" : "Login"}
         </Button>
