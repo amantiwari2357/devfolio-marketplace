@@ -8,6 +8,7 @@ import {
   updateProfileValidation,
   changePasswordValidation,
   availabilityValidation,
+  whatsappValidation,
 } from '../validations/auth.validation';
 
 const router = Router();
@@ -36,6 +37,12 @@ router.put(
   authenticate,
   validate(availabilityValidation),
   authController.updateAvailability
+);
+router.put(
+  '/whatsapp',
+  authenticate,
+  validate(whatsappValidation),
+  authController.updateWhatsApp
 );
 
 export default router;

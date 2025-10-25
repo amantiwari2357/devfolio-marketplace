@@ -178,4 +178,26 @@ export class AuthController {
       res.status(400).json({ message: error.message });
     }
   };
+
+  // Update WhatsApp number
+  updateWhatsApp = async (req: AuthRequest, res: Response): Promise<void> => {
+    try {
+      const { whatsappNumber } = req.body;
+
+      const user = await User.findByIdAndUpdate(
+        req.user.id,
+        { $set: { whatsappNumber } },
+        { new: true, runValidators: true }
+      ).select('-password');
+
+      if (!user) {
+        res.status(404).json({ message: 'User not found' });
+        return;
+      }
+
+      res.json({ message: 'WhatsApp number updated successfully', user });
+    } catch (error: any) {
+      res.status(400).json({ message: error.message });
+    }
+  };
 }

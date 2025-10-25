@@ -76,3 +76,10 @@ export const availabilityValidation = [
     .isString()
     .withMessage('End time must be a string'),
 ];
+
+export const whatsappValidation = [
+  body('whatsappNumber')
+    .optional()
+    .isString()
+    .withMessage('WhatsApp number must be a string'),
+];

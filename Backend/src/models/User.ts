@@ -20,6 +20,7 @@ export interface IUser extends Document {
     day: string;
     slots: Array<{ start: string; end: string }>;
   }>;
+  whatsappNumber?: string;
   isVerified: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -79,6 +80,10 @@ const userSchema = new Schema<IUser>(
         end: { type: String },
       }],
     }],
+    whatsappNumber: {
+      type: String,
+      trim: true,
+    },
     isVerified: {
       type: Boolean,
       default: false,
