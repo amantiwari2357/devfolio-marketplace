@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { DataTable } from '../components/common/DataTable';
+import {
+  Box,
+  Button,
+  Typography,
+  TextField,
+  MenuItem,
+} from '@mui/material';
+import { GridColDef } from '@mui/x-data-grid';
+import DataTable from '../components/common/DataTable';
 import api from '../services/api';
-import { toast } from 'sonner';
 
 interface Enquiry {
   _id: string;
@@ -35,11 +42,20 @@ const Enquiries: React.FC = () => {
       setEnquiries(response.data.data.enquiries);
       setTotalPages(response.data.data.totalPages);
     } catch (error: any) {
-      toast.error('Failed to fetch enquiries');
+      console.error('Failed to fetch enquiries');
     } finally {
       setLoading(false);
     }
   };
+
+  // Auto-refresh enquiries every 30 seconds for real-time updates
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchEnquiries();
+    }, 30000); // 30 seconds
+
+    return () => clearInterval(interval);
+  }, [currentPage, statusFilter]);
 
   useEffect(() => {
     fetchEnquiries();
@@ -48,10 +64,10 @@ const Enquiries: React.FC = () => {
   const handleStatusChange = async (enquiryId: string, newStatus: string) => {
     try {
       await api.put(`/enquiries/${enquiryId}/status`, { status: newStatus });
-      toast.success('Enquiry status updated successfully');
+      console.log('Enquiry status updated successfully');
       fetchEnquiries();
     } catch (error: any) {
-      toast.error('Failed to update enquiry status');
+      console.error('Failed to update enquiry status');
     }
   };
 
@@ -60,51 +76,42 @@ const Enquiries: React.FC = () => {
 
     try {
       await api.delete(`/enquiries/${enquiryId}`);
-      toast.success('Enquiry deleted successfully');
+      console.log('Enquiry deleted successfully');
       fetchEnquiries();
     } catch (error: any) {
-      toast.error('Failed to delete enquiry');
+      console.error('Failed to delete enquiry');
     }
   };
 
-  const columns = [
+  const columns: GridColDef[] = [
+    { field: 'name', headerName: 'Name', width: 150 },
+    { field: 'email', headerName: 'Email', width: 200 },
+    { field: 'phone', headerName: 'Phone', width: 150 },
     {
-      key: 'name',
-      header: 'Name',
-      render: (enquiry: Enquiry) => enquiry.name,
+      field: 'project',
+      headerName: 'Project',
+      width: 200,
+      valueGetter: (params) => params.row.project?.title || 'N/A'
     },
     {
-      key: 'email',
-      header: 'Email',
-      render: (enquiry: Enquiry) => enquiry.email,
-    },
-    {
-      key: 'phone',
-      header: 'Phone',
-      render: (enquiry: Enquiry) => enquiry.phone,
-    },
-    {
-      key: 'project',
-      header: 'Project',
-      render: (enquiry: Enquiry) => enquiry.project.title,
-    },
-    {
-      key: 'message',
-      header: 'Message',
-      render: (enquiry: Enquiry) => (
-        <div className="max-w-xs truncate" title={enquiry.message}>
-          {enquiry.message}
+      field: 'message',
+      headerName: 'Message',
+      width: 300,
+      renderCell: (params) => (
+        <div style={{ maxWidth: '300px', overflow: 'hidden', textOverflow: 'ellipsis' }} title={params.value}>
+          {params.value}
         </div>
       ),
     },
     {
-      key: 'status',
-      header: 'Status',
-      render: (enquiry: Enquiry) => (
+      field: 'status',
+      headerName: 'Status',
+      width: 130,
+      renderCell: (params) => (
         <select
-          value={enquiry.status}
-          onChange={(e) => handleStatusChange(enquiry._id, e.target.value)}
-          className="px-2 py-1 border rounded text-sm"
+          value={params.value}
+          onChange={(e) => handleStatusChange(params.row._id, e.target.value)}
+          style={{ padding: '4px', border: '1px solid #ccc', borderRadius: '4px' }}
         >
           <option value="pending">Pending</option>
           <option value="responded">Responded</option>
@@ -113,51 +120,63 @@ const Enquiries: React.FC = () => {
       ),
     },
     {
-      key: 'createdAt',
-      header: 'Date',
-      render: (enquiry: Enquiry) => new Date(enquiry.createdAt).toLocaleDateString(),
+      field: 'createdAt',
+      headerName: 'Date',
+      width: 150,
+      valueFormatter: (params) => new Date(params.value).toLocaleDateString(),
     },
     {
-      key: 'actions',
-      header: 'Actions',
-      render: (enquiry: Enquiry) => (
-        <button
-          onClick={() => handleDelete(enquiry._id)}
-          className="text-red-600 hover:text-red-800 text-sm"
+      field: 'actions',
+      headerName: 'Actions',
+      width: 100,
+      renderCell: (params) => (
+        <Button
+          onClick={() => handleDelete(params.row._id)}
+          color="error"
+          size="small"
         >
           Delete
-        </button>
+        </Button>
       ),
     },
   ];
 
+  const rows = enquiries.map((enquiry) => ({
+    ...enquiry,
+    id: enquiry._id,
+  }));
+
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Enquiries</h1>
-        <div className="flex gap-4">
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 border rounded"
-          >
-            <option value="">All Status</option>
-            <option value="pending">Pending</option>
-            <option value="responded">Responded</option>
-            <option value="closed">Closed</option>
-          </select>
-        </div>
-      </div>
+    <Box sx={{ p: 3 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          mb: 3,
+        }}
+      >
+        <Typography variant="h4">Enquiries Management</Typography>
+        <TextField
+          select
+          label="Filter by Status"
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          sx={{ minWidth: 150 }}
+        >
+          <MenuItem value="">All Status</MenuItem>
+          <MenuItem value="pending">Pending</MenuItem>
+          <MenuItem value="responded">Responded</MenuItem>
+          <MenuItem value="closed">Closed</MenuItem>
+        </TextField>
+      </Box>
 
       <DataTable
-        data={enquiries}
+        rows={rows}
         columns={columns}
         loading={loading}
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={setCurrentPage}
       />
-    </div>
+    </Box>
   );
 };
 

@@ -47,13 +47,29 @@ const ProjectDetail = () => {
     }
   }, [id, toast]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Enquiry Submitted!",
-      description: "We'll get back to you within 24 hours.",
-    });
-    setFormData({ name: "", email: "", phone: "", message: "" });
+    try {
+      const enquiryData = {
+        project: id,
+        ...formData,
+      };
+
+      await api.post('/enquiries', enquiryData);
+
+      toast({
+        title: "Enquiry Submitted!",
+        description: "We'll get back to you within 24 hours.",
+      });
+      setFormData({ name: "", email: "", phone: "", message: "" });
+    } catch (error: any) {
+      console.error('Error submitting enquiry:', error);
+      toast({
+        title: "Error",
+        description: "Failed to submit enquiry. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   if (loading) {

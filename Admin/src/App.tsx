@@ -18,6 +18,7 @@ import Experts from './pages/Experts';
 import Services from './pages/Services';
 import Testimonials from './pages/Testimonials';
 import Settings from './pages/Settings';
+import Enquiries from './pages/Enquiries';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -58,6 +59,7 @@ function App() {
             <Route path="/experts" element={<Experts />} />
             <Route path="/services" element={<Services />} />
             <Route path="/testimonials" element={<Testimonials />} />
+            <Route path="/enquiries" element={<Enquiries />} />
             <Route path="/settings" element={<Settings />} />
           </Route>
         </Routes>

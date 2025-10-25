@@ -19,6 +19,7 @@ import {
   BusinessCenter,
   Comment,
   Settings,
+  ContactMail,
 } from '@mui/icons-material';
 
 const drawerWidth = 240;
@@ -30,6 +31,7 @@ const menuItems = [
   { text: 'Courses', icon: <School />, path: '/courses' },
   { text: 'Experts', icon: <Engineering />, path: '/experts' },
   { text: 'Services', icon: <BusinessCenter />, path: '/services' },
+  { text: 'Enquiries', icon: <ContactMail />, path: '/enquiries' },
   { text: 'Testimonials', icon: <Comment />, path: '/testimonials' },
   { text: 'Settings', icon: <Settings />, path: '/settings' },
 ];

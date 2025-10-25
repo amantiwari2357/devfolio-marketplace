@@ -27,7 +27,7 @@ console.log('Env loaded:', {
 // Middleware
 app.use(
   cors({
-    origin: [CLIENT_URL, ADMIN_URL, 'http://localhost:8080'],
+    origin: [CLIENT_URL, ADMIN_URL, 'http://localhost:8080', 'http://localhost:5173'],
     credentials: true,
   })
 );
