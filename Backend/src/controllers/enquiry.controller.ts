@@ -3,14 +3,15 @@ import { Enquiry } from '../models';
 
 export const createEnquiry = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { project, name, email, phone, message } = req.body;
+    const { expert, project, name, email, phone, message } = req.body;
 
-    if (!project || !name || !email || !phone || !message) {
+    if ((!expert && !project) || !name || !email || !phone || !message) {
       res.status(400).json({ message: 'All fields are required' });
       return;
     }
 
     const enquiry = await Enquiry.create({
+      expert,
       project,
       name,
       email,
@@ -18,7 +19,9 @@ export const createEnquiry = async (req: Request, res: Response): Promise<void> 
       message,
     });
 
-    const populatedEnquiry = await Enquiry.findById(enquiry._id).populate('project', 'title');
+    const populatedEnquiry = await Enquiry.findById(enquiry._id)
+      .populate('expert', 'firstName lastName')
+      .populate('project', 'title');
 
     res.status(201).json({
       success: true,

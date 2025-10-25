@@ -1,7 +1,8 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
 export interface IEnquiry extends Document {
-  project: mongoose.Types.ObjectId;
+  expert?: mongoose.Types.ObjectId;
+  project?: mongoose.Types.ObjectId;
   name: string;
   email: string;
   phone: string;
@@ -13,10 +14,13 @@ export interface IEnquiry extends Document {
 
 const enquirySchema = new Schema<IEnquiry>(
   {
+    expert: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
     project: {
       type: Schema.Types.ObjectId,
       ref: 'Project',
-      required: true,
     },
     name: {
       type: String,
@@ -50,6 +54,7 @@ const enquirySchema = new Schema<IEnquiry>(
 );
 
 // Create indexes
+enquirySchema.index({ expert: 1, status: 1 });
 enquirySchema.index({ project: 1, status: 1 });
 enquirySchema.index({ createdAt: -1 });
 
