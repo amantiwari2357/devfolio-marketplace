@@ -39,10 +39,10 @@ const expertValidation = [
 
 // Public expert discovery
 router.get('/', expertController.getExperts);
+router.get('/stats', authenticate, authorize('admin'), expertController.getExpertsStats);
 router.get('/:id', expertController.getExpertProfile);
 router.get('/:id/availability', expertController.getExpertAvailability);
 router.get('/:id/stats', expertController.getExpertStats);
-router.get('/stats', authenticate, authorize('admin'), expertController.getExpertsStats);
 
 // Protected expert self-management
 router.use(authenticate);

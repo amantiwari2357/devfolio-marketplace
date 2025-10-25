@@ -248,7 +248,7 @@ export class ExpertController extends BaseController<IUser> {
           Service.countDocuments({ provider: expertId }),
         ]);
 
-        stats[expertId.toString()] = {
+        stats[expertId] = {
           projects,
           courses,
           services,
