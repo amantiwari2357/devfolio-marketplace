@@ -1,10 +1,11 @@
 import React from 'react';
-import { Grid, Paper, Typography, Box } from '@mui/material';
+import { Grid, Paper, Typography, Box, Button } from '@mui/material';
 import {
   People,
   Code,
   School,
   BusinessCenter,
+  Logout,
 } from '@mui/icons-material';
 import {
   BarChart,
@@ -65,6 +66,11 @@ const Dashboard = () => {
 
     fetchStats();
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    window.location.href = '/login';
+  };
 
   return (
     <Box>
@@ -146,6 +152,21 @@ const Dashboard = () => {
               </LineChart>
             </ResponsiveContainer>
           </Paper>
+        </Grid>
+
+        {/* Logout Button */}
+        <Grid item xs={12}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+            <Button
+              variant="contained"
+              color="error"
+              startIcon={<Logout />}
+              onClick={handleLogout}
+              sx={{ minWidth: 200 }}
+            >
+              Logout
+            </Button>
+          </Box>
         </Grid>
       </Grid>
     </Box>

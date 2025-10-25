@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Calendar, DollarSign, Users, TrendingUp, Settings, Home as HomeIcon, BookOpen, MessageSquare, Code, School, Briefcase } from "lucide-react";
+import { Calendar, DollarSign, Users, TrendingUp, Settings, Home as HomeIcon, BookOpen, MessageSquare, Code, School, Briefcase, LogOut } from "lucide-react";
 import api from "@/services/api";
 
 const Dashboard = () => {
@@ -20,6 +20,11 @@ const Dashboard = () => {
 
     fetchUserProfile();
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    window.location.href = '/login';
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -46,28 +51,39 @@ const Dashboard = () => {
               <HomeIcon className="w-4 h-4" />
               <span className="text-sm">Home</span>
             </a>
-            <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors">
+            <a href="/bookings" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors">
               <Calendar className="w-4 h-4" />
               <span className="text-sm">Bookings</span>
             </a>
-            <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors">
+            <a href="/priority-dm" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors">
               <MessageSquare className="w-4 h-4" />
               <span className="text-sm">Priority DM</span>
             </a>
-            <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors">
+            <a href="/services" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors">
               <BookOpen className="w-4 h-4" />
               <span className="text-sm">Services</span>
             </a>
-            
+
             <p className="text-xs font-semibold text-muted-foreground mt-6 mb-2">Your Page</p>
-            <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors">
+            <a href="/analytics" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors">
               <TrendingUp className="w-4 h-4" />
               <span className="text-sm">Analytics</span>
             </a>
-            <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors">
+            <a href="/settings" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors">
               <Settings className="w-4 h-4" />
               <span className="text-sm">Settings</span>
             </a>
+
+            <div className="mt-8 pt-4 border-t border-border">
+              <Button
+                onClick={handleLogout}
+                variant="ghost"
+                className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-destructive hover:text-destructive-foreground transition-colors text-left justify-start"
+              >
+                <LogOut className="w-4 h-4" />
+                <span className="text-sm">Logout</span>
+              </Button>
+            </div>
           </nav>
         </aside>
 
@@ -135,7 +151,7 @@ const Dashboard = () => {
                 <p className="text-lg mb-6">Pay 0% commission.</p>
                 <div className="flex gap-4">
                   <Button className="bg-background text-foreground hover:bg-background/90">
-                    Create Course
+                    Make Enquiry
                   </Button>
                   <Button variant="outline" className="border-dark-foreground/20 text-dark-foreground hover:bg-dark-foreground/10">
                     Contact us
