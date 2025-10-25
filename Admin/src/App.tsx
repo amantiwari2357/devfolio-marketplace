@@ -9,6 +9,7 @@ import { useAuthStore } from './store/auth.store';
 import Layout from './components/Layout/Layout';
 
 // Pages
+import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Users from './pages/Users';
 import Projects from './pages/Projects';
@@ -26,9 +27,6 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     return <div>Loading...</div>;
   }
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" />;
-  }
 
   return <>{children}</>;
 };
@@ -45,6 +43,7 @@ function App() {
       <CssBaseline />
       <Router>
         <Routes>
+          <Route path="/login" element={<Login />} />
           <Route
             element={
               <ProtectedRoute>

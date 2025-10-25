@@ -12,7 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const API_BASE = process.env.API_BASE || '/api';
 const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5173';
-const ADMIN_URL = process.env.ADMIN_URL || 'http://localhost:5173';
+const ADMIN_URL = process.env.ADMIN_URL || 'http://localhost:8080';
 const MONGO_URI = process.env.MONGO_URI ?? process.env.MONGODB_URI ?? 'mongodb://localhost:27017/devfolio';
 
 console.log('Env loaded:', {
@@ -27,7 +27,7 @@ console.log('Env loaded:', {
 // Middleware
 app.use(
   cors({
-    origin: [CLIENT_URL, ADMIN_URL],
+    origin: [CLIENT_URL, ADMIN_URL, 'http://localhost:8080'],
     credentials: true,
   })
 );
