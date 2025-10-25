@@ -9,6 +9,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Plus, ArrowLeft } from "lucide-react";
+import api from "@/services/api";
+import { toast } from "sonner";
 
 interface Step2AvailabilityProps {
   onNext: () => void;
@@ -54,6 +56,23 @@ const Step2Availability = ({ onNext, onBack }: Step2AvailabilityProps) => {
           endTime: enabledDay.endTime,
         }))
       );
+    }
+  };
+
+  const handleNext = async () => {
+    try {
+      const availabilityData = schedule.map((day) => ({
+        day: day.day,
+        enabled: day.enabled,
+        startTime: day.startTime,
+        endTime: day.endTime,
+      }));
+
+      await api.put('/auth/availability', { availability: availabilityData });
+      toast.success("Availability updated successfully!");
+      onNext();
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Failed to update availability");
     }
   };
 
@@ -145,7 +164,7 @@ const Step2Availability = ({ onNext, onBack }: Step2AvailabilityProps) => {
             <ArrowLeft className="w-4 h-4" />
           </Button>
           <Button
-            onClick={onNext}
+            onClick={handleNext}
             className="w-full max-w-md bg-foreground text-background hover:bg-foreground/90"
           >
             Next

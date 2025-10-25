@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { useNavigate, Link } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import api from "@/services/api";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -15,6 +16,8 @@ const SignUp = () => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const testimonials = [
     {
@@ -182,9 +185,29 @@ const SignUp = () => {
     };
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/onboarding");
+    setError("");
+    setIsLoading(true);
+
+    try {
+      const response = await api.post('/auth/register', {
+        email: formData.email,
+        password: formData.password,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+      });
+
+      const { token, user } = response.data;
+      localStorage.setItem('token', token);
+      // Optionally store user data if needed
+
+      navigate("/onboarding");
+    } catch (error: any) {
+      setError(error.response?.data?.message || 'Registration failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -312,8 +335,16 @@ const SignUp = () => {
               </div>
             </div>
 
-            <Button type="submit" className="w-full bg-foreground text-background hover:bg-foreground/90">
-              Get Started
+            {error && (
+              <p className="text-red-500 text-sm text-center">{error}</p>
+            )}
+
+            <Button
+              type="submit"
+              className="w-full bg-foreground text-background hover:bg-foreground/90"
+              disabled={isLoading}
+            >
+              {isLoading ? "Signing Up..." : "Get Started"}
             </Button>
 
             <p className="text-xs text-center text-muted-foreground">

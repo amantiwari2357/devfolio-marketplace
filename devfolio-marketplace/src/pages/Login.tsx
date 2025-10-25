@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
+import api from "@/services/api";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,11 +13,30 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    localStorage.setItem("isLoggedIn", "true");
-    navigate("/dashboard");
+    setError("");
+    setIsLoading(true);
+
+    try {
+      const response = await api.post('/auth/login', {
+        email: formData.email,
+        password: formData.password,
+      });
+
+      const { token, user } = response.data;
+      localStorage.setItem('token', token);
+      // Optionally store user data if needed
+
+      navigate("/dashboard");
+    } catch (error: any) {
+      setError(error.response?.data?.message || 'Login failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -122,8 +142,16 @@ const Login = () => {
             </div>
           </div>
 
-          <Button type="submit" className="w-full bg-foreground text-background hover:bg-foreground/90">
-            Login
+          {error && (
+            <p className="text-red-500 text-sm text-center">{error}</p>
+          )}
+
+          <Button
+            type="submit"
+            className="w-full bg-foreground text-background hover:bg-foreground/90"
+            disabled={isLoading}
+          >
+            {isLoading ? "Logging In..." : "Login"}
           </Button>
 
           <p className="text-sm text-center text-muted-foreground">

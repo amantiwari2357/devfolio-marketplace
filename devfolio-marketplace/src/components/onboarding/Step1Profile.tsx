@@ -10,6 +10,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Check } from "lucide-react";
+import api from "@/services/api";
+import { toast } from "sonner";
 
 interface Step1ProfileProps {
   onNext: () => void;
@@ -34,6 +36,24 @@ const Step1Profile = ({ onNext }: Step1ProfileProps) => {
         ? prev.filter((e) => e !== expertise)
         : [...prev, expertise]
     );
+  };
+
+  const handleNext = async () => {
+    try {
+      const profileData = {
+        socialUrl,
+        username,
+        country,
+        currency,
+        skills: selectedExpertise,
+      };
+
+      await api.put('/auth/profile', profileData);
+      toast.success("Profile updated successfully!");
+      onNext();
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Failed to update profile");
+    }
   };
 
   return (
@@ -146,7 +166,7 @@ const Step1Profile = ({ onNext }: Step1ProfileProps) => {
       <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border p-4">
         <div className="container mx-auto flex justify-center">
           <Button
-            onClick={onNext}
+            onClick={handleNext}
             className="w-full max-w-md bg-foreground text-background hover:bg-foreground/90"
           >
             Next

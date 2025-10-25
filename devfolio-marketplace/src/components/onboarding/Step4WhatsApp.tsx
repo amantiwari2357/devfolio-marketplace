@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { ArrowLeft, Rocket } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import api from "@/services/api";
 
 interface Step4WhatsAppProps {
   onBack: () => void;
@@ -16,18 +17,26 @@ const Step4WhatsApp = ({ onBack }: Step4WhatsAppProps) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const handleLaunch = () => {
-    setShowSuccess(true);
-    toast.success("Slots Updated Successfully!", {
-      duration: 2000,
-    });
-    
-    setTimeout(() => {
-      navigate("/");
-      toast.success("🎉 Welcome! Your devfolio-marketplace page is live!", {
-        duration: 3000,
+  const handleLaunch = async () => {
+    try {
+      if (phoneNumber) {
+        await api.put('/auth/whatsapp', { whatsappNumber: phoneNumber });
+      }
+
+      setShowSuccess(true);
+      toast.success("Slots Updated Successfully!", {
+        duration: 2000,
       });
-    }, 1500);
+
+      setTimeout(() => {
+        navigate("/");
+        toast.success("🎉 Welcome! Your devfolio-marketplace page is live!", {
+          duration: 3000,
+        });
+      }, 1500);
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Failed to update WhatsApp number");
+    }
   };
 
   return (
