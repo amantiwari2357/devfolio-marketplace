@@ -30,6 +30,7 @@ const DataTable: React.FC<DataTableProps> = ({
           columns={columns}
           loading={loading}
           onRowClick={onRowClick}
+          getRowId={(row) => row._id || row.id}
           initialState={{
             pagination: {
               paginationModel: {
