@@ -6,6 +6,7 @@ import courseRoutes from './course.routes';
 import testimonialRoutes from './testimonial.routes';
 import expertRoutes from './expert.routes';
 import serviceRoutes from './service.routes';
+import analyticsRoutes from './analytics.routes';
 
 const router = Router();
 
@@ -29,5 +30,8 @@ router.use('/experts', expertRoutes);
 
 // Service routes
 router.use('/services', serviceRoutes);
+
+// Analytics routes
+router.use('/analytics', analyticsRoutes);
 
 export default router;

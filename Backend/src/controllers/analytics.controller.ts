@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { AuthRequest } from '../middleware/auth';
-import { User, Service, Booking, Message } from '../models';
+import { User, Service, Project, Course } from '../models';
 
 export class AnalyticsController {
   // Get user analytics
@@ -139,37 +139,40 @@ export class AnalyticsController {
   getAdminOverview = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
       const totalUsers = await User.countDocuments();
+      const totalProjects = await Project.countDocuments();
+      const totalCourses = await Course.countDocuments();
       const totalServices = await Service.countDocuments();
-      const totalBookings = await Booking.countDocuments();
-      const totalMessages = await Message.countDocuments();
+
+      // Get recent activity (mock for now)
+      const recentActivity = [
+        { date: 'Mon', value: 15, message: 'New User Registration', timestamp: Date.now() - 43200000, color: '#4caf50' },
+        { date: 'Tue', value: 20, message: 'Project "Beta" started', timestamp: Date.now() - 36000000, color: '#2196f3' },
+        { date: 'Wed', value: 12, message: 'Course "Testing" launched', timestamp: Date.now() - 28800000, color: '#ff9800' },
+        { date: 'Thu', value: 25, message: 'Server patch applied', timestamp: Date.now() - 21600000, color: '#f44336' },
+        { date: 'Fri', value: 18, message: 'New API integrated', timestamp: Date.now() - 14400000, color: '#9e9e9e' },
+        { date: 'Sat', value: 30, message: 'High User Activity Peak', timestamp: Date.now() - 7200000, color: '#00bcd4' },
+        { date: 'Sun', value: 22, message: 'Database optimization done', timestamp: Date.now() - 3600000, color: '#ffc107' },
+      ];
+
+      // Mock revenue data
+      const revenue = [
+        { month: 'Jan', projects: 4000, courses: 2400, services: 1000 },
+        { month: 'Feb', projects: 3000, courses: 1398, services: 2000 },
+        { month: 'Mar', projects: 2000, courses: 9800, services: 3500 },
+        { month: 'Apr', projects: 2780, courses: 3908, services: 4000 },
+        { month: 'May', projects: 1890, courses: 4800, services: 4500 },
+        { month: 'Jun', projects: 2390, courses: 3800, services: 5000 },
+        { month: 'Jul', projects: 3490, courses: 4300, services: 6000 },
+        { month: 'Aug', projects: 4500, courses: 5500, services: 7500 },
+      ];
 
       const analytics = {
-        users: {
-          total: totalUsers,
-          active: Math.floor(totalUsers * 0.8),
-          newThisMonth: Math.floor(Math.random() * 50) + 10
-        },
-        services: {
-          total: totalServices,
-          active: Math.floor(totalServices * 0.9),
-          categories: ['Development', 'Design', 'Consultation', 'Marketing']
-        },
-        bookings: {
-          total: totalBookings,
-          completed: Math.floor(totalBookings * 0.85),
-          pending: Math.floor(totalBookings * 0.1),
-          cancelled: Math.floor(totalBookings * 0.05)
-        },
-        messages: {
-          total: totalMessages,
-          priority: Math.floor(totalMessages * 0.1),
-          unread: Math.floor(totalMessages * 0.2)
-        },
-        revenue: {
-          total: Math.floor(Math.random() * 50000) + 10000,
-          monthly: Math.floor(Math.random() * 5000) + 1000,
-          growth: Math.floor(Math.random() * 20) + 5 // percentage
-        }
+        users: totalUsers,
+        projects: totalProjects,
+        courses: totalCourses,
+        services: totalServices,
+        recentActivity,
+        revenue
       };
 
       res.json(analytics);
