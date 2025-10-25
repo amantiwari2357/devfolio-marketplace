@@ -42,6 +42,7 @@ router.get('/', expertController.getExperts);
 router.get('/:id', expertController.getExpertProfile);
 router.get('/:id/availability', expertController.getExpertAvailability);
 router.get('/:id/stats', expertController.getExpertStats);
+router.get('/stats', authenticate, authorize('admin'), expertController.getExpertsStats);
 
 // Protected expert self-management
 router.use(authenticate);

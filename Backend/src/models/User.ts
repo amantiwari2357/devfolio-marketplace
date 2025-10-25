@@ -16,10 +16,10 @@ export interface IUser extends Document {
     twitter?: string;
     website?: string;
   };
-  availability?: Array<{
-    day: string;
-    slots: Array<{ start: string; end: string }>;
-  }>;
+  availability?: {
+    status: 'available' | 'busy' | 'unavailable';
+    nextAvailableDate?: string;
+  };
   whatsappNumber?: string;
   isVerified: boolean;
   createdAt: Date;
@@ -73,13 +73,16 @@ const userSchema = new Schema<IUser>(
       twitter: String,
       website: String,
     },
-    availability: [{
-      day: { type: String },
-      slots: [{
-        start: { type: String },
-        end: { type: String },
-      }],
-    }],
+    availability: {
+      status: {
+        type: String,
+        enum: ['available', 'busy', 'unavailable'],
+        default: 'available',
+      },
+      nextAvailableDate: {
+        type: String,
+      },
+    },
     whatsappNumber: {
       type: String,
       trim: true,

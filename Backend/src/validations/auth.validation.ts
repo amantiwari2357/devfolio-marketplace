@@ -58,23 +58,17 @@ export const changePasswordValidation = [
 
 export const availabilityValidation = [
   body('availability')
-    .isArray()
-    .withMessage('Availability must be an array'),
-  body('availability.*.day')
-    .isString()
-    .notEmpty()
-    .withMessage('Day is required for each availability entry'),
-  body('availability.*.enabled')
-    .isBoolean()
-    .withMessage('Enabled must be a boolean'),
-  body('availability.*.startTime')
+    .optional()
+    .isObject()
+    .withMessage('Availability must be an object'),
+  body('availability.status')
+    .optional()
+    .isIn(['available', 'busy', 'unavailable'])
+    .withMessage('Status must be available, busy, or unavailable'),
+  body('availability.nextAvailableDate')
     .optional()
     .isString()
-    .withMessage('Start time must be a string'),
-  body('availability.*.endTime')
-    .optional()
-    .isString()
-    .withMessage('End time must be a string'),
+    .withMessage('Next available date must be a string'),
 ];
 
 export const whatsappValidation = [

@@ -44,11 +44,13 @@ const Experts = () => {
   const [open, setOpen] = React.useState(false);
   const [selectedExpert, setSelectedExpert] = React.useState<any>(null);
   const [stats, setStats] = React.useState<any>({});
+  const [skillsDisplay, setSkillsDisplay] = React.useState('');
 
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<ExpertForm>();
 
@@ -120,7 +122,7 @@ const Experts = () => {
   const fetchExperts = async () => {
     try {
       const [expertsResponse, statsResponse] = await Promise.all([
-        api.get('/users?role=expert'),
+        api.get('/experts'),
         api.get('/experts/stats'),
       ]);
       setExperts(expertsResponse.data.data);
@@ -139,6 +141,7 @@ const Experts = () => {
   const handleOpen = (expert?: any) => {
     if (expert) {
       setSelectedExpert(expert);
+      setSkillsDisplay(expert.skills?.join(', ') || '');
       reset({
         firstName: expert.firstName,
         lastName: expert.lastName,
@@ -151,6 +154,7 @@ const Experts = () => {
       });
     } else {
       setSelectedExpert(null);
+      setSkillsDisplay('');
       reset({
         firstName: '',
         lastName: '',
@@ -174,21 +178,22 @@ const Experts = () => {
 
   const onSubmit = async (data: ExpertForm) => {
     try {
+      const payload = {
+        ...data,
+        role: 'expert',
+      };
+      console.log('Payload being sent:', payload); // Debug log
+
       if (selectedExpert) {
-        await api.put(`/users/${selectedExpert.id}`, {
-          ...data,
-          role: 'expert',
-        });
+        await api.put(`/users/${selectedExpert.id}`, payload);
       } else {
-        await api.post('/users', {
-          ...data,
-          role: 'expert',
-        });
+        await api.post('/users', payload);
       }
       fetchExperts();
       handleClose();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error saving expert:', error);
+      console.error('Error response:', error.response?.data);
     }
   };
 
@@ -290,7 +295,12 @@ const Experts = () => {
                   fullWidth
                   label="Skills"
                   placeholder="Enter skills separated by commas"
-                  {...register('skills')}
+                  value={skillsDisplay}
+                  onChange={(e) => {
+                    setSkillsDisplay(e.target.value);
+                    const skillsArray = e.target.value.split(',').map(skill => skill.trim()).filter(skill => skill);
+                    setValue('skills', skillsArray);
+                  }}
                 />
               </Grid>
 

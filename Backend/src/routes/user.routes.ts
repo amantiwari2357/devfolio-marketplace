@@ -25,6 +25,30 @@ const userValidation = [
     .optional()
     .isLength({ min: 6 })
     .withMessage('Password must be at least 6 characters long'),
+  body('bio')
+    .optional()
+    .isLength({ max: 500 })
+    .withMessage('Bio must not exceed 500 characters'),
+  body('skills')
+    .optional()
+    .isArray()
+    .withMessage('Skills must be an array'),
+  body('socialLinks')
+    .optional()
+    .isObject()
+    .withMessage('Social links must be an object'),
+  body('availability')
+    .optional()
+    .isObject()
+    .withMessage('Availability must be an object'),
+  body('availability.status')
+    .optional()
+    .isIn(['available', 'busy', 'unavailable'])
+    .withMessage('Status must be available, busy, or unavailable'),
+  body('availability.nextAvailableDate')
+    .optional()
+    .isString()
+    .withMessage('Next available date must be a string'),
 ];
 
 // Public (if any) - keep minimal; users listing typically admin-only

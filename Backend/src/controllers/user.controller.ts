@@ -11,7 +11,7 @@ export class UserController extends BaseController<IUser> {
   // Create a new user (admin only)
   create = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { email, password, firstName, lastName, role } = req.body;
+      const { email, password, firstName, lastName, role, bio, skills, socialLinks, profileImage, availability } = req.body;
 
       // Check if user already exists
       const existingUser = await User.findOne({ email });
@@ -20,13 +20,21 @@ export class UserController extends BaseController<IUser> {
         return;
       }
 
+      // Use provided password or generate a default one for admin-created users
+      const userPassword = password || 'defaultPassword123';
+
       // Create new user
       const user = await User.create({
         email,
-        password,
+        password: userPassword,
         firstName,
         lastName,
         role,
+        bio,
+        skills,
+        socialLinks,
+        profileImage,
+        availability,
       });
 
       // Generate token (optional for admin-created users)
@@ -43,6 +51,9 @@ export class UserController extends BaseController<IUser> {
         },
       });
     } catch (error: any) {
+      console.error('Error creating user:', error);
+      console.error('Request body:', req.body);
+      console.error('Validation errors:', error.errors);
       res.status(400).json({ message: error.message });
     }
   };
@@ -64,6 +75,35 @@ export class UserController extends BaseController<IUser> {
 
       res.json({
         data: experts,
+        pagination: {
+          current: page,
+          limit,
+          total,
+          pages: Math.ceil(total / limit),
+        },
+      });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+
+  // Override getAll to exclude experts
+  getAll = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parseInt(req.query.limit as string) || 10;
+      const skip = (page - 1) * limit;
+
+      const [users, total] = await Promise.all([
+        User.find({ role: { $ne: 'expert' } })
+          .select('-password')
+          .skip(skip)
+          .limit(limit),
+        User.countDocuments({ role: { $ne: 'expert' } }),
+      ]);
+
+      res.json({
+        data: users,
         pagination: {
           current: page,
           limit,

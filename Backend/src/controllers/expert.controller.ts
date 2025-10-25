@@ -231,6 +231,36 @@ export class ExpertController extends BaseController<IUser> {
       res.status(500).json({ message: error.message });
     }
   };
+
+  // Get experts statistics for admin
+  getExpertsStats = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const experts = await User.find({ role: 'expert' }).select('_id');
+
+      const stats: { [key: string]: any } = {};
+
+      for (const expert of experts) {
+        const expertId = expert._id.toString();
+
+        const [projects, courses, services] = await Promise.all([
+          Project.countDocuments({ author: expertId }),
+          Course.countDocuments({ instructor: expertId }),
+          Service.countDocuments({ provider: expertId }),
+        ]);
+
+        stats[expertId] = {
+          projects,
+          courses,
+          services,
+        };
+      }
+
+      res.json(stats);
+    } catch (error: any) {
+      console.error('Error in getExpertsStats:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  };
 }
 
 // Helper functions
