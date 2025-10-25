@@ -240,7 +240,7 @@ export class ExpertController extends BaseController<IUser> {
       const stats: { [key: string]: any } = {};
 
       for (const expert of experts) {
-        const expertId = expert._id.toString();
+        const expertId = expert._id;
 
         const [projects, courses, services] = await Promise.all([
           Project.countDocuments({ author: expertId }),
@@ -248,7 +248,7 @@ export class ExpertController extends BaseController<IUser> {
           Service.countDocuments({ provider: expertId }),
         ]);
 
-        stats[expertId] = {
+        stats[expertId.toString()] = {
           projects,
           courses,
           services,
