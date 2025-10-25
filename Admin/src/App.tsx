@@ -9,7 +9,6 @@ import { useAuthStore } from './store/auth.store';
 import Layout from './components/Layout/Layout';
 
 // Pages
-import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Users from './pages/Users';
 import Projects from './pages/Projects';
@@ -46,8 +45,6 @@ function App() {
       <CssBaseline />
       <Router>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          
           <Route
             element={
               <ProtectedRoute>
