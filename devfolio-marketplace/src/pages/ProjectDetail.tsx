@@ -1,4 +1,4 @@
-import { useState } from "react";
+dedimport { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import api from "@/services/api";
 
 const ProjectDetail = () => {
   const { id } = useParams();
@@ -21,28 +22,30 @@ const ProjectDetail = () => {
     phone: "",
     message: "",
   });
+  const [project, setProject] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Mock project data (in real app, fetch from API)
-  const project = {
-    id: id,
-    name: "E-Commerce Platform",
-    description: "A full-featured online store with payment integration, inventory management, and customer analytics",
-    category: "E-Commerce",
-    icon: "🛍️",
-    pricing: "Paid",
-    features: [
-      "Secure payment gateway integration",
-      "Product catalog management",
-      "Shopping cart and wishlist",
-      "Order tracking system",
-      "Admin dashboard",
-      "Customer reviews and ratings"
-    ],
-    technologies: ["React", "Node.js", "MongoDB", "Stripe", "Tailwind CSS"],
-    liveLink: "",
-    timeline: "1-2 weeks",
-    price: "$2,500 - $5,000"
-  };
+  useEffect(() => {
+    const fetchProject = async () => {
+      try {
+        const response = await api.get(`/projects/${id}`);
+        setProject(response.data);
+      } catch (error) {
+        console.error('Error fetching project:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load project details.",
+          variant: "destructive",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchProject();
+    }
+  }, [id, toast]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

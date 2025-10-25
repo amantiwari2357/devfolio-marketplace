@@ -26,6 +26,8 @@ interface ProjectForm {
   price: number;
   technologies: string;
   features: string;
+  timeline: string;
+  priceRange: string;
   status: 'draft' | 'published' | 'archived';
 }
 
@@ -128,6 +130,8 @@ const Projects = () => {
         price: project.price,
         technologies: project.technologies?.join(', ') || '',
         features: project.features?.join('\n') || '',
+        timeline: project.timeline || '',
+        priceRange: project.priceRange || '',
         status: project.status,
       });
     } else {
@@ -140,6 +144,8 @@ const Projects = () => {
         price: 0,
         technologies: '',
         features: '',
+        timeline: '',
+        priceRange: '',
         status: 'draft',
       });
     }
@@ -295,6 +301,24 @@ const Projects = () => {
                   label="Features"
                   placeholder="Enter features separated by new lines"
                   {...register('features')}
+                />
+              </Grid>
+
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  label="Timeline"
+                  placeholder="e.g., 1-2 weeks"
+                  {...register('timeline')}
+                />
+              </Grid>
+
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  label="Price Range"
+                  placeholder="e.g., $2,500 - $5,000"
+                  {...register('priceRange')}
                 />
               </Grid>
 

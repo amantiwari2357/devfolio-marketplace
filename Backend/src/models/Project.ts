@@ -15,6 +15,8 @@ export interface IProject extends Document {
   status: 'draft' | 'published' | 'archived';
   downloads: number;
   rating: number;
+  timeline?: string;
+  priceRange?: string;
   reviews: Array<{
     user: mongoose.Types.ObjectId;
     rating: number;
@@ -90,6 +92,14 @@ const projectSchema = new Schema<IProject>(
       default: 0,
       min: 0,
       max: 5,
+    },
+    timeline: {
+      type: String,
+      trim: true,
+    },
+    priceRange: {
+      type: String,
+      trim: true,
     },
     reviews: [{
       user: {
