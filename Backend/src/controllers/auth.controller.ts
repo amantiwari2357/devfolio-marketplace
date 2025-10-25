@@ -148,4 +148,34 @@ export class AuthController {
       res.status(400).json({ message: error.message });
     }
   };
+
+  // Update availability
+  updateAvailability = async (req: AuthRequest, res: Response): Promise<void> => {
+    try {
+      const { availability } = req.body;
+
+      // Transform availability data to match schema
+      const transformedAvailability = availability
+        .filter((item: any) => item.enabled)
+        .map((item: any) => ({
+          day: item.day,
+          slots: [{ start: item.startTime, end: item.endTime }],
+        }));
+
+      const user = await User.findByIdAndUpdate(
+        req.user.id,
+        { $set: { availability: transformedAvailability } },
+        { new: true, runValidators: true }
+      ).select('-password');
+
+      if (!user) {
+        res.status(404).json({ message: 'User not found' });
+        return;
+      }
+
+      res.json({ message: 'Availability updated successfully', user });
+    } catch (error: any) {
+      res.status(400).json({ message: error.message });
+    }
+  };
 }

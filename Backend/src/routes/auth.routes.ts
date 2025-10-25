@@ -7,6 +7,7 @@ import {
   loginValidation,
   updateProfileValidation,
   changePasswordValidation,
+  availabilityValidation,
 } from '../validations/auth.validation';
 
 const router = Router();
@@ -29,6 +30,12 @@ router.post(
   authenticate,
   validate(changePasswordValidation),
   authController.changePassword
+);
+router.put(
+  '/availability',
+  authenticate,
+  validate(availabilityValidation),
+  authController.updateAvailability
 );
 
 export default router;

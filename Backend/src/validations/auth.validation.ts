@@ -55,3 +55,24 @@ export const changePasswordValidation = [
     .isLength({ min: 6 })
     .withMessage('New password must be at least 6 characters long'),
 ];
+
+export const availabilityValidation = [
+  body('availability')
+    .isArray()
+    .withMessage('Availability must be an array'),
+  body('availability.*.day')
+    .isString()
+    .notEmpty()
+    .withMessage('Day is required for each availability entry'),
+  body('availability.*.enabled')
+    .isBoolean()
+    .withMessage('Enabled must be a boolean'),
+  body('availability.*.startTime')
+    .optional()
+    .isString()
+    .withMessage('Start time must be a string'),
+  body('availability.*.endTime')
+    .optional()
+    .isString()
+    .withMessage('End time must be a string'),
+];
