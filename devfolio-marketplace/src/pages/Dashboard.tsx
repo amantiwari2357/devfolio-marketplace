@@ -1,10 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Calendar, DollarSign, Users, TrendingUp, Settings, Home as HomeIcon, BookOpen, MessageSquare } from "lucide-react";
+import { Calendar, DollarSign, Users, TrendingUp, Settings, Home as HomeIcon, BookOpen, MessageSquare, Code, School, Briefcase } from "lucide-react";
+import api from "@/services/api";
 
 const Dashboard = () => {
   const [timeRange, setTimeRange] = useState("7D");
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const response = await api.get('/auth/profile');
+        setUser(response.data);
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -17,7 +32,7 @@ const Dashboard = () => {
             </div>
             <div>
               <p className="font-bold text-sm">Creator Dashboard</p>
-              <p className="text-xs text-muted-foreground">aman_tiwari46</p>
+              <p className="text-xs text-muted-foreground">{user?.email?.split('@')[0] || 'user'}</p>
             </div>
           </div>
 
@@ -60,9 +75,9 @@ const Dashboard = () => {
         <main className="flex-1 p-8">
           <div className="max-w-6xl mx-auto">
             <div className="flex items-center justify-between mb-8">
-              <h1 className="text-3xl font-bold text-foreground">Hi, Aman</h1>
+              <h1 className="text-3xl font-bold text-foreground">Hi, {user?.firstName || 'User'}</h1>
               <Button variant="outline">
-                devfolio-marketplace.io/aman_tiwari46
+                devfolio-marketplace.io/{user?.email?.split('@')[0] || 'profile'}
               </Button>
             </div>
 

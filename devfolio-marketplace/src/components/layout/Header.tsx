@@ -1,16 +1,28 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
+import api from "@/services/api";
   import logo from "../../../public/Images/logo.png";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    // Check if user is logged in (you can replace this with actual auth logic)
-    const checkAuth = () => {
-      // For now, checking if we're on dashboard page as a simple check
-      setIsLoggedIn(window.location.pathname === "/dashboard");
+    const checkAuth = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          // Verify token by making a request to profile endpoint
+          await api.get('/auth/profile');
+          setIsLoggedIn(true);
+        } catch (error) {
+          // Token is invalid, remove it
+          localStorage.removeItem('token');
+          setIsLoggedIn(false);
+        }
+      } else {
+        setIsLoggedIn(false);
+      }
     };
     checkAuth();
   }, []);

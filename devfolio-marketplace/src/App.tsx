@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+
 import Onboarding from "./pages/Onboarding";
 import UseCases from "./pages/UseCases";
 import Search from "./pages/Search";
