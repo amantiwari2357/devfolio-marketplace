@@ -31,7 +31,11 @@ const Login = () => {
       localStorage.setItem('token', token);
       // Optionally store user data if needed
 
-      navigate("/dashboard");
+      if (user.role === 'admin') {
+        window.location.href = 'http://localhost:5173';
+      } else {
+        navigate("/dashboard");
+      }
     } catch (error: any) {
       setError(error.response?.data?.message || 'Login failed. Please try again.');
     } finally {

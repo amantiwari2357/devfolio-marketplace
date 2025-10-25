@@ -36,7 +36,7 @@ const Dashboard = () => {
               <span className="text-primary-foreground font-bold text-lg">T</span>
             </div>
             <div>
-              <p className="font-bold text-sm">Creator Dashboard</p>
+              <p className="font-bold text-sm">User Dashboard</p>
               <p className="text-xs text-muted-foreground">{user?.email?.split('@')[0] || 'user'}</p>
             </div>
           </div>
