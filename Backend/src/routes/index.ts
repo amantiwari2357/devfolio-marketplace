@@ -7,6 +7,7 @@ import testimonialRoutes from './testimonial.routes';
 import expertRoutes from './expert.routes';
 import serviceRoutes from './service.routes';
 import analyticsRoutes from './analytics.routes';
+import enquiryRoutes from './enquiry.routes';
 
 const router = Router();
 
@@ -33,6 +34,9 @@ router.use('/services', serviceRoutes);
 
 // Analytics routes
 router.use('/analytics', analyticsRoutes);
+
+// Enquiry routes
+router.use('/enquiries', enquiryRoutes);
 
 // Admin dashboard routes
 router.use('/admin', analyticsRoutes);

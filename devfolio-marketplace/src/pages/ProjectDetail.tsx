@@ -1,4 +1,4 @@
-dedimport { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -56,6 +56,38 @@ const ProjectDetail = () => {
     setFormData({ name: "", email: "", phone: "", message: "" });
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="py-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex justify-center items-center h-64">
+              <div className="text-lg">Loading project details...</div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!project) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="py-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex justify-center items-center h-64">
+              <div className="text-lg">Project not found.</div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -77,11 +109,11 @@ const ProjectDetail = () => {
                 <CardHeader>
                   <div className="flex items-start justify-between mb-4">
                     <div className="w-16 h-16 rounded-lg bg-primary/10 flex items-center justify-center text-4xl">
-                      {project.icon}
+                      🛍️
                     </div>
-                    <Badge variant="secondary">{project.pricing}</Badge>
+                    <Badge variant="secondary">Paid</Badge>
                   </div>
-                  <CardTitle className="text-3xl">{project.name}</CardTitle>
+                  <CardTitle className="text-3xl">{project.title}</CardTitle>
                   <CardDescription className="text-lg">
                     {project.description}
                   </CardDescription>
@@ -90,7 +122,7 @@ const ProjectDetail = () => {
                   <div>
                     <h3 className="text-xl font-semibold mb-4">Key Features</h3>
                     <ul className="space-y-2">
-                      {project.features.map((feature, index) => (
+                      {project.features?.map((feature: string, index: number) => (
                         <li key={index} className="flex items-start">
                           <span className="text-primary mr-2">✓</span>
                           <span className="text-muted-foreground">{feature}</span>
@@ -102,7 +134,7 @@ const ProjectDetail = () => {
                   <div>
                     <h3 className="text-xl font-semibold mb-4">Technologies Used</h3>
                     <div className="flex flex-wrap gap-2">
-                      {project.technologies.map((tech, index) => (
+                      {project.technologies?.map((tech: string, index: number) => (
                         <Badge key={index} variant="outline">{tech}</Badge>
                       ))}
                     </div>
@@ -111,17 +143,17 @@ const ProjectDetail = () => {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <h4 className="font-semibold mb-2">Timeline</h4>
-                      <p className="text-muted-foreground">{project.timeline}</p>
+                      <p className="text-muted-foreground">{project.timeline || 'N/A'}</p>
                     </div>
                     <div>
                       <h4 className="font-semibold mb-2">Price Range</h4>
-                      <p className="text-muted-foreground">{project.price}</p>
+                      <p className="text-muted-foreground">{project.priceRange || 'N/A'}</p>
                     </div>
                   </div>
 
                   <Button
                     className="w-full"
-                    onClick={() => window.open(project.liveLink, "_blank")}
+                    onClick={() => window.open(project.liveUrl, "_blank")}
                   >
                     <ExternalLink className="w-4 h-4 mr-2" />
                     View Live Demo <span className="hidden sm:inline">→</span><span className=" text-color-primary text-2xl font-mono">Free</span>
