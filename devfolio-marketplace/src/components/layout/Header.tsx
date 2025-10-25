@@ -55,7 +55,7 @@ const Header = () => {
           onClick={() => {
             if (isLoggedIn) {
               if (userRole === 'admin') {
-                window.location.href = "/admin";
+                window.location.href = "http://localhost:5173";
               } else {
                 window.location.href = "/dashboard";
               }
