@@ -1,11 +1,51 @@
 import { Request, Response } from 'express';
 import { BaseController } from './base.controller';
 import { User, IUser } from '../models';
+import { generateToken } from '../utils/jwt';
 
 export class UserController extends BaseController<IUser> {
   constructor() {
     super(User);
   }
+
+  // Create a new user (admin only)
+  create = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { email, password, firstName, lastName, role } = req.body;
+
+      // Check if user already exists
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        res.status(400).json({ message: 'Email already registered' });
+        return;
+      }
+
+      // Create new user
+      const user = await User.create({
+        email,
+        password,
+        firstName,
+        lastName,
+        role,
+      });
+
+      // Generate token (optional for admin-created users)
+      const token = generateToken(user);
+
+      res.status(201).json({
+        token,
+        user: {
+          id: user._id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          role: user.role,
+        },
+      });
+    } catch (error: any) {
+      res.status(400).json({ message: error.message });
+    }
+  };
 
   // Get all experts
   getExperts = async (req: Request, res: Response): Promise<void> => {

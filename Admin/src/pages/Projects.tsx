@@ -21,6 +21,7 @@ import api from '../services/api';
 interface ProjectForm {
   title: string;
   description: string;
+  thumbnail: string;
   category: string;
   price: number;
   technologies: string[];
@@ -113,6 +114,7 @@ const Projects = () => {
       reset({
         title: project.title,
         description: project.description,
+        thumbnail: project.thumbnail,
         category: project.category,
         price: project.price,
         technologies: project.technologies,
@@ -124,6 +126,7 @@ const Projects = () => {
       reset({
         title: '',
         description: '',
+        thumbnail: '',
         category: '',
         price: 0,
         technologies: [],
@@ -197,6 +200,19 @@ const Projects = () => {
                   })}
                   error={!!errors.title}
                   helperText={errors.title?.message}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Thumbnail URL"
+                  placeholder="https://example.com/image.jpg"
+                  {...register('thumbnail', {
+                    required: 'Thumbnail is required',
+                  })}
+                  error={!!errors.thumbnail}
+                  helperText={errors.thumbnail?.message}
                 />
               </Grid>
 
