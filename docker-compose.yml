@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=development
+      - PORT=5000
+      - MONGODB_URI=mongodb://mongo:27017/devfolio
+      - JWT_SECRET=your-super-secret-jwt-key
+    depends_on:
+      - mongo
+    volumes:
+      - ./Backend:/app
+      - /app/node_modules
+    networks:
+      - devfolio-network
+
+  frontend:
+    build:
+      context: ./devfolio-marketplace
+      dockerfile: Dockerfile
+    ports:
+      - "3000:4173"
+    environment:
+      - VITE_API_URL=http://localhost:5000/api
+    depends_on:
+      - backend
+    volumes:
+      - ./devfolio-marketplace:/app
+      - /app/node_modules
+    networks:
+      - devfolio-network
+
+  admin:
+    build:
+      context: ./Admin
+      dockerfile: Dockerfile
+    ports:
+      - "3001:4173"
+    environment:
+      - VITE_API_URL=http://localhost:5000/api
+    depends_on:
+      - backend
+    volumes:
+      - ./Admin:/app
+      - /app/node_modules
+    networks:
+      - devfolio-network
+
+  mongo:
+    image: mongo:7-jammy
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - devfolio-network
+
+volumes:
+  mongo_data:
+
+networks:
+  devfolio-network:
+    driver: bridge
