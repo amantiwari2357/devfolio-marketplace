@@ -32,7 +32,7 @@ const Login = () => {
       // Optionally store user data if needed
 
       if (user.role === 'admin') {
-        window.location.href = 'http://localhost:5173';
+        window.location.href = 'http://localhost:5173/';
       } else {
         navigate("/dashboard");
       }
