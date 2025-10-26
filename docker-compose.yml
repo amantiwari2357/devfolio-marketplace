@@ -52,18 +52,3 @@ services:
     networks:
       - devfolio-network
 
-  mongo:
-    image: mongo:7-jammy
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo_data:/data/db
-    networks:
-      - devfolio-network
-
-volumes:
-  mongo_data:
-
-networks:
-  devfolio-network:
-    driver: bridge
