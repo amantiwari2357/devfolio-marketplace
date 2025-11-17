@@ -25,7 +25,7 @@ const HeroSection = () => {
               className="bg-foreground text-background hover:bg-foreground/90 group"
               onClick={() => navigate("/signup")}
             >
-              Launch Your Store
+              Get Started
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
             

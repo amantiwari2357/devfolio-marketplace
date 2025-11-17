@@ -4,18 +4,64 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Search as SearchIcon, Filter } from "lucide-react";
+import ProjectCard from "@/components/cards/ProjectCard";
+import { useNavigate } from "react-router-dom";
 
 const Search = () => {
-  const experts = [
-    { name: "Sarah Johnson", expertise: "Product Management", rating: 4.9, sessions: 150 },
-    { name: "Michael Chen", expertise: "Software Engineering", rating: 4.8, sessions: 200 },
-    { name: "Emily Rodriguez", expertise: "UI/UX Design", rating: 5.0, sessions: 180 },
-    { name: "David Kim", expertise: "Marketing Strategy", rating: 4.7, sessions: 120 },
-    { name: "Lisa Anderson", expertise: "Career Coaching", rating: 4.9, sessions: 250 },
-    { name: "James Wilson", expertise: "Data Science", rating: 4.8, sessions: 140 },
+  const navigate = useNavigate();
+
+  const projects = [
+    {
+      id: 1,
+      name: "E-Commerce Platform",
+      description: "Full-featured online store with payment integration",
+      category: "E-Commerce",
+      icon: "🛍️",
+      pricing: "Paid"
+    },
+    {
+      id: 2,
+      name: "Social Media Dashboard",
+      description: "Analytics and management for multiple platforms",
+      category: "Business Tools",
+      icon: "📊",
+      pricing: "Freemium"
+    },
+    {
+      id: 3,
+      name: "Learning Management System",
+      description: "Complete LMS with courses and assessments",
+      category: "Education",
+      icon: "📚",
+      pricing: "Paid"
+    },
+    {
+      id: 4,
+      name: "Task Management App",
+      description: "Collaborative task tracking and team management",
+      category: "Productivity",
+      icon: "✅",
+      pricing: "Free"
+    },
+    {
+      id: 5,
+      name: "Restaurant Booking",
+      description: "Table reservation system with real-time availability",
+      category: "Hospitality",
+      icon: "🍽️",
+      pricing: "Paid"
+    },
+    {
+      id: 6,
+      name: "Fitness Tracker",
+      description: "Comprehensive health and activity monitoring",
+      category: "Health & Fitness",
+      icon: "💪",
+      pricing: "Freemium"
+    }
   ];
 
-  const categories = ["All", "Technology", "Business", "Design", "Marketing", "Career", "Lifestyle"];
+  const categories = ["All", "E-Commerce", "Business Tools", "Education", "Productivity", "Health & Fitness"];
 
   return (
     <div className="min-h-screen bg-background">
@@ -24,10 +70,10 @@ const Search = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto mb-12">
             <h1 className="text-5xl font-bold mb-6 text-center text-foreground">
-              Find Your Expert
+              Browse Projects
             </h1>
             <p className="text-xl text-muted-foreground text-center mb-8">
-              Connect with top professionals across various domains
+              Discover amazing projects across various categories
             </p>
 
             <div className="flex gap-4 mb-6">
@@ -58,26 +104,11 @@ const Search = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {experts.map((expert, index) => (
-              <Card key={index} className="p-6 bg-card border-border hover:shadow-lg transition-shadow">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className={`w-16 h-16 rounded-full bg-gradient-to-br from-card-${index % 2 === 0 ? 'purple' : 'blue'} to-card-${index % 2 === 0 ? 'pink' : 'cyan'}`}></div>
-                  <div>
-                    <h3 className="font-bold text-lg text-foreground">{expert.name}</h3>
-                    <p className="text-sm text-muted-foreground">{expert.expertise}</p>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-1">
-                    <span className="text-yellow-500">★</span>
-                    <span className="font-semibold">{expert.rating}</span>
-                  </div>
-                  <span className="text-sm text-muted-foreground">{expert.sessions}+ sessions</span>
-                </div>
-                <Button className="w-full bg-foreground text-background hover:bg-foreground/90">
-                  View Profile
-                </Button>
-              </Card>
+            {projects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+              />
             ))}
           </div>
         </div>
