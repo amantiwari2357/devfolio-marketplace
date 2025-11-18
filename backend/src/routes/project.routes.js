@@ -1,0 +1,18 @@
+const express = require('express');
+const router = express.Router();
+const projectController = require('../controllers/project.controller');
+const { createProjectValidation, updateProjectValidation } = require('../validators/project.validator');
+const authMiddleware = require('../middlewares/auth.middleware');
+
+// Get all projects (public - for frontend)
+router.get('/all', projectController.getAllProjects);
+
+// Get project by ID (public - for frontend)
+router.get('/:id', projectController.getProjectById);
+
+// Protected routes (admin only)
+router.post('/', authMiddleware, createProjectValidation, projectController.createProject);
+router.put('/:id', authMiddleware, updateProjectValidation, projectController.updateProject);
+router.delete('/:id', authMiddleware, projectController.deleteProject);
+
+module.exports = router;
