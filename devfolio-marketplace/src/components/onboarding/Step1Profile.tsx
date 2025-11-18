@@ -1,178 +1,136 @@
-import { useState } from "react";
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Check } from "lucide-react";
-import api from "@/services/api";
-import { toast } from "sonner";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface Step1ProfileProps {
   onNext: () => void;
 }
 
-const expertiseOptions = [
-  "Cybersecurity", "Law", "Content & Branding", "Others", "HR",
-  "Software", "Product", "Study Abroad", "Finance", "Design",
-  "Data", "Astrology", "Mental Health & Wellbeing", "Marketing"
-];
+const Step1Profile: React.FC<Step1ProfileProps> = ({ onNext }) => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    bio: '',
+    profession: '',
+    experience: ''
+  });
 
-const Step1Profile = ({ onNext }: Step1ProfileProps) => {
-  const [socialUrl, setSocialUrl] = useState("");
-  const [username, setUsername] = useState("aman_tiwari45");
-  const [country, setCountry] = useState("india");
-  const [currency, setCurrency] = useState("inr");
-  const [selectedExpertise, setSelectedExpertise] = useState<string[]>([]);
-
-  const toggleExpertise = (expertise: string) => {
-    setSelectedExpertise((prev) =>
-      prev.includes(expertise)
-        ? prev.filter((e) => e !== expertise)
-        : [...prev, expertise]
-    );
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleNext = async () => {
-    try {
-      const profileData = {
-        socialUrl,
-        username,
-        country,
-        currency,
-        skills: selectedExpertise,
-      };
-
-      await api.put('/auth/profile', profileData);
-      toast.success("Profile updated successfully!");
-      onNext();
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to update profile");
-    }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Simulate saving data
+    console.log('Profile data:', formData);
+    onNext();
   };
 
   return (
-    <div className="animate-fade-in">
-      <h1 className="text-4xl font-bold mb-2">Hello there!</h1>
-      <p className="text-muted-foreground mb-8">
-        In a few moments you will be ready to share your expertise & time
-      </p>
+    <div className="max-w-2xl mx-auto">
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-4">Create Your Profile</h1>
+        <p className="text-gray-600">Tell us about yourself to get started</p>
+      </div>
 
-      <div className="space-y-6 max-w-2xl">
-        <div>
-          <Label htmlFor="social">Connect your social account</Label>
-          <div className="flex items-center gap-2">
-            <span className="px-3 py-2 bg-muted rounded-l-lg text-sm">https://</span>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="firstName">First Name</Label>
             <Input
-              id="social"
-              placeholder="LinkedIn, Twitter, Instagram"
-              value={socialUrl}
-              onChange={(e) => setSocialUrl(e.target.value)}
-              className="rounded-l-none flex-1"
+              id="firstName"
+              value={formData.firstName}
+              onChange={(e) => handleInputChange('firstName', e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <Label htmlFor="lastName">Last Name</Label>
+            <Input
+              id="lastName"
+              value={formData.lastName}
+              onChange={(e) => handleInputChange('lastName', e.target.value)}
+              required
             />
           </div>
         </div>
 
         <div>
-          <Label htmlFor="username">Your devfolio-marketplace page link</Label>
-          <div className="flex items-center gap-2">
-            <span className="px-3 py-2 bg-muted rounded-l-lg text-sm">devfolio-marketplace.io/</span>
-            <div className="relative flex-1">
-              <Input
-                id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="rounded-l-none pr-10"
-              />
-              <Check className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-green-500" />
-            </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="country">Country</Label>
-            <Select value={country} onValueChange={setCountry}>
-              <SelectTrigger id="country">
-                <SelectValue>
-                  <div className="flex items-center gap-2">
-                    <span className="text-lg">🇮🇳</span>
-                    <span>India</span>
-                  </div>
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="india">
-                  <div className="flex items-center gap-2">
-                    <span className="text-lg">🇮🇳</span>
-                    <span>India</span>
-                  </div>
-                </SelectItem>
-                <SelectItem value="usa">
-                  <div className="flex items-center gap-2">
-                    <span className="text-lg">🇺🇸</span>
-                    <span>United States</span>
-                  </div>
-                </SelectItem>
-                <SelectItem value="uk">
-                  <div className="flex items-center gap-2">
-                    <span className="text-lg">🇬🇧</span>
-                    <span>United Kingdom</span>
-                  </div>
-                </SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div>
-            <Label htmlFor="currency">Currency</Label>
-            <Select value={currency} onValueChange={setCurrency}>
-              <SelectTrigger id="currency">
-                <SelectValue placeholder="₹ (Indian Rupee)" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="inr">₹ (Indian Rupee)</SelectItem>
-                <SelectItem value="usd">$ (US Dollar)</SelectItem>
-                <SelectItem value="gbp">£ (British Pound)</SelectItem>
-                <SelectItem value="eur">€ (Euro)</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <Label htmlFor="email">Email</Label>
+          <Input
+            id="email"
+            type="email"
+            value={formData.email}
+            onChange={(e) => handleInputChange('email', e.target.value)}
+            required
+          />
         </div>
 
         <div>
-          <Label>Select your expertise</Label>
-          <div className="flex flex-wrap gap-2 mt-2">
-            {expertiseOptions.map((expertise) => (
-              <Button
-                key={expertise}
-                variant={selectedExpertise.includes(expertise) ? "default" : "outline"}
-                onClick={() => toggleExpertise(expertise)}
-                type="button"
-                className={selectedExpertise.includes(expertise) ? "bg-foreground text-background hover:bg-foreground/90" : ""}
-              >
-                {expertise}
-              </Button>
-            ))}
-          </div>
+          <Label htmlFor="phone">Phone Number</Label>
+          <Input
+            id="phone"
+            type="tel"
+            value={formData.phone}
+            onChange={(e) => handleInputChange('phone', e.target.value)}
+            required
+          />
         </div>
-      </div>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border p-4">
-        <div className="container mx-auto flex justify-center">
-          <Button
-            onClick={handleNext}
-            className="w-full max-w-md bg-foreground text-background hover:bg-foreground/90"
-          >
-            Next
-          </Button>
+        <div>
+          <Label htmlFor="profession">Profession</Label>
+          <Select onValueChange={(value) => handleInputChange('profession', value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select your profession" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="developer">Software Developer</SelectItem>
+              <SelectItem value="designer">Designer</SelectItem>
+              <SelectItem value="marketer">Digital Marketer</SelectItem>
+              <SelectItem value="consultant">Consultant</SelectItem>
+              <SelectItem value="freelancer">Freelancer</SelectItem>
+              <SelectItem value="other">Other</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
-      </div>
+
+        <div>
+          <Label htmlFor="experience">Years of Experience</Label>
+          <Select onValueChange={(value) => handleInputChange('experience', value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select experience level" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="0-1">0-1 years</SelectItem>
+              <SelectItem value="1-3">1-3 years</SelectItem>
+              <SelectItem value="3-5">3-5 years</SelectItem>
+              <SelectItem value="5-10">5-10 years</SelectItem>
+              <SelectItem value="10+">10+ years</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div>
+          <Label htmlFor="bio">Bio</Label>
+          <Textarea
+            id="bio"
+            value={formData.bio}
+            onChange={(e) => handleInputChange('bio', e.target.value)}
+            placeholder="Tell us about yourself..."
+            rows={4}
+            required
+          />
+        </div>
+
+        <Button type="submit" className="w-full">
+          Continue
+        </Button>
+      </form>
     </div>
   );
 };

@@ -5,7 +5,6 @@ import { Label } from "@/components/ui/label";
 import { useNavigate, Link } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import api from "@/services/api";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -185,29 +184,18 @@ const SignUp = () => {
     };
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
 
-    try {
-      const response = await api.post('/auth/register', {
-        email: formData.email,
-        password: formData.password,
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-      });
-
-      const { token, user } = response.data;
-      localStorage.setItem('token', token);
-      // Optionally store user data if needed
-
+    // Simulate registration
+    setTimeout(() => {
+      // Mock successful registration
+      localStorage.setItem('token', 'mock-token');
       navigate("/onboarding");
-    } catch (error: any) {
-      setError(error.response?.data?.message || 'Registration failed. Please try again.');
-    } finally {
       setIsLoading(false);
-    }
+    }, 1000);
   };
 
   return (

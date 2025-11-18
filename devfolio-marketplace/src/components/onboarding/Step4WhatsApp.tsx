@@ -1,136 +1,104 @@
-import { useState } from "react";
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card } from "@/components/ui/card";
-import { ArrowLeft, Rocket } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
-import api from "@/services/api";
 
 interface Step4WhatsAppProps {
   onBack: () => void;
 }
 
-const Step4WhatsApp = ({ onBack }: Step4WhatsAppProps) => {
-  const navigate = useNavigate();
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [showSuccess, setShowSuccess] = useState(false);
+const Step4WhatsApp: React.FC<Step4WhatsAppProps> = ({ onBack }) => {
+  const [whatsAppNumber, setWhatsAppNumber] = useState('');
+  const [agreeToTerms, setAgreeToTerms] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleLaunch = async () => {
-    try {
-      if (phoneNumber) {
-        await api.put('/auth/whatsapp', { whatsappNumber: phoneNumber });
-      }
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-      setShowSuccess(true);
-      toast.success("Slots Updated Successfully!", {
-        duration: 2000,
-      });
-
-      setTimeout(() => {
-        navigate("/");
-        toast.success("🎉 Welcome! Your devfolio-marketplace page is live!", {
-          duration: 3000,
-        });
-      }, 1500);
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to update WhatsApp number");
+    if (!agreeToTerms) {
+      toast.error("Please agree to the terms and conditions");
+      return;
     }
+
+    setIsSubmitting(true);
+
+    // Simulate API call
+    setTimeout(() => {
+      toast.success("Profile setup completed successfully!");
+      // In a real app, this would redirect to dashboard
+      console.log('WhatsApp setup:', { whatsAppNumber, agreeToTerms });
+      setIsSubmitting(false);
+    }, 2000);
   };
 
   return (
-    <div className="animate-fade-in">
-      <h1 className="text-4xl font-bold mb-2">Alright! One last thing</h1>
+    <div className="max-w-2xl mx-auto">
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-4">Connect WhatsApp</h1>
+        <p className="text-gray-600">Link your WhatsApp for client communications</p>
+      </div>
 
-      <div className="max-w-2xl space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-8">
         <div>
-          <Label htmlFor="whatsapp">Whatsapp number</Label>
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-l-lg">
-              <span className="text-lg">🇮🇳</span>
-              <span className="text-sm">+91</span>
-            </div>
-            <Input
-              id="whatsapp"
-              type="tel"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              className="rounded-l-none flex-1"
-              placeholder="Enter your WhatsApp number"
-            />
-          </div>
+          <Label htmlFor="whatsapp">WhatsApp Number</Label>
+          <Input
+            id="whatsapp"
+            type="tel"
+            value={whatsAppNumber}
+            onChange={(e) => setWhatsAppNumber(e.target.value)}
+            placeholder="+91 98765 43210"
+            required
+          />
+          <p className="text-sm text-gray-500 mt-2">
+            We'll send a verification code to confirm this number
+          </p>
         </div>
 
-        <Card className="bg-gradient-to-br from-card-cyan to-card-blue border-none p-6">
-          <div className="flex gap-4">
-            <div className="flex-shrink-0">
-              <div className="w-24 h-48 bg-gradient-to-b from-green-600 to-green-700 rounded-2xl p-3 relative">
-                <div className="absolute top-3 left-3 right-3">
-                  <div className="bg-white/20 rounded-lg p-2 text-white text-xs mb-2">
-                    <div className="flex items-center gap-1 mb-1">
-                      <div className="w-4 h-4 rounded-full bg-primary" />
-                      <span className="font-semibold">devfolio-marketplace</span>
-                    </div>
-                    <p className="text-[10px]">You have a new booking from John.</p>
-                  </div>
-                  
-                  <div className="space-y-1">
-                    <div className="bg-white rounded-full px-2 py-1 flex items-center gap-1">
-                      <div className="w-3 h-3 bg-green-500 rounded-full" />
-                      <span className="text-[8px] font-medium">Bookings</span>
-                    </div>
-                    <div className="bg-white rounded-full px-2 py-1 flex items-center gap-1">
-                      <div className="w-3 h-3 bg-blue-500 rounded-full" />
-                      <span className="text-[8px] font-medium">Reminders</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div className="bg-blue-50 p-6 rounded-lg">
+          <h3 className="font-semibold text-gray-900 mb-2">Why connect WhatsApp?</h3>
+          <ul className="text-sm text-gray-700 space-y-1">
+            <li>• Direct communication with clients</li>
+            <li>• Instant booking confirmations</li>
+            <li>• Automated reminders and updates</li>
+            <li>• Professional client management</li>
+          </ul>
+        </div>
 
-            <div className="flex-1">
-              <h3 className="font-semibold text-lg mb-2">
-                Add your WhatsApp number to get booking updates and reminder.
-              </h3>
-              <p className="text-foreground/80 font-medium">
-                97% users love the integration!
-              </p>
-            </div>
-          </div>
-        </Card>
-      </div>
+        <div className="flex items-start space-x-2">
+          <Checkbox
+            id="terms"
+            checked={agreeToTerms}
+            onCheckedChange={(checked) => setAgreeToTerms(checked as boolean)}
+          />
+          <Label htmlFor="terms" className="text-sm leading-relaxed">
+            I agree to the{" "}
+            <a href="/terms" className="text-blue-600 hover:underline">
+              Terms of Service
+            </a>{" "}
+            and{" "}
+            <a href="/privacy" className="text-blue-600 hover:underline">
+              Privacy Policy
+            </a>
+          </Label>
+        </div>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border p-4">
-        <div className="container mx-auto flex items-center justify-between max-w-3xl">
-          <Button variant="ghost" onClick={onBack} className="gap-2">
-            <ArrowLeft className="w-4 h-4" />
+        <div className="flex gap-4">
+          <Button type="button" variant="outline" onClick={onBack} className="flex-1">
+            Back
           </Button>
-          <Button
-            onClick={handleLaunch}
-            className="w-full max-w-md bg-foreground text-background hover:bg-foreground/90 gap-2"
-          >
-            <Rocket className="w-4 h-4" />
-            Launch your page
+          <Button type="submit" disabled={isSubmitting} className="flex-1">
+            {isSubmitting ? "Setting up..." : "Complete Setup"}
           </Button>
         </div>
-      </div>
+      </form>
 
-      {showSuccess && (
-        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in">
-          <Card className="bg-card p-8 max-w-md animate-scale-in">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <h2 className="text-2xl font-bold mb-2">Slots Updated Successfully!</h2>
-              <p className="text-muted-foreground">Redirecting to your dashboard...</p>
-            </div>
-          </Card>
-        </div>
-      )}
+      <div className="text-center mt-8">
+        <p className="text-sm text-gray-500">
+          Need help? Contact our support team
+        </p>
+      </div>
     </div>
   );
 };

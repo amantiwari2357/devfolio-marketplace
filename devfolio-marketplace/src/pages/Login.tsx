@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
-import api from "@/services/api";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -16,31 +15,18 @@ const Login = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
 
-    try {
-      const response = await api.post('/auth/login', {
-        email: formData.email,
-        password: formData.password,
-      });
-
-      const { token, user } = response.data;
-      localStorage.setItem('token', token);
-      // Optionally store user data if needed
-
-      if (user.role === 'admin') {
-        window.location.href = 'http://localhost:5173/';
-      } else {
-        navigate("/dashboard");
-      }
-    } catch (error: any) {
-      setError(error.response?.data?.message || 'Login failed. Please try again.');
-    } finally {
+    // Simulate login
+    setTimeout(() => {
+      // Mock successful login
+      localStorage.setItem('token', 'mock-token');
+      navigate("/dashboard");
       setIsLoading(false);
-    }
+    }, 1000);
   };
 
   return (
