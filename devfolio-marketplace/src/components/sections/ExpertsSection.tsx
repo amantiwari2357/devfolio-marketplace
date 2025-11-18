@@ -1,7 +1,6 @@
 import ExpertCard from "@/components/cards/ExpertCard";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
-import api from "@/services/api";
+import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -24,9 +23,58 @@ interface Expert {
 }
 
 const ExpertsSection = () => {
-  const [experts, setExperts] = useState<Expert[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const experts: Expert[] = [
+    {
+      _id: "1",
+      firstName: "John",
+      lastName: "Doe",
+      role: "Software Engineer",
+      profileImage: null,
+      skills: ["JavaScript", "React", "Node.js"],
+      bio: "Experienced software engineer with 5+ years in web development.",
+      email: "john.doe@example.com"
+    },
+    {
+      _id: "2",
+      firstName: "Jane",
+      lastName: "Smith",
+      role: "Data Scientist",
+      profileImage: null,
+      skills: ["Python", "Machine Learning", "Data Analysis"],
+      bio: "Data scientist specializing in AI and predictive modeling.",
+      email: "jane.smith@example.com"
+    },
+    {
+      _id: "3",
+      firstName: "Mike",
+      lastName: "Johnson",
+      role: "Marketing Expert",
+      profileImage: null,
+      skills: ["Digital Marketing", "SEO", "Content Strategy"],
+      bio: "Marketing professional helping businesses grow online.",
+      email: "mike.johnson@example.com"
+    },
+    {
+      _id: "4",
+      firstName: "Sarah",
+      lastName: "Williams",
+      role: "HR Consultant",
+      profileImage: null,
+      skills: ["Talent Acquisition", "Employee Relations", "HR Strategy"],
+      bio: "HR expert focused on building strong workplace cultures.",
+      email: "sarah.williams@example.com"
+    },
+    {
+      _id: "5",
+      firstName: "David",
+      lastName: "Brown",
+      role: "Financial Advisor",
+      profileImage: null,
+      skills: ["Investment Planning", "Risk Management", "Financial Analysis"],
+      bio: "Certified financial advisor with expertise in wealth management.",
+      email: "david.brown@example.com"
+    }
+  ];
   const [selectedCategory, setSelectedCategory] = useState("Career");
   const [selectedExpert, setSelectedExpert] = useState<Expert | null>(null);
   const [enquiryForm, setEnquiryForm] = useState({
@@ -37,81 +85,27 @@ const ExpertsSection = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    const fetchExperts = async () => {
-      try {
-        const response = await api.get('/experts');
-        setExperts(response.data.data.experts || response.data.data);
-      } catch (err) {
-        console.error('Error fetching experts:', err);
-        setError('Failed to load experts');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchExperts();
-  }, []);
-
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
     // Filter experts by category (skills)
     // For now, we'll just set the category, but you can implement filtering logic
   };
 
-  const handleEnquirySubmit = async (e: React.FormEvent) => {
+  const handleEnquirySubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedExpert) return;
 
     setIsSubmitting(true);
-    try {
-      await api.post('/enquiries', {
-        expert: selectedExpert._id,
-        ...enquiryForm
-      });
+    // Simulate API call
+    setTimeout(() => {
       toast.success("Enquiry submitted successfully!");
       setEnquiryForm({ name: "", email: "", phone: "", message: "" });
       setSelectedExpert(null);
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to submit enquiry");
-    } finally {
       setIsSubmitting(false);
-    }
+    }, 1000);
   };
 
-  if (loading) {
-    return (
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              The <span className="text-primary">Go-To Platform</span> for Experts
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Loading experts...
-            </p>
-          </div>
-        </div>
-      </section>
-    );
-  }
 
-  if (error) {
-    return (
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              The <span className="text-primary">Go-To Platform</span> for Experts
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              {error}
-            </p>
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section className="py-20 bg-background">
