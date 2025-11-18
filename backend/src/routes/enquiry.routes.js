@@ -20,4 +20,7 @@ router.get('/my', authMiddleware, enquiryController.getUserEnquiries);
 // Update enquiry status (admin only)
 router.put('/:id/status', enquiryController.updateEnquiryStatus);
 
+// Add follow-up to enquiry
+router.post('/:id/followup', enquiryController.addFollowUp);
+
 module.exports = router;

@@ -146,6 +146,51 @@ const enquiryController = {
         message: 'Internal server error'
       });
     }
+  },
+
+  // Add follow-up to enquiry
+  addFollowUp: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { note, status } = req.body;
+
+      if (!note || !note.trim()) {
+        return res.status(400).json({
+          success: false,
+          message: 'Follow-up note is required'
+        });
+      }
+
+      const enquiry = await Enquiry.findById(id);
+      if (!enquiry) {
+        return res.status(404).json({
+          success: false,
+          message: 'Enquiry not found'
+        });
+      }
+
+      const followUp = {
+        date: new Date(),
+        note: note.trim(),
+        status: status || 'note'
+      };
+
+      enquiry.followUps.push(followUp);
+      await enquiry.save();
+
+      res.json({
+        success: true,
+        message: 'Follow-up added successfully',
+        enquiry
+      });
+
+    } catch (error) {
+      console.error('Error adding follow-up:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Internal server error'
+      });
+    }
   }
 };
 

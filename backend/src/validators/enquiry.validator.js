@@ -6,8 +6,8 @@ const enquiryValidators = {
       .trim()
       .isLength({ min: 2, max: 100 })
       .withMessage('Name must be between 2 and 100 characters')
-      .matches(/^[a-zA-Z\s]+$/)
-      .withMessage('Name can only contain letters and spaces'),
+      .matches(/^[a-zA-Z\s\.\-\']+$/)
+      .withMessage('Name can only contain letters, spaces, dots, hyphens, and apostrophes'),
 
     body('email')
       .isEmail()

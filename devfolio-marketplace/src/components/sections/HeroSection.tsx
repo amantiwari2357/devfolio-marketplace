@@ -143,7 +143,6 @@ const HeroSection = () => {
                 placeholder="Enter your full name"
                 value={enquiryForm.name}
                 onChange={(e) => setEnquiryForm(prev => ({ ...prev, name: e.target.value }))}
-                required
               />
             </div>
             <div>
@@ -154,7 +153,6 @@ const HeroSection = () => {
                 placeholder="Enter your email"
                 value={enquiryForm.email}
                 onChange={(e) => setEnquiryForm(prev => ({ ...prev, email: e.target.value }))}
-                required
               />
             </div>
             <div>
@@ -165,7 +163,6 @@ const HeroSection = () => {
                 placeholder="Enter your phone number"
                 value={enquiryForm.phone}
                 onChange={(e) => setEnquiryForm(prev => ({ ...prev, phone: e.target.value }))}
-                required
               />
             </div>
             <div>
@@ -176,7 +173,6 @@ const HeroSection = () => {
                 value={enquiryForm.message}
                 onChange={(e) => setEnquiryForm(prev => ({ ...prev, message: e.target.value }))}
                 rows={4}
-                required
               />
             </div>
             <div className="flex gap-3 pt-4">

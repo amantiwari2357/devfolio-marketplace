@@ -27,11 +27,31 @@ const enquirySchema = new mongoose.Schema({
     ref: 'User',
     required: false
   },
+  source: {
+    type: String,
+    enum: ['hero-section', 'contact-form', 'landing-page', 'other'],
+    default: 'hero-section'
+  },
   status: {
     type: String,
     enum: ['pending', 'in-progress', 'completed', 'cancelled'],
     default: 'pending'
-  }
+  },
+  followUps: [{
+    date: {
+      type: Date,
+      default: Date.now
+    },
+    note: {
+      type: String,
+      required: true
+    },
+    status: {
+      type: String,
+      enum: ['called', 'emailed', 'meeting', 'note'],
+      default: 'note'
+    }
+  }]
 }, {
   timestamps: true
 });
