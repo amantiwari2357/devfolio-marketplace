@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/select";
 import { Plus, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
+import { userAPI } from "@/services/auth";
 
 interface Step2AvailabilityProps {
   onNext: () => void;
@@ -33,6 +34,7 @@ const Step2Availability = ({ onNext, onBack }: Step2AvailabilityProps) => {
     { day: "Thursday", enabled: false, startTime: "", endTime: "" },
     { day: "Friday", enabled: false, startTime: "", endTime: "" },
   ]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const toggleDay = (index: number) => {
     const newSchedule = [...schedule];
@@ -58,10 +60,24 @@ const Step2Availability = ({ onNext, onBack }: Step2AvailabilityProps) => {
     }
   };
 
-  const handleNext = () => {
-    // Simulate availability update
-    toast.success("Availability updated successfully!");
-    onNext();
+  const handleNext = async () => {
+    setIsLoading(true);
+    try {
+      await userAPI.updateAvailability({
+        availability: schedule.map(s => ({
+          day: s.day,
+          enabled: s.enabled,
+          startTime: s.enabled ? s.startTime : undefined,
+          endTime: s.enabled ? s.endTime : undefined,
+        })),
+      });
+      toast.success("Availability updated successfully!");
+      onNext();
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Failed to update availability");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -153,9 +169,10 @@ const Step2Availability = ({ onNext, onBack }: Step2AvailabilityProps) => {
           </Button>
           <Button
             onClick={handleNext}
+            disabled={isLoading}
             className="w-full max-w-md bg-foreground text-background hover:bg-foreground/90"
           >
-            Next
+            {isLoading ? "Updating..." : "Next"}
           </Button>
         </div>
       </div>

@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { ArrowLeft, Rocket } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { userAPI } from "@/services/auth";
 
 interface Step4WhatsAppProps {
   onBack: () => void;
@@ -15,19 +16,29 @@ const Step4WhatsApp = ({ onBack }: Step4WhatsAppProps) => {
   const navigate = useNavigate();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLaunch = () => {
-    setShowSuccess(true);
-    toast.success("Slots Updated Successfully!", {
-      duration: 2000,
-    });
-
-    setTimeout(() => {
-      navigate("/");
-      toast.success("🎉 Welcome! Your devfolio-marketplace page is live!", {
-        duration: 3000,
+  const handleLaunch = async () => {
+    setIsLoading(true);
+    try {
+      await userAPI.updateWhatsApp({
+        whatsappNumber: phoneNumber || undefined,
       });
-    }, 1500);
+      setShowSuccess(true);
+      toast.success("Onboarding completed successfully!", {
+        duration: 2000,
+      });
+
+      setTimeout(() => {
+        navigate("/");
+        toast.success("🎉 Welcome! Your devfolio-marketplace page is live!", {
+          duration: 3000,
+        });
+      }, 1500);
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Failed to complete onboarding");
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -65,7 +76,7 @@ const Step4WhatsApp = ({ onBack }: Step4WhatsAppProps) => {
                     </div>
                     <p className="text-[10px]">You have a new booking from John.</p>
                   </div>
-                  
+
                   <div className="space-y-1">
                     <div className="bg-white rounded-full px-2 py-1 flex items-center gap-1">
                       <div className="w-3 h-3 bg-green-500 rounded-full" />
@@ -99,10 +110,11 @@ const Step4WhatsApp = ({ onBack }: Step4WhatsAppProps) => {
           </Button>
           <Button
             onClick={handleLaunch}
+            disabled={isLoading}
             className="w-full max-w-md bg-foreground text-background hover:bg-foreground/90 gap-2"
           >
             <Rocket className="w-4 h-4" />
-            Launch your page
+            {isLoading ? "Launching..." : "Launch your page"}
           </Button>
         </div>
       </div>
@@ -116,7 +128,7 @@ const Step4WhatsApp = ({ onBack }: Step4WhatsAppProps) => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h2 className="text-2xl font-bold mb-2">Slots Updated Successfully!</h2>
+              <h2 className="text-2xl font-bold mb-2">Onboarding Completed!</h2>
               <p className="text-muted-foreground">Redirecting to your dashboard...</p>
             </div>
           </Card>

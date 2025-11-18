@@ -2,7 +2,7 @@ const User = require('../models/user.model');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-// Signup - Create user account
+// Signup - Create user with basic info
 const signup = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -10,18 +10,17 @@ const signup = async (req, res) => {
     // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: 'User already exists with this email' });
+      return res.status(400).json({ message: 'User already exists' });
     }
 
     // Hash password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await bcrypt.hash(password, 12);
 
     // Create user
     const user = new User({
       email,
       password: hashedPassword,
-      username: email.split('@')[0], // Default username from email
+      currentStep: 1
     });
 
     await user.save();
@@ -29,7 +28,7 @@ const signup = async (req, res) => {
     // Generate JWT token
     const token = jwt.sign(
       { userId: user._id, email: user.email },
-      process.env.JWT_SECRET || 'your-secret-key',
+      process.env.JWT_SECRET,
       { expiresIn: '7d' }
     );
 
@@ -39,190 +38,154 @@ const signup = async (req, res) => {
       user: {
         id: user._id,
         email: user.email,
-        username: user.username,
-        currentStep: user.currentStep,
-        onboardingCompleted: user.onboardingCompleted
+        currentStep: user.currentStep
       }
     });
   } catch (error) {
     console.error('Signup error:', error);
-    res.status(500).json({ message: 'Server error during signup' });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
-// Login
-const login = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).json({ message: 'Invalid credentials' });
-    }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' });
-    }
-
-    const token = jwt.sign(
-      { userId: user._id, email: user.email },
-      process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '7d' }
-    );
-
-    res.json({
-      message: 'Login successful',
-      token,
-      user: {
-        id: user._id,
-        email: user.email,
-        username: user.username,
-        currentStep: user.currentStep,
-        onboardingCompleted: user.onboardingCompleted
-      }
-    });
-  } catch (error) {
-    console.error('Login error:', error);
-    res.status(500).json({ message: 'Server error during login' });
-  }
-};
-
-// Update Step 1: Profile
+// Step 1: Update Profile
 const updateProfile = async (req, res) => {
   try {
     const { socialUrl, username, country, currency, expertise } = req.body;
     const userId = req.user.userId;
 
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
     // Check if username is already taken
-    if (username !== user.username) {
-      const existingUser = await User.findOne({ username });
+    if (username) {
+      const existingUser = await User.findOne({ username, _id: { $ne: userId } });
       if (existingUser) {
         return res.status(400).json({ message: 'Username already taken' });
       }
     }
 
-    user.socialUrl = socialUrl;
-    user.username = username;
-    user.country = country;
-    user.currency = currency;
-    user.expertise = expertise;
-    user.currentStep = 2;
+    const user = await User.findByIdAndUpdate(
+      userId,
+      {
+        socialUrl,
+        username,
+        country,
+        currency,
+        expertise,
+        currentStep: 2
+      },
+      { new: true }
+    );
 
-    await user.save();
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
     res.json({
       message: 'Profile updated successfully',
       user: {
         id: user._id,
-        socialUrl: user.socialUrl,
-        username: user.username,
-        country: user.country,
-        currency: user.currency,
-        expertise: user.expertise,
         currentStep: user.currentStep
       }
     });
   } catch (error) {
     console.error('Update profile error:', error);
-    res.status(500).json({ message: 'Server error during profile update' });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
-// Update Step 2: Availability
+// Step 2: Update Availability
 const updateAvailability = async (req, res) => {
   try {
     const { availability } = req.body;
     const userId = req.user.userId;
 
-    const user = await User.findById(userId);
+    const user = await User.findByIdAndUpdate(
+      userId,
+      {
+        availability,
+        currentStep: 3
+      },
+      { new: true }
+    );
+
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-
-    user.availability = availability;
-    user.currentStep = 3;
-
-    await user.save();
 
     res.json({
       message: 'Availability updated successfully',
       user: {
         id: user._id,
-        availability: user.availability,
         currentStep: user.currentStep
       }
     });
   } catch (error) {
     console.error('Update availability error:', error);
-    res.status(500).json({ message: 'Server error during availability update' });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
-// Update Step 3: Services
+// Step 3: Update Services
 const updateServices = async (req, res) => {
   try {
     const { services } = req.body;
     const userId = req.user.userId;
 
-    const user = await User.findById(userId);
+    const user = await User.findByIdAndUpdate(
+      userId,
+      {
+        services: services || [{ name: 'Discovery Call', description: 'A 30-minute introductory session to understand your needs and discuss how I can help you achieve your goals.' }],
+        currentStep: 4
+      },
+      { new: true }
+    );
+
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-
-    user.services = services;
-    user.currentStep = 4;
-
-    await user.save();
 
     res.json({
       message: 'Services updated successfully',
       user: {
         id: user._id,
-        services: user.services,
         currentStep: user.currentStep
       }
     });
   } catch (error) {
     console.error('Update services error:', error);
-    res.status(500).json({ message: 'Server error during services update' });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
-// Update Step 4: WhatsApp and Complete Onboarding
+// Step 4: Update WhatsApp and Complete Onboarding
 const updateWhatsApp = async (req, res) => {
   try {
     const { whatsappNumber } = req.body;
     const userId = req.user.userId;
 
-    const user = await User.findById(userId);
+    const user = await User.findByIdAndUpdate(
+      userId,
+      {
+        whatsappNumber,
+        onboardingCompleted: true,
+        currentStep: 4
+      },
+      { new: true }
+    );
+
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-
-    user.whatsappNumber = whatsappNumber;
-    user.onboardingCompleted = true;
-    user.currentStep = 4;
-
-    await user.save();
 
     res.json({
       message: 'Onboarding completed successfully',
       user: {
         id: user._id,
-        whatsappNumber: user.whatsappNumber,
         onboardingCompleted: user.onboardingCompleted,
         currentStep: user.currentStep
       }
     });
   } catch (error) {
     console.error('Update WhatsApp error:', error);
-    res.status(500).json({ message: 'Server error during WhatsApp update' });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -243,12 +206,49 @@ const getProfile = async (req, res) => {
   }
 };
 
+// Login
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    const token = jwt.sign(
+      { userId: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
+    );
+
+    res.json({
+      message: 'Login successful',
+      token,
+      user: {
+        id: user._id,
+        email: user.email,
+        currentStep: user.currentStep,
+        onboardingCompleted: user.onboardingCompleted
+      }
+    });
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 module.exports = {
   signup,
-  login,
   updateProfile,
   updateAvailability,
   updateServices,
   updateWhatsApp,
-  getProfile
+  getProfile,
+  login
 };

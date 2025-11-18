@@ -1,37 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/user.controller');
-const authMiddleware = require('../middlewares/auth.middleware');
-const {
-  validateSignup,
-  validateLogin,
-  validateProfileUpdate,
-  validateAvailabilityUpdate,
-  validateServicesUpdate,
-  validateWhatsAppUpdate
-} = require('../validators/user.validator');
-const { validationResult } = require('express-validator');
 
-// Middleware to handle validation errors
-const handleValidationErrors = (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-  next();
-};
+// Import route modules
+const userRoutes = require('./user.routes');
 
-// Public routes
-router.post('/auth/signup', validateSignup, handleValidationErrors, userController.signup);
-router.post('/auth/login', validateLogin, handleValidationErrors, userController.login);
+// Mount routes
+router.use('/users', userRoutes);
 
-// Protected routes
-router.use(authMiddleware); // Apply auth middleware to all routes below
-
-router.get('/profile', userController.getProfile);
-router.put('/profile', validateProfileUpdate, handleValidationErrors, userController.updateProfile);
-router.put('/availability', validateAvailabilityUpdate, handleValidationErrors, userController.updateAvailability);
-router.put('/services', validateServicesUpdate, handleValidationErrors, userController.updateServices);
-router.put('/whatsapp', validateWhatsAppUpdate, handleValidationErrors, userController.updateWhatsApp);
+// Health check
+router.get('/health', (req, res) => {
+  res.json({ status: 'OK', message: 'Server is running' });
+});
 
 module.exports = router;

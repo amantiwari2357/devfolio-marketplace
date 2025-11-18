@@ -3,15 +3,15 @@ import api from './api';
 // Auth API functions
 export const authAPI = {
   signup: (data: { email: string; password: string }) =>
-    api.post('/auth/signup', data),
+    api.post('/users/signup', data),
 
   login: (data: { email: string; password: string }) =>
-    api.post('/auth/login', data),
+    api.post('/users/login', data),
 };
 
 // User API functions
 export const userAPI = {
-  getProfile: () => api.get('/profile'),
+  getProfile: () => api.get('/users/profile'),
 
   updateProfile: (data: {
     socialUrl?: string;
@@ -19,7 +19,7 @@ export const userAPI = {
     country: string;
     currency: string;
     expertise: string[];
-  }) => api.put('/profile', data),
+  }) => api.put('/users/profile', data),
 
   updateAvailability: (data: {
     availability: Array<{
@@ -28,16 +28,16 @@ export const userAPI = {
       startTime?: string;
       endTime?: string;
     }>;
-  }) => api.put('/availability', data),
+  }) => api.put('/users/availability', data),
 
   updateServices: (data: {
-    services: Array<{
+    services?: Array<{
       name: string;
       description: string;
     }>;
-  }) => api.put('/services', data),
+  }) => api.put('/users/services', data),
 
   updateWhatsApp: (data: {
     whatsappNumber?: string;
-  }) => api.put('/whatsapp', data),
+  }) => api.put('/users/whatsapp', data),
 };

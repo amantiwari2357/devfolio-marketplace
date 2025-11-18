@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import { Check } from "lucide-react";
 import { toast } from "sonner";
+import { userAPI } from "@/services/auth";
 
 interface Step1ProfileProps {
   onNext: () => void;
@@ -28,6 +29,7 @@ const Step1Profile = ({ onNext }: Step1ProfileProps) => {
   const [country, setCountry] = useState("india");
   const [currency, setCurrency] = useState("inr");
   const [selectedExpertise, setSelectedExpertise] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const toggleExpertise = (expertise: string) => {
     setSelectedExpertise((prev) =>
@@ -37,10 +39,23 @@ const Step1Profile = ({ onNext }: Step1ProfileProps) => {
     );
   };
 
-  const handleNext = () => {
-    // Simulate profile update
-    toast.success("Profile updated successfully!");
-    onNext();
+  const handleNext = async () => {
+    setIsLoading(true);
+    try {
+      await userAPI.updateProfile({
+        socialUrl: socialUrl || undefined,
+        username,
+        country,
+        currency,
+        expertise: selectedExpertise,
+      });
+      toast.success("Profile updated successfully!");
+      onNext();
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Failed to update profile");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -154,9 +169,10 @@ const Step1Profile = ({ onNext }: Step1ProfileProps) => {
         <div className="container mx-auto flex justify-center">
           <Button
             onClick={handleNext}
+            disabled={isLoading}
             className="w-full max-w-md bg-foreground text-background hover:bg-foreground/90"
           >
-            Next
+            {isLoading ? "Updating..." : "Next"}
           </Button>
         </div>
       </div>

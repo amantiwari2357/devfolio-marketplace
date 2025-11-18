@@ -5,6 +5,8 @@ import { Label } from "@/components/ui/label";
 import { useNavigate, Link } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { authAPI } from "@/services/auth";
+import { toast } from "sonner";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -155,18 +157,27 @@ const SignUp = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
 
-    // Simulate registration
-    setTimeout(() => {
-      // Mock successful registration
-      localStorage.setItem('token', 'mock-token');
+    try {
+      const response = await authAPI.signup({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      // Store token and navigate to onboarding
+      localStorage.setItem('token', response.data.token);
+      toast.success("Account created successfully!");
       navigate("/onboarding");
+    } catch (error: any) {
+      setError(error.response?.data?.message || "Signup failed");
+      toast.error("Signup failed");
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (
