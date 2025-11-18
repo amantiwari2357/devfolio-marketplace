@@ -26,53 +26,53 @@ const ExpertsSection = () => {
   const experts: Expert[] = [
     {
       _id: "1",
-      firstName: "John",
-      lastName: "Doe",
+      firstName: "Rahul",
+      lastName: "Sharma",
       role: "Software Engineer",
       profileImage: null,
       skills: ["JavaScript", "React", "Node.js"],
-      bio: "Experienced software engineer with 5+ years in web development.",
-      email: "john.doe@example.com"
+      bio: "Experienced software engineer with 5+ years in web development, specializing in Indian tech startups.",
+      email: "rahul.sharma@example.com"
     },
     {
       _id: "2",
-      firstName: "Jane",
-      lastName: "Smith",
+      firstName: "Priya",
+      lastName: "Patel",
       role: "Data Scientist",
       profileImage: null,
       skills: ["Python", "Machine Learning", "Data Analysis"],
-      bio: "Data scientist specializing in AI and predictive modeling.",
-      email: "jane.smith@example.com"
+      bio: "Data scientist specializing in AI and predictive modeling for Indian markets.",
+      email: "priya.patel@example.com"
     },
     {
       _id: "3",
-      firstName: "Mike",
-      lastName: "Johnson",
+      firstName: "Amit",
+      lastName: "Kumar",
       role: "Marketing Expert",
       profileImage: null,
       skills: ["Digital Marketing", "SEO", "Content Strategy"],
-      bio: "Marketing professional helping businesses grow online.",
-      email: "mike.johnson@example.com"
+      bio: "Marketing professional helping Indian businesses grow online with localized strategies.",
+      email: "amit.kumar@example.com"
     },
     {
       _id: "4",
-      firstName: "Sarah",
-      lastName: "Williams",
+      firstName: "Anjali",
+      lastName: "Singh",
       role: "HR Consultant",
       profileImage: null,
       skills: ["Talent Acquisition", "Employee Relations", "HR Strategy"],
-      bio: "HR expert focused on building strong workplace cultures.",
-      email: "sarah.williams@example.com"
+      bio: "HR expert focused on building strong workplace cultures in Indian corporate environments.",
+      email: "anjali.singh@example.com"
     },
     {
       _id: "5",
-      firstName: "David",
-      lastName: "Brown",
+      firstName: "Vikram",
+      lastName: "Gupta",
       role: "Financial Advisor",
       profileImage: null,
       skills: ["Investment Planning", "Risk Management", "Financial Analysis"],
-      bio: "Certified financial advisor with expertise in wealth management.",
-      email: "david.brown@example.com"
+      bio: "Certified financial advisor with expertise in wealth management for Indian investors.",
+      email: "vikram.gupta@example.com"
     }
   ];
   const [selectedCategory, setSelectedCategory] = useState("Career");
