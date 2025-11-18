@@ -1,110 +1,164 @@
-import React, { useState } from 'react';
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Plus, ArrowLeft } from "lucide-react";
+import { toast } from "sonner";
 
 interface Step2AvailabilityProps {
   onNext: () => void;
   onBack: () => void;
 }
 
-const Step2Availability: React.FC<Step2AvailabilityProps> = ({ onNext, onBack }) => {
-  const [availability, setAvailability] = useState({
-    monday: false,
-    tuesday: false,
-    wednesday: false,
-    thursday: false,
-    friday: false,
-    saturday: false,
-    sunday: false
-  });
+interface DaySchedule {
+  day: string;
+  enabled: boolean;
+  startTime: string;
+  endTime: string;
+}
 
-  const [timeSlots, setTimeSlots] = useState({
-    morning: false,
-    afternoon: false,
-    evening: false
-  });
+const Step2Availability = ({ onNext, onBack }: Step2AvailabilityProps) => {
+  const [schedule, setSchedule] = useState<DaySchedule[]>([
+    { day: "Saturday", enabled: true, startTime: "9:00 AM", endTime: "8:00 PM" },
+    { day: "Sunday", enabled: true, startTime: "9:00 AM", endTime: "8:00 PM" },
+    { day: "Monday", enabled: false, startTime: "", endTime: "" },
+    { day: "Tuesday", enabled: false, startTime: "", endTime: "" },
+    { day: "Wednesday", enabled: false, startTime: "", endTime: "" },
+    { day: "Thursday", enabled: false, startTime: "", endTime: "" },
+    { day: "Friday", enabled: false, startTime: "", endTime: "" },
+  ]);
 
-  const handleDayChange = (day: string, checked: boolean) => {
-    setAvailability(prev => ({ ...prev, [day]: checked }));
+  const toggleDay = (index: number) => {
+    const newSchedule = [...schedule];
+    newSchedule[index].enabled = !newSchedule[index].enabled;
+    if (newSchedule[index].enabled && !newSchedule[index].startTime) {
+      newSchedule[index].startTime = "9:00 AM";
+      newSchedule[index].endTime = "5:00 PM";
+    }
+    setSchedule(newSchedule);
   };
 
-  const handleTimeSlotChange = (slot: string, checked: boolean) => {
-    setTimeSlots(prev => ({ ...prev, [slot]: checked }));
+  const applyToAll = () => {
+    const enabledDay = schedule.find((s) => s.enabled);
+    if (enabledDay) {
+      setSchedule(
+        schedule.map((s) => ({
+          ...s,
+          enabled: true,
+          startTime: enabledDay.startTime,
+          endTime: enabledDay.endTime,
+        }))
+      );
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Simulate saving data
-    console.log('Availability:', { availability, timeSlots });
+  const handleNext = () => {
+    // Simulate availability update
+    toast.success("Availability updated successfully!");
     onNext();
   };
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">Set Your Availability</h1>
-        <p className="text-gray-600">When are you available for consultations?</p>
+    <div className="animate-fade-in">
+      <h1 className="text-4xl font-bold mb-2">Great! Now let's set your availability</h1>
+      <p className="text-muted-foreground mb-8">
+        Let your audience know when you're available. You can edit this later
+      </p>
+
+      <div className="space-y-4 max-w-3xl">
+        {schedule.map((daySchedule, index) => (
+          <div key={daySchedule.day} className="flex items-center gap-4">
+            <Checkbox
+              id={daySchedule.day}
+              checked={daySchedule.enabled}
+              onCheckedChange={() => toggleDay(index)}
+              className="data-[state=checked]:bg-primary"
+            />
+            <label
+              htmlFor={daySchedule.day}
+              className="w-24 text-sm font-medium cursor-pointer"
+            >
+              {daySchedule.day}
+            </label>
+
+            {daySchedule.enabled ? (
+              <>
+                <Select
+                  value={daySchedule.startTime}
+                  onValueChange={(value) => {
+                    const newSchedule = [...schedule];
+                    newSchedule[index].startTime = value;
+                    setSchedule(newSchedule);
+                  }}
+                >
+                  <SelectTrigger className="w-32">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="9:00 AM">9:00 AM</SelectItem>
+                    <SelectItem value="10:00 AM">10:00 AM</SelectItem>
+                    <SelectItem value="11:00 AM">11:00 AM</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <span className="text-muted-foreground">-</span>
+
+                <Select
+                  value={daySchedule.endTime}
+                  onValueChange={(value) => {
+                    const newSchedule = [...schedule];
+                    newSchedule[index].endTime = value;
+                    setSchedule(newSchedule);
+                  }}
+                >
+                  <SelectTrigger className="w-32">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="5:00 PM">5:00 PM</SelectItem>
+                    <SelectItem value="6:00 PM">6:00 PM</SelectItem>
+                    <SelectItem value="8:00 PM">8:00 PM</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Button variant="ghost" size="icon">
+                  <Plus className="w-4 h-4" />
+                </Button>
+              </>
+            ) : (
+              <span className="text-sm text-muted-foreground">Unavailable</span>
+            )}
+          </div>
+        ))}
+
+        <Button
+          variant="link"
+          onClick={applyToAll}
+          className="text-primary hover:text-primary/80"
+        >
+          Apply To All
+        </Button>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-8">
-        <div>
-          <Label className="text-lg font-semibold mb-4 block">Available Days</Label>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {Object.entries(availability).map(([day, checked]) => (
-              <div key={day} className="flex items-center space-x-2">
-                <Checkbox
-                  id={day}
-                  checked={checked}
-                  onCheckedChange={(checked) => handleDayChange(day, checked as boolean)}
-                />
-                <Label htmlFor={day} className="capitalize">
-                  {day}
-                </Label>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <Label className="text-lg font-semibold mb-4 block">Preferred Time Slots</Label>
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="morning"
-                checked={timeSlots.morning}
-                onCheckedChange={(checked) => handleTimeSlotChange('morning', checked as boolean)}
-              />
-              <Label htmlFor="morning">Morning (9 AM - 12 PM)</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="afternoon"
-                checked={timeSlots.afternoon}
-                onCheckedChange={(checked) => handleTimeSlotChange('afternoon', checked as boolean)}
-              />
-              <Label htmlFor="afternoon">Afternoon (12 PM - 5 PM)</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="evening"
-                checked={timeSlots.evening}
-                onCheckedChange={(checked) => handleTimeSlotChange('evening', checked as boolean)}
-              />
-              <Label htmlFor="evening">Evening (5 PM - 9 PM)</Label>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex gap-4">
-          <Button type="button" variant="outline" onClick={onBack} className="flex-1">
-            Back
+      <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border p-4">
+        <div className="container mx-auto flex items-center justify-between max-w-3xl">
+          <Button variant="ghost" onClick={onBack} className="gap-2">
+            <ArrowLeft className="w-4 h-4" />
           </Button>
-          <Button type="submit" className="flex-1">
-            Continue
+          <Button
+            onClick={handleNext}
+            className="w-full max-w-md bg-foreground text-background hover:bg-foreground/90"
+          >
+            Next
           </Button>
         </div>
-      </form>
+      </div>
     </div>
   );
 };

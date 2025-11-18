@@ -24,7 +24,7 @@ const Login = () => {
     setTimeout(() => {
       // Mock successful login
       localStorage.setItem('token', 'mock-token');
-      navigate("/dashboard");
+      navigate("/");
       setIsLoading(false);
     }, 1000);
   };
