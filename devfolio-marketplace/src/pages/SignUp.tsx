@@ -134,54 +134,25 @@ const SignUp = () => {
   ];
 
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const contentRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const el = containerRef.current;
-    const content = contentRef.current;
-    if (!el || !content) return;
+    const scrollContainer = containerRef.current;
+    if (!scrollContainer) return;
 
-    let rafId: number | null = null;
-    let lastTime = performance.now();
-    const speed = 20; // pixels per second (slow)
+    const scrollHeight = scrollContainer.scrollHeight / 2; // Since we duplicate the content
+    let scrollPosition = 0;
 
-    const step = (timestamp: number) => {
-      if (!el || !content) return;
-      const delta = (timestamp - lastTime) / 1000; // seconds
-      lastTime = timestamp;
-
-      el.scrollTop += speed * delta;
-      const halfHeight = content.scrollHeight / 2;
-      if (el.scrollTop >= halfHeight) {
-        el.scrollTop = 0; // seamless loop
+    const scroll = () => {
+      scrollPosition += 1;
+      if (scrollPosition >= scrollHeight) {
+        scrollPosition = 0;
       }
-
-      rafId = requestAnimationFrame(step);
+      scrollContainer.scrollTop = scrollPosition;
     };
 
-    // Ensure starting position on mount
-    el.scrollTop = 0;
+    const interval = setInterval(scroll, 50); // Adjust speed as needed
 
-    // Start animation
-    rafId = requestAnimationFrame(step);
-
-    const handleVisibility = () => {
-      if (document.visibilityState === "visible") {
-        // Reset timing to avoid jump and ensure it resumes
-        lastTime = performance.now();
-        if (!rafId) {
-          rafId = requestAnimationFrame(step);
-        }
-      }
-    };
-
-    document.addEventListener("visibilitychange", handleVisibility);
-
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibility);
-      if (rafId) cancelAnimationFrame(rafId);
-      rafId = null;
-    };
+    return () => clearInterval(interval);
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -352,7 +323,7 @@ const SignUp = () => {
       {/* Right Side - Testimonials */}
       <div className="hidden lg:flex items-center justify-center p-8 bg-card-beige">
         <div ref={containerRef} className="max-w-md relative h-[560px] overflow-hidden">
-          <div ref={contentRef} className="space-y-6">
+          <div className="space-y-6">
             {[...testimonials, ...testimonials].map((t, idx) => (
               <Card key={idx} className="bg-card border-none p-6">
                 <p className="text-foreground mb-4 italic">"{t.quote}"</p>
