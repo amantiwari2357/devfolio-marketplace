@@ -2,7 +2,7 @@ const { body } = require('express-validator');
 
 const validateAvailabilityBooking = [
   body('date')
-    .isISO8601()
+    .isISO8601({ strict: true })
     .withMessage('Please provide a valid date'),
 
   body('time')
@@ -30,7 +30,14 @@ const validateAvailabilityBooking = [
   body('serviceType')
     .optional()
     .isString()
-    .isIn(['Consultation', 'Custom Website Development', 'Full Stack Application Development', 'UI/UX Design & Prototyping', 'Maintenance & Optimization', 'Branding & Digital Presence'])
+    .isIn([
+      'Consultation',
+      'Custom Website Development',
+      'Full Stack Application Development',
+      'UI/UX Design & Prototyping',
+      'Maintenance & Optimization',
+      'Branding & Digital Presence'
+    ])
     .withMessage('Invalid service type'),
 
   body('notes')
