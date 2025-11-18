@@ -31,8 +31,8 @@ const menuItems = [
   { icon: FolderKanban, label: "Projects", path: "/projects-management" },
   { icon: MessageSquare, label: "Messages", path: "/messages" },
   { icon: Trophy, label: "Availbilty", path: "/leaderboard" },
+   { icon: Package, label: "Testimonial", path: "/products" },
   { icon: ShoppingCart, label: "Order", path: "/order" },
-  { icon: Package, label: "Products", path: "/products" },
   { icon: FileText, label: "Sales Report", path: "/sales-report" },
   { icon: Settings, label: "Settings", path: "/settings" },
 ];
