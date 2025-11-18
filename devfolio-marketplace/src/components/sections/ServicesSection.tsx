@@ -5,6 +5,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 const services = [
   {
@@ -40,6 +42,52 @@ const services = [
 ];
 
 const ServicesSection = () => {
+  const [selectedDate, setSelectedDate] = useState(1); // Default to Sat 16 Oct
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+
+  const getDaysInMonth = (date: Date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const firstDay = new Date(year, month, 1).getDay();
+    const days = [];
+
+    // Previous month days
+    const prevMonthDays = new Date(year, month, 0).getDate();
+    for (let i = firstDay - 1; i >= 0; i--) {
+      days.push({ day: prevMonthDays - i, currentMonth: false });
+    }
+
+    // Current month days
+    for (let i = 1; i <= daysInMonth; i++) {
+      days.push({ day: i, currentMonth: true });
+    }
+
+    // Next month days
+    const remainingDays = 42 - days.length; // 6 weeks * 7 days
+    for (let i = 1; i <= remainingDays; i++) {
+      days.push({ day: i, currentMonth: false });
+    }
+
+    return days;
+  };
+
+  const days = getDaysInMonth(currentMonth);
+  const monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+
+  const handleDateClick = (index: number) => {
+    setSelectedDate(index);
+  };
+
+  const handlePrevMonth = () => {
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1));
+  };
+
+  const handleNextMonth = () => {
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1));
+  };
+
   return (
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -58,23 +106,41 @@ const ServicesSection = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-4 gap-2 mb-4">
-                  {["Fri\n15 Oct", "Sat\n16 Oct", "Sun\n17 Oct", "Mon\n18 Oct"].map(
-                    (date, idx) => (
-                      <div
-                        key={idx}
-                        className={`p-2 rounded-lg text-center text-xs ${
-                          idx === 1
+                {/* Month Navigation */}
+                <div className="flex items-center justify-between mb-4">
+                  <Button variant="ghost" size="sm" onClick={handlePrevMonth}>
+                    ‹
+                  </Button>
+                  <h3 className="text-sm font-semibold">
+                    {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
+                  </h3>
+                  <Button variant="ghost" size="sm" onClick={handleNextMonth}>
+                    ›
+                  </Button>
+                </div>
+
+                {/* Calendar Grid */}
+                <div className="grid grid-cols-7 gap-1 mb-4">
+                  {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+                    <div key={day} className="p-1 text-center text-xs font-medium text-muted-foreground">
+                      {day}
+                    </div>
+                  ))}
+                  {days.map((dayObj, idx) => (
+                    <div
+                      key={idx}
+                      className={`p-2 text-center text-xs cursor-pointer rounded-lg ${
+                        dayObj.currentMonth
+                          ? selectedDate === idx
                             ? "bg-foreground text-background"
-                            : "bg-muted"
-                        }`}
-                      >
-                        {date.split("\n").map((line, i) => (
-                          <div key={i}>{line}</div>
-                        ))}
-                      </div>
-                    )
-                  )}
+                            : "bg-muted hover:bg-muted/80"
+                          : "text-muted-foreground"
+                      }`}
+                      onClick={() => dayObj.currentMonth && handleDateClick(idx)}
+                    >
+                      {dayObj.day}
+                    </div>
+                  ))}
                 </div>
 
                 <div className="flex items-center justify-between">
