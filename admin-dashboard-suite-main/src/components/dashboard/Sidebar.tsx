@@ -26,14 +26,14 @@ interface SidebarProps {
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard", active: true },
-  { icon: Trophy, label: "Leaderboard", path: "/leaderboard" },
+  { icon: Users, label: "Register User", path: "/register-user" },
+  { icon: Mail, label: "Enquiry", path: "/enquiry" },
+  { icon: FolderKanban, label: "Projects", path: "/projects-management" },
+  { icon: MessageSquare, label: "Messages", path: "/messages" },
+  { icon: Trophy, label: "Availbilty", path: "/leaderboard" },
   { icon: ShoppingCart, label: "Order", path: "/order" },
   { icon: Package, label: "Products", path: "/products" },
   { icon: FileText, label: "Sales Report", path: "/sales-report" },
-  { icon: MessageSquare, label: "Messages", path: "/messages" },
-  { icon: Mail, label: "Enquiry", path: "/enquiry" },
-  { icon: Users, label: "Register User", path: "/register-user" },
-  { icon: FolderKanban, label: "Projects", path: "/projects-management" },
   { icon: Settings, label: "Settings", path: "/settings" },
 ];
 
@@ -68,7 +68,7 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
               <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
                 <LinkIcon className="w-5 h-5 text-primary-foreground" />
               </div>
-              <span className="text-xl font-bold text-foreground">Dabang</span>
+              <span className="text-xl font-bold text-foreground">DevFolio</span>
             </div>
             <Button
               variant="ghost"
@@ -104,9 +104,9 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
             <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
               <LinkIcon className="w-6 h-6" />
             </div>
-            <h3 className="font-bold text-lg mb-2">Dabang Pro</h3>
+            <h3 className="font-bold text-lg mb-2">DevFolio Pro</h3>
             <p className="text-sm text-primary-foreground/80 mb-4">
-              Get access to all features on Dabang
+              Get access to all features on DevFolio
             </p>
             <Button
               variant="secondary"
