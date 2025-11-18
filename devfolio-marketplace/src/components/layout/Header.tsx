@@ -61,11 +61,11 @@ const Header = () => {
                   <div className="space-y-4">
                     <div>
                       <label className="text-sm font-medium">Name</label>
-                      <p className="text-sm text-muted-foreground">John Doe</p>
+                      <p className="text-sm text-muted-foreground">Aman Tiwari</p>
                     </div>
                     <div>
                       <label className="text-sm font-medium">Email</label>
-                      <p className="text-sm text-muted-foreground">john.doe@example.com</p>
+                      <p className="text-sm text-muted-foreground">amankumartiwari5255@gmail.com</p>
                     </div>
                     <div>
                       <label className="text-sm font-medium">Role</label>
