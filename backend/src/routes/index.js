@@ -3,9 +3,11 @@ const router = express.Router();
 
 // Import route modules
 const userRoutes = require('./user.routes');
+const enquiryRoutes = require('./enquiry.routes');
 
 // Mount routes
 router.use('/users', userRoutes);
+router.use('/enquiries', enquiryRoutes);
 
 // Health check
 router.get('/health', (req, res) => {

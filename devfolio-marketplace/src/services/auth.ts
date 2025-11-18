@@ -41,3 +41,17 @@ export const userAPI = {
     whatsappNumber?: string;
   }) => api.put('/users/whatsapp', data),
 };
+
+// Enquiry API functions
+export const enquiryAPI = {
+  createEnquiry: (data: {
+    name: string;
+    email: string;
+    phone: string;
+    message: string;
+  }) => api.post('/enquiries', data),
+
+  getUserEnquiries: () => api.get('/enquiries/my'),
+
+  getAllEnquiries: () => api.get('/enquiries/all'),
+};

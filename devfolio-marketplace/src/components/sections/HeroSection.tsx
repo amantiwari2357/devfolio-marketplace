@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { userAPI } from "@/services/auth";
+import { userAPI, enquiryAPI } from "@/services/auth";
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -55,14 +55,13 @@ const HeroSection = () => {
     setIsSubmitting(true);
 
     try {
-      // Here you would typically send the enquiry to your backend
-      // For now, we'll just simulate a successful submission
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await enquiryAPI.createEnquiry(enquiryForm);
 
       alert('Thank you for your enquiry! We will get back to you soon.');
       setEnquiryForm({ name: '', email: '', phone: '', message: '' });
       document.getElementById('enquiry-dialog-close')?.click();
     } catch (error) {
+      console.error('Error submitting enquiry:', error);
       alert('Failed to submit enquiry. Please try again.');
     } finally {
       setIsSubmitting(false);
