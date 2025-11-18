@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { enquiryAPI } from "@/services/auth";
 
 
 const ProjectDetail = () => {
@@ -215,14 +216,32 @@ const ProjectDetail = () => {
     }
   }, [id, toast]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate enquiry submission
-    toast({
-      title: "Enquiry Submitted!",
-      description: "We'll get back to you within 24 hours.",
-    });
-    setFormData({ name: "", email: "", phone: "", message: "" });
+
+    try {
+      const response = await enquiryAPI.createEnquiry({
+        ...formData,
+        source: 'project-detail'
+      });
+
+      if (response.data.success) {
+        toast({
+          title: "Enquiry Submitted!",
+          description: "We'll get back to you within 24 hours.",
+        });
+        setFormData({ name: "", email: "", phone: "", message: "" });
+      } else {
+        throw new Error(response.data.message || 'Failed to submit enquiry');
+      }
+    } catch (error) {
+      console.error('Error submitting enquiry:', error);
+      toast({
+        title: "Error",
+        description: "Failed to submit enquiry. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   if (loading) {

@@ -49,6 +49,7 @@ export const enquiryAPI = {
     email: string;
     phone: string;
     message: string;
+    source?: string;
   }) => api.post('/enquiries', data),
 
   getUserEnquiries: () => api.get('/enquiries/my'),
