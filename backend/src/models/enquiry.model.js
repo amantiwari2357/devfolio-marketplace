@@ -29,7 +29,7 @@ const enquirySchema = new mongoose.Schema({
   },
   source: {
     type: String,
-    enum: ['hero-section', 'contact-form', 'landing-page', 'other'],
+    enum: ['hero-section', 'contact-form', 'landing-page', 'project-detail', 'other'],
     default: 'hero-section'
   },
   status: {
