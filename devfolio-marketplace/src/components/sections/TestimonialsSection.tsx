@@ -35,9 +35,9 @@ const testimonials = [
 
 const TestimonialsSection = () => {
   return (
-    <section className="py-20 bg-dark-section">
+    <section className="py-20" style={{ backgroundColor: 'hsl(var(--background))' }}>
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-dark-foreground">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-black">
           Don't Just Take Our Word for It
         </h2>
         

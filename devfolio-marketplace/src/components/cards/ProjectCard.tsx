@@ -5,12 +5,15 @@ import { useNavigate } from "react-router-dom";
 
 interface ProjectCardProps {
   project: {
-    id: number;
-    name: string;
+    _id?: string;
+    id?: number;
+    title?: string;
+    name?: string;
     description: string;
     category: string;
-    icon: string;
-    pricing: string;
+    icon?: string;
+    pricing?: string;
+    price?: number;
   };
 }
 
@@ -20,9 +23,9 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   const handleClick = () => {
     // Check if user is logged in (you can replace this with actual auth check)
     const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-    
+
     if (isLoggedIn) {
-      navigate(`/project/${project.id}`);
+      navigate(`/project/${project._id || project.id}`);
     } else {
       navigate("/login");
     }
@@ -41,7 +44,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
         </div>
         <CardTitle className="text-lg group-hover:text-primary transition-colors">
-          {project.name}
+          {project.title || project.name}
         </CardTitle>
         <CardDescription className="line-clamp-2 text-sm">
           {project.description}
@@ -53,7 +56,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             {project.category}
           </Badge>
           <span className="text-xs font-medium text-muted-foreground">
-            {project.pricing}
+            {project.price === 0 ? 'Free' : project.price ? `$${project.price}` : project.pricing}
           </span>
         </div>
       </CardContent>

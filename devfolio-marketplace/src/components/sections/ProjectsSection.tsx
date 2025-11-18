@@ -4,67 +4,66 @@ import { useNavigate } from "react-router-dom";
 
 const ProjectsSection = () => {
   const navigate = useNavigate();
-
   const projects = [
     {
-      id: 1,
-      name: "E-Commerce Platform",
+      _id: "1",
+      title: "E-Commerce Platform",
       description: "Full-featured online store with payment integration",
       category: "E-Commerce",
       icon: "🛍️",
       pricing: "Paid"
     },
     {
-      id: 2,
-      name: "Social Media Dashboard",
+      _id: "2",
+      title: "Social Media Dashboard",
       description: "Analytics and management for multiple platforms",
       category: "Business Tools",
       icon: "📊",
       pricing: "Freemium"
     },
     {
-      id: 3,
-      name: "Learning Management System",
+      _id: "3",
+      title: "Learning Management System",
       description: "Complete LMS with courses and assessments",
       category: "Education",
       icon: "📚",
       pricing: "Paid"
     },
     {
-      id: 4,
-      name: "Task Management App",
+      _id: "4",
+      title: "Task Management App",
       description: "Collaborative task tracking and team management",
       category: "Productivity",
       icon: "✅",
       pricing: "Free"
     },
     {
-      id: 5,
-      name: "Restaurant Booking",
+      _id: "5",
+      title: "Restaurant Booking",
       description: "Table reservation system with real-time availability",
       category: "Hospitality",
       icon: "🍽️",
       pricing: "Paid"
     },
     {
-      id: 6,
-      name: "Fitness Tracker",
+      _id: "6",
+      title: "Fitness Tracker",
       description: "Workout logging and progress tracking",
       category: "Health",
       icon: "💪",
       pricing: "Freemium"
     },
     {
-      id: 7,
-      name: "Real Estate Portal",
+      _id: "7",
+      title: "Real Estate Portal",
       description: "Property listings with advanced search filters",
       category: "Real Estate",
       icon: "🏠",
       pricing: "Paid"
     },
     {
-      id: 8,
-      name: "Job Board Platform",
+      _id: "8",
+      title: "Job Board Platform",
       description: "Connect employers with job seekers",
       category: "Recruitment",
       icon: "💼",
@@ -93,7 +92,7 @@ const ProjectsSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+            <ProjectCard key={project._id} project={project} />
           ))}
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -10,6 +10,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { enquiryAPI } from "@/services/auth";
+
 
 const ProjectDetail = () => {
   const { id } = useParams();
@@ -21,37 +23,261 @@ const ProjectDetail = () => {
     phone: "",
     message: "",
   });
+  const [project, setProject] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Mock project data (in real app, fetch from API)
-  const project = {
-    id: id,
-    name: "E-Commerce Platform",
-    description: "A full-featured online store with payment integration, inventory management, and customer analytics",
-    category: "E-Commerce",
-    icon: "🛍️",
-    pricing: "Paid",
-    features: [
-      "Secure payment gateway integration",
-      "Product catalog management",
-      "Shopping cart and wishlist",
-      "Order tracking system",
-      "Admin dashboard",
-      "Customer reviews and ratings"
-    ],
-    technologies: ["React", "Node.js", "MongoDB", "Stripe", "Tailwind CSS"],
-    liveLink: "",
-    timeline: "1-2 weeks",
-    price: "$2,500 - $5,000"
-  };
+  useEffect(() => {
+    const fetchProject = async () => {
+      try {
+        // Static project data based on id
+        const staticProjects = [
+          {
+            _id: "1",
+            title: "E-Commerce Platform",
+            description: "Full-featured online store with payment integration",
+            category: "E-Commerce",
+            icon: "🛍️",
+            pricing: "Paid",
+            features: [
+              "User authentication and authorization",
+              "Product catalog with search and filters",
+              "Shopping cart and checkout process",
+              "Payment gateway integration",
+              "Order management system",
+              "Admin dashboard for inventory management"
+            ],
+            technologies: ["React", "Node.js", "MongoDB", "Stripe"],
+            timeline: "4-6 weeks",
+            priceRange: "$5,000 - $15,000",
+            liveUrl: "https://example-ecommerce.com"
+          },
+          {
+            _id: "2",
+            title: "Social Media Dashboard",
+            description: "Analytics and management for multiple platforms",
+            category: "Business Tools",
+            icon: "📊",
+            pricing: "Freemium",
+            features: [
+              "Multi-platform analytics integration",
+              "Real-time data visualization",
+              "Scheduled posting system",
+              "Engagement tracking and reporting",
+              "Content calendar management",
+              "Team collaboration tools"
+            ],
+            technologies: ["Vue.js", "Python", "PostgreSQL", "Chart.js"],
+            timeline: "6-8 weeks",
+            priceRange: "$8,000 - $20,000",
+            liveUrl: "https://example-dashboard.com"
+          },
+          {
+            _id: "3",
+            title: "Learning Management System",
+            description: "Complete LMS with courses and assessments",
+            category: "Education",
+            icon: "📚",
+            pricing: "Paid",
+            features: [
+              "Course creation and management",
+              "Student enrollment and progress tracking",
+              "Interactive quizzes and assessments",
+              "Video streaming and multimedia support",
+              "Discussion forums and messaging",
+              "Certificate generation"
+            ],
+            technologies: ["Angular", "Django", "MySQL", "AWS"],
+            timeline: "8-12 weeks",
+            priceRange: "$10,000 - $25,000",
+            liveUrl: "https://example-lms.com"
+          },
+          {
+            _id: "4",
+            title: "Task Management App",
+            description: "Collaborative task tracking and team management",
+            category: "Productivity",
+            icon: "✅",
+            pricing: "Free",
+            features: [
+              "Task creation and assignment",
+              "Project timeline and milestones",
+              "Team collaboration features",
+              "Time tracking and reporting",
+              "File sharing and attachments",
+              "Mobile app support"
+            ],
+            technologies: ["React Native", "Firebase", "Redux"],
+            timeline: "3-5 weeks",
+            priceRange: "$2,000 - $8,000",
+            liveUrl: "https://example-tasks.com"
+          },
+          {
+            _id: "5",
+            title: "Restaurant Booking",
+            description: "Table reservation system with real-time availability",
+            category: "Hospitality",
+            icon: "🍽️",
+            pricing: "Paid",
+            features: [
+              "Real-time table availability",
+              "Online reservation system",
+              "Menu management",
+              "Customer reviews and ratings",
+              "Staff scheduling",
+              "Payment processing"
+            ],
+            technologies: ["Next.js", "Express", "MongoDB", "Stripe"],
+            timeline: "5-7 weeks",
+            priceRange: "$6,000 - $18,000",
+            liveUrl: "https://example-restaurant.com"
+          },
+          {
+            _id: "6",
+            title: "Fitness Tracker",
+            description: "Workout logging and progress tracking",
+            category: "Health",
+            icon: "💪",
+            pricing: "Freemium",
+            features: [
+              "Workout logging and tracking",
+              "Progress visualization",
+              "Goal setting and achievements",
+              "Nutrition tracking",
+              "Social sharing features",
+              "Wearable device integration"
+            ],
+            technologies: ["Flutter", "Firebase", "Google Fit API"],
+            timeline: "4-6 weeks",
+            priceRange: "$4,000 - $12,000",
+            liveUrl: "https://example-fitness.com"
+          },
+          {
+            _id: "7",
+            title: "Real Estate Portal",
+            description: "Property listings with advanced search filters",
+            category: "Real Estate",
+            icon: "🏠",
+            pricing: "Paid",
+            features: [
+              "Property listing management",
+              "Advanced search and filters",
+              "Virtual tours and photo galleries",
+              "Agent profiles and reviews",
+              "Mortgage calculator",
+              "Lead generation tools"
+            ],
+            technologies: ["React", "Laravel", "MySQL", "Google Maps API"],
+            timeline: "7-10 weeks",
+            priceRange: "$8,000 - $22,000",
+            liveUrl: "https://example-realestate.com"
+          },
+          {
+            _id: "8",
+            title: "Job Board Platform",
+            description: "Connect employers with job seekers",
+            category: "Recruitment",
+            icon: "💼",
+            pricing: "Freemium",
+            features: [
+              "Job posting and application system",
+              "Resume database and search",
+              "Company profiles",
+              "Advanced filtering options",
+              "Email notifications",
+              "Analytics dashboard"
+            ],
+            technologies: ["Vue.js", "Node.js", "Elasticsearch", "MongoDB"],
+            timeline: "6-9 weeks",
+            priceRange: "$7,000 - $19,000",
+            liveUrl: "https://example-jobs.com"
+          }
+        ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+        const foundProject = staticProjects.find(p => p._id === id);
+        if (foundProject) {
+          setProject(foundProject);
+        } else {
+          throw new Error('Project not found');
+        }
+      } catch (error) {
+        console.error('Error fetching project:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load project details.",
+          variant: "destructive",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchProject();
+    }
+  }, [id, toast]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Enquiry Submitted!",
-      description: "We'll get back to you within 24 hours.",
-    });
-    setFormData({ name: "", email: "", phone: "", message: "" });
+
+    try {
+      const response = await enquiryAPI.createEnquiry({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+        source: 'project-detail'
+      });
+
+      if (response.data.success) {
+        toast({
+          title: "Enquiry Submitted!",
+          description: "We'll get back to you within 24 hours.",
+        });
+        setFormData({ name: "", email: "", phone: "", message: "" });
+      } else {
+        throw new Error(response.data.message || 'Failed to submit enquiry');
+      }
+    } catch (error) {
+      console.error('Error submitting enquiry:', error);
+      toast({
+        title: "Error",
+        description: "Failed to submit enquiry. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="py-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex justify-center items-center h-64">
+              <div className="text-lg">Loading project details...</div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!project) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="py-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex justify-center items-center h-64">
+              <div className="text-lg">Project not found.</div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -78,7 +304,7 @@ const ProjectDetail = () => {
                     </div>
                     <Badge variant="secondary">{project.pricing}</Badge>
                   </div>
-                  <CardTitle className="text-3xl">{project.name}</CardTitle>
+                  <CardTitle className="text-3xl">{project.title}</CardTitle>
                   <CardDescription className="text-lg">
                     {project.description}
                   </CardDescription>
@@ -87,7 +313,7 @@ const ProjectDetail = () => {
                   <div>
                     <h3 className="text-xl font-semibold mb-4">Key Features</h3>
                     <ul className="space-y-2">
-                      {project.features.map((feature, index) => (
+                      {project.features?.map((feature: string, index: number) => (
                         <li key={index} className="flex items-start">
                           <span className="text-primary mr-2">✓</span>
                           <span className="text-muted-foreground">{feature}</span>
@@ -99,7 +325,7 @@ const ProjectDetail = () => {
                   <div>
                     <h3 className="text-xl font-semibold mb-4">Technologies Used</h3>
                     <div className="flex flex-wrap gap-2">
-                      {project.technologies.map((tech, index) => (
+                      {project.technologies?.map((tech: string, index: number) => (
                         <Badge key={index} variant="outline">{tech}</Badge>
                       ))}
                     </div>
@@ -108,17 +334,17 @@ const ProjectDetail = () => {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <h4 className="font-semibold mb-2">Timeline</h4>
-                      <p className="text-muted-foreground">{project.timeline}</p>
+                      <p className="text-muted-foreground">{project.timeline || 'N/A'}</p>
                     </div>
                     <div>
                       <h4 className="font-semibold mb-2">Price Range</h4>
-                      <p className="text-muted-foreground">{project.price}</p>
+                      <p className="text-muted-foreground">{project.priceRange || 'N/A'}</p>
                     </div>
                   </div>
 
                   <Button
                     className="w-full"
-                    onClick={() => window.open(project.liveLink, "_blank")}
+                    onClick={() => window.open(project.liveUrl, "_blank")}
                   >
                     <ExternalLink className="w-4 h-4 mr-2" />
                     View Live Demo <span className="hidden sm:inline">→</span><span className=" text-color-primary text-2xl font-mono">Free</span>

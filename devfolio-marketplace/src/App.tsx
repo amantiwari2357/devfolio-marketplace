@@ -4,9 +4,16 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
-import SignUp from "./pages/SignUp";
+// import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import Bookings from "./pages/Bookings";
+import PriorityDM from "./pages/PriorityDM";
+import Services from "./pages/Services";
+import Analytics from "./pages/Analytics";
+import Settings from "./pages/Settings";
+
+import Onboarding from "./pages/Onboarding";
 import UseCases from "./pages/UseCases";
 import Search from "./pages/Search";
 import Listing from "./pages/Listing";
@@ -30,9 +37,15 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/signup" element={<SignUp />} />
+          {/* <Route path="/signup" element={<SignUp />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/bookings" element={<Bookings />} />
+          <Route path="/priority-dm" element={<PriorityDM />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/use-cases" element={<UseCases />} />
           <Route path="/search" element={<Search />} />
           <Route path="/listing" element={<Listing />} />

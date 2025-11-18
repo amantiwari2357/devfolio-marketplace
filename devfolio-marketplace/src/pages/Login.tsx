@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
+import { authAPI } from "@/services/auth";
+import { toast } from "sonner";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,11 +14,37 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    localStorage.setItem("isLoggedIn", "true");
-    navigate("/dashboard");
+    setError("");
+    setIsLoading(true);
+
+    try {
+      const response = await authAPI.login({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      // Store token and navigate based on onboarding status
+      localStorage.setItem('token', response.data.token);
+
+      toast.success("Login successful!");
+
+      // Check if onboarding is completed
+      if (response.data.user.onboardingCompleted) {
+        navigate("/");
+      } else {
+        navigate("/onboarding");
+      }
+    } catch (error: any) {
+      setError(error.response?.data?.message || "Login failed");
+      toast.error("Login failed");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -122,8 +150,16 @@ const Login = () => {
             </div>
           </div>
 
-          <Button type="submit" className="w-full bg-foreground text-background hover:bg-foreground/90">
-            Login
+          {error && (
+            <p className="text-red-500 text-sm text-center">{error}</p>
+          )}
+
+          <Button
+            type="submit"
+            className="w-full bg-foreground text-background hover:bg-foreground/90"
+            disabled={isLoading}
+          >
+            {isLoading ? "Logging In..." : "Login"}
           </Button>
 
           <p className="text-sm text-center text-muted-foreground">
