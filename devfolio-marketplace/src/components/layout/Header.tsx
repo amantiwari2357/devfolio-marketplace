@@ -1,34 +1,24 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
-import api from "@/services/api";
-  import logo from "../../../public/Images/logo.png";
+import { ChevronDown, User } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import logo from "../../../public/Images/logo.png";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState<string | null>(null);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        try {
-          // Verify token by making a request to profile endpoint
-          const response = await api.get('/auth/profile');
-          setIsLoggedIn(true);
-          setUserRole(response.data.role);
-        } catch (error) {
-          // Token is invalid, remove it
-          localStorage.removeItem('token');
-          setIsLoggedIn(false);
-          setUserRole(null);
-        }
-      } else {
-        setIsLoggedIn(false);
-        setUserRole(null);
-      }
-    };
-    checkAuth();
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Mock authentication: assume logged in with default role
+      setIsLoggedIn(true);
+      setUserRole('user'); // Default role, can be 'admin' if needed
+    } else {
+      setIsLoggedIn(false);
+      setUserRole(null);
+    }
   }, []);
 
   return (
@@ -50,22 +40,50 @@ const Header = () => {
           </nav>
         </div>
         
-        <Button
-          className="bg-foreground text-background hover:bg-foreground/90"
-          onClick={() => {
-            if (isLoggedIn) {
-              if (userRole === 'admin') {
-                window.location.href = "http://localhost:8080/";
-              } else {
-                window.location.href = "/dashboard";
-              }
-            } else {
-              window.location.href = "/login";
-            }
-          }}
-        >
-          {isLoggedIn ? "Dashboard" : "Login"}
-        </Button>
+        {isLoggedIn ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="rounded-full">
+                <User className="h-5 w-5" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                    View Profile
+                  </DropdownMenuItem>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Profile Details</DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="text-sm font-medium">Name</label>
+                      <p className="text-sm text-muted-foreground">John Doe</p>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium">Email</label>
+                      <p className="text-sm text-muted-foreground">john.doe@example.com</p>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium">Role</label>
+                      <p className="text-sm text-muted-foreground">{userRole}</p>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : (
+          <Button
+            className="bg-foreground text-background hover:bg-foreground/90"
+            onClick={() => window.location.href = "/login"}
+          >
+            Login
+          </Button>
+        )}
       </div>
     </header>
   );
