@@ -221,7 +221,10 @@ const ProjectDetail = () => {
 
     try {
       const response = await enquiryAPI.createEnquiry({
-        ...formData,
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
         source: 'project-detail'
       });
 
