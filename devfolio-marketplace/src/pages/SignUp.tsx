@@ -170,8 +170,12 @@ const SignUp = () => {
 
       // Store token and navigate to onboarding
       localStorage.setItem('token', response.data.token);
-      toast.success("Account created successfully!");
-      navigate("/onboarding");
+      toast.success("Account created successfully! Redirecting to onboarding...");
+
+      // Auto-login and redirect to onboarding
+      setTimeout(() => {
+        navigate("/onboarding");
+      }, 1000);
     } catch (error: any) {
       setError(error.response?.data?.message || "Signup failed");
       toast.error("Signup failed");

@@ -5,23 +5,48 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import logo from "../../../public/Images/logo.png";
 import { useNavigate } from "react-router-dom";
+import { userAPI } from "@/services/auth";
 
 const Header = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const userData = localStorage.getItem('user');
+    const checkAuth = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          // Fetch user profile to verify token and get user data
+          const response = await userAPI.getProfile();
+          setUser(response.data.user);
+          setIsLoggedIn(true);
+        } catch (error) {
+          // Token is invalid, clear it
+          localStorage.removeItem('token');
+          setIsLoggedIn(false);
+          setUser(null);
+        }
+      } else {
+        setIsLoggedIn(false);
+        setUser(null);
+      }
+      setIsLoading(false);
+    };
 
-    if (token && userData) {
-      setIsLoggedIn(true);
-      setUser(JSON.parse(userData));
-    } else {
-      setIsLoggedIn(false);
-      setUser(null);
-    }
+    checkAuth();
+
+    // Listen for storage changes (in case login/logout happens in another tab)
+    const handleStorageChange = () => {
+      checkAuth();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
   const handleLogout = () => {
@@ -35,6 +60,21 @@ const Header = () => {
   const handleEditProfile = () => {
     navigate('/settings');
   };
+
+  if (isLoading) {
+    return (
+      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-8">
+            <a href="/" className="flex items-center gap-2">
+              <img src={logo} alt="Devfolio Logo" className="h-36 w-auto" />
+            </a>
+          </div>
+          <div className="w-20 h-8 bg-muted animate-pulse rounded"></div>
+        </div>
+      </header>
+    );
+  }
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
@@ -58,8 +98,8 @@ const Header = () => {
         {isLoggedIn ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="rounded-full">
-                <User className="h-5 w-5" />
+              <Button variant="ghost" size="icon" className="rounded-full w-10 h-10 bg-primary/10 hover:bg-primary/20 border border-primary/20">
+                <User className="h-5 w-5 text-primary" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
@@ -75,7 +115,7 @@ const Header = () => {
                   </DialogHeader>
                   <div className="space-y-4">
                     <div>
-                      <label className="text-sm font-medium">Name</label>
+                      <label className="text-sm font-medium">Username</label>
                       <p className="text-sm text-muted-foreground">{user?.username || 'N/A'}</p>
                     </div>
                     <div>
@@ -89,6 +129,10 @@ const Header = () => {
                     <div>
                       <label className="text-sm font-medium">Currency</label>
                       <p className="text-sm text-muted-foreground">{user?.currency || 'N/A'}</p>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium">Expertise</label>
+                      <p className="text-sm text-muted-foreground">{user?.expertise?.join(', ') || 'N/A'}</p>
                     </div>
                   </div>
                 </DialogContent>
