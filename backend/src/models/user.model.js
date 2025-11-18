@@ -27,11 +27,11 @@ const userSchema = new mongoose.Schema({
   },
   country: {
     type: String,
-    required: true
+    default: 'india'
   },
   currency: {
     type: String,
-    required: true
+    default: 'inr'
   },
   expertise: [{
     type: String,

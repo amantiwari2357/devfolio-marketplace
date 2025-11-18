@@ -1,25 +1,40 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, User } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { ChevronDown, User, LogOut, Edit } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import logo from "../../../public/Images/logo.png";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userRole, setUserRole] = useState<string | null>(null);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
-      // Mock authentication: assume logged in with default role
+    const userData = localStorage.getItem('user');
+
+    if (token && userData) {
       setIsLoggedIn(true);
-      setUserRole('user'); // Default role, can be 'admin' if needed
+      setUser(JSON.parse(userData));
     } else {
       setIsLoggedIn(false);
-      setUserRole(null);
+      setUser(null);
     }
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setIsLoggedIn(false);
+    setUser(null);
+    navigate('/');
+  };
+
+  const handleEditProfile = () => {
+    navigate('/settings');
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
@@ -29,7 +44,7 @@ const Header = () => {
               <img src={logo} alt="Devfolio Logo" className="h-36 w-auto" />
               <span className="text-xl font-bold text-foreground hover:text-primary transition-colors"></span>
             </a>
-          
+
           <nav className="hidden md:flex items-center gap-10">
             <a href="/use-cases" className="text-sm text-foreground hover:text-primary transition-colors">
               Use Cases
@@ -39,7 +54,7 @@ const Header = () => {
             <a href="/pricing" className="text-sm text-foreground hover:text-primary transition-colors">Pricing</a>
           </nav>
         </div>
-        
+
         {isLoggedIn ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -61,19 +76,32 @@ const Header = () => {
                   <div className="space-y-4">
                     <div>
                       <label className="text-sm font-medium">Name</label>
-                      <p className="text-sm text-muted-foreground">Aman Tiwari</p>
+                      <p className="text-sm text-muted-foreground">{user?.username || 'N/A'}</p>
                     </div>
                     <div>
                       <label className="text-sm font-medium">Email</label>
-                      <p className="text-sm text-muted-foreground">amankumartiwari5255@gmqqail.com</p>
+                      <p className="text-sm text-muted-foreground">{user?.email || 'N/A'}</p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium">Role</label>
-                      <p className="text-sm text-muted-foreground">{userRole}</p>
+                      <label className="text-sm font-medium">Country</label>
+                      <p className="text-sm text-muted-foreground">{user?.country || 'N/A'}</p>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium">Currency</label>
+                      <p className="text-sm text-muted-foreground">{user?.currency || 'N/A'}</p>
                     </div>
                   </div>
                 </DialogContent>
               </Dialog>
+              <DropdownMenuItem onClick={handleEditProfile}>
+                <Edit className="mr-2 h-4 w-4" />
+                Edit Profile
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleLogout}>
+                <LogOut className="mr-2 h-4 w-4" />
+                Logout
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
