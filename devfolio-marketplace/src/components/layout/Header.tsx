@@ -65,7 +65,7 @@ const Header = () => {
                     </div>
                     <div>
                       <label className="text-sm font-medium">Email</label>
-                      <p className="text-sm text-muted-foreground">amankumartiwari5255@gmail.com</p>
+                      <p className="text-sm text-muted-foreground">amankumartiwari5255@gmqqail.com</p>
                     </div>
                     <div>
                       <label className="text-sm font-medium">Role</label>
