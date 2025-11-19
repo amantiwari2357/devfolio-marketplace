@@ -12,28 +12,39 @@ connectDB();
 
 // Allowed origins list
 const allowedOrigins = [
-  'http://localhost:8080',
-  'http://localhost:8081',
-  'http://localhost:3000',
+  "http://localhost:8080",
+  "http://localhost:8081",
+  "http://localhost:3000",
   process.env.CORS_ORIGIN
-].filter(Boolean); // remove undefined/null values
+].filter(Boolean);
 
 // CORS Setup
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps, postman)
+      // Allow requests with no origin (Postman, mobile apps)
       if (!origin) return callback(null, true);
 
       if (allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
+        console.error("❌ Blocked by CORS:", origin);
         callback(new Error("Not allowed by CORS: " + origin));
       }
     },
     credentials: true,
+    methods: "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+    allowedHeaders: "Content-Type, Authorization"
   })
 );
+
+// Handle Preflight Requests
+app.options("*", (req, res) => {
+  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.sendStatus(200);
+});
 
 // Body Parsers
 app.use(express.json({ limit: '10mb' }));

@@ -29,175 +29,182 @@ const ProjectDetail = () => {
   useEffect(() => {
     const fetchProject = async () => {
       try {
-        // Static project data based on id
-        const staticProjects = [
-          {
-            _id: "1",
-            title: "E-Commerce Platform",
-            description: "Full-featured online store with payment integration",
-            category: "E-Commerce",
-            icon: "🛍️",
-            pricing: "Paid",
-            features: [
-              "User authentication and authorization",
-              "Product catalog with search and filters",
-              "Shopping cart and checkout process",
-              "Payment gateway integration",
-              "Order management system",
-              "Admin dashboard for inventory management"
-            ],
-            technologies: ["React", "Node.js", "MongoDB", "Stripe"],
-            timeline: "4-6 weeks",
-            priceRange: "$5,000 - $15,000",
-            liveUrl: "https://example-ecommerce.com"
-          },
-          {
-            _id: "2",
-            title: "Social Media Dashboard",
-            description: "Analytics and management for multiple platforms",
-            category: "Business Tools",
-            icon: "📊",
-            pricing: "Freemium",
-            features: [
-              "Multi-platform analytics integration",
-              "Real-time data visualization",
-              "Scheduled posting system",
-              "Engagement tracking and reporting",
-              "Content calendar management",
-              "Team collaboration tools"
-            ],
-            technologies: ["Vue.js", "Python", "PostgreSQL", "Chart.js"],
-            timeline: "6-8 weeks",
-            priceRange: "$8,000 - $20,000",
-            liveUrl: "https://example-dashboard.com"
-          },
-          {
-            _id: "3",
-            title: "Learning Management System",
-            description: "Complete LMS with courses and assessments",
-            category: "Education",
-            icon: "📚",
-            pricing: "Paid",
-            features: [
-              "Course creation and management",
-              "Student enrollment and progress tracking",
-              "Interactive quizzes and assessments",
-              "Video streaming and multimedia support",
-              "Discussion forums and messaging",
-              "Certificate generation"
-            ],
-            technologies: ["Angular", "Django", "MySQL", "AWS"],
-            timeline: "8-12 weeks",
-            priceRange: "$10,000 - $25,000",
-            liveUrl: "https://example-lms.com"
-          },
-          {
-            _id: "4",
-            title: "Task Management App",
-            description: "Collaborative task tracking and team management",
-            category: "Productivity",
-            icon: "✅",
-            pricing: "Free",
-            features: [
-              "Task creation and assignment",
-              "Project timeline and milestones",
-              "Team collaboration features",
-              "Time tracking and reporting",
-              "File sharing and attachments",
-              "Mobile app support"
-            ],
-            technologies: ["React Native", "Firebase", "Redux"],
-            timeline: "3-5 weeks",
-            priceRange: "$2,000 - $8,000",
-            liveUrl: "https://example-tasks.com"
-          },
-          {
-            _id: "5",
-            title: "Restaurant Booking",
-            description: "Table reservation system with real-time availability",
-            category: "Hospitality",
-            icon: "🍽️",
-            pricing: "Paid",
-            features: [
-              "Real-time table availability",
-              "Online reservation system",
-              "Menu management",
-              "Customer reviews and ratings",
-              "Staff scheduling",
-              "Payment processing"
-            ],
-            technologies: ["Next.js", "Express", "MongoDB", "Stripe"],
-            timeline: "5-7 weeks",
-            priceRange: "$6,000 - $18,000",
-            liveUrl: "https://example-restaurant.com"
-          },
-          {
-            _id: "6",
-            title: "Fitness Tracker",
-            description: "Workout logging and progress tracking",
-            category: "Health",
-            icon: "💪",
-            pricing: "Freemium",
-            features: [
-              "Workout logging and tracking",
-              "Progress visualization",
-              "Goal setting and achievements",
-              "Nutrition tracking",
-              "Social sharing features",
-              "Wearable device integration"
-            ],
-            technologies: ["Flutter", "Firebase", "Google Fit API"],
-            timeline: "4-6 weeks",
-            priceRange: "$4,000 - $12,000",
-            liveUrl: "https://example-fitness.com"
-          },
-          {
-            _id: "7",
-            title: "Real Estate Portal",
-            description: "Property listings with advanced search filters",
-            category: "Real Estate",
-            icon: "🏠",
-            pricing: "Paid",
-            features: [
-              "Property listing management",
-              "Advanced search and filters",
-              "Virtual tours and photo galleries",
-              "Agent profiles and reviews",
-              "Mortgage calculator",
-              "Lead generation tools"
-            ],
-            technologies: ["React", "Laravel", "MySQL", "Google Maps API"],
-            timeline: "7-10 weeks",
-            priceRange: "$8,000 - $22,000",
-            liveUrl: "https://example-realestate.com"
-          },
-          {
-            _id: "8",
-            title: "Job Board Platform",
-            description: "Connect employers with job seekers",
-            category: "Recruitment",
-            icon: "💼",
-            pricing: "Freemium",
-            features: [
-              "Job posting and application system",
-              "Resume database and search",
-              "Company profiles",
-              "Advanced filtering options",
-              "Email notifications",
-              "Analytics dashboard"
-            ],
-            technologies: ["Vue.js", "Node.js", "Elasticsearch", "MongoDB"],
-            timeline: "6-9 weeks",
-            priceRange: "$7,000 - $19,000",
-            liveUrl: "https://example-jobs.com"
-          }
-        ];
-
-        const foundProject = staticProjects.find(p => p._id === id);
-        if (foundProject) {
-          setProject(foundProject);
+        // Try to fetch from API first
+        const response = await fetch(`http://localhost:5000/api/projects/${id}`);
+        if (response.ok) {
+          const data = await response.json();
+          setProject(data.project);
         } else {
-          throw new Error('Project not found');
+          // Fall back to static project data
+          const staticProjects = [
+            {
+              _id: "1",
+              title: "E-Commerce Platform",
+              description: "Full-featured online store with payment integration",
+              category: "E-Commerce",
+              icon: "🛍️",
+              pricing: "Paid",
+              features: [
+                "User authentication and authorization",
+                "Product catalog with search and filters",
+                "Shopping cart and checkout process",
+                "Payment gateway integration",
+                "Order management system",
+                "Admin dashboard for inventory management"
+              ],
+              technologies: ["React", "Node.js", "MongoDB", "Stripe"],
+              timeline: "4-6 weeks",
+              priceRange: "$5,000 - $15,000",
+              liveUrl: "https://example-ecommerce.com"
+            },
+            {
+              _id: "2",
+              title: "Social Media Dashboard",
+              description: "Analytics and management for multiple platforms",
+              category: "Business Tools",
+              icon: "📊",
+              pricing: "Freemium",
+              features: [
+                "Multi-platform analytics integration",
+                "Real-time data visualization",
+                "Scheduled posting system",
+                "Engagement tracking and reporting",
+                "Content calendar management",
+                "Team collaboration tools"
+              ],
+              technologies: ["Vue.js", "Python", "PostgreSQL", "Chart.js"],
+              timeline: "6-8 weeks",
+              priceRange: "$8,000 - $20,000",
+              liveUrl: "https://example-dashboard.com"
+            },
+            {
+              _id: "3",
+              title: "Learning Management System",
+              description: "Complete LMS with courses and assessments",
+              category: "Education",
+              icon: "📚",
+              pricing: "Paid",
+              features: [
+                "Course creation and management",
+                "Student enrollment and progress tracking",
+                "Interactive quizzes and assessments",
+                "Video streaming and multimedia support",
+                "Discussion forums and messaging",
+                "Certificate generation"
+              ],
+              technologies: ["Angular", "Django", "MySQL", "AWS"],
+              timeline: "8-12 weeks",
+              priceRange: "$10,000 - $25,000",
+              liveUrl: "https://example-lms.com"
+            },
+            {
+              _id: "4",
+              title: "Task Management App",
+              description: "Collaborative task tracking and team management",
+              category: "Productivity",
+              icon: "✅",
+              pricing: "Free",
+              features: [
+                "Task creation and assignment",
+                "Project timeline and milestones",
+                "Team collaboration features",
+                "Time tracking and reporting",
+                "File sharing and attachments",
+                "Mobile app support"
+              ],
+              technologies: ["React Native", "Firebase", "Redux"],
+              timeline: "3-5 weeks",
+              priceRange: "$2,000 - $8,000",
+              liveUrl: "https://example-tasks.com"
+            },
+            {
+              _id: "5",
+              title: "Restaurant Booking",
+              description: "Table reservation system with real-time availability",
+              category: "Hospitality",
+              icon: "🍽️",
+              pricing: "Paid",
+              features: [
+                "Real-time table availability",
+                "Online reservation system",
+                "Menu management",
+                "Customer reviews and ratings",
+                "Staff scheduling",
+                "Payment processing"
+              ],
+              technologies: ["Next.js", "Express", "MongoDB", "Stripe"],
+              timeline: "5-7 weeks",
+              priceRange: "$6,000 - $18,000",
+              liveUrl: "https://example-restaurant.com"
+            },
+            {
+              _id: "6",
+              title: "Fitness Tracker",
+              description: "Workout logging and progress tracking",
+              category: "Health",
+              icon: "💪",
+              pricing: "Freemium",
+              features: [
+                "Workout logging and tracking",
+                "Progress visualization",
+                "Goal setting and achievements",
+                "Nutrition tracking",
+                "Social sharing features",
+                "Wearable device integration"
+              ],
+              technologies: ["Flutter", "Firebase", "Google Fit API"],
+              timeline: "4-6 weeks",
+              priceRange: "$4,000 - $12,000",
+              liveUrl: "https://example-fitness.com"
+            },
+            {
+              _id: "7",
+              title: "Real Estate Portal",
+              description: "Property listings with advanced search filters",
+              category: "Real Estate",
+              icon: "🏠",
+              pricing: "Paid",
+              features: [
+                "Property listing management",
+                "Advanced search and filters",
+                "Virtual tours and photo galleries",
+                "Agent profiles and reviews",
+                "Mortgage calculator",
+                "Lead generation tools"
+              ],
+              technologies: ["React", "Laravel", "MySQL", "Google Maps API"],
+              timeline: "7-10 weeks",
+              priceRange: "$8,000 - $22,000",
+              liveUrl: "https://example-realestate.com"
+            },
+            {
+              _id: "8",
+              title: "Job Board Platform",
+              description: "Connect employers with job seekers",
+              category: "Recruitment",
+              icon: "💼",
+              pricing: "Freemium",
+              features: [
+                "Job posting and application system",
+                "Resume database and search",
+                "Company profiles",
+                "Advanced filtering options",
+                "Email notifications",
+                "Analytics dashboard"
+              ],
+              technologies: ["Vue.js", "Node.js", "Elasticsearch", "MongoDB"],
+              timeline: "6-9 weeks",
+              priceRange: "$7,000 - $19,000",
+              liveUrl: "https://example-jobs.com"
+            }
+          ];
+
+          const foundProject = staticProjects.find(p => p._id === id);
+          if (foundProject) {
+            setProject(foundProject);
+          } else {
+            throw new Error('Project not found');
+          }
         }
       } catch (error) {
         console.error('Error fetching project:', error);

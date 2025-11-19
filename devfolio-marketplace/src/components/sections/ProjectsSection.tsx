@@ -1,10 +1,14 @@
 import { Button } from "@/components/ui/button";
 import ProjectCard from "@/components/cards/ProjectCard";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const ProjectsSection = () => {
   const navigate = useNavigate();
-  const projects = [
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const staticProjects = [
     {
       _id: "1",
       title: "E-Commerce Platform",
@@ -71,6 +75,26 @@ const ProjectsSection = () => {
     }
   ];
 
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/projects/all');
+        if (response.ok) {
+          const data = await response.json();
+          setProjects(data.projects);
+        }
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+        // Fall back to static projects if API fails
+        setProjects(staticProjects);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
   return (
     <section className="py-8 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
@@ -91,7 +115,11 @@ const ProjectsSection = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {projects.map((project) => (
+          {loading ? (
+            <div className="col-span-full flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            </div>
+          ) : (projects.length > 0 ? projects : staticProjects).map((project) => (
             <ProjectCard key={project._id} project={project} />
           ))}
         </div>
