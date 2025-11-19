@@ -31,10 +31,11 @@ const menuItems = [
   { icon: FolderKanban, label: "Projects", path: "/projects-management" },
   { icon: MessageSquare, label: "Messages", path: "/messages" },
   { icon: Trophy, label: "Availbilty", path: "/leaderboard" },
-   { icon: Package, label: "Testimonial", path: "/products" },
+  { icon: Package, label: "Testimonial", path: "/products" },
   { icon: ShoppingCart, label: "Order", path: "/order" },
   { icon: FileText, label: "Sales Report", path: "/sales-report" },
-    { icon: LayoutDashboard, label: "Schedule Meeting", path: "/schedule-meeting" },
+  { icon: LayoutDashboard, label: "Schedule Meeting", path: "/schedule-meeting" },
+  { icon: FolderKanban, label: "Client Onboarding", path: "/client-onboarding" },
   { icon: Settings, label: "Settings", path: "/settings" },
 ];
 
