@@ -18,7 +18,7 @@ const Leaderboard = () => {
 
   const fetchAvailabilities = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/availabilities');
+      const response = await fetch('https://devfolio-marketplace-1.onrender.com/api/availabilities');
       const data = await response.json();
 
       if (data.success) {

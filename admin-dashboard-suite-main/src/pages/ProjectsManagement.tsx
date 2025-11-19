@@ -48,7 +48,7 @@ const ProjectsManagement = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/projects/all');
+        const response = await fetch('https://devfolio-marketplace-1.onrender.com/api/projects/all');
         if (!response.ok) {
           throw new Error('Failed to fetch projects');
         }
@@ -75,8 +75,8 @@ const ProjectsManagement = () => {
       }
 
       const url = editingProject
-        ? `http://localhost:5000/api/projects/${editingProject._id}`
-        : 'http://localhost:5000/api/projects';
+        ? `https://devfolio-marketplace-1.onrender.com/api/projects/${editingProject._id}`
+        : 'https://devfolio-marketplace-1.onrender.com/api/projects';
 
       const method = editingProject ? 'PUT' : 'POST';
 

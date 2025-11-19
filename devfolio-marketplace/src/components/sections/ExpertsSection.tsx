@@ -69,7 +69,7 @@ const ExpertsSection = () => {
     setIsSubmitting(true);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/enquiries", {
+      const res = await axios.post("https://devfolio-marketplace-1.onrender.com/api/enquiries", {
         name: enquiryForm.name,
         email: enquiryForm.email,
         phone: enquiryForm.phone,

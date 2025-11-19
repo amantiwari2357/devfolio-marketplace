@@ -80,7 +80,7 @@ backend/
    npm run dev
    ```
 
-The server will start on `http://localhost:5000`
+The server will start on `https://devfolio-marketplace-1.onrender.com`
 
 ## API Endpoints
 
@@ -134,21 +134,21 @@ The server will start on `http://localhost:5000`
 
 ### Signup
 ```bash
-curl -X POST http://localhost:5000/api/auth/signup \
+curl -X POST https://devfolio-marketplace-1.onrender.com/api/auth/signup \
   -H "Content-Type: application/json" \
   -d '{"email": "user@example.com", "password": "password123"}'
 ```
 
 ### Login
 ```bash
-curl -X POST http://localhost:5000/api/auth/login \
+curl -X POST https://devfolio-marketplace-1.onrender.com/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email": "user@example.com", "password": "password123"}'
 ```
 
 ### Update Profile (Step 1)
 ```bash
-curl -X PUT http://localhost:5000/api/profile \
+curl -X PUT https://devfolio-marketplace-1.onrender.com/api/profile \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -d '{

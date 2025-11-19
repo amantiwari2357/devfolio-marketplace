@@ -35,7 +35,7 @@ const Testimonials = () => {
 
   const fetchTestimonials = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/testimonials/admin');
+      const response = await fetch('https://devfolio-marketplace-1.onrender.com/api/testimonials/admin');
       const data = await response.json();
       setTestimonials(data.testimonials);
     } catch (error) {
@@ -58,8 +58,8 @@ const Testimonials = () => {
     e.preventDefault();
     try {
       const url = editingTestimonial
-        ? `http://localhost:5000/api/testimonials/${editingTestimonial._id}`
-        : 'http://localhost:5000/api/testimonials';
+        ? `https://devfolio-marketplace-1.onrender.com/api/testimonials/${editingTestimonial._id}`
+        : 'https://devfolio-marketplace-1.onrender.com/api/testimonials';
 
       const method = editingTestimonial ? 'PUT' : 'POST';
 
@@ -107,7 +107,7 @@ const Testimonials = () => {
     if (!confirm('Are you sure you want to delete this testimonial?')) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/testimonials/${id}`, {
+      const response = await fetch(`https://devfolio-marketplace-1.onrender.com/api/testimonials/${id}`, {
         method: 'DELETE',
       });
 
@@ -132,7 +132,7 @@ const Testimonials = () => {
 
   const handleToggleStatus = async (id: string) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/testimonials/${id}/toggle`, {
+      const response = await fetch(`https://devfolio-marketplace-1.onrender.com/api/testimonials/${id}/toggle`, {
         method: 'PATCH',
       });
 

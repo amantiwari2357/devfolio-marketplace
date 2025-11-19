@@ -21,7 +21,7 @@ const Enquiry = () => {
   useEffect(() => {
     const fetchEnquiries = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/enquiries/all');
+        const response = await fetch('https://devfolio-marketplace-1.onrender.com/api/enquiries/all');
         if (!response.ok) {
           throw new Error('Failed to fetch enquiries');
         }
@@ -41,7 +41,7 @@ const Enquiry = () => {
     if (!selectedEnquiry || !followUpNote.trim()) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/enquiries/${selectedEnquiry._id}/followup`, {
+      const response = await fetch(`https://devfolio-marketplace-1.onrender.com/api/enquiries/${selectedEnquiry._id}/followup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ const Enquiry = () => {
       }
 
       // Refresh enquiries
-      const fetchResponse = await fetch('http://localhost:5000/api/enquiries/all');
+      const fetchResponse = await fetch('https://devfolio-marketplace-1.onrender.com/api/enquiries/all');
       const data = await fetchResponse.json();
       setEnquiries(data.enquiries || []);
 

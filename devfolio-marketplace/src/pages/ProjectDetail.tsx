@@ -30,7 +30,7 @@ const ProjectDetail = () => {
     const fetchProject = async () => {
       try {
         // Try to fetch from API first
-        const response = await fetch(`http://localhost:5000/api/projects/${id}`);
+        const response = await fetch(`https://devfolio-marketplace-1.onrender.com/api/projects/${id}`);
         if (response.ok) {
           const data = await response.json();
           setProject(data.project);
