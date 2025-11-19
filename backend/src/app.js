@@ -17,13 +17,14 @@ const allowedOrigins = [
   "http://localhost:3000",
   "https://devfolio-marketplace-seven.vercel.app",
   "devfolio-marketplace-acy2.vercel.app",
+  "https://devfolio-marketplace-acy2.vercel.app",
   "https://devfolio-marketplace-5i6k-mbfsocci2.vercel.app",
   process.env.CORS_ORIGIN
 ].filter(Boolean);
 
 // CORS Setup
 app.use(
-  cors({
+  cors({0
     origin: function (origin, callback) {
       // Allow requests with no origin (Postman, mobile apps)
       if (!origin) return callback(null, true);
