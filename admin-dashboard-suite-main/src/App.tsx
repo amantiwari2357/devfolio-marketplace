@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import Leaderboard from "./pages/Leaderboard";
 import Order from "./pages/Order";
 import Products from "./pages/Products";
+import Testimonials from "./pages/Testimonials";
 import SalesReport from "./pages/SalesReport";
 import Messages from "./pages/Messages";
 import Enquiry from "./pages/Enquiry";

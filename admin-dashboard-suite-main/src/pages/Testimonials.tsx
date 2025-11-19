@@ -20,7 +20,7 @@ interface Testimonial {
   createdAt: string;
 }
 
-const Products = () => {
+const Testimonials = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [loading, setLoading] = useState(true);
@@ -353,4 +353,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default Testimonials;
