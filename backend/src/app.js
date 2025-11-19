@@ -15,6 +15,8 @@ const allowedOrigins = [
   "http://localhost:8080",
   "http://localhost:8081",
   "http://localhost:3000",
+  "https://devfolio-marketplace-seven.vercel.app",
+  "devfolio-marketplace-acy2.vercel.app",
   process.env.CORS_ORIGIN
 ].filter(Boolean);
 
