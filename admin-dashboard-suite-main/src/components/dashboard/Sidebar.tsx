@@ -34,6 +34,7 @@ const menuItems = [
    { icon: Package, label: "Testimonial", path: "/products" },
   { icon: ShoppingCart, label: "Order", path: "/order" },
   { icon: FileText, label: "Sales Report", path: "/sales-report" },
+    { icon: LayoutDashboard, label: "Schedule Meeting", path: "/schedule-meeting" },
   { icon: Settings, label: "Settings", path: "/settings" },
 ];
 

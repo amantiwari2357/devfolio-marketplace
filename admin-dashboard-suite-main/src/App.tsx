@@ -14,6 +14,7 @@ import Enquiry from "./pages/Enquiry";
 import RegisterUser from "./pages/RegisterUser";
 import ProjectsManagement from "./pages/ProjectsManagement";
 import Settings from "./pages/Settings";
+import ScheduleMeeting from "./pages/ScheduleMeeting";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="/enquiry" element={<Enquiry />} />
           <Route path="/register-user" element={<RegisterUser />} />
           <Route path="/projects-management" element={<ProjectsManagement />} />
+           <Route path="/schedule-meeting" element={<ScheduleMeeting />} />
           <Route path="/settings" element={<Settings />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
