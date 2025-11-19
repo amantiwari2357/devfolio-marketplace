@@ -14,6 +14,7 @@ connectDB();
 const allowedOrigins = [
   'http://localhost:8080',
   'http://localhost:8081',
+  'http://localhost:3000',
   process.env.CORS_ORIGIN
 ].filter(Boolean); // remove undefined/null values
 
