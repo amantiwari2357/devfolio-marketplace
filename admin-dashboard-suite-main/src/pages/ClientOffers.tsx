@@ -1,14 +1,14 @@
 import { useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
 import { useOffersStore, AssignedOffer } from "@/store/offersStore";
+import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import Sidebar from "@/components/dashboard/Sidebar";
 import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
 import { OfferCard } from "@/components/offers/OfferCard";
 import { OfferDetailsModal } from "@/components/offers/OfferDetailsModal";
 import { StatsCards } from "@/components/offers/StatsCards";
 import { Filters } from "@/components/offers/Filters";
 import { ActivityTimeline } from "@/components/offers/ActivityTimeline";
-import { useToast } from "@/hooks/use-toast";
 
 const ClientOffers = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -48,69 +48,60 @@ const ClientOffers = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-
-      <div className="lg:pl-64">
-        {/* Header */}
-        <header className="sticky top-0 z-30 border-b border-border/50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="flex h-16 items-center gap-4 px-6">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="lg:hidden"
-              onClick={() => setSidebarOpen(true)}
-            >
-              <Menu className="w-5 h-5" />
-            </Button>
-            <div>
-              <h1 className="text-2xl font-bold text-foreground">My Offers</h1>
-              <p className="text-sm text-muted-foreground">
-                View and manage your exclusive offers
-              </p>
-            </div>
-          </div>
+    <div className="min-h-screen bg-background flex overflow-hidden">
+      {/* Fixed Sidebar */}
+      <div className={`fixed inset-y-0 left-0 z-30 w-64 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-200 ease-in-out md:translate-x-0`}>
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      </div>
+      
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col h-screen overflow-hidden md:pl-64">
+        {/* Fixed Header */}
+        <header className="fixed top-0 right-0 left-0 z-20 bg-background border-b md:left-64">
+          <DashboardHeader onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
         </header>
+        
+        {/* Scrollable Content */}
+        <main className="flex-1 pt-24 pb-6 px-6 overflow-y-auto">
+          <div className="max-w-7xl mx-auto space-y-6">
+            {/* Stats */}
+            <StatsCards assignedOffers={clientOffers} />
 
-        {/* Main Content */}
-        <main className="p-6 space-y-6">
-          {/* Stats */}
-          <StatsCards assignedOffers={clientOffers} />
+            {/* Filters */}
+            <Filters
+              selectedStatus={selectedStatus}
+              onStatusChange={setSelectedStatus}
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+            />
 
-          {/* Filters */}
-          <Filters
-            selectedStatus={selectedStatus}
-            onStatusChange={setSelectedStatus}
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-          />
+            {/* Offers Grid */}
+            {filteredOffers.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground">No offers found matching your criteria.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredOffers.map((assignedOffer) => (
+                  <OfferCard
+                    key={assignedOffer.id}
+                    assignedOffer={assignedOffer}
+                    onViewDetails={() => handleViewDetails(assignedOffer)}
+                    onClaim={() => handleClaimOffer(assignedOffer.id)}
+                    isClient={true}
+                  />
+                ))}
+              </div>
+            )}
 
-          {/* Offers Grid */}
-          {filteredOffers.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">No offers found matching your criteria.</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredOffers.map((assignedOffer) => (
-                <OfferCard
-                  key={assignedOffer.id}
-                  assignedOffer={assignedOffer}
-                  onViewDetails={() => handleViewDetails(assignedOffer)}
-                  onClaim={() => handleClaimOffer(assignedOffer.id)}
-                  isClient={true}
-                />
-              ))}
-            </div>
-          )}
-
-          {/* Activity Timeline for first active/used offer */}
-          {clientOffers.length > 0 && (
-            <div className="mt-8">
-              <h2 className="text-xl font-semibold mb-4">Recent Activity</h2>
-              <ActivityTimeline assignedOffer={clientOffers[0]} />
-            </div>
-          )}
+            {/* Activity Timeline for first active/used offer */}
+            {clientOffers.length > 0 && (
+              <div className="mt-8">
+                <h2 className="text-xl font-semibold mb-4">Recent Activity</h2>
+                <ActivityTimeline assignedOffer={clientOffers[0]} />
+              </div>
+            )}
+          </div>
         </main>
       </div>
 

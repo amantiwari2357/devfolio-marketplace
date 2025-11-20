@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useOffersStore, Offer, OfferCategory } from "@/store/offersStore";
 import Sidebar from "@/components/dashboard/Sidebar";
+import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -129,35 +130,26 @@ const AdminOffers = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-
-      <div className="lg:pl-64">
-        {/* Header */}
-        <header className="sticky top-0 z-30 border-b border-border/50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="flex h-16 items-center justify-between gap-4 px-6">
-            <div className="flex items-center gap-4">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="lg:hidden"
-                onClick={() => setSidebarOpen(true)}
-              >
-                <Menu className="w-5 h-5" />
-              </Button>
-              <div>
-                <h1 className="text-2xl font-bold text-foreground">Offers Management</h1>
-                <p className="text-sm text-muted-foreground">
-                  Create and manage client offers
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <Button onClick={() => setAssignFormOpen(true)} variant="outline">
+    <div className="min-h-screen bg-background flex overflow-hidden">
+      {/* Fixed Sidebar */}
+      <div className={`fixed inset-y-0 left-0 z-30 w-64 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-200 ease-in-out md:translate-x-0`}>
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      </div>
+      
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col h-screen overflow-hidden md:pl-64">
+        {/* Fixed Header */}
+        <header className="fixed top-0 right-0 left-0 z-20 bg-background border-b md:left-64">
+          {/* <div className="h-16 px-6 flex items-center"> */}
+            <DashboardHeader onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
+          {/* </div> */}
+          <div className="border-t bg-muted/20 py-2 px-6">
+            <div className="flex justify-end gap-2">
+              <Button onClick={() => setAssignFormOpen(true)} variant="outline" size="sm">
                 <Gift className="w-4 h-4 mr-2" />
                 Assign Offer
               </Button>
-              <Button onClick={() => handleOpenOfferForm()}>
+              <Button onClick={() => handleOpenOfferForm()} size="sm">
                 <Plus className="w-4 h-4 mr-2" />
                 Create Offer
               </Button>
@@ -165,8 +157,9 @@ const AdminOffers = () => {
           </div>
         </header>
 
-        {/* Main Content */}
-        <main className="p-6 space-y-6">
+        {/* Scrollable Content */}
+        <main className="flex-1 pt-28 pb-6 px-6 overflow-y-auto">
+          <div className="max-w-7xl mx-auto space-y-6">
           {/* Stats */}
           <StatsCards assignedOffers={assignedOffers} />
 
@@ -221,6 +214,7 @@ const AdminOffers = () => {
               </div>
             </TabsContent>
           </Tabs>
+          </div>
         </main>
       </div>
 
