@@ -2,37 +2,37 @@ import { Card } from "@/components/ui/card";
 
 const profiles = [
   { 
-    name: "Rohit Sharma", 
-    role: "Full Stack Developer", 
+    name: "Krishna Upadhyay", 
+    role: "DevOps Engineer", 
     badge: "TCS", 
     color: "bg-card-green",
-    linkedin: "https://www.linkedin.com/in/rohit-sharma-12345678/"
+    linkedin: "https://www.linkedin.com/in/krishna-upadhyay-12345678/"
   },
   { 
-    name: "Neha Verma", 
-    role: "Digital Marketing Expert", 
-    badge: "Google Partner", 
+    name: "Vaibhav Koushik", 
+    role: "Full Stack Developer", 
+    badge: "scaller", 
     color: "bg-card-pink",
-    linkedin: "https://www.linkedin.com/in/neha-verma-12345678/"
+    linkedin: "https://www.linkedin.com/in/vaibhav-koushik-12345678/"
   },
   { 
-    name: "Arjun Patel", 
-    role: "Career & Life Coach", 
-    badge: "MindPath", 
+    name: "Aman Tiwari", 
+    role: "Full Stack Developer", 
+    badge: "100acress.com", 
     color: "bg-card-yellow",
-    linkedin: "https://www.linkedin.com/in/arjun-patel-12345678/"
+    linkedin: "https://www.linkedin.com/in/aman-tiwari-12345678/"
   },
   { 
-    name: "Priya Nair", 
-    role: "UI/UX Designer", 
-    badge: "Zoho", 
+    name: "Aman Mishra", 
+    role: "Full Stack Developer", 
+    badge: "75way technologies", 
     color: "bg-card-pink",
     linkedin: "https://www.linkedin.com/in/priya-nair-12345678/"
   },
   { 
-    name: "Ankit Mehta", 
-    role: "Software Engineer", 
-    badge: "Infosys", 
+    name: "Shivam Rajput", 
+    role: "Sco Expert", 
+    badge: "100acress.com", 
     color: "bg-card-green",
     linkedin: "https://www.linkedin.com/in/ankit-mehta-12345678/"
   },
