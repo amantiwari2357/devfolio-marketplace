@@ -104,14 +104,9 @@ const Leaderboard = () => {
         <header className="fixed top-0 right-0 left-0 z-20 bg-background border-b md:left-64">
           <DashboardHeader onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
         </header>
-        
         {/* Scrollable Content */}
         <main className="flex-1 pt-24 pb-6 px-6 overflow-y-auto">
           <div className="max-w-6xl mx-auto space-y-6">
-            {/* <div>
-              <h1 className="text-3xl font-bold text-foreground">Booking Availabilities</h1>
-              <p className="text-muted-foreground">All consultation bookings and their details</p>
-            </div> */}
 
             <div className="grid gap-4 md:grid-cols-3">
               <Card>
