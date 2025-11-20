@@ -34,7 +34,7 @@ const profiles = [
     role: "Sco Expert", 
     badge: "100acress.com", 
     color: "bg-card-green",
-    linkedin: "https://www.linkedin.com/in/ankit-mehta-12345678/"
+    linkedin: "https://www.linkedin.com/in/shivam-rajput-12345678/"
   },
   { 
     name: "Simran Kaur", 
