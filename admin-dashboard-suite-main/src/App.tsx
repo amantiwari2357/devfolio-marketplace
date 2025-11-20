@@ -17,6 +17,8 @@ import ProjectsManagement from "./pages/ProjectsManagement";
 import Settings from "./pages/Settings";
 import ScheduleMeeting from "./pages/ScheduleMeeting";
 import ClientOnboarding from "./pages/ClientOnboarding";
+import ClientOffers from "./pages/ClientOffers";
+import AdminOffers from "./pages/AdminOffers";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -41,6 +43,8 @@ const App = () => (
           <Route path="/schedule-meeting" element={<ScheduleMeeting />} />
           <Route path="/client-onboarding" element={<ClientOnboarding />} />
           <Route path="/settings" element={<Settings />} />
+           <Route path="/client-offers" element={<ClientOffers />} />
+          <Route path="/admin-offers" element={<AdminOffers />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
