@@ -21,7 +21,7 @@ const DashboardHeader = ({ onMenuClick }: DashboardHeaderProps) => {
           >
             <Menu className="w-5 h-5" />
           </Button>
-          <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
+          {/* <h1 className="text-2xl font-bold text-foreground">Dashboard</h1> */}
         </div>
 
         {/* Center section - Search */}

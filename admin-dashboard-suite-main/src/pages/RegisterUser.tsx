@@ -7,13 +7,15 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Users, UserPlus, UserCheck, Loader2 } from "lucide-react";
+import { Users, UserPlus, UserCheck, Loader2, X } from "lucide-react";
 
 const RegisterUser = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
     fetchUsers();
@@ -66,7 +68,7 @@ const RegisterUser = () => {
     return (
       <div className="min-h-screen bg-background flex">
         <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col lg:ml-64">
           <DashboardHeader onMenuClick={() => setSidebarOpen(true)} />
           <main className="flex-1 p-6 overflow-auto">
             <div className="max-w-7xl mx-auto space-y-6">
@@ -108,222 +110,214 @@ const RegisterUser = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="flex min-h-screen bg-background">
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-
-      <div className="flex-1 flex flex-col">
+      
+      <div className="flex-1 flex flex-col lg:ml-64">
         <DashboardHeader onMenuClick={() => setSidebarOpen(true)} />
-
-        <main className="flex-1 p-6 overflow-auto">
-          <div className="max-w-7xl mx-auto space-y-6">
-            <div>
-              <h1 className="text-3xl font-bold text-foreground">Registered Users</h1>
-              <p className="text-muted-foreground">View and manage registered users</p>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-3">
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Total Users</CardTitle>
-                  <Users className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{users.length}</div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Active Users</CardTitle>
-                  <UserCheck className="h-4 w-4 text-chart-2" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">
-                    {users.filter(u => getUserStatus(u) === "active").length}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">New This Week</CardTitle>
-                  <UserPlus className="h-4 w-4 text-chart-1" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">
-                    {users.filter(u => {
-                      const userDate = new Date(u.createdAt);
-                      const weekAgo = new Date();
-                      weekAgo.setDate(weekAgo.getDate() - 7);
-                      return userDate > weekAgo;
-                    }).length}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
+        <main className="flex-1 p-4 lg:p-8 space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <Card>
-              <CardHeader>
-                <CardTitle>User List</CardTitle>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Total Users</CardTitle>
+                <Users className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>User</TableHead>
-                      <TableHead>Email</TableHead>
-                      <TableHead>Phone</TableHead>
-                      <TableHead>Country</TableHead>
-                      <TableHead>Currency</TableHead>
-                      <TableHead>Expertise</TableHead>
-                      <TableHead>Availability</TableHead>
-                      <TableHead>Services</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Registered</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {users.map((user) => (
-                      <TableRow key={user._id}>
-                        <TableCell>
-                          <div className="flex items-center gap-3">
-                            <Avatar>
-                              <AvatarImage src="" />
-                              <AvatarFallback>{getUserInitials(user)}</AvatarFallback>
-                            </Avatar>
-                            <div>
-                              <div className="font-medium">{user.username || user.email.split('@')[0]}</div>
-                              {user.socialUrl && (
-                                <div className="text-xs text-muted-foreground truncate max-w-32">
-                                  {user.socialUrl}
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </TableCell>
-                        <TableCell>{user.email}</TableCell>
-                        <TableCell>{user.whatsappNumber || 'N/A'}</TableCell>
-                        <TableCell>
-                          <Badge variant="outline" className="capitalize">
-                            {user.country || 'N/A'}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant="outline" className="uppercase">
-                            {user.currency || 'N/A'}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex flex-wrap gap-1 max-w-48">
-                            {user.expertise && user.expertise.length > 0 ? (
-                              <>
-                                {user.expertise.slice(0, 2).map((exp, index) => (
-                                  <Badge key={index} variant="secondary" className="text-xs">
-                                    {exp}
-                                  </Badge>
-                                ))}
-                                {user.expertise.length > 2 && (
-                                  <Dialog>
-                                    <DialogTrigger asChild>
-                                      <Button variant="ghost" size="sm" className="h-5 px-2 text-xs">
-                                        +{user.expertise.length - 2}
-                                      </Button>
-                                    </DialogTrigger>
-                                    <DialogContent className="max-w-md">
-                                      <DialogHeader>
-                                        <DialogTitle>Expertise Areas</DialogTitle>
-                                      </DialogHeader>
-                                      <div className="flex flex-wrap gap-2">
-                                        {user.expertise.map((exp, index) => (
-                                          <Badge key={index} variant="outline" className="text-sm">
-                                            {exp}
-                                          </Badge>
-                                        ))}
-                                      </div>
-                                    </DialogContent>
-                                  </Dialog>
-                                )}
-                              </>
-                            ) : (
-                              <span className="text-muted-foreground text-sm">None</span>
-                            )}
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="text-sm">
-                            {user.availability && user.availability.filter(day => day.enabled).length > 0 ? (
-                              <>
-                                <div className="space-y-1">
-                                  {user.availability.filter(day => day.enabled).slice(0, 1).map((day, index) => (
-                                    <div key={index} className="text-xs">
-                                      {day.day}: {day.startTime}-{day.endTime}
-                                    </div>
-                                  ))}
-                                </div>
-                                {user.availability.filter(day => day.enabled).length > 1 && (
-                                  <Dialog>
-                                    <DialogTrigger asChild>
-                                      <Button variant="ghost" size="sm" className="h-5 px-2 text-xs mt-1">
-                                        View All ({user.availability.filter(day => day.enabled).length})
-                                      </Button>
-                                    </DialogTrigger>
-                                    <DialogContent className="max-w-md">
-                                      <DialogHeader>
-                                        <DialogTitle>Weekly Availability</DialogTitle>
-                                      </DialogHeader>
-                                      <div className="space-y-3">
-                                        {user.availability.filter(day => day.enabled).map((day, index) => (
-                                          <div key={index} className="flex justify-between items-center p-2 border rounded">
-                                            <span className="font-medium">{day.day}</span>
-                                            <span className="text-sm text-muted-foreground">
-                                              {day.startTime} - {day.endTime}
-                                            </span>
-                                          </div>
-                                        ))}
-                                      </div>
-                                    </DialogContent>
-                                  </Dialog>
-                                )}
-                              </>
-                            ) : (
-                              <span className="text-muted-foreground">Not set</span>
-                            )}
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="text-sm">
-                            {user.services && user.services.length > 0 ? (
-                              <div>
-                                <div className="font-medium text-xs">{user.services[0].name}</div>
-                                {user.services.length > 1 && (
-                                  <div className="text-xs text-muted-foreground">
-                                    +{user.services.length - 1} more
-                                  </div>
-                                )}
-                              </div>
-                            ) : (
-                              <span className="text-muted-foreground">None</span>
-                            )}
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="space-y-1">
-                            <Badge variant={getUserStatus(user) === "active" ? "default" : "secondary"}>
-                              {getUserStatus(user).charAt(0).toUpperCase() + getUserStatus(user).slice(1)}
-                            </Badge>
-                            <div className="text-xs text-muted-foreground">
-                              Step {user.currentStep || 1}/4
-                            </div>
-                          </div>
-                        </TableCell>
-                        <TableCell>{formatDate(user.createdAt)}</TableCell>
+                <div className="text-2xl font-bold">{users.length}</div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Active Users</CardTitle>
+                <UserCheck className="h-4 w-4 text-chart-2" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">
+                  {users.filter(u => getUserStatus(u) === "active").length}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">New This Week</CardTitle>
+                <UserPlus className="h-4 w-4 text-chart-1" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">
+                  {users.filter(u => {
+                    const userDate = new Date(u.createdAt);
+                    const weekAgo = new Date();
+                    weekAgo.setDate(weekAgo.getDate() - 7);
+                    return userDate > weekAgo;
+                  }).length}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <Card className="overflow-hidden">
+            <CardHeader className="px-4 sm:px-6">
+              <CardTitle className="text-lg sm:text-xl">User List</CardTitle>
+            </CardHeader>
+            <CardContent className="p-0">
+              <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader className="bg-muted/50">
+                      <TableRow>
+                        <TableHead className="min-w-[200px]">Email</TableHead>
+                        <TableHead className="w-24">Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {users.map((user) => (
+                        <TableRow key={user._id}>
+                          <TableCell className="py-3 px-4">
+                            <div className="text-sm">{user.email}</div>
+                          </TableCell>
+                          <TableCell className="py-3 px-4">
+                            <Button 
+                              variant="outline" 
+                              size="sm"
+                              onClick={() => {
+                                setSelectedUser(user);
+                                setIsDialogOpen(true);
+                              }}
+                            >
+                              View
+                            </Button>
+                          </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
                 </Table>
-              </CardContent>
-            </Card>
-          </div>
+
+                {/* User Details Dialog */}
+                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                  <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                    {selectedUser && (
+                      <>
+                        <DialogHeader>
+                          <DialogTitle className="flex justify-between items-center">
+                            <span>User Details</span>
+                            <Button 
+                              variant="ghost" 
+                              size="icon" 
+                              className="h-8 w-8"
+                              onClick={() => setIsDialogOpen(false)}
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
+                          </DialogTitle>
+                        </DialogHeader>
+                        <div className="space-y-6 py-4">
+                          <div className="flex items-center gap-4 pb-4 border-b">
+                            <Avatar className="h-16 w-16">
+                              <AvatarImage src="" />
+                              <AvatarFallback className="text-xl">
+                                {getUserInitials(selectedUser)}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div>
+                              <h3 className="text-lg font-semibold">
+                                {selectedUser.username || selectedUser.email.split('@')[0]}
+                              </h3>
+                              <p className="text-sm text-muted-foreground">{selectedUser.email}</p>
+                              <Badge 
+                                variant={getUserStatus(selectedUser) === "active" ? "default" : "secondary"} 
+                                className="mt-2"
+                              >
+                                {getUserStatus(selectedUser).charAt(0).toUpperCase() + getUserStatus(selectedUser).slice(1)}
+                              </Badge>
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-4">
+                              <div>
+                                <h4 className="text-sm font-medium text-muted-foreground mb-1">Phone Number</h4>
+                                <p>{selectedUser.whatsappNumber || 'N/A'}</p>
+                              </div>
+                              
+                              <div>
+                                <h4 className="text-sm font-medium text-muted-foreground mb-1">Country</h4>
+                                <p className="capitalize">{selectedUser.country || 'N/A'}</p>
+                              </div>
+                              
+                              <div>
+                                <h4 className="text-sm font-medium text-muted-foreground mb-1">Currency</h4>
+                                <p className="uppercase">{selectedUser.currency || 'N/A'}</p>
+                              </div>
+                              
+                              <div>
+                                <h4 className="text-sm font-medium text-muted-foreground mb-1">Registration Date</h4>
+                                <p>{formatDate(selectedUser.createdAt)}</p>
+                              </div>
+                            </div>
+
+                            <div className="space-y-4">
+                              <div>
+                                <h4 className="text-sm font-medium text-muted-foreground mb-2">Expertise</h4>
+                                <div className="flex flex-wrap gap-2">
+                                  {selectedUser.expertise?.length > 0 ? (
+                                    selectedUser.expertise.map((exp, index) => (
+                                      <Badge key={index} variant="outline">
+                                        {exp}
+                                      </Badge>
+                                    ))
+                                  ) : (
+                                    <span className="text-muted-foreground">None</span>
+                                  )}
+                                </div>
+                              </div>
+                              
+                              <div>
+                                <h4 className="text-sm font-medium text-muted-foreground mb-2">Services</h4>
+                                {selectedUser.services?.length > 0 ? (
+                                  <div className="space-y-2">
+                                    {selectedUser.services.map((service, index) => (
+                                      <div key={index} className="p-2 border rounded">
+                                        <div className="font-medium">{service.name}</div>
+                                        {service.description && (
+                                          <p className="text-sm text-muted-foreground">{service.description}</p>
+                                        )}
+                                      </div>
+                                    ))}
+                                  </div>
+                                ) : (
+                                  <span className="text-muted-foreground">None</span>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+
+                          {selectedUser.availability?.filter(day => day.enabled).length > 0 && (
+                            <div className="pt-4 border-t">
+                              <h4 className="text-sm font-medium text-muted-foreground mb-3">Availability</h4>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                {selectedUser.availability
+                                  .filter(day => day.enabled)
+                                  .map((day, index) => (
+                                    <div key={index} className="flex items-center justify-between p-3 border rounded">
+                                      <span className="font-medium">{day.day}</span>
+                                      <span className="text-sm text-muted-foreground">
+                                        {day.startTime} - {day.endTime}
+                                      </span>
+                                    </div>
+                                  ))
+                                }
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </>
+                    )}
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </CardContent>
+          </Card>
         </main>
       </div>
     </div>
