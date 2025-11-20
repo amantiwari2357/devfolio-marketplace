@@ -231,11 +231,7 @@ const ClientOnboarding = () => {
         <DashboardHeader onMenuClick={() => setSidebarOpen(true)} />
 
         <main className="p-6 space-y-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-foreground">Client Onboarding & Project Lifecycle</h1>
-              <p className="text-muted-foreground">Track projects from onboarding to delivery through 10 stages</p>
-            </div>
+          <div className="flex items-center justify-end">
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
                 <Button onClick={() => { setEditingProject(null); setFormData({ clientName: "", email: "", phone: "", companyName: "", projectName: "", techStack: "", projectType: "", startDate: "", deadline: "", totalAmount: "" }); }}>

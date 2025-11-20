@@ -12,19 +12,22 @@ const Settings = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-background flex">
-      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+    <div className="min-h-screen bg-background flex overflow-hidden">
+      {/* Fixed Sidebar */}
+      <div className={`fixed inset-y-0 left-0 z-30 w-64 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-200 ease-in-out md:translate-x-0`}>
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      </div>
       
-      <div className="flex-1 flex flex-col">
-        <DashboardHeader onMenuClick={() => setSidebarOpen(true)} />
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col h-screen overflow-hidden md:pl-64">
+        {/* Fixed Header */}
+        <header className="fixed top-0 right-0 left-0 z-20 bg-background border-b md:left-64">
+          <DashboardHeader onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
+        </header>
         
-        <main className="flex-1 p-6 overflow-auto">
+        {/* Scrollable Content */}
+        <main className="flex-1 pt-24 pb-6 px-6 overflow-y-auto">
           <div className="max-w-4xl mx-auto space-y-6">
-            <div>
-              <h1 className="text-3xl font-bold text-foreground">Settings</h1>
-              <p className="text-muted-foreground">Manage your account and application settings</p>
-            </div>
-
             <Tabs defaultValue="profile" className="space-y-6">
               <TabsList>
                 <TabsTrigger value="profile">Profile</TabsTrigger>
