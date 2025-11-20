@@ -176,11 +176,15 @@ const ProjectsManagement = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex">
-        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-        <div className="flex-1 flex flex-col">
-          <DashboardHeader onMenuClick={() => setSidebarOpen(true)} />
-          <main className="flex-1 p-6 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex overflow-hidden">
+        <div className={`fixed inset-y-0 left-0 z-30 w-64 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-200 ease-in-out md:translate-x-0`}>
+          <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        </div>
+        <div className="flex-1 flex flex-col h-screen overflow-hidden md:pl-64">
+          <header className="fixed top-0 right-0 left-0 z-20 bg-background border-b md:left-64">
+            <DashboardHeader onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
+          </header>
+          <main className="flex-1 pt-24 pb-6 px-6 flex items-center justify-center">
             <Loader2 className="h-8 w-8 animate-spin" />
             <span className="ml-2">Loading projects...</span>
           </main>
@@ -191,11 +195,15 @@ const ProjectsManagement = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-background flex">
-        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-        <div className="flex-1 flex flex-col">
-          <DashboardHeader onMenuClick={() => setSidebarOpen(true)} />
-          <main className="flex-1 p-6 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex overflow-hidden">
+        <div className={`fixed inset-y-0 left-0 z-30 w-64 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-200 ease-in-out md:translate-x-0`}>
+          <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        </div>
+        <div className="flex-1 flex flex-col h-screen overflow-hidden md:pl-64">
+          <header className="fixed top-0 right-0 left-0 z-20 bg-background border-b md:left-64">
+            <DashboardHeader onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
+          </header>
+          <main className="flex-1 pt-24 pb-6 px-6 flex items-center justify-center">
             <div className="text-red-500">Error: {error}</div>
           </main>
         </div>
@@ -204,19 +212,23 @@ const ProjectsManagement = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background flex">
-      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-
-      <div className="flex-1 flex flex-col">
-        <DashboardHeader onMenuClick={() => setSidebarOpen(true)} />
-
-        <main className="flex-1 p-6 overflow-auto">
+    <div className="min-h-screen bg-background flex overflow-hidden">
+      {/* Fixed Sidebar */}
+      <div className={`fixed inset-y-0 left-0 z-30 w-64 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-200 ease-in-out md:translate-x-0`}>
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      </div>
+      
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col h-screen overflow-hidden md:pl-64">
+        {/* Fixed Header */}
+        <header className="fixed top-0 right-0 left-0 z-20 bg-background border-b md:left-64">
+          <DashboardHeader onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
+        </header>
+        
+        {/* Scrollable Content */}
+        <main className="flex-1 pt-24 pb-6 px-6 overflow-y-auto">
           <div className="max-w-7xl mx-auto space-y-6">
-            <div className="flex items-center justify-between">
-              {/* <div>
-                <h1 className="text-3xl font-bold text-foreground">Projects Management</h1>
-                <p className="text-muted-foreground">Create and manage your projects</p>
-              </div> */}
+            <div className="flex justify-end">
               <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogTrigger asChild>
                   <Button onClick={openAddDialog}>
