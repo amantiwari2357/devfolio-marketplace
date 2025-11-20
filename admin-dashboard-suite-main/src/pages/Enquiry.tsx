@@ -5,9 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, Clock, Loader2, Eye, Plus, MessageSquare } from "lucide-react";
+import { Mail, Phone, Clock, Loader2, MessageSquare, User, Calendar, MessageCircle, ExternalLink, Plus, Send, ChevronDown, ChevronUp } from "lucide-react";
 
 const Enquiry = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -17,6 +17,8 @@ const Enquiry = () => {
   const [selectedEnquiry, setSelectedEnquiry] = useState(null);
   const [followUpNote, setFollowUpNote] = useState('');
   const [followUpDialogOpen, setFollowUpDialogOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [viewingFollowUps, setViewingFollowUps] = useState(null);
 
   useEffect(() => {
     const fetchEnquiries = async () => {
@@ -56,33 +58,40 @@ const Enquiry = () => {
         throw new Error('Failed to add follow-up');
       }
 
-      // Refresh enquiries
       const fetchResponse = await fetch('https://devfolio-marketplace-1.onrender.com/api/enquiries/all');
       const data = await fetchResponse.json();
       setEnquiries(data.enquiries || []);
 
       setFollowUpNote('');
       setFollowUpDialogOpen(false);
-      setSelectedEnquiry(null);
     } catch (err) {
       console.error('Error adding follow-up:', err);
       alert('Failed to add follow-up. Please try again.');
     }
   };
 
+  const handleViewFollowUps = (enquiry) => {
+    setSelectedEnquiry(enquiry);
+    setViewingFollowUps(true);
+  };
+
   return (
-    <div className="min-h-screen bg-background flex">
-      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+    <div className="min-h-screen bg-background flex overflow-hidden">
+      {/* Fixed Sidebar */}
+      <div className={`fixed inset-y-0 left-0 z-30 w-64 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-200 ease-in-out md:translate-x-0`}>
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      </div>
       
-      <div className="flex-1 flex flex-col">
-        <DashboardHeader onMenuClick={() => setSidebarOpen(true)} />
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col h-screen overflow-hidden md:pl-64">
+        {/* Fixed Header */}
+        <header className="fixed top-0 right-0 left-0 z-20 bg-background border-b md:left-64">
+          <DashboardHeader onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
+        </header>
         
-        <main className="flex-1 p-6 overflow-auto">
+        {/* Scrollable Content */}
+        <main className="flex-1 pt-24 pb-6 px-6 overflow-y-auto">
           <div className="max-w-7xl mx-auto space-y-6">
-            <div>
-              <h1 className="text-3xl font-bold text-foreground">Enquiries</h1>
-              <p className="text-muted-foreground">Manage customer enquiries and requests</p>
-            </div>
 
             {loading ? (
               <div className="flex items-center justify-center py-8">
@@ -137,64 +146,59 @@ const Enquiry = () => {
                   </CardHeader>
                   <CardContent>
                     <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Contact</TableHead>
-                      <TableHead>Source</TableHead>
-                      <TableHead>Message</TableHead>
-                      <TableHead>Date</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Name</TableHead>
+                          <TableHead className="w-24">Actions</TableHead>
+                        </TableRow>
+                      </TableHeader>
                       <TableBody>
                         {enquiries.map((enquiry) => (
                           <TableRow key={enquiry._id}>
-                            <TableCell className="font-medium">{enquiry.name}</TableCell>
-                            <TableCell>
-                              <div className="space-y-1">
-                                <div className="flex items-center gap-1 text-sm">
-                                  <Mail className="h-3 w-3" />
-                                  {enquiry.email}
-                                </div>
-                                <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                                  <Phone className="h-3 w-3" />
-                                  {enquiry.phone}
-                                </div>
+                            <TableCell className="font-medium">
+                              <div className="flex items-center gap-2">
+                                <User className="h-4 w-4 text-muted-foreground" />
+                                {enquiry.name}
                               </div>
                             </TableCell>
                             <TableCell>
-                              <Badge variant="outline">
-                                {enquiry.source ? enquiry.source.replace('-', ' ').toUpperCase() : 'HERO SECTION'}
-                              </Badge>
-                            </TableCell>
-                            <TableCell className="max-w-xs truncate">{enquiry.message}</TableCell>
-                            <TableCell>{new Date(enquiry.createdAt).toLocaleDateString()}</TableCell>
-                            <TableCell>
-                              <Badge variant={enquiry.status === "pending" ? "secondary" : "default"}>
-                                {enquiry.status.charAt(0).toUpperCase() + enquiry.status.slice(1)}
-                              </Badge>
-                            </TableCell>
-                            <TableCell>
-                              <div className="flex gap-2">
-                                <Button
-                                  size="sm"
-                                  variant="outline"
-                                  onClick={() => setSelectedEnquiry(enquiry)}
-                                >
-                                  <Eye className="h-3 w-3" />
-                                </Button>
-                                <Button
-                                  size="sm"
-                                  variant="outline"
-                                  onClick={() => {
-                                    setSelectedEnquiry(enquiry);
-                                    setFollowUpDialogOpen(true);
-                                  }}
-                                >
-                                  <Plus className="h-3 w-3" />
-                                </Button>
+                                <div className="flex flex-col space-y-2">
+                                  <div className="flex space-x-2">
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      onClick={() => {
+                                        setSelectedEnquiry(enquiry);
+                                        setIsDialogOpen(true);
+                                      }}
+                                      className="flex-1"
+                                    >
+                                      <MessageSquare className="h-4 w-4 mr-2" />
+                                      View Details
+                                    </Button>
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      onClick={() => {
+                                        setSelectedEnquiry(enquiry);
+                                        setFollowUpDialogOpen(true);
+                                      }}
+                                      className="flex-1"
+                                    >
+                                      <Plus className="h-4 w-4 mr-1" /> Follow Up
+                                    </Button>
+                                  </div>
+                                  {enquiry.followUps && enquiry.followUps.length > 0 && (
+                                    <Button
+                                      variant="ghost"
+                                      size="sm"
+                                      className="text-xs text-muted-foreground p-0 h-auto"
+                                      onClick={() => handleViewFollowUps(enquiry)}
+                                    >
+                                      <MessageCircle className="h-3 w-3 mr-1" />
+                                      View Follow-ups ({enquiry.followUps.length})
+                                    </Button>
+                                  )}
                               </div>
                             </TableCell>
                           </TableRow>
@@ -205,106 +209,136 @@ const Enquiry = () => {
                 </Card>
               </>
             )}
-
-            {/* Enquiry Details Dialog */}
-            <Dialog open={!!selectedEnquiry && !followUpDialogOpen} onOpenChange={() => setSelectedEnquiry(null)}>
-              <DialogContent className="max-w-2xl">
-                <DialogHeader>
-                  <DialogTitle>Enquiry Details</DialogTitle>
-                </DialogHeader>
-                {selectedEnquiry && (
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="text-sm font-medium">Name</label>
-                        <p className="text-sm text-muted-foreground">{selectedEnquiry.name}</p>
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium">Email</label>
-                        <p className="text-sm text-muted-foreground">{selectedEnquiry.email}</p>
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium">Phone</label>
-                        <p className="text-sm text-muted-foreground">{selectedEnquiry.phone}</p>
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium">Source</label>
-                        <p className="text-sm text-muted-foreground">
-                          {selectedEnquiry.source ? selectedEnquiry.source.replace('-', ' ').toUpperCase() : 'HERO SECTION'}
-                        </p>
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium">Status</label>
-                        <Badge variant={selectedEnquiry.status === "pending" ? "secondary" : "default"}>
-                          {selectedEnquiry.status.charAt(0).toUpperCase() + selectedEnquiry.status.slice(1)}
-                        </Badge>
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium">Date</label>
-                        <p className="text-sm text-muted-foreground">
-                          {new Date(selectedEnquiry.createdAt).toLocaleString()}
-                        </p>
-                      </div>
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium">Message</label>
-                      <p className="text-sm text-muted-foreground mt-1">{selectedEnquiry.message}</p>
-                    </div>
-                    {selectedEnquiry.followUps && selectedEnquiry.followUps.length > 0 && (
-                      <div>
-                        <label className="text-sm font-medium">Follow-ups</label>
-                        <div className="space-y-2 mt-2">
-                          {selectedEnquiry.followUps.map((followUp, index) => (
-                            <div key={index} className="border rounded p-3 bg-muted/50">
-                              <div className="flex justify-between items-start">
-                                <p className="text-sm">{followUp.note}</p>
-                                <Badge variant="outline" className="text-xs">
-                                  {followUp.status}
-                                </Badge>
-                              </div>
-                              <p className="text-xs text-muted-foreground mt-1">
-                                {new Date(followUp.date).toLocaleString()}
-                              </p>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </DialogContent>
-            </Dialog>
-
-            {/* Add Follow-up Dialog */}
-            <Dialog open={followUpDialogOpen} onOpenChange={setFollowUpDialogOpen}>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Add Follow-up</DialogTitle>
-                </DialogHeader>
-                <div className="space-y-4">
-                  <div>
-                    <label className="text-sm font-medium">Follow-up Note</label>
-                    <Textarea
-                      placeholder="Enter follow-up details..."
-                      value={followUpNote}
-                      onChange={(e) => setFollowUpNote(e.target.value)}
-                      rows={3}
-                    />
-                  </div>
-                  <div className="flex gap-2 justify-end">
-                    <Button variant="outline" onClick={() => setFollowUpDialogOpen(false)}>
-                      Cancel
-                    </Button>
-                    <Button onClick={handleAddFollowUp} disabled={!followUpNote.trim()}>
-                      Add Follow-up
-                    </Button>
-                  </div>
-                </div>
-              </DialogContent>
-            </Dialog>
           </div>
         </main>
       </div>
+
+      {/* Enquiry Details Dialog */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-4xl">
+          <DialogHeader>
+            <DialogTitle>Enquiry Details</DialogTitle>
+          </DialogHeader>
+          {selectedEnquiry && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="text-sm font-medium text-muted-foreground mb-2">Contact Information</h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <User className="h-4 w-4 text-muted-foreground" />
+                        <span>{selectedEnquiry.name}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Mail className="h-4 w-4 text-muted-foreground" />
+                        <a href={`mailto:${selectedEnquiry.email}`} className="hover:underline">
+                          {selectedEnquiry.email}
+                        </a>
+                      </div>
+                      {selectedEnquiry.phone && (
+                        <div className="flex items-center gap-2">
+                          <Phone className="h-4 w-4 text-muted-foreground" />
+                          <a href={`tel:${selectedEnquiry.phone}`} className="hover:underline">
+                            {selectedEnquiry.phone}
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="text-sm font-medium text-muted-foreground mb-2">Source</h4>
+                    <Badge variant="outline" className="capitalize">
+                      {selectedEnquiry.source ? 
+                        selectedEnquiry.source.replace(/-/g, ' ') : 
+                        'Hero Section'}
+                    </Badge>
+                  </div>
+
+                  {selectedEnquiry.projectLink && (
+                    <div>
+                      <h4 className="text-sm font-medium text-muted-foreground mb-2">Project Link</h4>
+                      <a 
+                        href={selectedEnquiry.projectLink} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-sm text-primary hover:underline flex items-center gap-1"
+                      >
+                        View Project <ExternalLink className="h-3 w-3" />
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <h4 className="text-sm font-medium text-muted-foreground mb-2">Message</h4>
+                <div className="bg-muted/50 p-4 rounded-lg">
+                  <p className="whitespace-pre-line">{selectedEnquiry.message}</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Follow-up Dialog */}
+      <Dialog open={followUpDialogOpen} onOpenChange={setFollowUpDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Add Follow Up</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <Textarea
+              placeholder="Enter your follow-up note..."
+              value={followUpNote}
+              onChange={(e) => setFollowUpNote(e.target.value)}
+              rows={4}
+            />
+            <div className="flex justify-end space-x-2">
+              <Button variant="outline" onClick={() => setFollowUpDialogOpen(false)}>
+                Cancel
+              </Button>
+              <Button onClick={handleAddFollowUp}>
+                <Send className="h-4 w-4 mr-2" />
+                Send Follow Up
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* View Follow-ups Dialog */}
+      <Dialog open={!!viewingFollowUps} onOpenChange={(open) => !open && setViewingFollowUps(false)}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Follow-up History</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 max-h-[60vh] overflow-y-auto">
+            {selectedEnquiry?.followUps?.length > 0 ? (
+              <div className="space-y-4">
+                {selectedEnquiry.followUps.map((followUp, idx) => (
+                  <div key={idx} className="p-4 border rounded-lg">
+                    <div className="flex justify-between items-start">
+                      <div className="space-y-2">
+                        <p className="text-sm text-muted-foreground">
+                          {new Date(followUp.createdAt).toLocaleString()}
+                        </p>
+                        <p className="whitespace-pre-line">{followUp.note}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-center text-muted-foreground py-8">
+                No follow-ups found for this enquiry.
+              </p>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
