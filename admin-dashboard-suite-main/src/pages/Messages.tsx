@@ -26,14 +26,22 @@ const Messages = () => {
   const [message, setMessage] = useState("");
 
   return (
-    <div className="min-h-screen bg-background flex">
-      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+    <div className="min-h-screen bg-background flex overflow-hidden">
+      {/* Fixed Sidebar */}
+      <div className={`fixed inset-y-0 left-0 z-30 w-64 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-200 ease-in-out md:translate-x-0`}>
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      </div>
       
-      <div className="flex-1 flex flex-col">
-        <DashboardHeader onMenuClick={() => setSidebarOpen(true)} />
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col h-screen overflow-hidden md:pl-64">
+        {/* Fixed Header */}
+        <header className="fixed top-0 right-0 left-0 z-20 bg-background border-b md:left-64">
+          <DashboardHeader onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
+        </header>
         
-        <main className="flex-1 p-6 overflow-auto">
-          <div className="max-w-7xl mx-auto h-[calc(100vh-140px)]">
+        {/* Scrollable Content */}
+        <main className="flex-1 pt-20 pb-6 px-6 overflow-y-auto">
+          <div className="max-w-7xl mx-auto h-full">
             <div className="grid grid-cols-12 gap-6 h-full">
               <Card className="col-span-4 flex flex-col">
                 <CardContent className="p-4 flex-1 overflow-auto">
