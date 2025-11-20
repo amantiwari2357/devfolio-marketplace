@@ -16,7 +16,7 @@ import {
   Mail,
   Users,
   FolderKanban,
-  Menu,
+   Gift,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
@@ -38,6 +38,8 @@ const menuItems = [
   { icon: FileText, label: "Sales Report", path: "/sales-report" },
   { icon: LayoutDashboard, label: "Schedule Meeting", path: "/schedule-meeting" },
   { icon: FolderKanban, label: "Client Onboarding", path: "/client-onboarding" },
+   { icon: Gift, label: "Client Offers", path: "/client-offers" },
+  { icon: Gift, label: "Admin Offers", path: "/admin-offers" },
   { icon: Settings, label: "Settings", path: "/settings" },
 ];
 
