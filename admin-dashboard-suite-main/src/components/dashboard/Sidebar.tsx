@@ -16,8 +16,10 @@ import {
   Mail,
   Users,
   FolderKanban,
+  Menu,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 interface SidebarProps {
   open: boolean;
@@ -41,64 +43,111 @@ const menuItems = [
 
 const Sidebar = ({ open, onClose }: SidebarProps) => {
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(false);
+  const [isOpen, setIsOpen] = useState(open);
+
+  // Update isOpen when open prop changes
+  useEffect(() => {
+    setIsOpen(open);
+  }, [open]);
+
+  // Check if mobile view
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    
+    // Initial check
+    checkIfMobile();
+    
+    // Add event listener for window resize
+    window.addEventListener('resize', checkIfMobile);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
 
   const handleLogout = () => {
     navigate("/");
   };
 
+  // Close sidebar when clicking outside on mobile
+  const handleOverlayClick = () => {
+    if (isMobile) {
+      onClose();
+    }
+  };
+
   return (
     <>
-      {/* Mobile overlay */}
-      {open && (
+      {/* Overlay */}
+      {open && isMobile && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={onClose}
+          className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm transition-opacity duration-300 lg:hidden"
+          style={{
+            opacity: open ? 1 : 0,
+            pointerEvents: open ? 'auto' : 'none',
+          }}
+          onClick={() => setIsOpen(false)}
         />
       )}
 
-      {/* Sidebar */}
       <aside
         className={cn(
-          "fixed top-0 left-0 h-full w-64 bg-card shadow-xl z-50 transition-transform duration-300 lg:translate-x-0",
-          open ? "translate-x-0" : "-translate-x-full"
+          "fixed left-0 top-0 z-50 flex h-screen w-64 flex-col border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-300 ease-in-out lg:sticky lg:translate-x-0",
+          isOpen ? "translate-x-0 shadow-lg" : "-translate-x-full lg:translate-x-0",
+          "dark:border-gray-800 border-gray-200"
         )}
+        style={{
+          boxShadow: isOpen
+            ? "4px 0 15px -3px rgba(0, 0, 0, 0.1), 4px 0 6px -4px rgba(0, 0, 0, 0.1)"
+            : "none",
+          transform: isOpen 
+            ? 'translateX(0)' 
+            : '-translate-x-full lg:translate-x-0',
+          transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+          willChange: 'transform, box-shadow',
+        }}
       >
-        <div className="flex flex-col h-full p-6">
+        <div className="flex flex-col h-full p-4">
           {/* Logo */}
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+          <div className="flex items-center justify-between mb-6 p-2">
+            <Link to="/dashboard" className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/80 rounded-xl flex items-center justify-center">
                 <LinkIcon className="w-5 h-5 text-primary-foreground" />
               </div>
-              <span className="text-xl font-bold text-foreground">DevFolio</span>
-            </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="lg:hidden"
-              onClick={onClose}
-            >
-              <X className="w-5 h-5" />
-            </Button>
+              <span className="text-xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
+                DevFolio
+              </span>
+            </Link>
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 space-y-2">
-            {menuItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={cn(
-                  "flex items-center gap-3 px-4 py-3 rounded-xl transition-colors",
-                  item.active
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:bg-secondary"
-                )}
-              >
-                <item.icon className="w-5 h-5" />
-                <span className="font-medium">{item.label}</span>
-              </Link>
-            ))}
+          <nav className="flex-1 space-y-1 overflow-y-auto py-2">
+            {menuItems.map((item) => {
+              const isActive = location.pathname === item.path;
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={cn(
+                    "flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground",
+                    isActive
+                      ? "bg-accent/50 text-accent-foreground font-semibold"
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
+                  onClick={() => isMobile && onClose()}
+                >
+                  <item.icon 
+                    className={cn(
+                      "h-5 w-5 flex-shrink-0",
+                      isActive ? "text-primary" : ""
+                    )} 
+                  />
+                  <span className="truncate">{item.label}</span>
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Pro Card */}
@@ -118,18 +167,39 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
             </Button>
           </Card>
 
-          {/* Logout */}
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-muted-foreground hover:bg-secondary mt-4 w-full transition-colors"
-          >
-            <LogOut className="w-5 h-5" />
-            <span className="font-medium">Sign Out</span>
-          </button>
+          {/* User & Logout */}
+          <div className="mt-auto pt-4 border-t dark:border-gray-800">
+            <Button
+              variant="ghost"
+              className="w-full justify-start gap-3 text-muted-foreground hover:text-foreground hover:bg-accent/50"
+              onClick={handleLogout}
+            >
+              <LogOut className="h-5 w-5" />
+              <span className="truncate">Logout</span>
+            </Button>
+            
+            {/* Mobile close button */}
+            {isMobile && (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="w-full justify-center mt-2 text-xs text-muted-foreground hover:text-foreground lg:hidden"
+                onClick={onClose}
+              >
+                Close Menu
+              </Button>
+            )}
+          </div>
         </div>
       </aside>
     </>
   );
+};
+
+// Add default props
+Sidebar.defaultProps = {
+  open: false,
+  onClose: () => {},
 };
 
 export default Sidebar;
