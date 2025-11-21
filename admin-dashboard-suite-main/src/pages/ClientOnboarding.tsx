@@ -273,7 +273,8 @@ const ClientOnboarding = () => {
                     </div>
                     <div>
                       <Label>Phone</Label>
-                      <Input value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} required />
+                      <Input placeholder="+919031359720" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} required />
+                      <p className="text-xs text-muted-foreground mt-1">Format: +91 followed by 10 digits</p>
                     </div>
                     <div>
                       <Label>Company Name</Label>
