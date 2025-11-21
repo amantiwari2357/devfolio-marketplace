@@ -189,6 +189,7 @@ const ExpertManagement = () => {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
+            "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify(expertData),
         });
@@ -198,7 +199,7 @@ const ExpertManagement = () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-             "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify(expertData),
         });

@@ -4,7 +4,7 @@ const expertController = require('../controllers/expert.controller');
 const authMiddleware = require('../middlewares/auth.middleware');
 
 // Expert routes
-router.get('/all', authMiddleware, expertController.getAllExperts);
+router.get('/all', expertController.getAllExperts);
 router.get('/:id', authMiddleware, expertController.getExpertById);
 router.post('/', expertController.createExpert);
 router.put('/:id', authMiddleware, expertController.updateExpert);
