@@ -41,60 +41,9 @@ const ExpertManagement = () => {
   const [activeTab, setActiveTab] = useState<"experts" | "enquiries">("experts");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingExpert, setEditingExpert] = useState<Expert | null>(null);
-  
-  const [experts, setExperts] = useState<Expert[]>([
-    {
-      _id: "1",
-      firstName: "Rahul",
-      lastName: "Sharma",
-      role: "Senior Software Engineer",
-      skills: ["JavaScript", "React", "Node.js", "System Design"],
-      bio: "Experienced software engineer with 5+ years in web development. Specialized in building scalable products.",
-      email: "rahul.sharma@example.com",
-      rating: 4.9,
-      connections: 342,
-      experience: "5+ years",
-      location: "Bangalore, India"
-    },
-    {
-      _id: "2",
-      firstName: "Priya",
-      lastName: "Patel",
-      role: "Data Scientist & ML Engineer",
-      skills: ["Python", "Machine Learning", "Data Analysis", "TensorFlow"],
-      bio: "Data scientist specializing in AI and predictive modeling. Helped 50+ startups scale their ML pipelines.",
-      email: "priya.patel@example.com",
-      rating: 4.8,
-      connections: 289,
-      experience: "4+ years",
-      location: "Mumbai, India"
-    }
-  ]);
-
-  const [enquiries, setEnquiries] = useState<Enquiry[]>([
-    {
-      _id: "1",
-      expertId: "1",
-      expertName: "Rahul Sharma",
-      name: "John Doe",
-      email: "john@example.com",
-      phone: "+91 98765 43210",
-      message: "I want to learn React and system design for my next interview.",
-      date: "2024-01-15",
-      status: "pending"
-    },
-    {
-      _id: "2",
-      expertId: "2",
-      expertName: "Priya Patel",
-      name: "Jane Smith",
-      email: "jane@example.com",
-      phone: "+91 87654 32109",
-      message: "Need guidance on building ML pipelines for production.",
-      date: "2024-01-14",
-      status: "contacted"
-    }
-  ]);
+  const [loading, setLoading] = useState(false);
+  const [experts, setExperts] = useState<Expert[]>([]);
+  const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
 
   const [formData, setFormData] = useState({
     firstName: "",
