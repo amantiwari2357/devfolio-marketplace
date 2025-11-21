@@ -17,6 +17,7 @@ import {
   Users,
   FolderKanban,
   Gift,
+  UserCog,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -39,6 +40,7 @@ const menuItems = [
   { icon: FolderKanban, label: "Client Onboarding", path: "/client-onboarding" },
    { icon: Gift, label: "Client Offers", path: "/client-offers" },
   { icon: Gift, label: "Admin Offers", path: "/admin-offers" },
+   { icon: UserCog, label: "Expert Management", path: "/expert-management" },
   { icon: Settings, label: "Settings", path: "/settings" },
 ];
 

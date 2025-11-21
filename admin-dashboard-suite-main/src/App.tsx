@@ -19,6 +19,7 @@ import ScheduleMeeting from "./pages/ScheduleMeeting";
 import ClientOnboarding from "./pages/ClientOnboarding";
 import ClientOffers from "./pages/ClientOffers";
 import AdminOffers from "./pages/AdminOffers";
+import ExpertManagement from "./pages/ExpertManagement";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -45,6 +46,7 @@ const App = () => (
           <Route path="/settings" element={<Settings />} />
            <Route path="/client-offers" element={<ClientOffers />} />
           <Route path="/admin-offers" element={<AdminOffers />} />
+          <Route path="/expert-management" element={<ExpertManagement />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
