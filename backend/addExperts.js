@@ -102,15 +102,12 @@ const addExperts = async () => {
 
     for (const expertData of dummyExperts) {
       try {
-        const existingExpert = await Expert.findOne({ email: expertData.email });
-        if (existingExpert) {
-          console.log(`Expert ${expertData.firstName} ${expertData.lastName} already exists`);
-          continue;
-        }
-
-        const expert = new Expert(expertData);
-        await expert.save();
-        console.log(`Successfully added expert: ${expertData.firstName} ${expertData.lastName}`);
+        const expert = await Expert.findOneAndUpdate(
+          { email: expertData.email },
+          expertData,
+          { upsert: true, new: true, runValidators: true }
+        );
+        console.log(`Successfully added/updated expert: ${expertData.firstName} ${expertData.lastName}`);
       } catch (error) {
         console.log(`Failed to add expert: ${expertData.firstName} ${expertData.lastName}`);
         console.error('Error:', error.message);
