@@ -6,7 +6,7 @@ const authMiddleware = require('../middlewares/auth.middleware');
 // Expert routes
 router.get('/all', authMiddleware, expertController.getAllExperts);
 router.get('/:id', authMiddleware, expertController.getExpertById);
-router.post('/', authMiddleware, expertController.createExpert);
+router.post('/', expertController.createExpert);
 router.put('/:id', authMiddleware, expertController.updateExpert);
 router.delete('/:id', authMiddleware, expertController.deleteExpert);
 
