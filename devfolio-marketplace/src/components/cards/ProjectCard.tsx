@@ -21,14 +21,8 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    // Check if user is logged in (you can replace this with actual auth check)
-    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-
-    if (isLoggedIn) {
-      navigate(`/project/${project._id || project.id}`);
-    } else {
-      navigate("/login");
-    }
+    // Allow anyone to view projects without login
+    navigate(`/project/${project._id || project.id}`);
   };
 
   return (
