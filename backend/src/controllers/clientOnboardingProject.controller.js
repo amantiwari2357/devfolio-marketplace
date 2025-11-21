@@ -230,6 +230,12 @@ const updateProjectStage = async (req, res) => {
 
     await project.save();
 
+    // Emit real-time update via Socket.IO
+    if (global.io) {
+      global.io.to(`project_${project._id}`).emit('projectUpdated', project);
+      global.io.emit('projectUpdated', project); // Also emit to all clients as fallback
+    }
+
     res.json({
       success: true,
       message: 'Stage updated successfully',

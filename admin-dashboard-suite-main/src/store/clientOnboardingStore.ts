@@ -58,7 +58,7 @@ const useClientOnboardingStore = create<ClientOnboardingStore>((set, get) => ({
     set({ loading: true, error: null });
     try {
       const response = await api.get('/client-onboarding-projects');
-      set({ projects: response.data, loading: false });
+      set({ projects: response.data.projects || [], loading: false });
     } catch (error) {
       set({ error: 'Failed to fetch projects', loading: false });
     }
@@ -83,7 +83,7 @@ const useClientOnboardingStore = create<ClientOnboardingStore>((set, get) => ({
       const response = await api.put(`/client-onboarding-projects/${id}`, projectData);
       set((state) => ({
         projects: state.projects.map(project =>
-          project._id === id ? response.data : project
+          project._id === id ? response.data.project : project
         ),
         loading: false
       }));
@@ -98,7 +98,7 @@ const useClientOnboardingStore = create<ClientOnboardingStore>((set, get) => ({
       const response = await api.put(`/client-onboarding-projects/${projectId}/stages/${stageId}`, updateData);
       set((state) => ({
         projects: state.projects.map(project =>
-          project._id === projectId ? response.data : project
+          project._id === projectId ? response.data.project : project
         ),
         loading: false
       }));
