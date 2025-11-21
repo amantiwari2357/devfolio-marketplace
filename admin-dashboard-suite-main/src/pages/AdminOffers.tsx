@@ -35,7 +35,7 @@ const AdminOffers = () => {
   const [categoryFilter, setCategoryFilter] = useState<OfferCategory | 'all'>('all');
   const [editingOffer, setEditingOffer] = useState<Offer | null>(null);
 
-  const { offers, assignedOffers, addOffer, updateOffer, deleteOffer } = useOffersStore();
+  const { offers, assignedOffers, addOffer, updateOffer, deleteOffer, createOffer } = useOffersStore();
   const { toast } = useToast();
 
   // Form state
@@ -105,6 +105,7 @@ const AdminOffers = () => {
           category: formData.category,
           terms: formData.terms,
           validityDays: formData.validityDays,
+          isActive: true,
         });
         toast({
           title: "Offer Created",
