@@ -38,6 +38,7 @@ const signup = async (req, res) => {
       user: {
         id: user._id,
         email: user.email,
+        role: user.role,
         currentStep: user.currentStep
       }
     });
@@ -245,12 +246,60 @@ const login = async (req, res) => {
       user: {
         id: user._id,
         email: user.email,
+        role: user.role,
         currentStep: user.currentStep,
         onboardingCompleted: user.onboardingCompleted
       }
     });
   } catch (error) {
     console.error('Login error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// Create Admin
+const createAdmin = async (req, res) => {
+  try {
+    const { email = 'admin@example.com', password = 'admin123' } = req.body;
+
+    // Check if admin already exists
+    const existingAdmin = await User.findOne({ email });
+    if (existingAdmin) {
+      return res.status(400).json({ message: 'Admin already exists' });
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    // Create admin user
+    const admin = new User({
+      email,
+      password: hashedPassword,
+      role: 'admin',
+      currentStep: 4,
+      onboardingCompleted: true
+    });
+
+    await admin.save();
+
+    // Generate JWT token
+    const token = jwt.sign(
+      { userId: admin._id, email: admin.email },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
+    );
+
+    res.status(201).json({
+      message: 'Admin created successfully',
+      token,
+      admin: {
+        id: admin._id,
+        email: admin.email,
+        role: admin.role
+      }
+    });
+  } catch (error) {
+    console.error('Create admin error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -263,5 +312,6 @@ module.exports = {
   updateWhatsApp,
   getProfile,
   getAllUsers,
-  login
+  login,
+  createAdmin
 };

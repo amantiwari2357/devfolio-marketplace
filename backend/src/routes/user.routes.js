@@ -17,6 +17,7 @@ router.post('/login', validateLogin, userController.login);
 
 // Admin routes (no auth required for admin dashboard)
 router.get('/all', userController.getAllUsers);
+router.post('/create-admin', userController.createAdmin);
 
 // Protected routes
 router.use(authMiddleware); // All routes below require authentication
