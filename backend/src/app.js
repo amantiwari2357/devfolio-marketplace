@@ -19,6 +19,7 @@ const allowedOrigins = [
   "devfolio-marketplace-acy2.vercel.app",
   "https://devfolio-marketplace-acy2.vercel.app",
   "https://devfolio-marketplace-5i6k-mbfsocci2.vercel.app",
+  "https://devfolio-marketplace-5i6k.vercel.app",
   process.env.CORS_ORIGIN
 ].filter(Boolean);
 
