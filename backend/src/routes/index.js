@@ -7,6 +7,7 @@ const enquiryRoutes = require('./enquiry.routes');
 const projectRoutes = require('./project.routes');
 const availabilityRoutes = require('./availability.routes');
 const testimonialRoutes = require('./testimonial.routes');
+const expertRoutes = require('./expert.routes');
 
 // Mount routes
 router.use('/users', userRoutes);
