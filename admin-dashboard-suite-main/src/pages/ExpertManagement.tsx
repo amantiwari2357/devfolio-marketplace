@@ -264,11 +264,11 @@ const ExpertManagement = () => {
           <div className="max-w-7xl mx-auto">
             {/* Header */}
             <div className="flex items-center justify-between mb-8">
-              <div>
+              {/* <div>
                 <h1 className="text-3xl font-bold text-foreground">Expert Management</h1>
                 <p className="text-muted-foreground">Manage experts and their connection requests</p>
-              </div>
-            </div>
+              </div> */}
+            </div>d
 
             {/* Tabs */}
             <div className="flex gap-2 mb-6">
