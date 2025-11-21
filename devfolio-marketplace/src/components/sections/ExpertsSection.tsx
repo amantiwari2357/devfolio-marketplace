@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Star, MessageCircle, Share2, Heart, MapPin, Award } from "lucide-react";
+import { Star, MessageCircle, Share2, Heart, MapPin, Award, Loader2 } from "lucide-react";
 
 const categories = [
   "Career", "Data & AI", "Study Abroad", "Software", "HR", "Finance", "Astrology", "Marketing", "Product & Design", "Others"
@@ -27,50 +27,31 @@ interface Expert {
 }
 
 const ExpertsSection = () => {
-  const experts: Expert[] = [
-    {
-      _id: "1",
-      firstName: "Rahul",
-      lastName: "Sharma",
-      role: "Senior Software Engineer",
-      profileImage: null,
-      skills: ["JavaScript", "React", "Node.js", "System Design"],
-      bio: "Experienced software engineer with 5+ years in web development. Specialized in building scalable products.",
-      email: "rahul.sharma@example.com",
-      rating: 4.9,
-      connections: 342,
-      experience: "5+ years",
-      location: "Bangalore, India"
-    },
-    {
-      _id: "2",
-      firstName: "Priya",
-      lastName: "Patel",
-      role: "Data Scientist & ML Engineer",
-      profileImage: null,
-      skills: ["Python", "Machine Learning", "Data Analysis", "TensorFlow"],
-      bio: "Data scientist specializing in AI and predictive modeling. Helped 50+ startups scale their ML pipelines.",
-      email: "priya.patel@example.com",
-      rating: 4.8,
-      connections: 289,
-      experience: "4+ years",
-      location: "Mumbai, India"
-    },
-    {
-      _id: "3",
-      firstName: "Arjun",
-      lastName: "Singh",
-      role: "Career Coach & HR Strategist",
-      profileImage: null,
-      skills: ["Career Guidance", "Resume Building", "Interview Prep", "Leadership"],
-      bio: "Helped 500+ professionals land their dream jobs. Expertise in tech and finance domains.",
-      email: "arjun.singh@example.com",
-      rating: 4.7,
-      connections: 512,
-      experience: "6+ years",
-      location: "Delhi, India"
-    }
-  ];
+  const [experts, setExperts] = useState<Expert[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch experts on component mount
+  useEffect(() => {
+    const fetchExperts = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('https://devfolio-marketplace-1.onrender.com/api/experts/all');
+        if (!response.ok) {
+          throw new Error('Failed to fetch experts');
+        }
+        const data = await response.json();
+        setExperts(data.experts || []);
+      } catch (err) {
+        console.error('Error fetching experts:', err);
+        setError('Failed to load experts. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchExperts();
+  }, []);
 
   const [selectedCategory, setSelectedCategory] = useState("Career");
   const [selectedExpert, setSelectedExpert] = useState<Expert | null>(null);
@@ -144,8 +125,24 @@ const ExpertsSection = () => {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {experts.map((expert) => (
+        {loading ? (
+          <div className="flex justify-center items-center py-20">
+            <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+            <span className="ml-2 text-slate-600">Loading experts...</span>
+          </div>
+        ) : error ? (
+          <div className="text-center py-20">
+            <p className="text-red-600 mb-4">{error}</p>
+            <Button
+              onClick={() => window.location.reload()}
+              className="bg-blue-600 hover:bg-blue-700"
+            >
+              Try Again
+            </Button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {experts.map((expert) => (
             <Dialog key={expert._id} open={isDialogOpen && selectedExpert?._id === expert._id} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
                 <div
@@ -337,8 +334,9 @@ const ExpertsSection = () => {
                 </div>
               </DialogContent>
             </Dialog>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
