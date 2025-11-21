@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
-import { Link } from "lucide-react";
+import { Link, Loader2 } from "lucide-react";
 
 const Login = () => {
   const navigate = useNavigate();
