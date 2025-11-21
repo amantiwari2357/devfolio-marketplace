@@ -108,7 +108,7 @@ const useClientOnboardingStore = create<ClientOnboardingStore>((set, get) => ({
   },
 
   connectSocket: () => {
-    const socket = io('http://localhost:5000');
+    const socket = io('https://devfolio-marketplace-1.onrender.com');
     socket.on('projectUpdated', (updatedProject) => {
       set((state) => ({
         projects: state.projects.map(project =>
