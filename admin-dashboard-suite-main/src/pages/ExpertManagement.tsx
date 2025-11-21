@@ -47,6 +47,7 @@ const ExpertManagement = () => {
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
   const [expertsLoading, setExpertsLoading] = useState(true);
   const [enquiriesLoading, setEnquiriesLoading] = useState(true);
+  const token = localStorage.getItem("token");
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -197,6 +198,7 @@ const ExpertManagement = () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+             "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify(expertData),
         });
