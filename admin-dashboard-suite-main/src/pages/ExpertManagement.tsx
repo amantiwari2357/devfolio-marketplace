@@ -268,7 +268,7 @@ const ExpertManagement = () => {
                 <h1 className="text-3xl font-bold text-foreground">Expert Management</h1>
                 <p className="text-muted-foreground">Manage experts and their connection requests</p>
               </div> */}
-            </div>d
+            </div>
 
             {/* Tabs */}
             <div className="flex gap-2 mb-6">
