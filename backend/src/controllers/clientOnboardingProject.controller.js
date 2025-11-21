@@ -67,12 +67,23 @@ const getProjectById = async (req, res) => {
 // Create new project
 const createProject = async (req, res) => {
   try {
+    console.log('Creating project with data:', req.body);
+    console.log('User:', req.user);
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      console.log('Validation errors:', errors.array());
       return res.status(400).json({
         success: false,
         message: 'Validation errors',
         errors: errors.array()
+      });
+    }
+
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({
+        success: false,
+        message: 'User not authenticated'
       });
     }
 
@@ -85,6 +96,8 @@ const createProject = async (req, res) => {
       }))
     };
 
+    console.log('Project data to save:', projectData);
+
     const project = new ClientOnboardingProject(projectData);
     await project.save();
 
@@ -94,10 +107,12 @@ const createProject = async (req, res) => {
       project
     });
   } catch (error) {
-    console.error('Error creating project:', error);
+    console.error('Error creating project:', error.message);
+    console.error('Stack:', error.stack);
     res.status(500).json({
       success: false,
-      message: 'Failed to create project'
+      message: 'Failed to create project',
+      error: error.message
     });
   }
 };

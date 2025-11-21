@@ -46,10 +46,14 @@ const clientOnboardingProjectSchema = [
     .withMessage('Project type is required'),
 
   body('startDate')
+    .notEmpty()
+    .withMessage('Start date is required')
     .isISO8601()
     .withMessage('Valid start date is required'),
 
   body('deadline')
+    .notEmpty()
+    .withMessage('Deadline is required')
     .isISO8601()
     .withMessage('Valid deadline is required'),
 
