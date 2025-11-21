@@ -17,6 +17,7 @@ router.use('/projects', projectRoutes);
 router.use('/availabilities', availabilityRoutes);
 router.use('/testimonials', testimonialRoutes);
 router.use('/experts', expertRoutes);
+router.use('/offers', offerRoutes);
 
 // Health check
 router.get('/health', (req, res) => {
