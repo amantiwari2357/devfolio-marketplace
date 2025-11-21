@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useOffersStore, Offer, OfferCategory } from "@/store/offersStore";
 import Sidebar from "@/components/dashboard/Sidebar";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
@@ -80,7 +80,7 @@ const AdminOffers = () => {
     setOfferFormOpen(true);
   };
 
-  const handleSubmitOffer = () => {
+  const handleSubmitOffer = async () => {
     if (!formData.title || !formData.description || !formData.terms) {
       toast({
         title: "Missing Information",
@@ -90,27 +90,36 @@ const AdminOffers = () => {
       return;
     }
 
-    if (editingOffer) {
-      updateOffer(editingOffer.id, formData);
+    try {
+      if (editingOffer) {
+        // For now, keep local update - backend update can be added later
+        updateOffer(editingOffer.id, formData);
+        toast({
+          title: "Offer Updated",
+          description: "The offer has been updated successfully.",
+        });
+      } else {
+        await createOffer({
+          title: formData.title,
+          description: formData.description,
+          category: formData.category,
+          terms: formData.terms,
+          validityDays: formData.validityDays,
+        });
+        toast({
+          title: "Offer Created",
+          description: "The new offer has been created successfully.",
+        });
+      }
+
+      setOfferFormOpen(false);
+    } catch (error) {
       toast({
-        title: "Offer Updated",
-        description: "The offer has been updated successfully.",
-      });
-    } else {
-      const newOffer: Offer = {
-        id: `off${Date.now()}`,
-        ...formData,
-        isActive: true,
-        createdAt: new Date().toISOString(),
-      };
-      addOffer(newOffer);
-      toast({
-        title: "Offer Created",
-        description: "The new offer has been created successfully.",
+        title: "Error",
+        description: "Failed to save offer. Please try again.",
+        variant: "destructive",
       });
     }
-
-    setOfferFormOpen(false);
   };
 
   const handleDeleteOffer = (id: string) => {

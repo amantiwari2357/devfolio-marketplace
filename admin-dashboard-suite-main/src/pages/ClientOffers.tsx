@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { useOffersStore, AssignedOffer } from "@/store/offersStore";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
@@ -17,8 +17,13 @@ const ClientOffers = () => {
   const [selectedOffer, setSelectedOffer] = useState<AssignedOffer | null>(null);
   const [detailsModalOpen, setDetailsModalOpen] = useState(false);
   
-  const { assignedOffers, claimOffer } = useOffersStore();
+  const { assignedOffers, claimOffer, fetchAssignedOffers } = useOffersStore();
   const { toast } = useToast();
+
+  // Load data on component mount
+  useEffect(() => {
+    fetchAssignedOffers();
+  }, [fetchAssignedOffers]);
 
   // Mock client ID - in a real app, this would come from auth
   const currentClientId = 'c1';
