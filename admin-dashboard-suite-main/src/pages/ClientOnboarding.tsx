@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "@/components/dashboard/Sidebar";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import { Button } from "@/components/ui/button";
@@ -12,8 +12,9 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
-import { Plus, ChevronDown, ChevronUp, CheckCircle2, Clock, Circle, DollarSign, FileText, Calendar, Users, Edit } from "lucide-react";
+import { Plus, ChevronDown, ChevronUp, CheckCircle2, Clock, Circle, DollarSign, FileText, Calendar, Users, Edit, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import useClientOnboardingStore from "@/store/clientOnboardingStore";
 
 interface Stage {
   id: number;
@@ -30,7 +31,7 @@ interface Stage {
 }
 
 interface Project {
-  id: string;
+  _id: string;
   clientName: string;
   email: string;
   phone: string;
@@ -44,6 +45,8 @@ interface Project {
   totalAmount: number;
   paidAmount: number;
   stages: Stage[];
+  createdAt: string;
+  updatedAt: string;
 }
 
 const defaultStages: Stage[] = [
@@ -60,25 +63,19 @@ const defaultStages: Stage[] = [
 ];
 
 const ClientOnboarding = () => {
+  const {
+    projects,
+    loading,
+    error,
+    fetchProjects,
+    createProject,
+    updateProject,
+    updateStage,
+    connectSocket,
+    disconnectSocket
+  } = useClientOnboardingStore();
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [projects, setProjects] = useState<Project[]>([
-    {
-      id: "1",
-      clientName: "John Doe",
-      email: "john@example.com",
-      phone: "+91 98765 43210",
-      companyName: "Tech Solutions",
-      projectName: "E-commerce Platform",
-      techStack: "React + Node.js",
-      projectType: "E-commerce",
-      startDate: "2025-01-15",
-      deadline: "2025-06-30",
-      teamMembers: ["Alice", "Bob"],
-      totalAmount: 500000,
-      paidAmount: 150000,
-      stages: defaultStages.map(s => ({ ...s, payment: 50000 })),
-    },
-  ]);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [expandedStage, setExpandedStage] = useState<number | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -96,6 +93,15 @@ const ClientOnboarding = () => {
     deadline: "",
     totalAmount: "",
   });
+
+  useEffect(() => {
+    fetchProjects();
+    connectSocket();
+
+    return () => {
+      disconnectSocket();
+    };
+  }, [fetchProjects, connectSocket, disconnectSocket]);
 
   const calculateProgress = (stages: Stage[]) => {
     const completedStages = stages.filter((s) => s.status === "done").length;
@@ -124,10 +130,10 @@ const ClientOnboarding = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const newProject: Project = {
-      id: editingProject?.id || Date.now().toString(),
+
+    const projectData = {
       clientName: formData.clientName,
       email: formData.email,
       phone: formData.phone,
@@ -138,72 +144,56 @@ const ClientOnboarding = () => {
       startDate: formData.startDate,
       deadline: formData.deadline,
       totalAmount: Number(formData.totalAmount),
-      paidAmount: editingProject?.paidAmount || 0,
-      teamMembers: editingProject?.teamMembers || [],
-      stages: editingProject?.stages || defaultStages.map(s => ({ ...s, payment: Number(formData.totalAmount) / 10 })),
     };
 
-    if (editingProject) {
-      setProjects(projects.map((p) => (p.id === editingProject.id ? newProject : p)));
-    } else {
-      setProjects([...projects, newProject]);
+    try {
+      if (editingProject) {
+        await updateProject(editingProject._id, projectData);
+      } else {
+        await createProject(projectData);
+      }
+
+      setIsDialogOpen(false);
+      setFormData({
+        clientName: "",
+        email: "",
+        phone: "",
+        companyName: "",
+        projectName: "",
+        techStack: "",
+        projectType: "",
+        startDate: "",
+        deadline: "",
+        totalAmount: "",
+      });
+      setEditingProject(null);
+    } catch (error) {
+      console.error('Error saving project:', error);
     }
-
-    setIsDialogOpen(false);
-    setFormData({
-      clientName: "",
-      email: "",
-      phone: "",
-      companyName: "",
-      projectName: "",
-      techStack: "",
-      projectType: "",
-      startDate: "",
-      deadline: "",
-      totalAmount: "",
-    });
-    setEditingProject(null);
   };
 
-  const updateStageStatus = (projectId: string, stageId: number, status: "pending" | "in-progress" | "done") => {
-    setProjects(
-      projects.map((p) =>
-        p.id === projectId
-          ? {
-              ...p,
-              stages: p.stages.map((s) =>
-                s.id === stageId ? { ...s, status, completionDate: status === "done" ? new Date().toISOString().split("T")[0] : s.completionDate } : s
-              ),
-            }
-          : p
-      )
-    );
+  const updateStageStatus = async (projectId: string, stageId: number, status: "pending" | "in-progress" | "done") => {
+    try {
+      await updateStage(projectId, stageId, { status });
+    } catch (error) {
+      console.error('Error updating stage status:', error);
+    }
   };
 
-  const updateStagePayment = (projectId: string, stageId: number, paymentStatus: "pending" | "partially-paid" | "paid") => {
-    setProjects(
-      projects.map((p) =>
-        p.id === projectId
-          ? {
-              ...p,
-              stages: p.stages.map((s) => (s.id === stageId ? { ...s, paymentStatus } : s)),
-            }
-          : p
-      )
-    );
+  const updateStagePayment = async (projectId: string, stageId: number, paymentStatus: "pending" | "partially-paid" | "paid") => {
+    try {
+      await updateStage(projectId, stageId, { paymentStatus });
+    } catch (error) {
+      console.error('Error updating stage payment:', error);
+    }
   };
 
-  const updateStageNotes = (projectId: string, stageId: number, notes: string) => {
-    setProjects(
-      projects.map((p) =>
-        p.id === projectId
-          ? {
-              ...p,
-              stages: p.stages.map((s) => (s.id === stageId ? { ...s, notes } : s)),
-            }
-          : p
-      )
-    );
+  const updateStageNotes = async (projectId: string, stageId: number, notes: string) => {
+    try {
+      await updateStage(projectId, stageId, { notes });
+    } catch (error) {
+      console.error('Error updating stage notes:', error);
+    }
   };
 
   const openEditDialog = (project: Project) => {
@@ -222,6 +212,34 @@ const ClientOnboarding = () => {
     });
     setIsDialogOpen(true);
   };
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen w-full bg-background">
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        <div className="flex-1 lg:ml-64">
+          <DashboardHeader onMenuClick={() => setSidebarOpen(true)} />
+          <main className="p-6 flex items-center justify-center">
+            <Loader2 className="w-8 h-8 animate-spin" />
+          </main>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex min-h-screen w-full bg-background">
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        <div className="flex-1 lg:ml-64">
+          <DashboardHeader onMenuClick={() => setSidebarOpen(true)} />
+          <main className="p-6 flex items-center justify-center">
+            <div className="text-red-500">Error: {error}</div>
+          </main>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen w-full bg-background">
@@ -419,7 +437,7 @@ const ClientOnboarding = () => {
                             <div className="grid grid-cols-2 gap-4">
                               <div>
                                 <Label>Status</Label>
-                                <Select value={stage.status} onValueChange={(value: any) => updateStageStatus(selectedProject.id, stage.id, value)}>
+                                <Select value={stage.status} onValueChange={(value: any) => updateStageStatus(selectedProject._id, stage.id, value)}>
                                   <SelectTrigger>
                                     <SelectValue />
                                   </SelectTrigger>
@@ -432,7 +450,7 @@ const ClientOnboarding = () => {
                               </div>
                               <div>
                                 <Label>Payment Status</Label>
-                                <Select value={stage.paymentStatus} onValueChange={(value: any) => updateStagePayment(selectedProject.id, stage.id, value)}>
+                                <Select value={stage.paymentStatus} onValueChange={(value: any) => updateStagePayment(selectedProject._id, stage.id, value)}>
                                   <SelectTrigger>
                                     <SelectValue />
                                   </SelectTrigger>
@@ -454,7 +472,7 @@ const ClientOnboarding = () => {
                               <Label>Notes</Label>
                               <Textarea
                                 value={stage.notes}
-                                onChange={(e) => updateStageNotes(selectedProject.id, stage.id, e.target.value)}
+                                onChange={(e) => updateStageNotes(selectedProject._id, stage.id, e.target.value)}
                                 placeholder="Add notes, comments, or attachments info..."
                                 rows={3}
                               />
@@ -483,7 +501,7 @@ const ClientOnboarding = () => {
               <TabsContent value="list" className="space-y-4">
                 <div className="grid gap-4">
                   {projects.map((project) => (
-                    <Card key={project.id} className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => setSelectedProject(project)}>
+                    <Card key={project._id} className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => setSelectedProject(project)}>
                       <CardHeader>
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
@@ -554,7 +572,7 @@ const ClientOnboarding = () => {
 
               <TabsContent value="timeline" className="space-y-4">
                 {projects.map((project) => (
-                  <Card key={project.id}>
+                  <Card key={project._id}>
                     <CardHeader>
                       <CardTitle>{project.projectName}</CardTitle>
                       <p className="text-sm text-muted-foreground">{project.companyName}</p>
