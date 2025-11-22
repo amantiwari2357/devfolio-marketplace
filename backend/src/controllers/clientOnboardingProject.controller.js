@@ -19,7 +19,7 @@ const defaultStages = [
 // Get all client onboarding projects
 const getAllProjects = async (req, res) => {
   try {
-    const projects = await ClientOnboardingProject.find({ createdBy: req.user.id })
+    const projects = await ClientOnboardingProject.find({ createdBy: req.user.userId })
       .sort({ createdAt: -1 });
 
     res.json({
