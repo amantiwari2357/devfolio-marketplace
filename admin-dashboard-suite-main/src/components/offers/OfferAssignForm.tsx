@@ -81,7 +81,15 @@ export const OfferAssignForm = ({ open, onClose }: OfferAssignFormProps) => {
     if (!client) return;
 
     try {
-      await assignOffer(selectedOffer, selectedClient, client.clientName);
+      await api.post('/offers/assign', {
+        offerId: selectedOffer,
+        clientId: selectedClient,
+        clientName: client.clientName,
+      });
+
+      // Update local state
+      assignOffer(selectedOffer, selectedClient, client.clientName);
+
       toast({
         title: "Offer Assigned Successfully",
         description: `${selectedOfferData?.title} has been assigned to ${client.clientName}`,
