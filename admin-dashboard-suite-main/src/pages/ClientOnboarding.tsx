@@ -150,9 +150,13 @@ const ClientOnboarding = () => {
       if (editingProject) {
         await updateProject(editingProject._id, projectData);
       } else {
-        await createProject(projectData);
-        // Refresh projects list after creation
-        await fetchProjects();
+        const newProject = await createProject(projectData);
+        console.log('Project created successfully:', newProject);
+        // Only refresh if project was created successfully
+        if (newProject) {
+          // Don't call fetchProjects here - the store already added it to the list
+          // await fetchProjects(); // Commented out to prevent double fetch
+        }
       }
 
       setIsDialogOpen(false);
@@ -171,10 +175,9 @@ const ClientOnboarding = () => {
       setEditingProject(null);
     } catch (error: any) {
       console.error('Error saving project:', error);
-      // Error is already handled by the store, just show user-friendly message
-      if (error.response?.data?.message) {
-        // Toast will be shown by API interceptor
-      }
+      // Don't close dialog on error, let user see the error
+      // Error is already handled by the store and API interceptor
+      // The toast will be shown by API interceptor
     }
   };
 

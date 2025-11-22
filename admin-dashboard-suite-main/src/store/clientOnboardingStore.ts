@@ -69,15 +69,24 @@ const useClientOnboardingStore = create<ClientOnboardingStore>((set, get) => ({
     set({ loading: true, error: null });
     try {
       const response = await api.post('/client-onboarding-projects', projectData);
-      const newProject = response.data.project || response.data;
-      set((state) => ({
-        projects: [...state.projects, newProject],
-        loading: false
-      }));
-      return newProject;
+      console.log('Create project response:', response.data);
+      
+      // Handle different response formats
+      const newProject = response.data?.project || response.data;
+      
+      if (newProject) {
+        set((state) => ({
+          projects: [newProject, ...state.projects],
+          loading: false,
+          error: null
+        }));
+        return newProject;
+      } else {
+        throw new Error('Invalid response format');
+      }
     } catch (error: any) {
       console.error('Error creating project:', error);
-      const errorMessage = error.response?.data?.message || 'Failed to create project';
+      const errorMessage = error.response?.data?.message || error.message || 'Failed to create project';
       set({ error: errorMessage, loading: false });
       throw error; // Re-throw to let component handle it
     }
