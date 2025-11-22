@@ -173,7 +173,7 @@ const ClientOnboarding = () => {
         totalAmount: "",
       });
       setEditingProject(null);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error saving project:', error);
       // Don't close dialog on error, let user see the error
       // Error is already handled by the store and API interceptor
@@ -447,7 +447,7 @@ const ClientOnboarding = () => {
                             <div className="grid grid-cols-2 gap-4">
                               <div>
                                 <Label>Status</Label>
-                                <Select value={stage.status} onValueChange={(value: any) => updateStageStatus(selectedProject._id, stage.id, value)}>
+                                <Select value={stage.status} onValueChange={(value: "pending" | "in-progress" | "done") => updateStageStatus(selectedProject._id, stage.id, value)}>
                                   <SelectTrigger>
                                     <SelectValue />
                                   </SelectTrigger>
@@ -460,7 +460,7 @@ const ClientOnboarding = () => {
                               </div>
                               <div>
                                 <Label>Payment Status</Label>
-                                <Select value={stage.paymentStatus} onValueChange={(value: any) => updateStagePayment(selectedProject._id, stage.id, value)}>
+                                <Select value={stage.paymentStatus} onValueChange={(value: "pending" | "partially-paid" | "paid") => updateStagePayment(selectedProject._id, stage.id, value)}>
                                   <SelectTrigger>
                                     <SelectValue />
                                   </SelectTrigger>

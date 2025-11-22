@@ -61,7 +61,9 @@ api.interceptors.response.use(
     // Show toast for other errors (400, 500, etc.) - but don't redirect
     if (status === 400 && errors && Array.isArray(errors)) {
       // Validation errors
-      const errorMessages = errors.map((err: any) => `${err.path || err.param}: ${err.msg || err.message}`).join(', ');
+      const errorMessages = errors.map((err: { path?: string; param?: string; msg?: string; message?: string }) => 
+        `${err.path || err.param}: ${err.msg || err.message}`
+      ).join(', ');
       toast.error('Validation Error: ' + errorMessages);
     } else if (message) {
       toast.error(message);

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { io } from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 import api from '../services/api';
 
 interface Project {
@@ -39,11 +39,11 @@ interface ClientOnboardingStore {
   projects: Project[];
   loading: boolean;
   error: string | null;
-  socket: any;
+  socket: Socket | null;
   fetchProjects: () => Promise<void>;
-  createProject: (projectData: any) => Promise<void>;
-  updateProject: (id: string, projectData: any) => Promise<void>;
-  updateStage: (projectId: string, stageId: number, updateData: any) => Promise<void>;
+  createProject: (projectData: Partial<Project>) => Promise<Project | void>;
+  updateProject: (id: string, projectData: Partial<Project>) => Promise<void>;
+  updateStage: (projectId: string, stageId: number, updateData: Partial<Stage>) => Promise<void>;
   connectSocket: () => void;
   disconnectSocket: () => void;
 }
@@ -59,9 +59,10 @@ const useClientOnboardingStore = create<ClientOnboardingStore>((set, get) => ({
     try {
       const response = await api.get('/client-onboarding-projects');
       set({ projects: response.data.projects || response.data.data || [], loading: false });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error fetching projects:', error);
-      set({ error: error.response?.data?.message || 'Failed to fetch projects', loading: false });
+      const errorMessage = (error as { response?: { data?: { message?: string } } })?.response?.data?.message || 'Failed to fetch projects';
+      set({ error: errorMessage, loading: false });
     }
   },
 
@@ -84,9 +85,10 @@ const useClientOnboardingStore = create<ClientOnboardingStore>((set, get) => ({
       } else {
         throw new Error('Invalid response format');
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error creating project:', error);
-      const errorMessage = error.response?.data?.message || error.message || 'Failed to create project';
+      const err = error as { response?: { data?: { message?: string } }; message?: string };
+      const errorMessage = err.response?.data?.message || err.message || 'Failed to create project';
       set({ error: errorMessage, loading: false });
       throw error; // Re-throw to let component handle it
     }
