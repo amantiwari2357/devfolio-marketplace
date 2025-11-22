@@ -46,8 +46,8 @@ export const OfferAssignForm = ({ open, onClose }: OfferAssignFormProps) => {
     const fetchClients = async () => {
       setLoading(true);
       try {
-        const res = await api.get("/users/all");
-        if (mounted) setClients(res.data.users || []);
+        const res = await api.get("/client-onboarding-projects");
+        if (mounted) setClients(res.data.projects || []);
       } catch (error) {
         toast({
           title: "Error",
