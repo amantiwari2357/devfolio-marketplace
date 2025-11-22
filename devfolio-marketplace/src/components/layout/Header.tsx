@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, User, LogOut, Edit, CheckCircle2 } from "lucide-react";
+import { ChevronDown, LogOut, Edit, CheckCircle2, User } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuLabel } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import logo from "../../../public/Images/logo.png";
 import { useNavigate } from "react-router-dom";
 import { userAPI } from "@/services/auth";
+
+import { Avatar } from "@/components/ui/avatar";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -101,17 +103,9 @@ const Header = () => {
              <Button 
                 variant="ghost" 
                 size="icon" 
-                className="relative rounded-full w-10 h-10 bg-gradient-to-br from-primary/10 to-primary-glow/10 hover:from-primary/20 hover:to-primary-glow/20 border border-primary/20 transition-all duration-300"
+                className="relative rounded-full w-10 h-10  from-primary/10 to-primary-glow/10 hover:from-primary/20 hover:to-primary-glow/20 border border-primary/20 transition-all duration-300"
               >
-                {user?.profileImage ? (
-                  <img 
-                    src={user.profileImage} 
-                    alt={user.username} 
-                    className="w-full h-full rounded-full object-cover"
-                  />
-                ) : (
-                  <User className="h-5 w-5 text-primary" />
-                )}
+                <Avatar className="rounded-full h-10 w-10" />
               </Button>
             </DropdownMenuTrigger>
              <DropdownMenuContent align="end" className="w-64 bg-popover/95 backdrop-blur-md shadow-lg border-border z-[100]">
