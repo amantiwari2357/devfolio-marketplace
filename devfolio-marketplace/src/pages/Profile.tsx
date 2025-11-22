@@ -24,6 +24,11 @@ const Profile = () => {
     portfolio: "",
     reason: "",
     availability: "",
+    projectName: "",
+    projectDescription: "",
+    requirements: "",
+    timeline: "",
+    budget: ""
   });
 
   useEffect(() => {
@@ -58,7 +63,12 @@ const Profile = () => {
   }, [navigate, user]);
 
   const handleOnboardingSubmit = async () => {
-    if (!onboardingForm.experience || !onboardingForm.reason || !onboardingForm.availability) {
+    // Validate required project onboarding fields here
+    if (
+      !onboardingForm.projectName ||
+      !onboardingForm.projectDescription ||
+      !onboardingForm.requirements
+    ) {
       toast.error("Please fill in all required fields");
       return;
     }
@@ -66,16 +76,21 @@ const Profile = () => {
     setIsSubmitting(true);
     try {
       await userAPI.submitOnboardingRequest(onboardingForm);
-      toast.success("Onboarding request submitted successfully!");
+      toast.success("Project onboarding request submitted successfully!");
       setIsDialogOpen(false);
       setOnboardingForm({
         experience: "",
         portfolio: "",
         reason: "",
         availability: "",
+        projectName: "",
+        projectDescription: "",
+        requirements: "",
+        timeline: "",
+        budget: ""
       });
     } catch (error) {
-      toast.error("Failed to submit onboarding request");
+      toast.error("Failed to submit project onboarding request");
     } finally {
       setIsSubmitting(false);
     }
