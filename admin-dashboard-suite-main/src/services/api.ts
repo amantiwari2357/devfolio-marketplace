@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { toast } from 'sonner';
+import { API_CONFIG } from '../config/api.config';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'https://devfolio-marketplace-1.onrender.com/api',
+  baseURL: API_CONFIG.BASE_URL,
+  timeout: API_CONFIG.TIMEOUT,
   headers: {
     'Content-Type': 'application/json',
   },

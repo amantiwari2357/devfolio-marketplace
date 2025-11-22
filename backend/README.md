@@ -1,179 +1,126 @@
-# Devfolio Marketplace Backend
+# Devfolio Backend API
 
-A Node.js backend API for the Devfolio Marketplace platform with user registration and multi-step onboarding.
+## Setup Instructions
 
-## Features
-
-- User authentication (signup/login)
-- Multi-step onboarding process (4 steps)
-- JWT-based authentication
-- MongoDB database integration
-- Input validation and error handling
-- CORS support
-
-## Tech Stack
-
-- **Runtime**: Node.js
-- **Framework**: Express.js
-- **Database**: MongoDB with Mongoose
-- **Authentication**: JWT (JSON Web Tokens)
-- **Validation**: express-validator
-- **Password Hashing**: bcryptjs
-
-## Project Structure
-
-```
-backend/
-├── src/
-│   ├── app.js              # Express app setup
-│   ├── server.js           # Server entry point
-│   ├── config/
-│   │   └── db.js           # Database connection
-│   ├── controllers/
-│   │   └── user.controller.js  # User-related logic
-│   ├── middlewares/
-│   │   └── auth.middleware.js  # JWT authentication
-│   ├── models/
-│   │   └── user.model.js   # User schema
-│   ├── routes/
-│   │   └── index.js        # API routes
-│   ├── services/
-│   │   └── user.service.js # User services (placeholder)
-│   ├── utils/
-│   │   └── errorHandler.js # Error handling middleware
-│   └── validators/
-│       └── user.validator.js # Input validation
-├── package.json
-├── .env.example
-└── README.md
+### 1. Install Dependencies
+```bash
+npm install
 ```
 
-## Installation
+### 2. Environment Variables
 
-1. Navigate to the backend directory:
-   ```bash
-   cd devfolio-marketplace/backend
-   ```
+Create a `.env` file in the root directory with the following variables:
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+```env
+# Server Configuration
+PORT=5000
+NODE_ENV=development
 
-3. Create a `.env` file based on `.env.example`:
-   ```bash
-   cp .env.example .env
-   ```
+# MongoDB Configuration
+MONGODB_URI=mongodb+srv://amankumartiwari5255_db_user:jlJohiJC3FX5gBxN@cluster0.m5vmuqs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 
-4. Update the `.env` file with your configuration:
-   ```env
-   NODE_ENV=development
-   PORT=5000
-   MONGODB_URI=mongodb://localhost:27017/devfolio-marketplace
-   JWT_SECRET=your-super-secret-jwt-key
-   ```
+# JWT Configuration
+JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+JWT_EXPIRES_IN=7d
 
-5. Start MongoDB (if running locally)
+# Frontend URL
+FRONTEND_URL=http://localhost:5173
+```
 
-6. Start the development server:
-   ```bash
-   npm run dev
-   ```
+### 3. Run the Server
 
-The server will start on `https://devfolio-marketplace-1.onrender.com`
+Development mode (with auto-reload):
+```bash
+npm run dev
+```
 
-## API Endpoints
+Production mode:
+```bash
+npm run build
+npm start
+```
 
-### Authentication
-- `POST /api/auth/signup` - User registration
-- `POST /api/auth/login` - User login
+### 4. API Endpoints
 
-### Protected Routes (require JWT token in Authorization header)
-- `GET /api/profile` - Get user profile
-- `PUT /api/profile` - Update user profile (Step 1)
-- `PUT /api/availability` - Update availability (Step 2)
-- `PUT /api/services` - Update services (Step 3)
-- `PUT /api/whatsapp` - Update WhatsApp number and complete onboarding (Step 4)
+- Health Check: `GET /api/health`
+- Auth: `/api/auth/*`
+- Users: `/api/users/*`
+- Projects: `/api/projects/*`
+- Courses: `/api/courses/*`
+- Services: `/api/services/*`
+- Experts: `/api/experts/*`
+- Testimonials: `/api/testimonials/*`
+- Client Onboarding: `/api/client-onboarding/*`
 
-## Onboarding Steps
+## Client Onboarding API
 
-1. **Profile Setup**: Social URL, username, country, currency, expertise
-2. **Availability**: Weekly schedule with start/end times
-3. **Services**: Service offerings (default: Discovery Call)
-4. **WhatsApp Integration**: Phone number for booking notifications
+### Get All Client Onboarding Records
+```
+GET /api/client-onboarding
+Query Parameters:
+  - clientName (optional)
+  - email (optional)
+  - companyName (optional)
+  - projectName (optional)
+  - status (optional)
+  - page (optional, default: 1)
+  - limit (optional, default: 10)
+```
 
-## Data Models
+### Get Client Onboarding by ID
+```
+GET /api/client-onboarding/:id
+```
 
-### User Model
-```javascript
-{
-  email: String (required, unique),
-  password: String (required, hashed),
-  socialUrl: String,
-  username: String (required, unique),
-  country: String (required),
-  currency: String (required),
-  expertise: [String],
-  availability: [{
-    day: String,
-    enabled: Boolean,
-    startTime: String,
-    endTime: String
-  }],
-  services: [{
-    name: String,
-    description: String
-  }],
-  whatsappNumber: String,
-  onboardingCompleted: Boolean,
-  currentStep: Number (1-4)
+### Create Client Onboarding
+```
+POST /api/client-onboarding
+Body: {
+  clientName: string,
+  email: string,
+  phone: string,
+  companyName: string,
+  projectName: string,
+  techStack: string,
+  projectType: string,
+  startDate: string (ISO date),
+  deadline: string (ISO date),
+  teamMembers: Array,
+  totalAmount: number,
+  paidAmount: number,
+  stages: Array
 }
 ```
 
-## Usage
-
-### Signup
-```bash
-curl -X POST https://devfolio-marketplace-1.onrender.com/api/auth/signup \
-  -H "Content-Type: application/json" \
-  -d '{"email": "user@example.com", "password": "password123"}'
+### Update Client Onboarding
+```
+PUT /api/client-onboarding/:id
+Body: (same as create)
 ```
 
-### Login
-```bash
-curl -X POST https://devfolio-marketplace-1.onrender.com/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email": "user@example.com", "password": "password123"}'
+### Update Stage Status
+```
+PATCH /api/client-onboarding/:id/stage
+Body: {
+  stageIndex: number,
+  status: 'pending' | 'in-progress' | 'completed'
+}
 ```
 
-### Update Profile (Step 1)
-```bash
-curl -X PUT https://devfolio-marketplace-1.onrender.com/api/profile \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
-  -d '{
-    "socialUrl": "https://linkedin.com/in/user",
-    "username": "user123",
-    "country": "India",
-    "currency": "INR",
-    "expertise": ["Software", "Design"]
-  }'
+### Update Payment
+```
+PATCH /api/client-onboarding/:id/payment
+Body: {
+  paidAmount: number
+}
 ```
 
-## Development
+### Get Statistics
+```
+GET /api/client-onboarding/stats
+```
 
-- Use `npm run dev` for development with nodemon
-- Use `npm start` for production
-- MongoDB connection is handled automatically on server start
-- JWT tokens expire in 7 days
+## Notes
 
-## Contributing
-
-1. Follow the existing code structure
-2. Add proper validation for new endpoints
-3. Update this README for any new features
-4. Test all endpoints thoroughly
-
-## License
-
-ISC
+- All routes except `/api/health` and `/api/auth/login` require authentication
+- Use the JWT token from login in the Authorization header: `Bearer <token>`
