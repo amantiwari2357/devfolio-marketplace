@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,9 @@ import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Settings as SettingsIcon, User, Bell, Shield, CreditCard, Save } from "lucide-react";
 import api from "@/services/api";
+import { connectSocket, getSocket } from "@/services/socket";
+
+type NullableTimeout = ReturnType<typeof setTimeout> | null;
 
 const Settings = () => {
   const [user, setUser] = useState({
@@ -31,55 +34,91 @@ const Settings = () => {
     showPhone: false,
     allowMessages: true
   });
+
   const [loading, setLoading] = useState(false);
+
+  const profileTimeout = useRef<NullableTimeout>(null);
+  const notificationsTimeout = useRef<NullableTimeout>(null);
+  const privacyTimeout = useRef<NullableTimeout>(null);
 
   useEffect(() => {
     const fetchUserSettings = async () => {
       try {
         const response = await api.get('/auth/profile');
-        setUser(response.data);
+        setUser(response.data.user);
+        setNotifications(response.data.notifications);
+        setPrivacy(response.data.privacy);
       } catch (error) {
         console.error('Error fetching user settings:', error);
       }
     };
 
     fetchUserSettings();
+
+    const socket = connectSocket();
+
+    // Optional: event listeners to update UI on server broadcasts
+    // socket.on('profileUpdated', updatedProfile => setUser(updatedProfile));
+    // socket.on('notificationsUpdated', updatedNotifications => setNotifications(updatedNotifications));
+    // socket.on('privacyUpdated', updatedPrivacy => setPrivacy(updatedPrivacy));
+
+    return () => {
+      socket.disconnect();
+      if (profileTimeout.current) clearTimeout(profileTimeout.current);
+      if (notificationsTimeout.current) clearTimeout(notificationsTimeout.current);
+      if (privacyTimeout.current) clearTimeout(privacyTimeout.current);
+    };
   }, []);
 
-  const handleSaveProfile = async () => {
-    setLoading(true);
-    try {
-      await api.put('/auth/profile', user);
-      // Show success message
-    } catch (error) {
-      console.error('Error updating profile:', error);
-    } finally {
-      setLoading(false);
-    }
+  const emitProfileUpdate = (updatedProfile: typeof user) => {
+    if (profileTimeout.current) clearTimeout(profileTimeout.current);
+    profileTimeout.current = setTimeout(() => {
+      try {
+        getSocket().emit('updateProfile', updatedProfile);
+      } catch (e) {
+        console.error('Socket emit error:', e);
+      }
+    }, 500);
   };
 
-  const handleSaveNotifications = async () => {
-    setLoading(true);
-    try {
-      await api.put('/user/notifications', notifications);
-      // Show success message
-    } catch (error) {
-      console.error('Error updating notifications:', error);
-    } finally {
-      setLoading(false);
-    }
+  const emitNotificationsUpdate = (updatedNotifications: typeof notifications) => {
+    if (notificationsTimeout.current) clearTimeout(notificationsTimeout.current);
+    notificationsTimeout.current = setTimeout(() => {
+      try {
+        getSocket().emit('updateNotifications', updatedNotifications);
+      } catch (e) {
+        console.error('Socket emit error:', e);
+      }
+    }, 500);
   };
 
-  const handleSavePrivacy = async () => {
-    setLoading(true);
-    try {
-      await api.put('/user/privacy', privacy);
-      // Show success message
-    } catch (error) {
-      console.error('Error updating privacy:', error);
-    } finally {
-      setLoading(false);
-    }
+  const emitPrivacyUpdate = (updatedPrivacy: typeof privacy) => {
+    if (privacyTimeout.current) clearTimeout(privacyTimeout.current);
+    privacyTimeout.current = setTimeout(() => {
+      try {
+        getSocket().emit('updatePrivacy', updatedPrivacy);
+      } catch (e) {
+        console.error('Socket emit error:', e);
+      }
+    }, 500);
+  };
+
+  const handleUserChange = (field: keyof typeof user, value: string) => {
+    const updatedUser = { ...user, [field]: value };
+    setUser(updatedUser);
+    emitProfileUpdate(updatedUser);
+  };
+
+  const handleNotificationChange = (field: keyof typeof notifications, value: boolean) => {
+    const updatedNotifications = { ...notifications, [field]: value };
+    setNotifications(updatedNotifications);
+    emitNotificationsUpdate(updatedNotifications);
+  };
+
+  const handlePrivacyChange = (field: keyof typeof privacy, value: any) => {
+    const updatedPrivacy = { ...privacy, [field]: value };
+    setPrivacy(updatedPrivacy);
+    emitPrivacyUpdate(updatedPrivacy);
   };
 
   return (
@@ -120,7 +159,7 @@ const Settings = () => {
                   <Input
                     id="firstName"
                     value={user.firstName}
-                    onChange={(e) => setUser({...user, firstName: e.target.value})}
+                    onChange={(e) => handleUserChange("firstName", e.target.value)}
                   />
                 </div>
                 <div className="space-y-2">
@@ -128,7 +167,7 @@ const Settings = () => {
                   <Input
                     id="lastName"
                     value={user.lastName}
-                    onChange={(e) => setUser({...user, lastName: e.target.value})}
+                    onChange={(e) => handleUserChange("lastName", e.target.value)}
                   />
                 </div>
                 <div className="space-y-2">
@@ -137,7 +176,7 @@ const Settings = () => {
                     id="email"
                     type="email"
                     value={user.email}
-                    onChange={(e) => setUser({...user, email: e.target.value})}
+                    onChange={(e) => handleUserChange("email", e.target.value)}
                   />
                 </div>
                 <div className="space-y-2">
@@ -145,7 +184,7 @@ const Settings = () => {
                   <Input
                     id="phone"
                     value={user.phone}
-                    onChange={(e) => setUser({...user, phone: e.target.value})}
+                    onChange={(e) => handleUserChange("phone", e.target.value)}
                   />
                 </div>
                 <div className="space-y-2">
@@ -154,7 +193,7 @@ const Settings = () => {
                     id="website"
                     placeholder="https://yourwebsite.com"
                     value={user.website}
-                    onChange={(e) => setUser({...user, website: e.target.value})}
+                    onChange={(e) => handleUserChange("website", e.target.value)}
                   />
                 </div>
                 <div className="space-y-2">
@@ -163,7 +202,7 @@ const Settings = () => {
                     id="location"
                     placeholder="City, Country"
                     value={user.location}
-                    onChange={(e) => setUser({...user, location: e.target.value})}
+                    onChange={(e) => handleUserChange("location", e.target.value)}
                   />
                 </div>
               </div>
@@ -173,18 +212,10 @@ const Settings = () => {
                   id="bio"
                   placeholder="Tell us about yourself..."
                   value={user.bio}
-                  onChange={(e) => setUser({...user, bio: e.target.value})}
+                  onChange={(e) => handleUserChange("bio", e.target.value)}
                   rows={4}
                 />
               </div>
-              <Button
-                onClick={handleSaveProfile}
-                disabled={loading}
-                className="mt-6 bg-foreground text-background hover:bg-foreground/90"
-              >
-                <Save className="w-4 h-4 mr-2" />
-                {loading ? 'Saving...' : 'Save Profile'}
-              </Button>
             </Card>
           </TabsContent>
 
@@ -201,19 +232,21 @@ const Settings = () => {
                   <Switch
                     checked={notifications.emailNotifications}
                     onCheckedChange={(checked) =>
-                      setNotifications({...notifications, emailNotifications: checked})
+                      handleNotificationChange("emailNotifications", checked)
                     }
                   />
                 </div>
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="font-medium">Booking Reminders</h3>
-                    <p className="text-sm text-muted-foreground">Get reminded about upcoming bookings</p>
+                    <p className="text-sm text-muted-foreground">
+                      Get reminded about upcoming bookings
+                    </p>
                   </div>
                   <Switch
                     checked={notifications.bookingReminders}
                     onCheckedChange={(checked) =>
-                      setNotifications({...notifications, bookingReminders: checked})
+                      handleNotificationChange("bookingReminders", checked)
                     }
                   />
                 </div>
@@ -225,31 +258,25 @@ const Settings = () => {
                   <Switch
                     checked={notifications.messageNotifications}
                     onCheckedChange={(checked) =>
-                      setNotifications({...notifications, messageNotifications: checked})
+                      handleNotificationChange("messageNotifications", checked)
                     }
                   />
                 </div>
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="font-medium">Marketing Emails</h3>
-                    <p className="text-sm text-muted-foreground">Receive promotional emails and updates</p>
+                    <p className="text-sm text-muted-foreground">
+                      Receive promotional emails and updates
+                    </p>
                   </div>
                   <Switch
                     checked={notifications.marketingEmails}
                     onCheckedChange={(checked) =>
-                      setNotifications({...notifications, marketingEmails: checked})
+                      handleNotificationChange("marketingEmails", checked)
                     }
                   />
                 </div>
               </div>
-              <Button
-                onClick={handleSaveNotifications}
-                disabled={loading}
-                className="mt-6 bg-foreground text-background hover:bg-foreground/90"
-              >
-                <Save className="w-4 h-4 mr-2" />
-                {loading ? 'Saving...' : 'Save Preferences'}
-              </Button>
             </Card>
           </TabsContent>
 
@@ -262,12 +289,12 @@ const Settings = () => {
                   <Label className="text-base font-medium">Profile Visibility</Label>
                   <p className="text-sm text-muted-foreground mb-3">Control who can see your profile</p>
                   <div className="flex gap-4">
-                    {['public', 'private', 'unlisted'].map((option) => (
+                    {["public", "private", "unlisted"].map((option) => (
                       <Button
                         key={option}
                         variant={privacy.profileVisibility === option ? "default" : "outline"}
                         size="sm"
-                        onClick={() => setPrivacy({...privacy, profileVisibility: option})}
+                        onClick={() => handlePrivacyChange("profileVisibility", option)}
                       >
                         {option.charAt(0).toUpperCase() + option.slice(1)}
                       </Button>
@@ -281,9 +308,7 @@ const Settings = () => {
                   </div>
                   <Switch
                     checked={privacy.showEmail}
-                    onCheckedChange={(checked) =>
-                      setPrivacy({...privacy, showEmail: checked})
-                    }
+                    onCheckedChange={checked => handlePrivacyChange("showEmail", checked)}
                   />
                 </div>
                 <div className="flex items-center justify-between">
@@ -293,9 +318,7 @@ const Settings = () => {
                   </div>
                   <Switch
                     checked={privacy.showPhone}
-                    onCheckedChange={(checked) =>
-                      setPrivacy({...privacy, showPhone: checked})
-                    }
+                    onCheckedChange={(checked) => handlePrivacyChange("showPhone", checked)}
                   />
                 </div>
                 <div className="flex items-center justify-between">
@@ -305,19 +328,17 @@ const Settings = () => {
                   </div>
                   <Switch
                     checked={privacy.allowMessages}
-                    onCheckedChange={(checked) =>
-                      setPrivacy({...privacy, allowMessages: checked})
-                    }
+                    onCheckedChange={(checked) => handlePrivacyChange("allowMessages", checked)}
                   />
                 </div>
               </div>
               <Button
-                onClick={handleSavePrivacy}
-                disabled={loading}
-                className="mt-6 bg-foreground text-background hover:bg-foreground/90"
+                onClick={() => {}}
+                disabled
+                className="mt-6 bg-foreground text-background hover:bg-foreground/90 cursor-not-allowed"
               >
                 <Save className="w-4 h-4 mr-2" />
-                {loading ? 'Saving...' : 'Save Privacy Settings'}
+                {"Saving... (auto)"}
               </Button>
             </Card>
           </TabsContent>
