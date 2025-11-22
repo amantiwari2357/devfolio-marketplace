@@ -94,9 +94,23 @@ const ClientOnboarding = () => {
     totalAmount: "",
   });
 
+  const [users, setUsers] = useState<any[]>([]);
+
   useEffect(() => {
     fetchProjects();
     connectSocket();
+
+    // Fetch all registered users
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch('https://devfolio-marketplace-1.onrender.com/api/users/all');
+        const data = await response.json();
+        setUsers(data.users || []);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+    fetchUsers();
 
     return () => {
       disconnectSocket();
@@ -273,12 +287,32 @@ const ClientOnboarding = () => {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <Label>Client Name</Label>
-                      <Input value={formData.clientName} onChange={(e) => setFormData({ ...formData, clientName: e.target.value })} required />
+                      <Label>Select Client</Label>
+                      <Select value={formData.clientName} onValueChange={(value) => {
+                        const selectedUser = users.find(user => user.username === value);
+                        if (selectedUser) {
+                          setFormData({
+                            ...formData,
+                            clientName: selectedUser.username,
+                            email: selectedUser.email
+                          });
+                        }
+                      }}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a registered user" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {users.map((user) => (
+                            <SelectItem key={user._id} value={user.username}>
+                              {user.username} - {user.email}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
                     <div>
                       <Label>Email</Label>
-                      <Input type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} required />
+                      <Input type="email" value={formData.email} readOnly />
                     </div>
                     <div>
                       <Label>Phone</Label>
