@@ -120,9 +120,19 @@ const Profile = () => {
             <CardContent className="pt-6">
               <div className="flex flex-col md:flex-row gap-6">
                 <div className="flex-shrink-0">
-                  <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center text-4xl font-bold text-primary-foreground">
-                    {user?.username?.charAt(0).toUpperCase()}
-                  </div>
+                <div className="w-32 h-32 rounded-full overflow-hidden bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center text-primary-foreground">
+                  {(user as any)?.imageUrl ? (
+                    <img
+                      src={(user as any).imageUrl}
+                      alt="User Profile"
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <span className="text-4xl font-bold">
+                      {user?.username?.charAt(0).toUpperCase()}
+                    </span>
+                  )}
+                </div>
                 </div>
                 <div className="flex-1 space-y-4">
                   <div className="flex items-start justify-between">
