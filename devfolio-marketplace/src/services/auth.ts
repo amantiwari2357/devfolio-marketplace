@@ -39,6 +39,11 @@ export interface OnboardingRequest {
   portfolio?: string;
   reason: string;
   availability: string;
+  projectName?: string;
+  projectDescription?: string;
+  requirements?: string;
+  timeline?: string;
+  budget?: string;
 }
 
 // Auth API functions

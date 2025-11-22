@@ -195,110 +195,82 @@ const Profile = () => {
             </CardContent>
           </Card>
 
-          {/* Onboarding Section */}
+          {/* Project Onboarding Section */}
           <Card className="border-border shadow-sm bg-gradient-to-br from-card to-card/50">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <CheckCircle2 className="h-5 w-5 text-primary" />
-                Professional Onboarding
+                Project Onboarding
               </CardTitle>
               <CardDescription>
-                Request to join our verified professionals program
+                Fill out your project details to proceed with creating your project.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-sm text-muted-foreground">
-                Get verified as a professional to unlock premium features and showcase your expertise to potential clients.
-              </p>
-              <div className="flex gap-3">
-                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                  <DialogTrigger asChild>
-                    <Button className="gap-2 bg-gradient-to-r from-primary to-primary-glow">
-                      <Send className="h-4 w-4" />
-                      Request Onboarding
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                    <DialogHeader>
-                      <DialogTitle>Professional Onboarding Request</DialogTitle>
-                      <DialogDescription>
-                        Fill out this form to request professional verification
-                      </DialogDescription>
-                    </DialogHeader>
-                    <div className="space-y-4 py-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="experience">Years of Experience *</Label>
-                        <Input
-                          id="experience"
-                          value={onboardingForm.experience}
-                          onChange={(e) =>
-                            setOnboardingForm({ ...onboardingForm, experience: e.target.value })
-                          }
-                          placeholder="e.g., 5 years"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="portfolio">Portfolio URL</Label>
-                        <Input
-                          id="portfolio"
-                          value={onboardingForm.portfolio}
-                          onChange={(e) =>
-                            setOnboardingForm({ ...onboardingForm, portfolio: e.target.value })
-                          }
-                          placeholder="https://yourportfolio.com"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="reason">Why do you want to join? *</Label>
-                        <Textarea
-                          id="reason"
-                          value={onboardingForm.reason}
-                          onChange={(e) =>
-                            setOnboardingForm({ ...onboardingForm, reason: e.target.value })
-                          }
-                          placeholder="Tell us about your motivation and goals..."
-                          rows={4}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="availability">Availability *</Label>
-                        <Input
-                          id="availability"
-                          value={onboardingForm.availability}
-                          onChange={(e) =>
-                            setOnboardingForm({ ...onboardingForm, availability: e.target.value })
-                          }
-                          placeholder="e.g., Full-time, Part-time, Weekends"
-                        />
-                      </div>
-                    </div>
-                    <DialogFooter>
-                      <Button
-                        variant="outline"
-                        onClick={() => setIsDialogOpen(false)}
-                        disabled={isSubmitting}
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        onClick={handleOnboardingSubmit}
-                        disabled={isSubmitting}
-                        className="bg-gradient-to-r from-primary to-primary-glow"
-                      >
-                        {isSubmitting ? "Submitting..." : "Submit Request"}
-                      </Button>
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
-                <Button
-                  variant="outline"
-                  onClick={() => navigate("/onboarding-status")}
-                  className="gap-2"
-                >
-                  <CheckCircle2 className="h-4 w-4" />
-                  View Status
-                </Button>
+              <div className="space-y-2">
+                <Label htmlFor="projectName">Project Name *</Label>
+                <Input
+                  id="projectName"
+                  value={onboardingForm.projectName}
+                  onChange={(e) =>
+                    setOnboardingForm({ ...onboardingForm, projectName: e.target.value })
+                  }
+                  placeholder="Enter your project name"
+                />
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="projectDescription">Project Description *</Label>
+                <Textarea
+                  id="projectDescription"
+                  value={onboardingForm.projectDescription}
+                  onChange={(e) =>
+                    setOnboardingForm({ ...onboardingForm, projectDescription: e.target.value })
+                  }
+                  rows={4}
+                  placeholder="Provide a brief description of your project"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="requirements">Basic Requirements *</Label>
+                <Textarea
+                  id="requirements"
+                  value={onboardingForm.requirements}
+                  onChange={(e) =>
+                    setOnboardingForm({ ...onboardingForm, requirements: e.target.value })
+                  }
+                  rows={4}
+                  placeholder="List the main requirements or features needed"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="timeline">Expected Timeline</Label>
+                <Input
+                  id="timeline"
+                  value={onboardingForm.timeline}
+                  onChange={(e) =>
+                    setOnboardingForm({ ...onboardingForm, timeline: e.target.value })
+                  }
+                  placeholder="e.g., 3 months, ASAP"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="budget">Estimated Budget</Label>
+                <Input
+                  id="budget"
+                  value={onboardingForm.budget}
+                  onChange={(e) =>
+                    setOnboardingForm({ ...onboardingForm, budget: e.target.value })
+                  }
+                  placeholder="Enter your budget range"
+                />
+              </div>
+              <Button
+                onClick={handleOnboardingSubmit}
+                disabled={isSubmitting}
+                className="bg-gradient-to-r from-primary to-primary-glow"
+              >
+                {isSubmitting ? "Submitting..." : "Submit Project Request"}
+              </Button>
             </CardContent>
           </Card>
         </div>
