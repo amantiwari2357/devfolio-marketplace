@@ -1,7 +1,7 @@
 // Centralized API Configuration
 export const API_CONFIG = {
   // Base URL - Change this to your backend URL
-  BASE_URL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  BASE_URL: import.meta.env.VITE_API_URL || 'https://devfolio-marketplace-1.onrender.com/api',
   
   // API Endpoints
   ENDPOINTS: {
@@ -41,10 +41,10 @@ export const API_CONFIG = {
       SEARCH: '/services/search',
     },
     
-    // Client Onboarding
-    CLIENT_ONBOARDING: {
-      BASE: '/client-onboarding',
-      STATS: '/client-onboarding/stats',
+    // Client Onboarding Projects
+    CLIENT_ONBOARDING_PROJECTS: {
+      BASE: '/client-onboarding-projects',
+      STATS: '/client-onboarding-projects/stats',
     },
     
     // Experts

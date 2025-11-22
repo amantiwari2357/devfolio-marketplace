@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { io, Socket } from 'socket.io-client';
 import api from '../services/api';
+import { API_CONFIG } from '../config/api.config';
 
 interface Project {
   _id: string;
@@ -69,12 +70,12 @@ const useClientOnboardingStore = create<ClientOnboardingStore>((set, get) => ({
   createProject: async (projectData) => {
     set({ loading: true, error: null });
     try {
-      const response = await api.post('/client-onboarding-projects', projectData);
+      const response = await api.post(API_CONFIG.ENDPOINTS.CLIENT_ONBOARDING_PROJECTS.BASE, projectData);
       console.log('Create project response:', response.data);
-      
+
       // Handle different response formats
       const newProject = response.data?.project || response.data;
-      
+
       if (newProject) {
         set((state) => ({
           projects: [newProject, ...state.projects],
@@ -114,8 +115,8 @@ const useClientOnboardingStore = create<ClientOnboardingStore>((set, get) => ({
     set({ loading: true, error: null });
     try {
       const response = await api.patch(`/client-onboarding-projects/${projectId}/stage`, {
-        stageIndex: stageId,
-        status: updateData.status
+        stageId: stageId,
+        ...updateData
       });
       const updatedProject = response.data.project || response.data;
       set((state) => ({
