@@ -27,9 +27,10 @@ interface OfferAssignFormProps {
 }
 
 interface Client {
-  id: string;
+  _id: string;
+  clientName: string;
   email: string;
-  username?: string;
+  companyName: string;
 }
 
 export const OfferAssignForm = ({ open, onClose }: OfferAssignFormProps) => {
@@ -76,14 +77,14 @@ export const OfferAssignForm = ({ open, onClose }: OfferAssignFormProps) => {
       return;
     }
 
-    const client = clients.find((c) => c.id === selectedClient);
+    const client = clients.find((c) => c._id === selectedClient);
     if (!client) return;
 
     try {
-      await assignOffer(selectedOffer, selectedClient, client.username || client.email);
+      await assignOffer(selectedOffer, selectedClient, client.clientName);
       toast({
         title: "Offer Assigned Successfully",
-        description: `${selectedOfferData?.title} has been assigned to ${client.username || client.email}`,
+        description: `${selectedOfferData?.title} has been assigned to ${client.clientName}`,
       });
 
       setSelectedClient("");
@@ -118,10 +119,10 @@ export const OfferAssignForm = ({ open, onClose }: OfferAssignFormProps) => {
               </SelectTrigger>
               <SelectContent>
                 {clients.map((client) => (
-                  <SelectItem key={client.id} value={client.id}>
+                  <SelectItem key={client._id} value={client._id}>
                     <div className="flex flex-col">
-                      <span className="font-medium">{client.username || client.email}</span>
-                      <span className="text-xs text-muted-foreground">{client.email}</span>
+                      <span className="font-medium">{client.clientName}</span>
+                      <span className="text-xs text-muted-foreground">{client.email} • {client.companyName}</span>
                     </div>
                   </SelectItem>
                 ))}
