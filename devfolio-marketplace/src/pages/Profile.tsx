@@ -153,6 +153,12 @@ const Profile = () => {
                         </a>
                       </div>
                     )}
+                    {user?.whatsappNumber && (
+                      <div className="flex items-center gap-2">
+                        <Phone className="h-4 w-4" />
+                        <span>{user.whatsappNumber}</span>
+                      </div>
+                    )}
                   </div>
 
                   {user?.expertise && user.expertise.length > 0 && (

@@ -1,6 +1,19 @@
 import api from './api';
 
 // Type definitions
+export interface Availability {
+  day: string;
+  enabled: boolean;
+  startTime?: string;
+  endTime?: string;
+}
+
+export interface Service {
+  _id: string;
+  name: string;
+  description: string;
+}
+
 export interface User {
   id: string;
   username: string;
@@ -11,6 +24,14 @@ export interface User {
   website?: string;
   expertise?: string[];
   currency?: string;
+  whatsappNumber?: string;
+  socialUrl?: string;
+  onboardingCompleted?: boolean;
+  currentStep?: number;
+  availability?: Availability[];
+  services?: Service[];
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface OnboardingRequest {
