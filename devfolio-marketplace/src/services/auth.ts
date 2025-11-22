@@ -1,5 +1,25 @@
 import api from './api';
 
+// Type definitions
+export interface User {
+  id: string;
+  username: string;
+  email: string;
+  bio?: string;
+  country?: string;
+  phone?: string;
+  website?: string;
+  expertise?: string[];
+  currency?: string;
+}
+
+export interface OnboardingRequest {
+  experience: string;
+  portfolio?: string;
+  reason: string;
+  availability: string;
+}
+
 // Auth API functions
 export const authAPI = {
   signup: (data: { email: string; password: string }) =>
@@ -40,6 +60,12 @@ export const userAPI = {
   updateWhatsApp: (data: {
     whatsappNumber?: string;
   }) => api.put('/users/whatsapp', data),
+
+  // Added Methods for onboarding
+  getOnboardingStatus: () => api.get('/users/onboarding-status'),
+
+  submitOnboardingRequest: (data: OnboardingRequest) =>
+    api.post('/users/onboarding-request', data),
 };
 
 // Enquiry API functions

@@ -40,7 +40,22 @@ const Profile = () => {
     };
 
     fetchProfile();
-  }, [navigate]);
+
+    const intervalId = setInterval(async () => {
+      // Here add real-time polling for onboarding status if needed, example:
+      if(user) {
+        try {
+          const onboardingStatusResponse = await userAPI.getOnboardingStatus();
+          // You can update state or notify user based on status here if desired
+          // e.g. setOnboardingStatus(onboardingStatusResponse.data);
+        } catch (error) {
+          // Handle polling errors silently or notify
+        }
+      }
+    }, 30000); // Poll every 30 seconds
+
+    return () => clearInterval(intervalId);
+  }, [navigate, user]);
 
   const handleOnboardingSubmit = async () => {
     if (!onboardingForm.experience || !onboardingForm.reason || !onboardingForm.availability) {
