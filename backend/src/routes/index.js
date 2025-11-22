@@ -20,6 +20,8 @@ router.use('/testimonials', testimonialRoutes);
 router.use('/experts', expertRoutes);
 router.use('/offers', offerRoutes);
 router.use('/client-onboarding-projects', clientOnboardingProjectRoutes);
+// Add alias route for consistency
+router.use('/client-onboarding', clientOnboardingProjectRoutes);
 
 // Health check
 router.get('/health', (req, res) => {
