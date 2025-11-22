@@ -41,7 +41,7 @@ const getProjectById = async (req, res) => {
     const { id } = req.params;
     const project = await ClientOnboardingProject.findOne({
       _id: id,
-      createdBy: req.user.id
+      createdBy: req.user.userId
     });
 
     if (!project) {
@@ -80,7 +80,7 @@ const createProject = async (req, res) => {
       });
     }
 
-    if (!req.user || !req.user.id) {
+    if (!req.user || !req.user.userId) {
       return res.status(401).json({
         success: false,
         message: 'User not authenticated'
@@ -89,7 +89,7 @@ const createProject = async (req, res) => {
 
     const projectData = {
       ...req.body,
-      createdBy: req.user.id,
+      createdBy: req.user.userId,
       stages: defaultStages.map(stage => ({
         ...stage,
         payment: Math.round(req.body.totalAmount / 10)
@@ -133,7 +133,7 @@ const updateProject = async (req, res) => {
     const updateData = req.body;
 
     const project = await ClientOnboardingProject.findOneAndUpdate(
-      { _id: id, createdBy: req.user.id },
+      { _id: id, createdBy: req.user.userId },
       updateData,
       { new: true, runValidators: true }
     );
@@ -165,7 +165,7 @@ const deleteProject = async (req, res) => {
     const { id } = req.params;
     const project = await ClientOnboardingProject.findOneAndDelete({
       _id: id,
-      createdBy: req.user.id
+      createdBy: req.user.userId
     });
 
     if (!project) {
@@ -205,7 +205,7 @@ const updateProjectStage = async (req, res) => {
 
     const project = await ClientOnboardingProject.findOne({
       _id: id,
-      createdBy: req.user.id
+      createdBy: req.user.userId
     });
 
     if (!project) {
