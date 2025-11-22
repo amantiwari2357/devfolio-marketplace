@@ -75,10 +75,11 @@ const ExpertsSection = () => {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch("https://devfolio-marketplace-1.onrender.com/api/enquiries", {
+      const res = await fetch("https://devfolio-marketplace-1.onrender.com/api/experts/enquiries", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          expertId: selectedExpert._id,
           name: enquiryForm.name,
           email: enquiryForm.email,
           phone: enquiryForm.phone,

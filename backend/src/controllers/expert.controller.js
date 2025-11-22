@@ -214,6 +214,21 @@ const createExpertEnquiry = async (req, res) => {
 
     await enquiry.save();
 
+    // Emit real-time update to admin dashboard
+    if (global.io) {
+      global.io.emit('newExpertEnquiry', {
+        _id: enquiry._id,
+        expertId: enquiry.expertId,
+        expertName: enquiry.expertName,
+        name: enquiry.name,
+        email: enquiry.email,
+        phone: enquiry.phone,
+        message: enquiry.message,
+        date: enquiry.createdAt.toISOString().split('T')[0],
+        status: enquiry.status
+      });
+    }
+
     res.status(201).json({
       success: true,
       message: 'Expert enquiry submitted successfully',

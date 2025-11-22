@@ -92,7 +92,11 @@ const ExpertManagement = () => {
   const fetchEnquiries = async () => {
     try {
       setEnquiriesLoading(true);
-      const response = await fetch('https://devfolio-marketplace-1.onrender.com/api/experts/enquiries/all');
+      const response = await fetch('https://devfolio-marketplace-1.onrender.com/api/experts/enquiries/all', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       if (!response.ok) {
         throw new Error('Failed to fetch enquiries');
       }
@@ -147,6 +151,9 @@ const ExpertManagement = () => {
       setLoading(true);
       const response = await fetch(`https://devfolio-marketplace-1.onrender.com/api/experts/${id}`, {
         method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       });
 
       if (!response.ok) {

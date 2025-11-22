@@ -27,9 +27,18 @@ const enquirySchema = new mongoose.Schema({
     ref: 'User',
     required: false
   },
+  expertId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Expert',
+    required: false
+  },
+  expertName: {
+    type: String,
+    required: false
+  },
   source: {
     type: String,
-    enum: ['hero-section', 'contact-form', 'landing-page', 'project-detail', 'other'],
+    enum: ['hero-section', 'contact-form', 'landing-page', 'project-detail', 'expert-detail', 'other'],
     default: 'hero-section'
   },
   status: {
