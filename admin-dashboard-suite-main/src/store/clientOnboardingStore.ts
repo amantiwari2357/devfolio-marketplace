@@ -57,8 +57,8 @@ const useClientOnboardingStore = create<ClientOnboardingStore>((set, get) => ({
   fetchProjects: async () => {
     set({ loading: true, error: null });
     try {
-      const response = await api.get('/client-onboarding-projects');
-      set({ projects: response.data.projects || [], loading: false });
+      const response = await api.get('/client-onboarding');
+      set({ projects: response.data.data || response.data.projects || [], loading: false });
     } catch (error) {
       set({ error: 'Failed to fetch projects', loading: false });
     }
@@ -67,23 +67,26 @@ const useClientOnboardingStore = create<ClientOnboardingStore>((set, get) => ({
   createProject: async (projectData) => {
     set({ loading: true, error: null });
     try {
-      const response = await api.post('/client-onboarding-projects', projectData);
+      const response = await api.post('/client-onboarding', projectData);
       set((state) => ({
         projects: [...state.projects, response.data],
         loading: false
       }));
-    } catch (error) {
-      set({ error: 'Failed to create project', loading: false });
+      return response.data;
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.message || 'Failed to create project';
+      set({ error: errorMessage, loading: false });
+      throw error; // Re-throw to let component handle it
     }
   },
 
   updateProject: async (id, projectData) => {
     set({ loading: true, error: null });
     try {
-      const response = await api.put(`/client-onboarding-projects/${id}`, projectData);
+      const response = await api.put(`/client-onboarding/${id}`, projectData);
       set((state) => ({
         projects: state.projects.map(project =>
-          project._id === id ? response.data.project : project
+          project._id === id ? response.data : project
         ),
         loading: false
       }));
@@ -95,10 +98,13 @@ const useClientOnboardingStore = create<ClientOnboardingStore>((set, get) => ({
   updateStage: async (projectId, stageId, updateData) => {
     set({ loading: true, error: null });
     try {
-      const response = await api.put(`/client-onboarding-projects/${projectId}/stages/${stageId}`, updateData);
+      const response = await api.patch(`/client-onboarding/${projectId}/stage`, {
+        stageIndex: stageId,
+        status: updateData.status
+      });
       set((state) => ({
         projects: state.projects.map(project =>
-          project._id === projectId ? response.data.project : project
+          project._id === projectId ? response.data : project
         ),
         loading: false
       }));

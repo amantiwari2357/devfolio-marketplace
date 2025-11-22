@@ -151,6 +151,8 @@ const ClientOnboarding = () => {
         await updateProject(editingProject._id, projectData);
       } else {
         await createProject(projectData);
+        // Refresh projects list after creation
+        await fetchProjects();
       }
 
       setIsDialogOpen(false);
@@ -167,8 +169,12 @@ const ClientOnboarding = () => {
         totalAmount: "",
       });
       setEditingProject(null);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error saving project:', error);
+      // Error is already handled by the store, just show user-friendly message
+      if (error.response?.data?.message) {
+        // Toast will be shown by API interceptor
+      }
     }
   };
 

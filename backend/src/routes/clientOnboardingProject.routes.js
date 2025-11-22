@@ -38,4 +38,4 @@ router.delete('/:id', deleteProject);
 // Update project stage
 router.patch('/:id/stage', updateStageSchema, updateProjectStage);
 
-module.exports = router;
+module.exports = router;  

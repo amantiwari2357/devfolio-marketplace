@@ -34,11 +34,14 @@ api.interceptors.response.use(
 
     console.error('API Error:', { status, message, errors });
 
-    // Only logout on 401 (Unauthorized)
-    if (status === 401) {
+    // Only logout on 401 (Unauthorized) - but not if it's a validation error
+    if (status === 401 && !error.response?.data?.errors) {
       console.warn('Unauthorized - logging out');
       localStorage.removeItem('token');
-      window.location.href = '/login';
+      // Use window.location only if we're not already on login page
+      if (!window.location.pathname.includes('/login')) {
+        window.location.href = '/login';
+      }
       return Promise.reject(error);
     }
 
