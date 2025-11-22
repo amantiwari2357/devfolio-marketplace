@@ -35,8 +35,12 @@ const AdminOffers = () => {
   const [categoryFilter, setCategoryFilter] = useState<OfferCategory | 'all'>('all');
   const [editingOffer, setEditingOffer] = useState<Offer | null>(null);
 
-  const { offers, assignedOffers, addOffer, updateOffer, deleteOffer, createOffer } = useOffersStore();
+  const { offers, assignedOffers, addOffer, updateOffer, deleteOffer, createOffer, fetchOffers } = useOffersStore();
   const { toast } = useToast();
+
+  useEffect(() => {
+    fetchOffers();
+  }, [fetchOffers]);
 
   // Form state
   const [formData, setFormData] = useState({

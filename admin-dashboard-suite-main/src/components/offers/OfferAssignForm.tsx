@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useOffersStore } from "@/store/offersStore";
 import {
   Dialog,
@@ -19,30 +19,54 @@ import {
 import { Card } from "@/components/ui/card";
 import { Gift, Calendar, FileText } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import api from "@/services/api";
 
 interface OfferAssignFormProps {
   open: boolean;
   onClose: () => void;
 }
 
-// Mock clients data
-const mockClients = [
-  { id: 'c1', name: 'Acme Corporation', email: 'contact@acme.com' },
-  { id: 'c2', name: 'TechStart Inc', email: 'hello@techstart.com' },
-  { id: 'c3', name: 'Global Solutions', email: 'info@globalsolutions.com' },
-  { id: 'c4', name: 'Digital Ventures', email: 'team@digitalventures.com' },
-];
+interface Client {
+  id: string;
+  email: string;
+  username?: string;
+}
 
 export const OfferAssignForm = ({ open, onClose }: OfferAssignFormProps) => {
   const { offers, assignOffer } = useOffersStore();
   const { toast } = useToast();
   const [selectedClient, setSelectedClient] = useState<string>("");
   const [selectedOffer, setSelectedOffer] = useState<string>("");
+  const [clients, setClients] = useState<Client[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    let mounted = true;
+    const fetchClients = async () => {
+      setLoading(true);
+      try {
+        const res = await api.get("/users/all");
+        if (mounted) setClients(res.data.users || []);
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Failed to load clients.",
+          variant: "destructive",
+        });
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    };
+    fetchClients();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const activeOffers = offers.filter((o) => o.isActive);
   const selectedOfferData = offers.find((o) => o.id === selectedOffer);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!selectedClient || !selectedOffer) {
       toast({
         title: "Missing Information",
@@ -52,19 +76,26 @@ export const OfferAssignForm = ({ open, onClose }: OfferAssignFormProps) => {
       return;
     }
 
-    const client = mockClients.find((c) => c.id === selectedClient);
+    const client = clients.find((c) => c.id === selectedClient);
     if (!client) return;
 
-    assignOffer(selectedOffer, selectedClient, client.name);
-    
-    toast({
-      title: "Offer Assigned Successfully",
-      description: `${selectedOfferData?.title} has been assigned to ${client.name}`,
-    });
+    try {
+      await assignOffer(selectedOffer, selectedClient, client.username || client.email);
+      toast({
+        title: "Offer Assigned Successfully",
+        description: `${selectedOfferData?.title} has been assigned to ${client.username || client.email}`,
+      });
 
-    setSelectedClient("");
-    setSelectedOffer("");
-    onClose();
+      setSelectedClient("");
+      setSelectedOffer("");
+      onClose();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to assign offer. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -81,15 +112,15 @@ export const OfferAssignForm = ({ open, onClose }: OfferAssignFormProps) => {
           {/* Client Selection */}
           <div className="space-y-2">
             <Label htmlFor="client">Select Client</Label>
-            <Select value={selectedClient} onValueChange={setSelectedClient}>
+            <Select value={selectedClient} onValueChange={setSelectedClient} disabled={loading}>
               <SelectTrigger id="client">
-                <SelectValue placeholder="Choose a client..." />
+                <SelectValue placeholder={loading ? "Loading clients..." : "Choose a client..."} />
               </SelectTrigger>
               <SelectContent>
-                {mockClients.map((client) => (
+                {clients.map((client) => (
                   <SelectItem key={client.id} value={client.id}>
                     <div className="flex flex-col">
-                      <span className="font-medium">{client.name}</span>
+                      <span className="font-medium">{client.username || client.email}</span>
                       <span className="text-xs text-muted-foreground">{client.email}</span>
                     </div>
                   </SelectItem>
