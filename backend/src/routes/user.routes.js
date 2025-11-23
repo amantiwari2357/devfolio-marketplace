@@ -28,4 +28,8 @@ router.put('/availability', validateAvailabilityUpdate, userController.updateAva
 router.put('/services', validateServicesUpdate, userController.updateServices);
 router.put('/whatsapp', validateWhatsAppUpdate, userController.updateWhatsApp);
 
+// Onboarding request routes used by frontend profile page
+router.get('/onboarding-status', userController.getOnboardingStatus);
+router.post('/onboarding-request', userController.submitOnboardingRequest);
+
 module.exports = router;

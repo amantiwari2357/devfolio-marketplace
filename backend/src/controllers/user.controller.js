@@ -1,6 +1,7 @@
 const User = require('../models/user.model');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const ClientOnboardingProject = require('../models/clientOnboardingProject.model');
 
 // Signup - Create user with basic info
 const signup = async (req, res) => {
@@ -46,6 +47,108 @@ const signup = async (req, res) => {
   } catch (error) {
     console.error('Signup error:', error);
     res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// Public project-onboarding stages template (same structure as clientOnboardingProject.controller)
+const onboardingDefaultStages = [
+  { id: 1, name: "Requirement Gathering + Contract", output: "Documents, Payment Part-1", status: "pending", completionDate: "", assignedMember: "", payment: 0, paymentStatus: "pending", notes: "", approvalRequired: true, approved: false },
+  { id: 2, name: "Branding & Wireframe", output: "Logo, Colors, Sitemap", status: "pending", completionDate: "", assignedMember: "", payment: 0, paymentStatus: "pending", notes: "", approvalRequired: true, approved: false },
+  { id: 3, name: "UI/UX Design", output: "Figma, Approval Status", status: "pending", completionDate: "", assignedMember: "", payment: 0, paymentStatus: "pending", notes: "", approvalRequired: true, approved: false },
+  { id: 4, name: "Frontend Development", output: "Web Pages, Components", status: "pending", completionDate: "", assignedMember: "", payment: 0, paymentStatus: "pending", notes: "", approvalRequired: false, approved: false },
+  { id: 5, name: "Backend Development", output: "Database, APIs", status: "pending", completionDate: "", assignedMember: "", payment: 0, paymentStatus: "pending", notes: "", approvalRequired: false, approved: false },
+  { id: 6, name: "Integrations", output: "Payment, Auth, CRM, Third-Party APIs", status: "pending", completionDate: "", assignedMember: "", payment: 0, paymentStatus: "pending", notes: "", approvalRequired: false, approved: false },
+  { id: 7, name: "Content Upload", output: "Images, Text Content", status: "pending", completionDate: "", assignedMember: "", payment: 0, paymentStatus: "pending", notes: "", approvalRequired: true, approved: false },
+  { id: 8, name: "Testing & QA", output: "Bugs List, Reports", status: "pending", completionDate: "", assignedMember: "", payment: 0, paymentStatus: "pending", notes: "", approvalRequired: false, approved: false },
+  { id: 9, name: "Deployment & Hosting", output: "Domain, SSL, Server", status: "pending", completionDate: "", assignedMember: "", payment: 0, paymentStatus: "pending", notes: "", approvalRequired: true, approved: false },
+  { id: 10, name: "Final Delivery & Training", output: "Documentation, Credentials, Warranty", status: "pending", completionDate: "", assignedMember: "", payment: 0, paymentStatus: "pending", notes: "", approvalRequired: true, approved: false },
+];
+
+// Submit project onboarding request from public site Profile page
+const submitOnboardingRequest = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const {
+      projectName,
+      projectDescription,
+      requirements,
+      timeline,
+      budget,
+    } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Basic validation for required fields coming from the form
+    if (!projectName || !projectDescription || !requirements) {
+      return res.status(400).json({ message: 'Missing required onboarding fields' });
+    }
+
+    // Derive some reasonable defaults for the client onboarding project
+    const today = new Date();
+    const isoToday = today.toISOString().split('T')[0];
+    const deadlineDate = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
+    const isoDeadline = deadlineDate.toISOString().split('T')[0];
+
+    const totalAmount = 0; // budget is free-text, so we keep numeric amount 0 for now
+
+    const projectData = {
+      clientName: user.username || user.email.split('@')[0],
+      email: user.email,
+      phone: user.whatsappNumber || '+910000000000',
+      companyName: projectName,
+      projectName,
+      techStack: 'Not specified',
+      projectType: 'Website',
+      startDate: isoToday,
+      deadline: isoDeadline,
+      teamMembers: [],
+      totalAmount,
+      paidAmount: 0,
+      description: projectDescription,
+      requirements,
+      timeline,
+      budget,
+      createdBy: userId,
+      stages: onboardingDefaultStages.map(stage => ({
+        ...stage,
+        payment: Math.round(totalAmount / onboardingDefaultStages.length),
+      })),
+    };
+
+    const project = new ClientOnboardingProject(projectData);
+    await project.save();
+
+    return res.status(201).json({
+      message: 'Project onboarding request submitted successfully',
+      project,
+    });
+  } catch (error) {
+    console.error('Submit onboarding request error:', error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// Get latest onboarding status for authenticated user
+const getOnboardingStatus = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const project = await ClientOnboardingProject.findOne({ createdBy: userId })
+      .sort({ createdAt: -1 });
+
+    if (!project) {
+      return res.json({ status: 'none', project: null });
+    }
+
+    return res.json({
+      status: 'exists',
+      project,
+    });
+  } catch (error) {
+    console.error('Get onboarding status error:', error);
+    return res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -314,5 +417,7 @@ module.exports = {
   getProfile,
   getAllUsers,
   login,
-  createAdmin
+  createAdmin,
+  submitOnboardingRequest,
+  getOnboardingStatus
 };
