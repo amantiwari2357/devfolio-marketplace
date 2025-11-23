@@ -7,7 +7,7 @@ import logo from "../../../public/Images/logo.png";
 import { useNavigate } from "react-router-dom";
 import { userAPI } from "@/services/auth";
 
-import { Avatar } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -82,10 +82,10 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-8">
-            <a href="/" className="flex items-center gap-2">
-              <img src={logo} alt="Devfolio Logo" className="h-36 w-auto" />
-              <span className="text-xl font-bold text-foreground hover:text-primary transition-colors"></span>
-            </a>
+          <a href="/" className="flex items-center gap-2">
+            <img src={logo} alt="Devfolio Logo" className="h-36 w-auto" />
+            <span className="text-xl font-bold text-foreground hover:text-primary transition-colors"></span>
+          </a>
 
           <nav className="hidden md:flex items-center gap-10">
             <a href="/use-cases" className="text-sm text-foreground hover:text-primary transition-colors">
@@ -100,15 +100,22 @@ const Header = () => {
         {isLoggedIn ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-             <Button 
+              <Button 
                 variant="ghost" 
                 size="icon" 
                 className="relative rounded-full w-10 h-10  from-primary/10 to-primary-glow/10 hover:from-primary/20 hover:to-primary-glow/20 border border-primary/20 transition-all duration-300"
               >
-                <Avatar className="rounded-full h-10 w-10" />
+                <Avatar className="rounded-full h-10 w-10 bg-primary/5">
+                  <AvatarImage src={user?.avatarUrl} alt={user?.username || "User"} />
+                  <AvatarFallback className="text-sm font-semibold">
+                    {user?.username
+                      ? user.username.charAt(0).toUpperCase()
+                      : "U"}
+                  </AvatarFallback>
+                </Avatar>
               </Button>
             </DropdownMenuTrigger>
-             <DropdownMenuContent align="end" className="w-64 bg-popover/95 backdrop-blur-md shadow-lg border-border z-[100]">
+            <DropdownMenuContent align="end" className="w-64 bg-popover/95 backdrop-blur-md shadow-lg border-border z-[100]">
               <DropdownMenuLabel className="font-normal">
                 <div className="flex flex-col space-y-1">
                   <p className="text-sm font-medium leading-none">{user?.username}</p>
