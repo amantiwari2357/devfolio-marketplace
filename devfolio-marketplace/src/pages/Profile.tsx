@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
@@ -10,8 +11,9 @@ import { Input } from "@/components/ui/input";
 import { userAPI } from "@/services/auth";
 import type { User, OnboardingRequest } from "@/services/auth";
 import { toast } from "sonner";
-import { Mail, MapPin, Globe, Phone, Edit, Send, CheckCircle2 } from "lucide-react";
+import { Mail, MapPin, Globe, Phone, Edit, Send, CheckCircle2, ChevronDown, ChevronUp } from "lucide-react";
 import Header from "@/components/layout/Header";
+import { cn } from "@/lib/utils";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -19,6 +21,8 @@ const Profile = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
+
   const [onboardingForm, setOnboardingForm] = useState<OnboardingRequest>({
     experience: "",
     portfolio: "",
@@ -77,7 +81,7 @@ const Profile = () => {
     try {
       await userAPI.submitOnboardingRequest(onboardingForm);
       toast.success("Project onboarding request submitted successfully!");
-      setIsDialogOpen(false);
+      setIsOnboardingOpen(false);
       setOnboardingForm({
         experience: "",
         portfolio: "",
@@ -118,84 +122,82 @@ const Profile = () => {
           {/* Profile Header */}
           <Card className="border-border shadow-sm">
             <CardContent className="pt-6">
-              <div className="flex flex-col md:flex-row gap-6">
-                <div className="flex-shrink-0">
-                <div className="w-32 h-32 rounded-full overflow-hidden bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center text-primary-foreground">
-                  {(user as any)?.imageUrl ? (
-                    <img
-                      src={(user as any).imageUrl}
-                      alt="User Profile"
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <span className="text-4xl font-bold">
-                      {user?.username?.charAt(0).toUpperCase()}
-                    </span>
-                  )}
-                </div>
-                </div>
-                <div className="flex-1 space-y-4">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <h1 className="text-3xl font-bold">{user?.username}</h1>
-                      <div className="flex items-center gap-2 mt-2 text-muted-foreground">
+              <div className="flex flex-col gap-6">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center text-primary-foreground">
+                      {(user as any)?.imageUrl ? (
+                        <img
+                          src={(user as any).imageUrl}
+                          alt="User Profile"
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-3xl md:text-4xl font-bold">
+                          {user?.username?.charAt(0).toUpperCase()}
+                        </span>
+                      )}
+                    </div>
+                    <div className="text-center sm:text-left">
+                      <h1 className="text-2xl md:text-3xl font-bold">{user?.username}</h1>
+                      <div className="flex items-center justify-center sm:justify-start gap-2 mt-2 text-muted-foreground">
                         <Mail className="h-4 w-4" />
                         <span className="text-sm">{user?.email}</span>
                       </div>
                     </div>
-                    <Button
-                      onClick={() => navigate("/settings")}
-                      variant="outline"
-                      className="gap-2"
-                    >
-                      <Edit className="h-4 w-4" />
-                      Edit Profile
-                    </Button>
                   </div>
+                  <Button
+                    onClick={() => navigate("/settings")}
+                    variant="outline"
+                    className="gap-2"
+                  >
+                    <Edit className="h-4 w-4" />
+                    Edit Profile
+                  </Button>
+                </div>
 
-                  {user?.bio && (
-                    <p className="text-muted-foreground">{user.bio}</p>
+                {user?.bio && (
+                  <p className="text-muted-foreground">{user.bio}</p>
+                )}
+
+                <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+                  {user?.country && (
+                    <div className="flex items-center gap-2">
+                      <MapPin className="h-4 w-4" />
+                      <span>{user.country}</span>
+                    </div>
                   )}
-
-                  <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
-                    {user?.country && (
-                      <div className="flex items-center gap-2">
-                        <MapPin className="h-4 w-4" />
-                        <span>{user.country}</span>
-                      </div>
-                    )}
-                    {user?.phone && (
-                      <div className="flex items-center gap-2">
-                        <Phone className="h-4 w-4" />
-                        <span>{user.phone}</span>
-                      </div>
-                    )}
-                    {user?.website && (
-                      <div className="flex items-center gap-2">
-                        <Globe className="h-4 w-4" />
-                        <a href={user.website} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
-                          {user.website}
-                        </a>
-                      </div>
-                    )}
-                    {user?.whatsappNumber && (
-                      <div className="flex items-center gap-2">
-                        <Phone className="h-4 w-4" />
-                        <span>{user.whatsappNumber}</span>
-                      </div>
-                    )}
-                  </div>
-
-                  {user?.expertise && user.expertise.length > 0 && (
-                    <div className="flex flex-wrap gap-2">
-                      {user.expertise.map((item) => (
-                        <Badge key={item} variant="secondary" className="px-3 py-1">
-                          {item}
-                        </Badge>
-                      ))}
+                  {user?.phone && (
+                    <div className="flex items-center gap-2">
+                      <Phone className="h-4 w-4" />
+                      <span>{user.phone}</span>
+                    </div>
+                  )}
+                  {user?.website && (
+                    <div className="flex items-center gap-2">
+                      <Globe className="h-4 w-4" />
+                      <a href={user.website} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                        {user.website}
+                      </a>
+                    </div>
+                  )}
+                  {user?.whatsappNumber && (
+                    <div className="flex items-center gap-2">
+                      <Phone className="h-4 w-4" />
+                      <span>{user.whatsappNumber}</span>
                     </div>
                   )}
                 </div>
+
+                {user?.expertise && user.expertise.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {user.expertise.map((item) => (
+                      <Badge key={item} variant="secondary" className="px-3 py-1">
+                        {item}
+                      </Badge>
+                    ))}
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>
@@ -222,16 +224,35 @@ const Profile = () => {
 
           {/* Project Onboarding Section */}
           <Card className="border-border shadow-sm bg-gradient-to-br from-card to-card/50">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-primary" />
-                Project Onboarding
-              </CardTitle>
-              <CardDescription>
-                Fill out your project details to proceed with creating your project.
-              </CardDescription>
+            <CardHeader className="flex flex-row items-center justify-between gap-4">
+              <div>
+                <CardTitle className="flex items-center gap-2">
+                  <CheckCircle2 className="h-5 w-5 text-primary" />
+                  Project Onboarding
+                </CardTitle>
+                <CardDescription>
+                  Fill out your project details to proceed with creating your project.
+                </CardDescription>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsOnboardingOpen((prev) => !prev)}
+                className="flex items-center gap-1 text-sm text-primary hover:text-primary/80 transition-colors"
+              >
+                <span>View Onboarding</span>
+                {isOnboardingOpen ? (
+                  <ChevronUp className="h-4 w-4" />
+                ) : (
+                  <ChevronDown className="h-4 w-4" />
+                )}
+              </button>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent
+              className={cn(
+                "space-y-4 overflow-hidden transition-all duration-300",
+                isOnboardingOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0 pointer-events-none"
+              )}
+            >
               <div className="space-y-2">
                 <Label htmlFor="projectName">Project Name *</Label>
                 <Input
