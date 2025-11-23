@@ -103,14 +103,12 @@ const Header = () => {
               <Button 
                 variant="ghost" 
                 size="icon" 
-                className="relative rounded-full w-10 h-10  from-primary/10 to-primary-glow/10 hover:from-primary/20 hover:to-primary-glow/20 border border-primary/20 transition-all duration-300"
+                className="relative rounded-full w-10 h-10 from-primary/10 to-primary-glow/10 hover:from-primary/20 hover:to-primary-glow/20 border border-primary/20 transition-all duration-300"
               >
-                <Avatar className="rounded-full h-10 w-10 bg-primary/5">
+                <Avatar className="rounded-full h-10 w-10 bg-primary/5 flex items-center justify-center">
                   <AvatarImage src={user?.avatarUrl} alt={user?.username || "User"} />
-                  <AvatarFallback className="text-sm font-semibold">
-                    {user?.username
-                      ? user.username.charAt(0).toUpperCase()
-                      : "U"}
+                  <AvatarFallback className="flex items-center justify-center w-full h-full rounded-full bg-primary/10">
+                    <User className="h-5 w-5 text-primary" />
                   </AvatarFallback>
                 </Avatar>
               </Button>
