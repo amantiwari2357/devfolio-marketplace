@@ -10,6 +10,7 @@ const testimonialRoutes = require('./testimonial.routes');
 const expertRoutes = require('./expert.routes');
 const offerRoutes = require('./offer.routes');
 const clientOnboardingProjectRoutes = require('./clientOnboardingProject.routes');
+const templateRoutes = require('./template.routes');
 
 // Mount routes
 router.use('/users', userRoutes);
@@ -20,6 +21,7 @@ router.use('/testimonials', testimonialRoutes);
 router.use('/experts', expertRoutes);
 router.use('/offers', offerRoutes);
 router.use('/client-onboarding-projects', clientOnboardingProjectRoutes);
+router.use('/templates', templateRoutes);
 // Add alias route for consistency
 router.use('/client-onboarding', clientOnboardingProjectRoutes);
 
