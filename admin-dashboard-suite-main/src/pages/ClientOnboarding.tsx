@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Sidebar from "@/components/dashboard/Sidebar";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -272,6 +272,48 @@ const ClientOnboarding = () => {
         <DashboardHeader onMenuClick={() => setSidebarOpen(true)} />
 
         <main className="p-6 space-y-6">
+          {/* Onboarding Requests Section */}
+          {projects.filter((p) => p.totalAmount === 0).length > 0 && (
+            <Card className="border-border bg-card/60">
+              <CardHeader>
+                <CardTitle>Onboarding Requests</CardTitle>
+                <CardDescription>
+                  Incoming project onboarding requests created from the public site.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {projects
+                  .filter((p) => p.totalAmount === 0)
+                  .map((project) => (
+                    <div
+                      key={project._id}
+                      className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-3 rounded-lg border border-border bg-background/60"
+                    >
+                      <div>
+                        <p className="font-medium">{project.projectName}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {project.clientName} • {project.email}
+                        </p>
+                        {project.createdAt && (
+                          <p className="text-xs text-muted-foreground mt-1">
+                            Requested on {new Date(project.createdAt).toLocaleDateString()}
+                          </p>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => openEditDialog(project)}
+                        >
+                          Proceed
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+              </CardContent>
+            </Card>
+          )}
           <div className="flex items-center justify-end">
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
@@ -544,7 +586,9 @@ const ClientOnboarding = () => {
 
               <TabsContent value="list" className="space-y-4">
                 <div className="grid gap-4">
-                  {projects.map((project) => (
+                  {projects
+                    .filter((p) => p.totalAmount > 0)
+                    .map((project) => (
                     <Card key={project._id} className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => setSelectedProject(project)}>
                       <CardHeader>
                         <div className="flex items-start justify-between">
@@ -615,7 +659,9 @@ const ClientOnboarding = () => {
               </TabsContent>
 
               <TabsContent value="timeline" className="space-y-4">
-                {projects.map((project) => (
+                {projects
+                  .filter((p) => p.totalAmount > 0)
+                  .map((project) => (
                   <Card key={project._id}>
                     <CardHeader>
                       <CardTitle>{project.projectName}</CardTitle>
