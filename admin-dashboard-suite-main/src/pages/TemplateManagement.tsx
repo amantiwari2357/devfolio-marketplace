@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import Sidebar from "@/components/dashboard/Sidebar";
 import { Input } from "@/components/ui/input";
@@ -20,6 +20,9 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
+import DashboardHeader from "@/components/dashboard/DashboardHeader";
+import { templateService, TemplateDto } from "../services/template.service";
+
 interface Template {
   id: string;
   name: string;
@@ -32,39 +35,10 @@ interface Template {
   pdfName?: string;
 }
 
-import DashboardHeader from "@/components/dashboard/DashboardHeader";
-
 const TemplateManagement = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [templates, setTemplates] = useState<Template[]>([
-    {
-      id: "1",
-      name: "Minimal Portfolio",
-      description: "Clean and minimal portfolio template with focus on content",
-      technologies: ["React", "Tailwind", "Framer Motion"],
-      rating: 1.2,
-      downloads: "5.4k",
-      isActive: true,
-    },
-    {
-      id: "2",
-      name: "Developer CV",
-      description: "Professional CV template for developers with project showcase",
-      technologies: ["Next.js", "TypeScript", "Shadcn"],
-      rating: 2.1,
-      downloads: "8.7k",
-      isActive: true,
-    },
-    {
-      id: "3",
-      name: "Creative Portfolio",
-      description: "Modern and creative portfolio with smooth animations",
-      technologies: ["React", "GSAP", "Three.js"],
-      rating: 3.5,
-      downloads: "12.3k",
-      isActive: true,
-    },
-  ]);
+  const [templates, setTemplates] = useState<Template[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -123,7 +97,36 @@ const TemplateManagement = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const mapDtoToTemplate = (dto: TemplateDto): Template => ({
+    id: dto._id,
+    name: dto.name,
+    description: dto.description,
+    technologies: dto.technologies || [],
+    rating: dto.rating,
+    downloads: dto.downloads,
+    isActive: dto.isActive,
+    pdfUrl: dto.pdfUrl,
+    pdfName: dto.pdfName,
+  });
+
+  useEffect(() => {
+    const fetchTemplates = async () => {
+      setLoading(true);
+      try {
+        const data = await templateService.getAllAdmin();
+        setTemplates(data.templates.map(mapDtoToTemplate));
+      } catch (error) {
+        console.error(error);
+        toast.error("Failed to load templates");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTemplates();
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!formData.name || !formData.description || formData.technologies.length === 0) {
@@ -131,43 +134,43 @@ const TemplateManagement = () => {
       return;
     }
 
-    let pdfUrl = editingTemplate?.pdfUrl;
-    let pdfName = editingTemplate?.pdfName;
-
-    if (formData.pdfFile) {
-      pdfUrl = URL.createObjectURL(formData.pdfFile);
-      pdfName = formData.pdfFile.name;
-    }
-
-    const templateData: Template = {
-      id: editingTemplate?.id || Date.now().toString(),
+    const payload = {
       name: formData.name,
       description: formData.description,
       technologies: formData.technologies,
       rating: parseFloat(formData.rating) || 0,
       downloads: formData.downloads,
       isActive: editingTemplate?.isActive ?? true,
-      pdfUrl,
-      pdfName,
+      pdfUrl: editingTemplate?.pdfUrl,
+      pdfName: formData.pdfFile?.name || editingTemplate?.pdfName,
     };
 
-    if (editingTemplate) {
-      setTemplates(templates.map((t) => (t.id === editingTemplate.id ? templateData : t)));
-      toast.success("Template updated successfully!");
-    } else {
-      setTemplates([...templates, templateData]);
-      toast.success("Template created successfully!");
-    }
+    try {
+      if (editingTemplate) {
+        const { template } = await templateService.update(editingTemplate.id, payload);
+        const updated = mapDtoToTemplate(template);
+        setTemplates(templates.map((t) => (t.id === editingTemplate.id ? updated : t)));
+        toast.success("Template updated successfully!");
+      } else {
+        const { template } = await templateService.create(payload);
+        const created = mapDtoToTemplate(template);
+        setTemplates([...templates, created]);
+        toast.success("Template created successfully!");
+      }
 
-    setIsDialogOpen(false);
-    setFormData({
-      name: "",
-      description: "",
-      technologies: [],
-      rating: "",
-      downloads: "",
-      pdfFile: null,
-    });
+      setIsDialogOpen(false);
+      setFormData({
+        name: "",
+        description: "",
+        technologies: [],
+        rating: "",
+        downloads: "",
+        pdfFile: null,
+      });
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to save template");
+    }
   };
 
   const handleDownloadPDF = (template: Template) => {
@@ -189,22 +192,36 @@ const TemplateManagement = () => {
     setIsDeleteDialogOpen(true);
   };
 
-  const handleDeleteConfirm = () => {
-    if (deleteTemplateId) {
+  const handleDeleteConfirm = async () => {
+    if (!deleteTemplateId) return;
+
+    try {
+      await templateService.delete(deleteTemplateId);
       setTemplates(templates.filter((t) => t.id !== deleteTemplateId));
       toast.success("Template deleted successfully!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to delete template");
+    } finally {
       setIsDeleteDialogOpen(false);
       setDeleteTemplateId(null);
     }
   };
 
-  const handleToggleActive = (id: string) => {
-    setTemplates(
-      templates.map((t) =>
-        t.id === id ? { ...t, isActive: !t.isActive } : t
-      )
-    );
-    toast.success("Template status updated!");
+  const handleToggleActive = async (id: string) => {
+    try {
+      const { template } = await templateService.toggleStatus(id);
+      const updated = mapDtoToTemplate(template);
+      setTemplates(
+        templates.map((t) =>
+          t.id === id ? updated : t
+        )
+      );
+      toast.success("Template status updated!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update template status");
+    }
   };
 
   return (
@@ -384,6 +401,9 @@ const TemplateManagement = () => {
         </div>
 
         {/* Templates Grid */}
+        {loading ? (
+          <div className="mt-8 text-center text-muted-foreground">Loading templates...</div>
+        ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {templates.map((template) => (
             <Card
@@ -485,8 +505,9 @@ const TemplateManagement = () => {
             </Card>
           ))}
         </div>
+        )}
 
-          {templates.length === 0 && (
+          {templates.length === 0 && !loading && (
             <Card className="p-12 text-center">
               <div className="max-w-md mx-auto">
                 <Code className="w-16 h-16 text-muted-foreground/40 mx-auto mb-4" />

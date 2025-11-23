@@ -41,6 +41,12 @@ export const API_CONFIG = {
       SEARCH: '/services/search',
     },
     
+    // Templates
+    TEMPLATES: {
+      BASE: '/templates',
+      ADMIN: '/templates/admin',
+    },
+    
     // Client Onboarding Projects
     CLIENT_ONBOARDING_PROJECTS: {
       BASE: '/client-onboarding-projects',
