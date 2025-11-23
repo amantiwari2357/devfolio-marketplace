@@ -90,7 +90,7 @@ export const userAPI = {
   // Added Methods for onboarding
   getOnboardingStatus: () => api.get('/users/onboarding-status'),
   
-  getOnboardingRequests: () => api.get('/users/onboarding-requests'),
+  getOnboardingRequests: () => api.get('/users/onboarding-request'),
 
   submitOnboardingRequest: (data: OnboardingRequest) =>
     api.post('/users/onboarding-request', data),
