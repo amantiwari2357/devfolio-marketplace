@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import Sidebar from "@/components/dashboard/Sidebar";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -31,7 +32,10 @@ interface Template {
   pdfName?: string;
 }
 
+import DashboardHeader from "@/components/dashboard/DashboardHeader";
+
 const TemplateManagement = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [templates, setTemplates] = useState<Template[]>([
     {
       id: "1",
@@ -204,43 +208,48 @@ const TemplateManagement = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h1 className="text-4xl font-bold text-foreground mb-2">Template Management</h1>
-              <p className="text-muted-foreground">Manage portfolio and project templates</p>
-            </div>
-            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-              <DialogTrigger asChild>
-                <Button
-                  onClick={() => handleOpenDialog()}
-                  className="bg-primary text-primary-foreground hover:bg-primary/90"
-                >
-                  <Plus className="w-4 h-4 mr-2" />
-                  Add Template
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                <DialogHeader>
-                  <DialogTitle className="text-2xl">
-                    {editingTemplate ? "Edit Template" : "Add New Template"}
-                  </DialogTitle>
-                </DialogHeader>
+    <div className="min-h-screen bg-background flex">
+      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <Label className="text-foreground font-semibold">Template Name *</Label>
-                    <Input
-                      placeholder="e.g., Minimal Portfolio"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      required
-                      className="mt-2"
-                    />
-                  </div>
+      <div className="flex-1 flex flex-col p-6 lg:p-8">
+        <DashboardHeader onMenuClick={() => setSidebarOpen(true)} />
+
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="mb-8">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h1 className="text-4xl font-bold text-foreground mb-2">Template Management</h1>
+                <p className="text-muted-foreground">Manage portfolio and project templates</p>
+              </div>
+              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button
+                    onClick={() => handleOpenDialog()}
+                    className="bg-primary text-primary-foreground hover:bg-primary/90"
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Template
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle className="text-2xl">
+                      {editingTemplate ? "Edit Template" : "Add New Template"}
+                    </DialogTitle>
+                  </DialogHeader>
+
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                      <Label className="text-foreground font-semibold">Template Name *</Label>
+                      <Input
+                        placeholder="e.g., Minimal Portfolio"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        required
+                        className="mt-2"
+                      />
+                    </div>
 
                   <div>
                     <Label className="text-foreground font-semibold">Description *</Label>
@@ -481,25 +490,26 @@ const TemplateManagement = () => {
           ))}
         </div>
 
-        {templates.length === 0 && (
-          <Card className="p-12 text-center">
-            <div className="max-w-md mx-auto">
-              <Code className="w-16 h-16 text-muted-foreground/40 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-foreground mb-2">No templates yet</h3>
-              <p className="text-muted-foreground mb-6">
-                Create your first template to get started
-              </p>
-              <Button onClick={() => handleOpenDialog()}>
-                <Plus className="w-4 h-4 mr-2" />
-                Add Template
-              </Button>
-            </div>
-          </Card>
-        )}
+          {templates.length === 0 && (
+            <Card className="p-12 text-center">
+              <div className="max-w-md mx-auto">
+                <Code className="w-16 h-16 text-muted-foreground/40 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-foreground mb-2">No templates yet</h3>
+                <p className="text-muted-foreground mb-6">
+                  Create your first template to get started
+                </p>
+                <Button onClick={() => handleOpenDialog()}>
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Template
+                </Button>
+              </div>
+            </Card>
+          )}
+        </div>
       </div>
-
-      {/* Delete Confirmation Dialog */}
-      <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+  
+        {/* Delete Confirmation Dialog */}
+        <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
