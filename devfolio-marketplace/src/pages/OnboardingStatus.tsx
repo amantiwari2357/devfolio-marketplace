@@ -5,21 +5,22 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { userAPI } from "@/services/auth";
-import type { OnboardingStatus } from "@/services/auth";
+
 import { toast } from "sonner";
 import { ArrowLeft, CheckCircle2, Clock, XCircle, AlertCircle } from "lucide-react";
 import Header from "@/components/layout/Header";
 
 const OnboardingStatusPage = () => {
   const navigate = useNavigate();
-  const [status, setStatus] = useState<OnboardingStatus | null>(null);
+  const [status, setStatus] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchStatus = async () => {
       try {
         const response = await userAPI.getOnboardingStatus();
-        setStatus(response.data.status);
+        // Backend returns { status: 'none' | 'exists', project }
+        setStatus(response.data);
       } catch (error) {
         toast.error("Failed to load onboarding status");
       } finally {
@@ -70,7 +71,8 @@ const OnboardingStatusPage = () => {
     );
   }
 
-  if (!status) {
+  if (!status || status.status === "none" || !status.project) {
+
     return (
       <div className="min-h-screen bg-background">
         <Header />
@@ -107,7 +109,21 @@ const OnboardingStatusPage = () => {
     );
   }
 
-  const progressPercentage = (status.progress.step / status.progress.totalSteps) * 100;
+  const project = status.project;
+  const stages = project?.stages || [];
+  const completedStages = stages.filter((stage: any) => stage.status === "done").length;
+  const totalStages = stages.length || 1;
+  const progressPercentage = (completedStages / totalStages) * 100;
+
+  const allDone = stages.length > 0 && stages.every((stage: any) => stage.status === "done");
+  const anyInProgress = stages.some((stage: any) => stage.status === "in-progress");
+
+  let overallStatus: "approved" | "rejected" | "in_review" | "pending" = "pending";
+  if (allDone) {
+    overallStatus = "approved";
+  } else if (anyInProgress || completedStages > 0) {
+    overallStatus = "in_review";
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -134,28 +150,20 @@ const OnboardingStatusPage = () => {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle className="flex items-center gap-2">
-                  {getStatusIcon(status.status)}
+                  {getStatusIcon(overallStatus)}
                   Application Status
                 </CardTitle>
-                {getStatusBadge(status.status)}
+                {getStatusBadge(overallStatus)}
               </div>
               <CardDescription>
-                Submitted on {new Date(status.submittedAt).toLocaleDateString()}
+                Submitted on {project.createdAt ? new Date(project.createdAt).toLocaleDateString() : "N/A"}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              {status.reviewedAt && (
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">Reviewed on</p>
-                  <p className="text-base">{new Date(status.reviewedAt).toLocaleDateString()}</p>
-                </div>
-              )}
-              {status.reviewNotes && (
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">Review Notes</p>
-                  <p className="text-base">{status.reviewNotes}</p>
-                </div>
-              )}
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Overall Status</p>
+                <p className="text-base capitalize">{overallStatus.replace("_", " ")}</p>
+              </div>
             </CardContent>
           </Card>
 
@@ -164,7 +172,7 @@ const OnboardingStatusPage = () => {
             <CardHeader>
               <CardTitle>Progress Tracking</CardTitle>
               <CardDescription>
-                Step {status.progress.step} of {status.progress.totalSteps}
+                Completed {completedStages} of {totalStages} stages
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -177,34 +185,26 @@ const OnboardingStatusPage = () => {
               </div>
 
               <div className="space-y-3">
-                <p className="text-sm font-medium">Current Step</p>
-                <div className="flex items-center gap-3 p-3 bg-primary/5 border border-primary/20 rounded-lg">
-                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span className="text-sm font-bold text-primary">{status.progress.step}</span>
-                  </div>
-                  <div>
-                    <p className="font-medium">{status.progress.currentStep}</p>
-                    <p className="text-xs text-muted-foreground">In progress</p>
-                  </div>
+                <p className="text-sm font-medium">Stages</p>
+                <div className="space-y-2">
+                  {stages.map((stage: any) => (
+                    <div
+                      key={stage.id}
+                      className="flex items-center justify-between p-3 bg-muted/40 border border-border rounded-lg"
+                    >
+                      <div>
+                        <p className="font-medium">{stage.name}</p>
+                        <p className="text-xs text-muted-foreground">{stage.output}</p>
+                      </div>
+                      <Badge
+                        variant={stage.status === "done" ? "default" : stage.status === "in-progress" ? "outline" : "secondary"}
+                      >
+                        {stage.status.replace("-", " ")}
+                      </Badge>
+                    </div>
+                  ))}
                 </div>
               </div>
-
-              {status.progress.completedSteps.length > 0 && (
-                <div className="space-y-3">
-                  <p className="text-sm font-medium">Completed Steps</p>
-                  <div className="space-y-2">
-                    {status.progress.completedSteps.map((step, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center gap-3 p-3 bg-success/5 border border-success/20 rounded-lg"
-                      >
-                        <CheckCircle2 className="h-5 w-5 text-success flex-shrink-0" />
-                        <p className="text-sm">{step}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
             </CardContent>
           </Card>
         </div>
