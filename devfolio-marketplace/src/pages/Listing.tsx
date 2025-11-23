@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Code, GitBranch, Zap, ShieldCheck, BarChart2, Link as LinkIcon, Github, X, Download, Star } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -160,47 +160,54 @@ const EnquiryForm = ({ isOpen, onClose }) => {
 };
 
 const TemplateGallery = ({ isOpen, onClose }) => {
-  const templates = [
-    {
-      id: 1,
-      title: 'Minimal Portfolio',
-      description: 'Clean and minimal portfolio template with focus on content',
-      tech: ['React', 'Tailwind', 'Framer Motion'],
-      stars: '1.2k',
-      downloads: '5.4k',
-      downloadUrl: '/templates/minimal-portfolio.zip'
-    },
-    {
-      id: 2,
-      title: 'Developer CV',
-      description: 'Professional CV template for developers with project showcase',
-      tech: ['Next.js', 'TypeScript', 'Shadcn'],
-      stars: '2.1k',
-      downloads: '8.7k',
-      downloadUrl: '/templates/developer-cv.zip'
-    },
-    {
-      id: 3,
-      title: 'Creative Portfolio',
-      description: 'Modern and creative portfolio with smooth animations',
-      tech: ['React', 'GSAP', 'Three.js'],
-      stars: '3.5k',
-      downloads: '12.3k',
-      downloadUrl: '/templates/creative-portfolio.zip'
-    },
-  ];
+  const [templates, setTemplates] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      fetchTemplates();
+    }
+  }, [isOpen]);
+
+  const fetchTemplates = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('https://devfolio-marketplace-1.onrender.com/api/templates');
+      const data = await response.json();
+      
+      // Transform backend data to match TemplateCard props
+      const transformedTemplates = (data.templates || []).map((template: any) => ({
+        id: template._id,
+        title: template.name,
+        description: template.description,
+        tech: template.technologies || [],
+        stars: template.rating ? `${template.rating}k` : '0',
+        downloads: template.downloads || '0',
+        pdfUrl: template.pdfUrl,
+        pdfName: template.pdfName
+      }));
+      
+      setTemplates(transformedTemplates);
+    } catch (error) {
+      console.error('Error fetching templates:', error);
+      setTemplates([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleDownload = (template: any): void => {
-    // In a real app, you would trigger the actual file download here
-    console.log(`Initiating download for: ${template.title} (${template.downloadUrl})`);
-    
-    // Simulate download by creating a temporary link
-    const link = document.createElement('a');
-    link.href = template.downloadUrl;
-    link.download = `${template.title.toLowerCase().replace(/\s+/g, '-')}.zip`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // Download PDF from the provided URL
+    if (template.pdfUrl) {
+      const link = document.createElement('a');
+      link.href = template.pdfUrl;
+      link.download = template.pdfName || `${template.title.toLowerCase().replace(/\s+/g, '-')}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      console.warn('No PDF URL available for this template');
+    }
   };
 
   return (
@@ -218,13 +225,23 @@ const TemplateGallery = ({ isOpen, onClose }) => {
           </DialogDescription>
         </DialogHeader>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-4">
-          {templates.map((template) => (
-            <TemplateCard
-              key={template.id}
-              {...template}
-              onDownload={() => handleDownload(template)}
-            />
-          ))}
+          {loading ? (
+            <div className="col-span-full flex items-center justify-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            </div>
+          ) : templates.length > 0 ? (
+            templates.map((template) => (
+              <TemplateCard
+                key={template.id}
+                {...template}
+                onDownload={() => handleDownload(template)}
+              />
+            ))
+          ) : (
+            <div className="col-span-full text-center py-12">
+              <p className="text-muted-foreground">No templates available</p>
+            </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>
