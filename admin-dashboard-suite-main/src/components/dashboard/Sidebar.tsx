@@ -38,9 +38,10 @@ const menuItems = [
   { icon: FileText, label: "Sales Report", path: "/sales-report" },
   { icon: LayoutDashboard, label: "Schedule Meeting", path: "/schedule-meeting" },
   { icon: FolderKanban, label: "Client Onboarding", path: "/client-onboarding" },
-   { icon: Gift, label: "Client Offers", path: "/client-offers" },
+  { icon: Gift, label: "Client Offers", path: "/client-offers" },
   { icon: Gift, label: "Admin Offers", path: "/admin-offers" },
-   { icon: UserCog, label: "Expert Management", path: "/expert-management" },
+  { icon: UserCog, label: "Expert Management", path: "/expert-management" },
+  { icon: LayoutDashboard, label: "Templates", path: "/templates" },
   { icon: Settings, label: "Settings", path: "/settings" },
 ];
 
