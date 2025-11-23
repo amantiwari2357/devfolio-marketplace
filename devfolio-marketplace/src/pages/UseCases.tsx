@@ -11,6 +11,7 @@ import { toast } from "sonner";
 
 const UseCases = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -62,14 +63,47 @@ const UseCases = () => {
     }
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the form data to your backend
-    console.log('Enquiry submitted:', formData);
-    toast.success('Thank you for your enquiry! We will contact you soon.');
-    setIsDialogOpen(false);
-    // Reset form
-    setFormData({ name: '', phone: '', service: '' });
+    
+    // Validate form data
+    if (!formData.name || !formData.phone || !formData.service) {
+      toast.error('Please fill in all fields');
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const response = await fetch('https://devfolio-marketplace-1.onrender.com/api/enquiries', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          service: formData.service,
+          type: 'service-enquiry'
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit enquiry');
+      }
+
+      const data = await response.json();
+      console.log('Enquiry submitted:', data);
+      
+      toast.success('Thank you for your enquiry! We will contact you soon.');
+      setIsDialogOpen(false);
+      // Reset form
+      setFormData({ name: '', phone: '', service: '' });
+    } catch (error) {
+      console.error('Error submitting enquiry:', error);
+      toast.error('Failed to submit enquiry. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -159,8 +193,8 @@ const UseCases = () => {
                           className="opacity-70"
                         />
                       </div>
-                      <Button type="submit" className="w-full mt-4">
-                        Request Call Back
+                      <Button type="submit" className="w-full mt-4" disabled={isSubmitting}>
+                        {isSubmitting ? 'Submitting...' : 'Request Call Back'}
                       </Button>
                     </form>
                   </DialogContent>
@@ -227,8 +261,8 @@ const UseCases = () => {
                       ))}
                     </select>
                   </div>
-                  <Button type="submit" className="w-full mt-4">
-                    Request Free Consultation
+                  <Button type="submit" className="w-full mt-4" disabled={isSubmitting}>
+                    {isSubmitting ? 'Submitting...' : 'Request Free Consultation'}
                   </Button>
                 </form>
               </DialogContent>
