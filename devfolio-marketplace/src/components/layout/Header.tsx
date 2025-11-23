@@ -15,6 +15,14 @@ const Header = () => {
   const [user, setUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const getAvatarUrl = (email: string) => {
+    return `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`;
+  };
+
+  const getInitials = (email: string) => {
+    return email.split("@")[0].slice(0, 2).toUpperCase();
+  };
+
   useEffect(() => {
     const checkAuth = async () => {
       const token = localStorage.getItem('token');
@@ -105,10 +113,10 @@ const Header = () => {
                 size="icon" 
                 className="relative rounded-full w-10 h-10 from-primary/10 to-primary-glow/10 hover:from-primary/20 hover:to-primary-glow/20 border border-primary/20 transition-all duration-300"
               >
-                <Avatar className="rounded-full h-10 w-10 bg-primary/5 flex items-center justify-center">
-                  <AvatarImage src={user?.avatarUrl} alt={user?.username || "User"} />
-                  <AvatarFallback className="flex items-center justify-center w-full h-full rounded-full bg-primary/10">
-                    <User className="h-5 w-5 text-primary" />
+                <Avatar>
+                  <AvatarImage src={user ? getAvatarUrl(user.email) : "https://api.dicebear.com/7.x/avataaars/svg?seed=User"} alt={user?.email || "User"} />
+                  <AvatarFallback>
+                    {user ? getInitials(user.email) : "US"}
                   </AvatarFallback>
                 </Avatar>
               </Button>
