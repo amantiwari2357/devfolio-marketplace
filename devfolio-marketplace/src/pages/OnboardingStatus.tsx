@@ -14,21 +14,57 @@ const OnboardingStatusPage = () => {
   const navigate = useNavigate();
   const [status, setStatus] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const [previousStatus, setPreviousStatus] = useState<any>(null);
 
-  useEffect(() => {
-    const fetchStatus = async () => {
-      try {
-        const response = await userAPI.getOnboardingStatus();
-        // Backend returns { status: 'none' | 'exists', project }
-        setStatus(response.data);
-      } catch (error) {
-        toast.error("Failed to load onboarding status");
-      } finally {
-        setIsLoading(false);
+  const fetchStatus = async (isManualRefresh = false) => {
+    if (isManualRefresh) {
+      setIsRefreshing(true);
+    }
+    
+    try {
+      const response = await userAPI.getOnboardingStatus();
+      // Backend returns { status: 'none' | 'exists', project }
+      setStatus(response.data);
+      setLastUpdated(new Date());
+      
+      // Check if status has changed
+      if (previousStatus && 
+          JSON.stringify(previousStatus) !== JSON.stringify(response.data)) {
+        const oldStatus = getOverallStatus(previousStatus.project);
+        const newStatus = getOverallStatus(response.data.project);
+        
+        if (oldStatus !== newStatus) {
+          toast.success(`Status updated to: ${newStatus.replace('_', ' ')}`, {
+            description: 'Your onboarding status has been updated.'
+          });
+        }
       }
-    };
+      
+      setPreviousStatus(response.data);
+    } catch (error) {
+      console.error('Error fetching status:', error);
+      if (isManualRefresh) {
+        toast.error("Failed to refresh status");
+      }
+    } finally {
+      setIsRefreshing(false);
+      setIsLoading(false);
+    }
+  };
 
+  // Initial fetch
+  useEffect(() => {
     fetchStatus();
+    
+    // Set up polling every 10 seconds
+    const pollInterval = setInterval(() => {
+      fetchStatus();
+    }, 10000);
+    
+    // Clean up interval on component unmount
+    return () => clearInterval(pollInterval);
   }, []);
 
   const getStatusIcon = (statusType: string) => {
@@ -57,6 +93,21 @@ const OnboardingStatusPage = () => {
     }
   };
 
+  // Helper function to determine overall status
+  const getOverallStatus = (project: any) => {
+    if (!project || !project.stages) return 'pending';
+    
+    const stages = project.stages;
+    const completedStages = stages.filter((stage: any) => stage.status === "done").length;
+    const totalStages = stages.length || 1;
+    const allDone = stages.length > 0 && stages.every((stage: any) => stage.status === "done");
+    const anyInProgress = stages.some((stage: any) => stage.status === "in-progress");
+
+    if (allDone) return "approved";
+    if (anyInProgress || completedStages > 0) return "in_review";
+    return "pending";
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background">
@@ -72,7 +123,6 @@ const OnboardingStatusPage = () => {
   }
 
   if (!status || status.status === "none" || !status.project) {
-
     return (
       <div className="min-h-screen bg-background">
         <Header />
@@ -93,14 +143,28 @@ const OnboardingStatusPage = () => {
             </div>
 
             <Card className="border-border shadow-sm">
-              <CardContent className="pt-6 text-center">
-                <p className="text-muted-foreground">No onboarding request found</p>
-                <Button
-                  onClick={() => navigate("/profile")}
-                  className="mt-4 bg-gradient-to-r from-primary to-primary-glow"
-                >
-                  Submit Request
-                </Button>
+              <CardContent className="pt-8 pb-8 text-center">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+                  <AlertCircle className="h-6 w-6 text-muted-foreground" />
+                </div>
+                <h3 className="mt-4 text-lg font-medium text-foreground">No Project Onboarding Found</h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  You haven't submitted any project onboarding request yet.
+                </p>
+                <div className="mt-6 flex justify-center gap-3">
+                  <Button 
+                    variant="outline" 
+                    onClick={() => navigate(-1)}
+                  >
+                    Go Back
+                  </Button>
+                  <Button 
+                    onClick={() => navigate("/profile")}
+                    className="bg-gradient-to-r from-primary to-primary-glow hover:opacity-90"
+                  >
+                    Request Project Onboarding
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -114,35 +178,60 @@ const OnboardingStatusPage = () => {
   const completedStages = stages.filter((stage: any) => stage.status === "done").length;
   const totalStages = stages.length || 1;
   const progressPercentage = (completedStages / totalStages) * 100;
-
-  const allDone = stages.length > 0 && stages.every((stage: any) => stage.status === "done");
-  const anyInProgress = stages.some((stage: any) => stage.status === "in-progress");
-
-  let overallStatus: "approved" | "rejected" | "in_review" | "pending" = "pending";
-  if (allDone) {
-    overallStatus = "approved";
-  } else if (anyInProgress || completedStages > 0) {
-    overallStatus = "in_review";
-  }
+  const overallStatus = getOverallStatus(project);
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <div className="container mx-auto px-4 pt-24 pb-12">
         <div className="max-w-4xl mx-auto space-y-6">
-          <div className="flex items-center gap-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => navigate(-1)}
-              className="rounded-full"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <div>
-              <h1 className="text-3xl font-bold">Onboarding Status</h1>
-              <p className="text-muted-foreground">Track your professional verification progress</p>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => navigate(-1)}
+                className="rounded-full"
+              >
+                <ArrowLeft className="h-5 w-5" />
+              </Button>
+              <div>
+                <h1 className="text-3xl font-bold">Onboarding Status</h1>
+                <p className="text-muted-foreground">
+                  {lastUpdated && `Last updated: ${lastUpdated.toLocaleTimeString()}`}
+                </p>
+              </div>
             </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => fetchStatus(true)}
+              disabled={isRefreshing}
+              className="gap-2"
+            >
+              {isRefreshing ? 'Refreshing...' : 'Refresh Status'}
+              {isRefreshing ? (
+                <div className="h-4 w-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-refresh-ccw"
+                >
+                  <path d="M21 2v6h-6" />
+                  <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.68L21 8" />
+                  <path d="M3 22v-6h6" />
+                  <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.68L3 16" />
+                </svg>
+              )}
+            </Button>
           </div>
 
           {/* Status Overview */}

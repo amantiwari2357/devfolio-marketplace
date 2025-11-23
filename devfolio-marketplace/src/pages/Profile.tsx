@@ -22,14 +22,6 @@ const Profile = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
-  const [showRequestsDialog, setShowRequestsDialog] = useState(false);
-  const [pendingRequests, setPendingRequests] = useState<Array<{
-    id: string;
-    clientName: string;
-    email: string;
-    projectName: string;
-    createdAt: string;
-  }>>([]);
 
   const [onboardingForm, setOnboardingForm] = useState<OnboardingRequest>({
     experience: "",
@@ -43,23 +35,11 @@ const Profile = () => {
     budget: ""
   });
 
-  const fetchPendingRequests = async () => {
-    try {
-      const response = await userAPI.getOnboardingRequests();
-      setPendingRequests(response.data.requests || []);
-    } catch (error) {
-      console.error("Failed to fetch pending requests:", error);
-      toast.error("Failed to load pending requests");
-    }
-  };
-
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const response = await userAPI.getProfile();
         setUser(response.data.user);
-        // Fetch pending requests after profile is loaded
-        await fetchPendingRequests();
       } catch (error) {
         toast.error("Failed to load profile");
         navigate("/login");
@@ -68,18 +48,7 @@ const Profile = () => {
       }
     };
 
-    const fetchPendingRequests = async () => {
-      try {
-        const response = await userAPI.getOnboardingRequests();
-        setPendingRequests(response.data.requests || []);
-      } catch (error) {
-        console.error("Failed to fetch pending requests:", error);
-        toast.error("Failed to load pending requests");
-      }
-    };
-
     fetchProfile();
-    fetchPendingRequests();
 
     const intervalId = setInterval(async () => {
       // Here add real-time polling for onboarding status if needed, example:
@@ -285,27 +254,18 @@ const Profile = () => {
                   Fill out your project details to proceed with creating your project.
                 </CardDescription>
               </div>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => setShowRequestsDialog(true)}
-                  className="flex items-center gap-1 text-sm bg-muted hover:bg-muted/80 text-primary px-3 py-2 rounded-md transition-colors"
-                >
-                  <span>{pendingRequests.length} onboarding request{pendingRequests.length !== 1 ? 's' : ''}</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsOnboardingOpen((prev) => !prev)}
-                  className="flex items-center gap-1 text-sm text-primary hover:text-primary/80 transition-colors border border-border rounded-md px-3 py-2"
-                >
-                  <span>View Onboarding</span>
-                  {isOnboardingOpen ? (
-                    <ChevronUp className="h-4 w-4" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4" />
-                  )}
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={() => setIsOnboardingOpen((prev) => !prev)}
+                className="flex items-center gap-1 text-sm text-primary hover:text-primary/80 transition-colors border border-border rounded-md px-3 py-2"
+              >
+                <span>View Onboarding</span>
+                {isOnboardingOpen ? (
+                  <ChevronUp className="h-4 w-4" />
+                ) : (
+                  <ChevronDown className="h-4 w-4" />
+                )}
+              </button>
             </CardHeader>
             <CardContent
               className={cn(
@@ -379,53 +339,6 @@ const Profile = () => {
               </Button>
             </CardContent>
           </Card>
-
-          {/* Pending Requests Dialog */}
-          <Dialog open={showRequestsDialog} onOpenChange={setShowRequestsDialog}>
-            <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-              <DialogHeader>
-                <DialogTitle>Onboarding Requests</DialogTitle>
-                <p className="text-sm text-muted-foreground">
-                  Incoming project onboarding requests created from the public site.
-                </p>
-              </DialogHeader>
-              <div className="space-y-4">
-                {pendingRequests.length === 0 ? (
-                  <div className="text-center py-8">
-                    <p className="text-muted-foreground">No pending requests</p>
-                  </div>
-                ) : (
-                  pendingRequests.map((request) => (
-                    <Card key={request.id} className="border-border">
-                      <CardContent className="p-4">
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <h4 className="font-medium">{request.clientName}</h4>
-                            <p className="text-sm text-muted-foreground">{request.email}</p>
-                            <p className="text-sm mt-1">
-                              <span className="font-medium">Project:</span> {request.projectName}
-                            </p>
-                            <p className="text-xs text-muted-foreground mt-1">
-                              Requested on: {new Date(request.createdAt).toLocaleDateString()}
-                            </p>
-                          </div>
-                          <Button
-                            size="sm"
-                            onClick={() => {
-                              // Handle proceed action
-                              toast.info(`Processing request from ${request.clientName}`);
-                            }}
-                          >
-                            Proceed
-                          </Button>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))
-                )}
-              </div>
-            </DialogContent>
-          </Dialog>
         </div>
       </div>
     </div>
