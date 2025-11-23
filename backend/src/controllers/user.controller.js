@@ -74,6 +74,9 @@ const submitOnboardingRequest = async (req, res) => {
       requirements,
       timeline,
       budget,
+      clientName,
+      email,
+      phone,
     } = req.body;
 
     const user = await User.findById(userId);
@@ -95,9 +98,9 @@ const submitOnboardingRequest = async (req, res) => {
     const totalAmount = 0; // budget is free-text, so we keep numeric amount 0 for now
 
     const projectData = {
-      clientName: user.username || user.email.split('@')[0],
-      email: user.email,
-      phone: user.whatsappNumber || '+910000000000',
+      clientName: clientName || user.username || user.email.split('@')[0],
+      email: email || user.email,
+      phone: phone || user.whatsappNumber || '+910000000000',
       companyName: projectName,
       projectName,
       techStack: 'Not specified',

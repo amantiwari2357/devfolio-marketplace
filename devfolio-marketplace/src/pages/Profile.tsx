@@ -79,7 +79,15 @@ const Profile = () => {
 
     setIsSubmitting(true);
     try {
-      await userAPI.submitOnboardingRequest(onboardingForm);
+      // Include user information with the onboarding request
+      const requestData = {
+        ...onboardingForm,
+        clientName: user?.username || "",
+        email: user?.email || "",
+        phone: user?.phone || ""
+      };
+      
+      await userAPI.submitOnboardingRequest(requestData);
       toast.success("Project onboarding request submitted successfully!");
       setIsOnboardingOpen(false);
       setOnboardingForm({
