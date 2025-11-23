@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Settings as SettingsIcon, User, Bell, Shield, CreditCard, Save } from "lucide-react";
 import api from "@/services/api";
 import { connectSocket, getSocket } from "@/services/socket";
+import Header from "@/components/layout/Header";
 
 type NullableTimeout = ReturnType<typeof setTimeout> | null;
 
@@ -121,9 +122,26 @@ const Settings = () => {
     emitPrivacyUpdate(updatedPrivacy);
   };
 
+  const handleSaveProfile = async () => {
+    setLoading(true);
+    try {
+      await api.put('/auth/profile', user);
+      try {
+        getSocket().emit('profileUpdated', user);
+      } catch (e) {
+        console.error('Socket emit error:', e);
+      }
+    } catch (error) {
+      console.error('Error saving profile:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-background p-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-background">
+      <Header />
+      <div className="max-w-4xl mx-auto px-4 pt-24 pb-12">
         <div className="flex items-center gap-2 mb-8">
           <SettingsIcon className="w-8 h-8" />
           <h1 className="text-3xl font-bold text-foreground">Settings</h1>
@@ -215,6 +233,16 @@ const Settings = () => {
                   onChange={(e) => handleUserChange("bio", e.target.value)}
                   rows={4}
                 />
+              </div>
+              <div className="mt-6 flex justify-end">
+                <Button
+                  onClick={handleSaveProfile}
+                  disabled={loading}
+                  className="bg-foreground text-background hover:bg-foreground/90"
+                >
+                  <Save className="w-4 h-4 mr-2" />
+                  {loading ? "Saving..." : "Save Changes"}
+                </Button>
               </div>
             </Card>
           </TabsContent>
