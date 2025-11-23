@@ -33,9 +33,22 @@ const AvatarFallback = React.forwardRef<
     {...props}
   >
     {children ?? (
-      <span role="img" aria-label="avatar" className="text-lg">
-        👤
-      </span>
+      <svg
+        viewBox="0 0 64 64"
+        className="h-8 w-8"
+        aria-hidden="true"
+      >
+        <circle cx="32" cy="32" r="32" fill="#FF6B6B" />
+        <circle cx="32" cy="24" r="10" fill="#FCD7B6" />
+        <path
+          d="M16 50c2.5-9 8-14 16-14s13.5 5 16 14"
+          fill="#FCD7B6"
+        />
+        <path
+          d="M24 20c0-5 4-9 8-9s8 4 8 9"
+          fill="#2F3C7E"
+        />
+      </svg>
     )}
   </AvatarPrimitive.Fallback>
 ));
