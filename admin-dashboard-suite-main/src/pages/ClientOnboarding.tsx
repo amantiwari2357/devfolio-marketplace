@@ -264,6 +264,8 @@ const ClientOnboarding = () => {
     );
   }
 
+  const requestCount = projects.filter((p) => p.totalAmount === 0).length;
+
   return (
     <div className="flex min-h-screen w-full bg-background">
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
@@ -317,10 +319,17 @@ const ClientOnboarding = () => {
           <div className="flex items-center justify-end">
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
-                <Button onClick={() => { setEditingProject(null); setFormData({ clientName: "", email: "", phone: "", companyName: "", projectName: "", techStack: "", projectType: "", startDate: "", deadline: "", totalAmount: "" }); }}>
-                  <Plus className="w-4 h-4 mr-2" />
-                  Add Project
-                </Button>
+                <div className="flex items-center gap-3">
+                  <Button onClick={() => { setEditingProject(null); setFormData({ clientName: "", email: "", phone: "", companyName: "", projectName: "", techStack: "", projectType: "", startDate: "", deadline: "", totalAmount: "" }); }}>
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Project
+                  </Button>
+                  {requestCount > 0 && (
+                    <Badge variant="outline" className="px-3 py-1 text-xs font-medium">
+                      {requestCount} onboarding request{requestCount > 1 ? "s" : ""}
+                    </Badge>
+                  )}
+                </div>
               </DialogTrigger>
               <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
