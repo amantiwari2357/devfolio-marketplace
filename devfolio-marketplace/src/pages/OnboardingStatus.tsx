@@ -12,41 +12,31 @@ import Header from "@/components/layout/Header";
 
 const OnboardingStatusPage = () => {
   const navigate = useNavigate();
-  const [status, setStatus] = useState<any>(null);
+  const [projects, setProjects] = useState<any[]>([]);
+  const [selectedProject, setSelectedProject] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
-  const [previousStatus, setPreviousStatus] = useState<any>(null);
 
-  const fetchStatus = async (isManualRefresh = false) => {
+  const fetchProjects = async (isManualRefresh = false) => {
     if (isManualRefresh) {
       setIsRefreshing(true);
     }
     
     try {
-      const response = await userAPI.getOnboardingStatus();
-      // Backend returns { status: 'none' | 'exists', project }
-      setStatus(response.data);
+      const response = await userAPI.getOnboardingRequests();
+      // Backend returns array of projects
+      const projectsData = Array.isArray(response.data) ? response.data : response.data.requests || [];
+      setProjects(projectsData);
       setLastUpdated(new Date());
       
-      // Check if status has changed
-      if (previousStatus && 
-          JSON.stringify(previousStatus) !== JSON.stringify(response.data)) {
-        const oldStatus = getOverallStatus(previousStatus.project);
-        const newStatus = getOverallStatus(response.data.project);
-        
-        if (oldStatus !== newStatus) {
-          toast.success(`Status updated to: ${newStatus.replace('_', ' ')}`, {
-            description: 'Your onboarding status has been updated.'
-          });
-        }
+      if (projectsData.length > 0 && !selectedProject) {
+        setSelectedProject(projectsData[0]);
       }
-      
-      setPreviousStatus(response.data);
     } catch (error) {
-      console.error('Error fetching status:', error);
+      console.error('Error fetching projects:', error);
       if (isManualRefresh) {
-        toast.error("Failed to refresh status");
+        toast.error("Failed to refresh projects");
       }
     } finally {
       setIsRefreshing(false);
@@ -56,11 +46,11 @@ const OnboardingStatusPage = () => {
 
   // Initial fetch
   useEffect(() => {
-    fetchStatus();
+    fetchProjects();
     
     // Set up polling every 10 seconds
     const pollInterval = setInterval(() => {
-      fetchStatus();
+      fetchProjects();
     }, 10000);
     
     // Clean up interval on component unmount
@@ -113,16 +103,20 @@ const OnboardingStatusPage = () => {
       <div className="min-h-screen bg-background">
         <Header />
         <div className="container mx-auto px-4 pt-24 pb-12">
-          <div className="max-w-4xl mx-auto space-y-6">
+          <div className="max-w-6xl mx-auto space-y-6">
             <div className="h-8 w-48 bg-muted animate-pulse rounded"></div>
-            <div className="h-64 bg-muted animate-pulse rounded-lg"></div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="h-48 bg-muted animate-pulse rounded-lg"></div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
     );
   }
 
-  if (!status || status.status === "none" || !status.project) {
+  if (projects.length === 0) {
     return (
       <div className="min-h-screen bg-background">
         <Header />
@@ -173,7 +167,8 @@ const OnboardingStatusPage = () => {
     );
   }
 
-  const project = status.project;
+  // Get selected project details
+  const project = selectedProject;
   const stages = project?.stages || [];
   const completedStages = stages.filter((stage: any) => stage.status === "done").length;
   const totalStages = stages.length || 1;
@@ -184,7 +179,7 @@ const OnboardingStatusPage = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <div className="container mx-auto px-4 pt-24 pb-12">
-        <div className="max-w-4xl mx-auto space-y-6">
+        <div className="max-w-6xl mx-auto space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <Button
@@ -205,7 +200,7 @@ const OnboardingStatusPage = () => {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => fetchStatus(true)}
+              onClick={() => fetchProjects(true)}
               disabled={isRefreshing}
               className="gap-2"
             >
@@ -234,68 +229,114 @@ const OnboardingStatusPage = () => {
             </Button>
           </div>
 
-          {/* Status Overview */}
-          <Card className="border-border shadow-sm">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="flex items-center gap-2">
-                  {getStatusIcon(overallStatus)}
-                  Application Status
-                </CardTitle>
-                {getStatusBadge(overallStatus)}
-              </div>
-              <CardDescription>
-                Submitted on {project.createdAt ? new Date(project.createdAt).toLocaleDateString() : "N/A"}
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Overall Status</p>
-                <p className="text-base capitalize">{overallStatus.replace("_", " ")}</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Progress Tracking */}
-          <Card className="border-border shadow-sm">
-            <CardHeader>
-              <CardTitle>Progress Tracking</CardTitle>
-              <CardDescription>
-                Completed {completedStages} of {totalStages} stages
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="font-medium">Overall Progress</span>
-                  <span className="text-muted-foreground">{Math.round(progressPercentage)}%</span>
-                </div>
-                <Progress value={progressPercentage} className="h-2" />
-              </div>
-
-              <div className="space-y-3">
-                <p className="text-sm font-medium">Stages</p>
-                <div className="space-y-2">
-                  {stages.map((stage: any) => (
-                    <div
-                      key={stage.id}
-                      className="flex items-center justify-between p-3 bg-muted/40 border border-border rounded-lg"
-                    >
-                      <div>
-                        <p className="font-medium">{stage.name}</p>
-                        <p className="text-xs text-muted-foreground">{stage.output}</p>
+          {/* Projects Grid */}
+          <div>
+            <h2 className="text-xl font-semibold mb-4">Your Onboarding Requests</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {projects.map((proj: any) => {
+                const projStatus = getOverallStatus(proj);
+                return (
+                  <Card
+                    key={proj._id || proj.id}
+                    className={`border-border shadow-sm cursor-pointer transition-all hover:shadow-md ${
+                      selectedProject?._id === proj._id || selectedProject?.id === proj.id
+                        ? 'ring-2 ring-primary'
+                        : ''
+                    }`}
+                    onClick={() => setSelectedProject(proj)}
+                  >
+                    <CardHeader>
+                      <div className="flex items-start justify-between gap-2">
+                        <CardTitle className="text-base line-clamp-2">
+                          {proj.projectName || proj.name || 'Untitled Project'}
+                        </CardTitle>
+                        {getStatusIcon(projStatus)}
                       </div>
-                      <Badge
-                        variant={stage.status === "done" ? "default" : stage.status === "in-progress" ? "outline" : "secondary"}
-                      >
-                        {stage.status.replace("-", " ")}
-                      </Badge>
+                      <CardDescription className="line-clamp-2">
+                        {proj.projectDescription || proj.description || 'No description'}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-muted-foreground">
+                          {proj.stages?.length || 0} stages
+                        </span>
+                        {getStatusBadge(projStatus)}
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Selected Project Details */}
+          {project && (
+            <>
+              {/* Status Overview */}
+              <Card className="border-border shadow-sm">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="flex items-center gap-2">
+                      {getStatusIcon(overallStatus)}
+                      Application Status
+                    </CardTitle>
+                    {getStatusBadge(overallStatus)}
+                  </div>
+                  <CardDescription>
+                    Submitted on {project.createdAt ? new Date(project.createdAt).toLocaleDateString() : "N/A"}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Overall Status</p>
+                    <p className="text-base capitalize">{overallStatus.replace("_", " ")}</p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Progress Tracking */}
+              <Card className="border-border shadow-sm">
+                <CardHeader>
+                  <CardTitle>Progress Tracking</CardTitle>
+                  <CardDescription>
+                    Completed {completedStages} of {totalStages} stages
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span className="font-medium">Overall Progress</span>
+                      <span className="text-muted-foreground">{Math.round(progressPercentage)}%</span>
                     </div>
-                  ))}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+                    <Progress value={progressPercentage} className="h-2" />
+                  </div>
+
+                  <div className="space-y-3">
+                    <p className="text-sm font-medium">Stages</p>
+                    <div className="space-y-2">
+                      {stages.map((stage: any) => (
+                        <div
+                          key={stage.id || stage._id}
+                          className="flex items-center justify-between p-3 bg-muted/40 border border-border rounded-lg"
+                        >
+                          <div>
+                            <p className="font-medium">{stage.name}</p>
+                            <p className="text-xs text-muted-foreground">{stage.output}</p>
+                          </div>
+                          <Badge
+                            variant={stage.status === "done" ? "default" : stage.status === "in-progress" ? "outline" : "secondary"}
+                          >
+                            {stage.status.replace("-", " ")}
+                          </Badge>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </>
+          )}
         </div>
       </div>
     </div>
