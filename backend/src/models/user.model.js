@@ -78,6 +78,20 @@ const userSchema = new mongoose.Schema({
     trim: true
   },
 
+  // Email verification
+  isEmailVerified: {
+    type: Boolean,
+    default: false
+  },
+  emailVerificationToken: {
+    type: String,
+    default: null
+  },
+  emailVerificationExpires: {
+    type: Date,
+    default: null
+  },
+
   // Onboarding status
   onboardingCompleted: {
     type: Boolean,

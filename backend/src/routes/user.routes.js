@@ -14,6 +14,8 @@ const {
 // Public routes
 router.post('/signup', validateSignup, userController.signup);
 router.post('/login', validateLogin, userController.login);
+router.get('/verify-email', userController.verifyEmail);
+router.post('/resend-verification', userController.resendVerificationEmail);
 
 // Admin routes (no auth required for admin dashboard)
 router.get('/all', userController.getAllUsers);

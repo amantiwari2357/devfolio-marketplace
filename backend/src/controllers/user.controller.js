@@ -1,12 +1,19 @@
 const User = require('../models/user.model');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const ClientOnboardingProject = require('../models/clientOnboardingProject.model');
+const { sendVerificationEmail, sendWelcomeEmail } = require('../services/emailService');
 
 // Signup - Create user with basic info
 const signup = async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    // Validation
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Email and password are required' });
+    }
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -17,31 +24,37 @@ const signup = async (req, res) => {
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 12);
 
+    // Generate verification token
+    const verificationToken = crypto.randomBytes(32).toString('hex');
+    const verificationExpires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+
     // Create user
     const user = new User({
       email,
       password: hashedPassword,
-      currentStep: 1
+      currentStep: 1,
+      isEmailVerified: false,
+      emailVerificationToken: verificationToken,
+      emailVerificationExpires: verificationExpires
     });
 
     await user.save();
 
-    // Generate JWT token
-    const jwtSecret = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-this-in-production';
-    const token = jwt.sign(
-      { userId: user._id, email: user.email },
-      jwtSecret,
-      { expiresIn: '7d' }
-    );
+    // Send verification email
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:8080';
+    try {
+      await sendVerificationEmail(email, verificationToken, frontendUrl);
+    } catch (emailError) {
+      console.error('Failed to send verification email:', emailError);
+      // Continue even if email fails, user can request resend
+    }
 
     res.status(201).json({
-      message: 'User created successfully',
-      token,
+      message: 'User created successfully. Please check your email to verify your account.',
       user: {
         id: user._id,
         email: user.email,
-        role: user.role,
-        currentStep: user.currentStep
+        isEmailVerified: user.isEmailVerified
       }
     });
   } catch (error) {
@@ -411,6 +424,99 @@ const createAdmin = async (req, res) => {
   }
 };
 
+// Verify email with token
+const verifyEmail = async (req, res) => {
+  try {
+    const { token } = req.query;
+
+    if (!token) {
+      return res.status(400).json({ message: 'Verification token is required' });
+    }
+
+    // Find user with matching token and check if it's not expired
+    const user = await User.findOne({
+      emailVerificationToken: token,
+      emailVerificationExpires: { $gt: new Date() }
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid or expired verification token' });
+    }
+
+    // Mark email as verified
+    user.isEmailVerified = true;
+    user.emailVerificationToken = null;
+    user.emailVerificationExpires = null;
+
+    await user.save();
+
+    // Send welcome email
+    try {
+      await sendWelcomeEmail(user.email, user.username || 'User');
+    } catch (emailError) {
+      console.error('Failed to send welcome email:', emailError);
+    }
+
+    res.status(200).json({
+      message: 'Email verified successfully. You can now login.',
+      user: {
+        id: user._id,
+        email: user.email,
+        isEmailVerified: user.isEmailVerified
+      }
+    });
+  } catch (error) {
+    console.error('Email verification error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// Resend verification email
+const resendVerificationEmail = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: 'Email is required' });
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (user.isEmailVerified) {
+      return res.status(400).json({ message: 'Email is already verified' });
+    }
+
+    // Generate new verification token
+    const verificationToken = crypto.randomBytes(32).toString('hex');
+    const verificationExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+    user.emailVerificationToken = verificationToken;
+    user.emailVerificationExpires = verificationExpires;
+
+    await user.save();
+
+    // Send verification email
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:8080';
+    try {
+      await sendVerificationEmail(email, verificationToken, frontendUrl);
+    } catch (emailError) {
+      console.error('Failed to send verification email:', emailError);
+      return res.status(500).json({ message: 'Failed to send verification email' });
+    }
+
+    res.status(200).json({
+      message: 'Verification email sent successfully'
+    });
+  } catch (error) {
+    console.error('Resend verification error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 module.exports = {
   signup,
   updateProfile,
@@ -422,5 +528,7 @@ module.exports = {
   login,
   createAdmin,
   submitOnboardingRequest,
-  getOnboardingStatus
+  getOnboardingStatus,
+  verifyEmail,
+  resendVerificationEmail
 };
