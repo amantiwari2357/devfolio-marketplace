@@ -25,8 +25,17 @@ const OnboardingStatusPage = () => {
     
     try {
       const response = await userAPI.getOnboardingRequests();
-      // Backend returns array of projects
-      const projectsData = Array.isArray(response.data) ? response.data : response.data.requests || [];
+      // Backend returns array of projects directly or wrapped in data property
+      let projectsData = [];
+      
+      if (Array.isArray(response.data)) {
+        projectsData = response.data;
+      } else if (response.data?.projects) {
+        projectsData = response.data.projects;
+      } else if (response.data?.requests) {
+        projectsData = response.data.requests;
+      }
+      
       setProjects(projectsData);
       setLastUpdated(new Date());
       

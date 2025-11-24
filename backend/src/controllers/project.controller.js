@@ -18,6 +18,40 @@ const getAllProjects = async (req, res) => {
   }
 };
 
+// Get current user's projects
+const getUserProjects = async (req, res) => {
+  try {
+    console.log('getUserProjects - req.user:', req.user);
+    
+    const userId = req.user?.id || req.user?._id;
+    
+    if (!userId) {
+      console.error('No userId found in req.user:', req.user);
+      return res.status(401).json({
+        success: false,
+        message: 'User not authenticated',
+        debug: 'req.user is missing or invalid'
+      });
+    }
+
+    console.log('Fetching projects for userId:', userId);
+    const projects = await Project.find({ createdBy: userId }).sort({ createdAt: -1 });
+    
+    console.log('Found projects:', projects.length);
+    res.status(200).json({
+      success: true,
+      projects
+    });
+  } catch (error) {
+    console.error('Error fetching user projects:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch user projects',
+      error: error.message
+    });
+  }
+};
+
 // Get project by ID
 const getProjectById = async (req, res) => {
   try {
@@ -144,6 +178,7 @@ const deleteProject = async (req, res) => {
 
 module.exports = {
   getAllProjects,
+  getUserProjects,
   getProjectById,
   createProject,
   updateProject,

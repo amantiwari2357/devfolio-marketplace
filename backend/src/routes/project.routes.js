@@ -7,6 +7,9 @@ const authMiddleware = require('../middlewares/auth.middleware');
 // Get all projects (public - for frontend)
 router.get('/all', projectController.getAllProjects);
 
+// Get current user's projects (protected)
+router.get('/my', authMiddleware, projectController.getUserProjects);
+
 // Get project by ID (public - for frontend)
 router.get('/:id', projectController.getProjectById);
 
