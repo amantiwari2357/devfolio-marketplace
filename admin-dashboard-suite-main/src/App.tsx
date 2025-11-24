@@ -22,6 +22,7 @@ import ClientOffers from "./pages/ClientOffers";
 import AdminOffers from "./pages/AdminOffers";
 import ExpertManagement from "./pages/ExpertManagement";
 import TemplateManagement from "./pages/TemplateManagement";
+import PostsManagement from "./pages/PostsManagement";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -52,6 +53,7 @@ const App = () => (
           <Route path="/expert-management" element={<ExpertManagement />} />
           <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/templates" element={<TemplateManagement />} />
+           <Route path="/posts-management" element={<PostsManagement />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

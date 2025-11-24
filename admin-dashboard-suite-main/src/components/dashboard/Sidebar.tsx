@@ -18,6 +18,7 @@ import {
   FolderKanban,
   Gift,
   UserCog,
+  PenSquare,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -42,6 +43,7 @@ const menuItems = [
   { icon: Gift, label: "Admin Offers", path: "/admin-offers" },
   { icon: UserCog, label: "Expert Management", path: "/expert-management" },
   { icon: LayoutDashboard, label: "Templates", path: "/templates" },
+    { icon: PenSquare, label: "Blog Posts", path: "/posts-management" },
   { icon: Settings, label: "Settings", path: "/settings" },
 ];
 
