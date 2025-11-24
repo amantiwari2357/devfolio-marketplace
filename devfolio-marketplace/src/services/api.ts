@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://devfolio-marketplace-1.onrender.com/api', // Backend API URL
+  baseURL: 'https://devfolio-marketplace-1.onrender.com/api', // Backend API URL - use http for local development
   headers: {
     'Content-Type': 'application/json',
   },
