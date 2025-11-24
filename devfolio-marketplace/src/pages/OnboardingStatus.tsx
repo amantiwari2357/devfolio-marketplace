@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { userAPI } from "@/services/auth";
 
 import { toast } from "sonner";
-import { ArrowLeft, CheckCircle2, Clock, XCircle, AlertCircle } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Clock, XCircle, AlertCircle, X } from "lucide-react";
 import Header from "@/components/layout/Header";
 
 const OnboardingStatusPage = () => {
@@ -38,10 +38,6 @@ const OnboardingStatusPage = () => {
       
       setProjects(projectsData);
       setLastUpdated(new Date());
-      
-      if (projectsData.length > 0 && !selectedProject) {
-        setSelectedProject(projectsData[0]);
-      }
     } catch (error) {
       console.error('Error fetching projects:', error);
       if (isManualRefresh) {
@@ -249,10 +245,16 @@ const OnboardingStatusPage = () => {
                     key={proj._id || proj.id}
                     className={`border-border shadow-sm cursor-pointer transition-all hover:shadow-md ${
                       selectedProject?._id === proj._id || selectedProject?.id === proj.id
-                        ? 'ring-2 ring-primary'
+                        ? 'ring-2 ring-primary bg-primary/5'
                         : ''
                     }`}
-                    onClick={() => setSelectedProject(proj)}
+                    onClick={() => {
+                      setSelectedProject(proj);
+                      // Scroll to details section
+                      setTimeout(() => {
+                        document.getElementById('project-details')?.scrollIntoView({ behavior: 'smooth' });
+                      }, 100);
+                    }}
                   >
                     <CardHeader>
                       <div className="flex items-start justify-between gap-2">
@@ -281,7 +283,19 @@ const OnboardingStatusPage = () => {
 
           {/* Selected Project Details */}
           {project && (
-            <>
+            <div id="project-details" className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold">{project.projectName}</h2>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setSelectedProject(null)}
+                  className="rounded-full"
+                >
+                  <X className="h-5 w-5" />
+                </Button>
+              </div>
+
               {/* Status Overview */}
               <Card className="border-border shadow-sm">
                 <CardHeader>
@@ -344,7 +358,7 @@ const OnboardingStatusPage = () => {
                   </div>
                 </CardContent>
               </Card>
-            </>
+            </div>
           )}
         </div>
       </div>

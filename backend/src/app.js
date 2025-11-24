@@ -47,6 +47,13 @@ app.use(
 
 // Handle Preflight Requests
 app.options("*", (req, res) => {
+  const origin = req.headers.origin;
+  
+  // Set origin header if it's in allowed list
+  if (allowedOrigins.includes(origin)) {
+    res.header("Access-Control-Allow-Origin", origin);
+  }
+  
   res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.header("Access-Control-Allow-Credentials", "true");

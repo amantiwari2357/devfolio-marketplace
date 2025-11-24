@@ -1,4 +1,5 @@
 const Project = require('../models/project.model');
+const ClientOnboardingProject = require('../models/clientOnboardingProject.model');
 const { validationResult } = require('express-validator');
 
 // Get all projects
@@ -23,7 +24,8 @@ const getUserProjects = async (req, res) => {
   try {
     console.log('getUserProjects - req.user:', req.user);
     
-    const userId = req.user?.id || req.user?._id;
+    // Try different field names: userId, id, _id
+    const userId = req.user?.userId || req.user?.id || req.user?._id;
     
     if (!userId) {
       console.error('No userId found in req.user:', req.user);
@@ -35,7 +37,8 @@ const getUserProjects = async (req, res) => {
     }
 
     console.log('Fetching projects for userId:', userId);
-    const projects = await Project.find({ createdBy: userId }).sort({ createdAt: -1 });
+    // Query ClientOnboardingProject collection instead of Project
+    const projects = await ClientOnboardingProject.find({ createdBy: userId }).sort({ createdAt: -1 });
     
     console.log('Found projects:', projects.length);
     res.status(200).json({
