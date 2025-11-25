@@ -35,15 +35,29 @@ export interface User {
 }
 
 export interface OnboardingRequest {
-  experience: string;
-  portfolio?: string;
-  reason: string;
-  availability: string;
-  projectName?: string;
-  projectDescription?: string;
-  requirements?: string;
+  // Client information
+  clientName?: string;
+  email?: string;
+  phone?: string;
+  
+  // Project details
+  projectName: string;
+  projectDescription: string;
+  requirements: string;
   timeline?: string;
   budget?: string;
+  
+  // Additional information
+  experience?: string;
+  portfolio?: string;
+  reason?: string;
+  availability?: string;
+  
+  // Backend fields
+  companyName?: string;
+  status?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 // Auth API functions
@@ -93,7 +107,20 @@ export const userAPI = {
   getOnboardingRequests: () => api.get('/projects/my'),
 
   submitOnboardingRequest: (data: OnboardingRequest) =>
-    api.post('/projects', data),
+    api.post('/client-onboarding', {
+      clientName: data.clientName || '',
+      email: data.email || '',
+      phone: data.phone || '',
+      projectName: data.projectName,
+      projectDescription: data.projectDescription,
+      requirements: data.requirements,
+      timeline: data.timeline || 'Not specified',
+      budget: data.budget || 'Not specified',
+      experience: data.experience || '',
+      portfolio: data.portfolio || '',
+      reason: data.reason || '',
+      availability: data.availability || 'Flexible'
+    }),
 };
 
 // Enquiry API functions
