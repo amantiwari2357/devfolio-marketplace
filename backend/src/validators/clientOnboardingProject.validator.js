@@ -1,85 +1,23 @@
 const { body } = require('express-validator');
 
-// Project creation/update validation
+// Project creation/update validation - All fields are optional
 const clientOnboardingProjectSchema = [
-  body('clientName')
-    .trim()
-    .notEmpty()
-    .withMessage('Client name is required')
-    .isLength({ min: 2, max: 100 })
-    .withMessage('Client name must be between 2 and 100 characters'),
-
-  body('email')
-    .isEmail()
-    .normalizeEmail()
-    .withMessage('Valid email is required'),
-
-  body('phone')
-    .trim()
-    .notEmpty()
-    .withMessage('Phone number is required')
-    .matches(/^[\+]?[1-9][\d]{0,15}$/)
-    .withMessage('Invalid phone number format'),
-
-  body('companyName')
-    .trim()
-    .notEmpty()
-    .withMessage('Company name is required')
-    .isLength({ min: 2, max: 100 })
-    .withMessage('Company name must be between 2 and 100 characters'),
-
-  body('projectName')
-    .trim()
-    .notEmpty()
-    .withMessage('Project name is required')
-    .isLength({ min: 2, max: 200 })
-    .withMessage('Project name must be between 2 and 200 characters'),
-
-  body('techStack')
-    .trim()
-    .notEmpty()
-    .withMessage('Technology stack is required'),
-
-  body('projectType')
-    .trim()
-    .notEmpty()
-    .withMessage('Project type is required'),
-
-  body('startDate')
-    .notEmpty()
-    .withMessage('Start date is required')
-    .isISO8601()
-    .withMessage('Valid start date is required'),
-
-  body('deadline')
-    .notEmpty()
-    .withMessage('Deadline is required')
-    .isISO8601()
-    .withMessage('Valid deadline is required'),
-
-  body('totalAmount')
-    .isNumeric()
-    .withMessage('Total amount must be a number')
-    .isFloat({ min: 0 })
-    .withMessage('Total amount must be positive'),
-
-  body('paidAmount')
-    .optional()
-    .isNumeric()
-    .withMessage('Paid amount must be a number')
-    .isFloat({ min: 0 })
-    .withMessage('Paid amount must be positive'),
-
-  body('teamMembers')
-    .optional()
-    .isArray()
-    .withMessage('Team members must be an array'),
-
-  body('teamMembers.*')
-    .optional()
-    .trim()
-    .isLength({ min: 1 })
-    .withMessage('Team member name cannot be empty')
+  body('clientName').optional().trim(),
+  body('email').optional().trim().normalizeEmail(),
+  body('phone').optional().trim(),
+  body('companyName').optional().trim(),
+  body('projectName').optional().trim(),
+  body('techStack').optional().trim(),
+  body('projectType').optional().trim(),
+  body('startDate').optional().trim(),
+  body('deadline').optional().trim(),
+  body('totalAmount').optional().trim(),
+  body('paidAmount').optional().trim(),
+  body('teamMembers').optional(),
+  body('projectDescription').optional().trim(),
+  body('requirements').optional().trim(),
+  body('timeline').optional().trim(),
+  body('budget').optional().trim()
 ];
 
 // Stage update validation
