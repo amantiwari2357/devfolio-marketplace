@@ -19,6 +19,7 @@ import Search from "./pages/Search";
 import Listing from "./pages/Listing";
 import Pricing from "./pages/Pricing";
 import CreateCourse from "./pages/CreateCourse";
+
 import Contact from "./pages/Contact";
 import AboutUs from "./pages/AboutUs";
 import Terms from "./pages/Terms";
@@ -27,7 +28,6 @@ import Blog from "./pages/Blog";
 import ProjectDetail from "./pages/ProjectDetail";
 import Profile from "./pages/Profile";
 import OnboardingStatus from "./pages/OnboardingStatus";
-import VerifyEmail from "./pages/VerifyEmail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -62,7 +62,6 @@ const App = () => (
           <Route path="/project/:id" element={<ProjectDetail />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/onboarding-status" element={<OnboardingStatus />} />
-          <Route path="/verify-email" element={<VerifyEmail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

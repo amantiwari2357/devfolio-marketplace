@@ -24,33 +24,26 @@ const signup = async (req, res) => {
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    // Generate verification token
-    const verificationToken = crypto.randomBytes(32).toString('hex');
-    const verificationExpires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
-
     // Create user
     const user = new User({
       email,
       password: hashedPassword,
       currentStep: 1,
-      isEmailVerified: false,
-      emailVerificationToken: verificationToken,
-      emailVerificationExpires: verificationExpires
+      isEmailVerified: true
     });
 
     await user.save();
 
-    // Send verification email
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:8080';
-    try {
-      await sendVerificationEmail(email, verificationToken, frontendUrl);
-    } catch (emailError) {
-      console.error('Failed to send verification email:', emailError);
-      // Continue even if email fails, user can request resend
-    }
+    // Generate JWT token for immediate login
+    const token = jwt.sign(
+      { userId: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
+    );
 
     res.status(201).json({
-      message: 'User created successfully. Please check your email to verify your account.',
+      message: 'User created successfully',
+      token,
       user: {
         id: user._id,
         email: user.email,
