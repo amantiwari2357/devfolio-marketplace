@@ -15,7 +15,8 @@ export class ClientOnboardingController extends BaseController<IClientOnboarding
       const userId = req.user?._id || req.user?.id;
       
       if (!userId) {
-        return res.status(401).json({ message: 'User not authenticated' });
+        res.status(401).json({ message: 'User not authenticated' });
+        return;
       }
 
       // Format dates properly - handle both string and Date objects
@@ -74,10 +75,11 @@ export class ClientOnboardingController extends BaseController<IClientOnboarding
           field: err.path,
           message: err.message,
         }));
-        return res.status(400).json({
+        res.status(400).json({
           message: 'Validation error',
           errors: validationErrors,
         });
+        return;
       }
 
       res.status(400).json({ 
@@ -85,6 +87,7 @@ export class ClientOnboardingController extends BaseController<IClientOnboarding
         error: error.name,
         details: error.errors || error.stack,
       });
+      return;
     }
   };
 
