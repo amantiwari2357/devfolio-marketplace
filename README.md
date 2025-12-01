@@ -135,13 +135,3 @@
 </div>
 
 <hr>
-
-## 🌐 Online Presence
-
-- 🔗 [**Portfolio Website**](https://your-website.com) *(Showcase of my best work)* 
-- 💼 [**LinkedIn**](https://www.linkedin.com/in/aman-tiwari-91b869225)  
-- 🐦 [**Twitter (X)**](https://x.com/amantiwari2357)  
-- 💻 [**GitHub**](https://github.com/amantiwari2357)  
-- 📬 [**Email Me**](mailto:amankumartiwari5255@gmail.com)
-
-<hr>
