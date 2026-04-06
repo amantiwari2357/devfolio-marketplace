@@ -79,7 +79,7 @@ const HeroSection = () => {
 
   if (isLoading) {
     return (
-      <section className="section-spacing bg-gradient-to-b from-background to-secondary/30">
+      <section className="section-spacing pt-32 md:pt-40 bg-gradient-to-b from-background to-secondary/30">
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
@@ -95,7 +95,7 @@ const HeroSection = () => {
   }
 
   return (
-    <section className="section-spacing bg-gradient-to-b from-background to-secondary/30 relative overflow-hidden">
+    <section className="section-spacing pt-32 md:pt-40 bg-gradient-to-b from-background to-secondary/30 relative overflow-hidden">
       {/* Background Flux */}
       <div className="absolute top-0 right-0 -z-10 w-1/2 h-1/2 bg-primary/2 opacity-30 blur-[150px] rounded-full animate-pulse" />
       
