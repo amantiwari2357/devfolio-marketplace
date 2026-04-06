@@ -19,7 +19,7 @@ const profiles = [
     role: "Full Stack Developer",
     badge: "100acress.com",
     color: "bg-card-yellow",
-    linkedin: ""
+    linkedin: "www.linkedin.com/in/vivek-narayan-4157271b7"
   },
 
   {
