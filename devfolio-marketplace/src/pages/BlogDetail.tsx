@@ -180,29 +180,29 @@ const BlogDetail = () => {
                   </nav>
 
                   {/* Advertisement Card - RESPONSIVE DYNAMIC */}
-                  <div className={`my-16 md:my-20 rounded-[32px] md:rounded-[48px] ${currentAd.bg} border border-border/40 md:border-2 md:border-primary/20 p-8 md:p-12 lg:p-16 shadow-[0_20px_80px_-20px_rgba(var(--primary),0.15)] relative overflow-hidden group/ad flex flex-col xl:flex-row items-center justify-between gap-8 md:gap-12 md:text-left text-center`}>
-                    <div className="absolute top-[-20%] right-[-10%] md:right-0 lg:right-[15%] p-6 opacity-[0.03] md:opacity-5 group-hover/ad:scale-110 transition-transform duration-1000 rotate-12 pointer-events-none w-full md:w-[600px] h-[600px] flex justify-center items-center">
+                  <div className={`my-12 md:my-16 rounded-[24px] md:rounded-[36px] ${currentAd.bg} border border-border/40 md:border-2 md:border-primary/20 p-6 md:p-8 lg:p-10 shadow-[0_20px_60px_-20px_rgba(var(--primary),0.15)] relative overflow-hidden group/ad flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 md:gap-8 lg:text-left text-left`}>
+                    <div className="absolute top-[-50%] right-[-10%] md:right-0 lg:right-[15%] p-6 opacity-[0.03] md:opacity-5 group-hover/ad:scale-110 transition-transform duration-1000 rotate-12 pointer-events-none w-full md:w-[400px] h-full flex justify-center items-center">
                       {currentAd.icon}
                     </div>
                     
-                    <div className="relative z-10 flex-1 max-w-3xl">
-                      <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-primary mb-4 block">
+                    <div className="relative z-10 flex-1 w-full lg:max-w-xl xl:max-w-2xl">
+                      <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] text-primary mb-3 block">
                         {currentAd.subtitle}
                       </span>
-                      <h3 className="text-3xl md:text-5xl lg:text-6xl font-black text-foreground uppercase tracking-tight mb-4 md:mb-6 leading-[0.9]">
-                        {currentAd.title1} <br className="hidden md:block" /> <span className="text-primary italic">{currentAd.title2}</span>
+                      <h3 className="text-2xl md:text-4xl lg:text-5xl font-black text-foreground uppercase tracking-tight mb-3 md:mb-4 leading-[0.9]">
+                        {currentAd.title1} <span className="text-primary italic">{currentAd.title2}</span>
                       </h3>
-                      <p className="font-bold text-sm md:text-base lg:text-lg text-foreground/80 leading-relaxed md:max-w-2xl mx-auto md:mx-0">
+                      <p className="font-bold text-xs md:text-sm lg:text-base text-foreground/80 leading-relaxed max-w-xl m-0">
                         {currentAd.desc}
                       </p>
                     </div>
                     
-                    <div className="relative z-10 w-full xl:w-auto shrink-0 flex items-center justify-center pt-2 md:pt-0">
+                    <div className="relative z-10 w-full lg:w-auto shrink-0 flex items-center justify-start lg:justify-center mt-2 lg:mt-0">
                       <Button 
                         onClick={() => navigate('/signup')}
-                        className="w-full xl:w-auto rounded-[20px] md:rounded-[24px] bg-foreground text-background font-black uppercase tracking-widest text-[10px] md:text-sm h-14 md:h-16 px-8 md:px-12 hover:scale-105 active:scale-95 transition-all shadow-2xl"
+                        className="w-full sm:w-auto lg:w-auto rounded-[16px] md:rounded-[20px] bg-foreground text-background font-black uppercase tracking-widest text-[10px] md:text-[11px] h-12 md:h-14 px-6 md:px-10 hover:scale-105 active:scale-95 transition-all shadow-xl overflow-hidden"
                       >
-                        {currentAd.cta} <Zap className="w-4 h-4 md:w-5 md:h-5 ml-3 md:ml-4 text-primary" />
+                        <span className="whitespace-nowrap">{currentAd.cta}</span> <Zap className="w-3 h-3 md:w-4 md:h-4 ml-2 md:ml-3 text-primary shrink-0" />
                       </Button>
                     </div>
                   </div>
@@ -369,26 +369,37 @@ const BlogDetail = () => {
                   </div>
 
                   {/* Primary Call To Action Feature */}
-                  <div className="p-8 rounded-[36px] bg-foreground text-background border-none relative overflow-hidden group shadow-2xl">
-                    <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:scale-125 transition-transform duration-1000">
-                      <Layers className="w-32 h-32 text-primary" />
+                  <div className="p-8 md:p-10 rounded-[40px] bg-gradient-to-b from-foreground to-foreground/90 text-background border border-background/10 relative overflow-hidden group shadow-[0_30px_100px_-20px_rgba(0,0,0,0.4)] flex flex-col justify-center min-h-[360px] hover:shadow-[0_40px_120px_-20px_rgba(var(--primary),0.2)] transition-all duration-700">
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/15 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                    <div className="absolute -top-10 -right-10 p-8 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-1000 rotate-12">
+                      <Zap className="w-56 h-56 text-primary" />
                     </div>
-                    <div className="relative z-10 space-y-6">
-                      <div className="flex items-center gap-2 text-primary animate-pulse">
-                        <Zap className="w-4 h-4" />
-                        <span className="text-[10px] font-black uppercase tracking-[0.4em] italic">Action Required</span>
+                    
+                    <div className="relative z-10 space-y-7">
+                      <div className="flex items-center gap-3 text-primary">
+                        <div className="relative flex h-3 w-3">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+                        </div>
+                        <span className="text-[10px] font-black uppercase tracking-[0.4em]">System Ready</span>
                       </div>
-                      <h4 className="text-2xl font-black italic uppercase leading-[0.9]">Ready To Scale Your <span className="text-primary NOT-italic">Operations?</span></h4>
-                      <p className="text-xs font-bold text-background/60 italic leading-relaxed">
-                        Deploy your own high-converting creator storefront today. Manage clients, sell services, and automate your workflows with zero friction.
+                      
+                      <h4 className="text-3xl md:text-4xl font-black uppercase tracking-tighter leading-[1.1]">
+                        Scale Your <br /> <span className="text-primary italic">Operations.</span>
+                      </h4>
+                      
+                      <p className="text-sm font-medium text-background/60 leading-relaxed max-w-[90%]">
+                        Deploy your high-converting storefront today. Manage clients, sell services, and automate workflows effortlessly.
                       </p>
+                      
                       <Button 
                         onClick={() => navigate('/signup')}
-                        className="w-full h-16 rounded-[24px] bg-gradient-to-r from-primary to-primary-glow/80 text-primary-foreground font-black uppercase tracking-[0.2em] text-[11px] hover:scale-105 active:scale-95 transition-all shadow-[0_0_40px_-10px_rgba(var(--primary),0.6)] mt-8 italic border-none flex items-center justify-center gap-3 relative overflow-hidden group/btn"
+                        className="w-full h-16 rounded-[24px] bg-primary text-primary-foreground font-black uppercase tracking-[0.2em] text-[11px] hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_30px_-5px_rgba(var(--primary),0.5)] mt-4 border-none flex items-center justify-between px-6 group/btn"
                       >
-                        <div className="absolute inset-0 bg-white/20 translate-y-[-100%] group-hover/btn:translate-y-[100%] transition-transform duration-700 ease-in-out" />
-                        Initialize Storefront
-                        <ChevronRight className="w-5 h-5 group-hover/btn:translate-x-2 transition-transform" />
+                        <span className="relative z-10">Initialize Now</span>
+                        <div className="w-8 h-8 rounded-full bg-background/20 flex items-center justify-center group-hover/btn:bg-background/30 transition-colors">
+                           <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                        </div>
                       </Button>
                     </div>
                   </div>
