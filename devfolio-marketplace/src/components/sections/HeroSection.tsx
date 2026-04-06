@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { ArrowRight, Star } from "lucide-react";
 import ProfileCards from "@/components/cards/ProfileCards";
 import { useNavigate } from "react-router-dom";
@@ -162,7 +163,7 @@ const HeroSection = () => {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="OPERATOR@DEVFOLIOMARKETPLACE.COM"
+                  placeholder="SUPPORT@DEVFOLIOMARKETPLACE.COM"
                   className="h-14 rounded-2xl bg-background/50 border-border/40 focus:border-primary/50 font-black text-xs uppercase tracking-widest px-6"
                   value={enquiryForm.email}
                   onChange={(e) => setEnquiryForm(prev => ({ ...prev, email: e.target.value }))}

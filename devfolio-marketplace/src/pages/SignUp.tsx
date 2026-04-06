@@ -146,25 +146,25 @@ const SignUp = () => {
                 </div>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="firstName" className="text-xs md:text-sm font-bold tracking-tight">First name</Label>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="space-y-3">
+                    <Label htmlFor="firstName" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-3 italic">First Identity</Label>
                     <Input
                       id="firstName"
-                      placeholder="John"
-                      className="rounded-xl py-4 md:py-6 border-border/50 bg-secondary/30 focus:border-primary/50 focus:ring-primary/20 transition-all font-medium"
+                      placeholder="ENTER_FIRST_NAME"
+                      className="h-14 md:h-16 rounded-[18px] md:rounded-[22px] px-8 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-[10px] md:text-xs uppercase tracking-widest placeholder:opacity-40"
                       value={formData.firstName}
                       onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                       required
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="lastName" className="text-xs md:text-sm font-bold tracking-tight">Last name</Label>
+                  <div className="space-y-3">
+                    <Label htmlFor="lastName" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-3 italic">Last Identity</Label>
                     <Input
                       id="lastName"
-                      placeholder="Doe"
-                      className="rounded-xl py-4 md:py-6 border-border/50 bg-secondary/30 focus:border-primary/50 focus:ring-primary/20 transition-all font-medium"
+                      placeholder="ENTER_LAST_NAME"
+                      className="h-14 md:h-16 rounded-[18px] md:rounded-[22px] px-8 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-[10px] md:text-xs uppercase tracking-widest placeholder:opacity-40"
                       value={formData.lastName}
                       onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                       required
@@ -172,27 +172,27 @@ const SignUp = () => {
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-xs md:text-sm font-bold tracking-tight">Email address</Label>
+                <div className="space-y-3">
+                  <Label htmlFor="email" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-3 italic">Signal Node (Email)</Label>
                   <Input
                     id="email"
                     type="email"
                     placeholder="OPERATOR@DEVFOLIOMARKETPLACE.COM"
-                    className="rounded-xl py-4 md:py-6 border-border/50 bg-secondary/30 focus:border-primary/50 focus:ring-primary/20 transition-all font-medium"
+                    className="h-14 md:h-16 rounded-[18px] md:rounded-[22px] px-8 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-[10px] md:text-xs uppercase tracking-widest placeholder:opacity-40"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="password" title="password" className="text-xs md:text-sm font-bold tracking-tight">Password</Label>
+                <div className="space-y-3">
+                  <Label htmlFor="password" title="password" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-3 italic">Secret Key (Password)</Label>
                   <div className="relative">
                     <Input
                       id="password"
                       type={showPassword ? "text" : "password"}
-                      placeholder="••••••••"
-                      className="rounded-xl py-4 md:py-6 border-border/50 bg-secondary/30 focus:border-primary/50 focus:ring-primary/20 transition-all font-medium"
+                      placeholder="••••••••••••"
+                      className="h-14 md:h-16 rounded-[18px] md:rounded-[22px] px-8 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-[10px] md:text-xs uppercase tracking-widest placeholder:opacity-40"
                       value={formData.password}
                       onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                       required
@@ -200,10 +200,10 @@ const SignUp = () => {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary transition-colors"
+                      className="absolute right-6 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary transition-all"
                       title={showPassword ? "Hide password" : "Show password"}
                     >
-                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                      {showPassword ? <EyeOff className="w-5 h-5 opacity-60" /> : <Eye className="w-5 h-5 opacity-60" />}
                     </button>
                   </div>
                 </div>
@@ -255,20 +255,21 @@ const SignUp = () => {
                 <h2 className="text-3xl font-black tracking-tighter text-foreground italic uppercase leading-none">
                   Trusted by experts across <span className="text-primary NOT-italic underline decoration-primary/30 underline-offset-8">industry domains</span>.
                 </h2>
-              </div>
-
-              <div className="h-[600px] overflow-hidden mask-fade-y relative mt-8">
-                <div className="flex flex-col gap-6 animate-scroll-y py-4">
-                  {[...testimonials, ...testimonials].map((t, idx) => (
-                    <Card key={idx} className={`p-8 border-none bg-gradient-to-br ${t.grad} shadow-xl backdrop-blur-md group hover:scale-[1.02] transition-all duration-500 rounded-[32px] w-full`}>
-                      <p className="text-foreground/90 mb-6 font-bold italic leading-relaxed text-sm">"{t.quote}"</p>
-                      <div className="flex items-center gap-4 border-t border-foreground/10 pt-6">
-                        <div className="w-12 h-12 rounded-2xl bg-background flex items-center justify-center font-black text-xs shadow-inner text-primary">
+                    <div className="h-[600px] overflow-hidden mask-fade-y relative mt-8">
+                <div className="flex flex-col gap-6 animate-scroll-y py-12">
+                  {[...testimonials, ...testimonials, ...testimonials].map((t, idx) => (
+                    <Card key={idx} className={`p-10 border-none bg-gradient-to-br ${t.grad} shadow-2xl backdrop-blur-xl group hover:scale-[1.02] transition-all duration-700 rounded-[32px] w-full relative overflow-hidden`}>
+                      <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:rotate-12 transition-transform">
+                        <Star className="w-24 h-24 text-foreground" />
+                      </div>
+                      <p className="text-foreground font-black italic leading-relaxed text-sm relative z-10 mb-8 opacity-80">"{t.quote}"</p>
+                      <div className="flex items-center gap-5 border-t border-foreground/10 pt-8 relative z-10">
+                        <div className="w-14 h-14 rounded-2xl bg-background flex items-center justify-center font-black text-sm shadow-2xl text-primary italic">
                           {t.name.split(' ').map(n => n[0]).join('')}
                         </div>
                         <div>
-                          <p className="font-black text-sm text-foreground uppercase tracking-tighter">{t.name}</p>
-                          <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest opacity-60">{t.title}</p>
+                          <p className="font-black text-sm text-foreground uppercase tracking-tighter italic leading-none mb-1">{t.name}</p>
+                          <p className="text-[9px] text-muted-foreground font-black uppercase tracking-[0.2em] opacity-40 italic">{t.title}</p>
                         </div>
                       </div>
                     </Card>
@@ -276,9 +277,11 @@ const SignUp = () => {
                 </div>
               </div>
 
-              <div className="pt-10 text-center bg-background/50 rounded-[32px] p-8 backdrop-blur-xl border border-border/20 shadow-2xl">
-                <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.5em] italic">Join the revolution</p>
-              </div>
+              <div className="pt-10 text-center">
+                <div className="bg-background/20 rounded-[32px] p-10 backdrop-blur-3xl border border-border/10 shadow-2xl animate-pulse">
+                  <p className="text-[11px] font-black text-muted-foreground uppercase tracking-[0.6em] italic">Join the Neural Revolution</p>
+                </div>
+              </div>          </div>
             </div>
           </div>
         </div>

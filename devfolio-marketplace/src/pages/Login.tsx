@@ -183,13 +183,13 @@ const Login = () => {
 
               {/* Access Payload Form */}
               <form onSubmit={handleSubmit} className="space-y-8">
-                <div className="space-y-3">
-                  <Label htmlFor="email" className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground ml-4 italic px-2">Digital Identity</Label>
+                <div className="space-y-4">
+                  <Label htmlFor="email" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-4 italic px-2">Digital Identity (Email)</Label>
                     <Input
                       id="email"
                       type="email"
                       placeholder="OPERATOR@DEVFOLIOMARKETPLACE.COM"
-                      className="h-14 md:h-16 rounded-[18px] md:rounded-[22px] px-8 bg-background/50 border-border/40 focus:border-primary/50 focus:ring-primary/20 transition-all font-black text-[10px] md:text-xs uppercase tracking-widest placeholder:opacity-30"
+                      className="h-14 md:h-16 rounded-[18px] md:rounded-[22px] px-8 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-[10px] md:text-xs uppercase tracking-widest placeholder:opacity-40"
                       value={formData.email}
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
@@ -198,17 +198,17 @@ const Login = () => {
                     />
                 </div>
 
-                <div className="space-y-3">
+                <div className="space-y-4">
                   <div className="flex items-center justify-between px-2">
-                    <Label htmlFor="password" title="password" className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground ml-2 italic">Access Key</Label>
-                    <Link to="/forgot-password" title="forgot password" className="text-[10px] font-black italic text-primary uppercase tracking-[0.2em] hover:text-foreground transition-all">Reset Vector</Link>
+                    <Label htmlFor="password" title="password" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-2 italic">Access Key (Password)</Label>
+                    <Link to="/forgot-password" title="forgot password" className="text-[11px] font-black italic text-primary uppercase tracking-[0.3em] hover:text-foreground transition-all">Reset Vector</Link>
                   </div>
                   <div className="relative">
                     <Input
                       id="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="••••••••••••"
-                      className="h-14 md:h-16 rounded-[18px] md:rounded-[22px] px-8 bg-background/50 border-border/40 focus:border-primary/50 focus:ring-primary/20 transition-all font-black text-[10px] md:text-xs uppercase tracking-widest placeholder:opacity-30"
+                      className="h-14 md:h-16 rounded-[18px] md:rounded-[22px] px-8 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-[10px] md:text-xs uppercase tracking-widest placeholder:opacity-40"
                       value={formData.password}
                       onChange={(e) =>
                         setFormData({ ...formData, password: e.target.value })
@@ -222,9 +222,9 @@ const Login = () => {
                       title={showPassword ? "Hide password" : "Show password"}
                     >
                       {showPassword ? (
-                        <EyeOff className="w-5 h-5 opacity-40" />
+                        <EyeOff className="w-5 h-5 opacity-60" />
                       ) : (
-                        <Eye className="w-5 h-5 opacity-40" />
+                        <Eye className="w-5 h-5 opacity-60" />
                       )}
                     </button>
                   </div>
@@ -291,17 +291,20 @@ const Login = () => {
               </div>
 
               <div className="h-[600px] overflow-hidden mask-fade-y relative mt-8">
-                <div className="flex flex-col gap-6 animate-scroll-y py-4">
-                  {[...testimonials, ...testimonials].map((t, idx) => (
-                    <Card key={idx} className={`p-8 border-none bg-gradient-to-br ${t.grad} shadow-xl backdrop-blur-md group hover:scale-[1.02] transition-all duration-500 rounded-[32px] w-full`}>
-                      <p className="text-foreground/90 mb-6 font-bold italic leading-relaxed text-sm">"{t.quote}"</p>
-                      <div className="flex items-center gap-4 border-t border-foreground/10 pt-6">
-                        <div className="w-12 h-12 rounded-2xl bg-background flex items-center justify-center font-black text-xs shadow-inner text-primary">
+                <div className="flex flex-col gap-6 animate-scroll-y py-12">
+                  {[...testimonials, ...testimonials, ...testimonials].map((t, idx) => (
+                    <Card key={idx} className={`p-10 border-none bg-gradient-to-br ${t.grad} shadow-2xl backdrop-blur-xl group hover:scale-[1.02] transition-all duration-700 rounded-[32px] w-full relative overflow-hidden`}>
+                      <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:rotate-12 transition-transform">
+                        <Activity className="w-24 h-24 text-foreground" />
+                      </div>
+                      <p className="text-foreground font-black italic leading-relaxed text-sm relative z-10 mb-8 opacity-80">"{t.quote}"</p>
+                      <div className="flex items-center gap-5 border-t border-foreground/10 pt-8 relative z-10">
+                        <div className="w-14 h-14 rounded-2xl bg-background flex items-center justify-center font-black text-sm shadow-2xl text-primary italic">
                           {t.name.split(' ').map(n => n[0]).join('')}
                         </div>
                         <div>
-                          <p className="font-black text-sm text-foreground uppercase tracking-tighter">{t.name}</p>
-                          <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest opacity-60">{t.title}</p>
+                          <p className="font-black text-sm text-foreground uppercase tracking-tighter italic leading-none mb-1">{t.name}</p>
+                          <p className="text-[9px] text-muted-foreground font-black uppercase tracking-[0.2em] opacity-40 italic">{t.title}</p>
                         </div>
                       </div>
                     </Card>
@@ -309,8 +312,10 @@ const Login = () => {
                 </div>
               </div>
 
-              <div className="pt-10 text-center bg-background/50 rounded-[32px] p-8 backdrop-blur-xl border border-border/20 shadow-2xl">
-                <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.5em] italic">Join the Neural Revolution</p>
+              <div className="pt-10 text-center">
+                <div className="bg-background/20 rounded-[32px] p-10 backdrop-blur-3xl border border-border/10 shadow-2xl animate-pulse">
+                  <p className="text-[11px] font-black text-muted-foreground uppercase tracking-[0.6em] italic">Neural Network Optimization Active</p>
+                </div>
               </div>
             </div>
           </div>

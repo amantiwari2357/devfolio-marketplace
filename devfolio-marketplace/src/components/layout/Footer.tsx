@@ -12,11 +12,8 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-8 group">
-              <a href="/" className="flex items-center gap-2">
-                <img src={logo} alt="Devfolio Logo" className="h-40 w-auto group-hover:scale-105 transition-transform duration-300" />
-                <span className="text-2xl font-black tracking-tighter text-foreground group-hover:text-primary transition-colors">
-                  DEVFOLIO<span className="text-primary">.</span>
-                </span>
+              <a href="/" className="flex flex-col items-start gap-4">
+                <img src={logo} alt="Devfolio Logo" className="h-32 md:h-40 w-auto group-hover:scale-105 transition-transform duration-300" />
               </a>
             </div>
             
@@ -71,9 +68,10 @@ const Footer = () => {
           <div className="col-span-2 md:col-span-1 pt-12 md:pt-0 border-t md:border-t-0 border-border/20">
             <h4 className="font-black text-xs mb-8 tracking-[0.2em] uppercase italic opacity-40">Frequency Connect</h4>
             <div className="space-y-6">
-              <p className="text-muted-foreground text-xs font-bold italic uppercase tracking-widest">
+              <p className="text-muted-foreground text-xs font-bold italic uppercase tracking-widest leading-relaxed">
                 GURGAON SECTOR 39, INDIA<br/>
-                <a href="mailto:devfoliomarketplace@gmail.com" className="text-foreground NOT-italic hover:text-primary transition-colors">support@devfoliomarketplace.com</a>
+                <a href="tel:9031359720" className="text-foreground NOT-italic hover:text-primary transition-colors block mt-2">+91 9031359720</a>
+                <a href="mailto:devfoliomarketplace@gmail.com" className="text-foreground NOT-italic hover:text-primary transition-colors block mt-1">support@devfoliomarketplace.com</a>
               </p>
               
               <div className="flex gap-4">

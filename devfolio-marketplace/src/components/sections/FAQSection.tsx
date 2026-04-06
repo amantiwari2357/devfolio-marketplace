@@ -40,31 +40,34 @@ const faqs = [
 
 const FAQSection = () => {
   return (
-    <section className="py-24 bg-gradient-to-b from-secondary/30 to-background">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
-            Frequently Asked <span className="text-primary">Questions</span>
+    <section className="section-spacing bg-gradient-to-b from-secondary/30 to-background overflow-hidden relative">
+      {/* Background Decor */}
+      <div className="absolute bottom-0 right-0 -z-10 w-1/4 h-1/4 bg-primary/5 blur-[100px] rounded-full animate-pulse" />
+      
+      <div className="container mx-auto px-6 max-w-5xl">
+        <div className="text-center max-w-3xl mx-auto mb-20 md:mb-32 animate-slide-up">
+           <h2 className="heading-responsive">
+            Frequently Asked <span className="text-primary NOT-italic">Questions.</span>
           </h2>
-          <p className="text-lg text-muted-foreground font-medium">
+          <p className="text-base md:text-xl text-muted-foreground font-bold italic tracking-tight leading-relaxed opacity-70 mt-8">
             Can't find the answer you are looking for?{" "}
-            <a href="#contact" className="text-primary hover:underline font-bold">
-              Reach out to us
+            <a href="/contact" className="text-primary hover:underline font-black uppercase tracking-widest text-xs italic">
+              Dispatch Inquiry
             </a>
           </p>
         </div>
 
-        <Accordion type="single" collapsible className="space-y-4">
+        <Accordion type="single" collapsible className="space-y-6 animate-slide-up" style={{ animationDelay: '100ms' }}>
           {faqs.map((faq, idx) => (
             <AccordionItem
               key={idx}
               value={`faq-${idx}`}
-              className="border border-border rounded-lg px-6"
+              className="border border-border/40 rounded-[28px] px-8 bg-card/30 backdrop-blur-sm overflow-hidden transition-all hover:border-primary/20 hover:bg-card/50"
             >
-              <AccordionTrigger className="hover:no-underline py-6 text-left font-semibold">
-                {faq.question}
+              <AccordionTrigger className="hover:no-underline py-8 text-left font-black text-sm md:text-base uppercase tracking-tighter italic leading-none group">
+                <span className="flex-1 group-data-[state=open]:text-primary transition-colors">{faq.question}</span>
               </AccordionTrigger>
-              <AccordionContent className="pb-6 text-muted-foreground">
+              <AccordionContent className="pb-10 text-muted-foreground font-bold italic text-sm leading-relaxed tracking-tight opacity-70">
                 {faq.answer}
               </AccordionContent>
             </AccordionItem>

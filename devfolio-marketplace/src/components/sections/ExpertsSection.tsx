@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Star, MessageCircle, Share2, Heart, MapPin, Award, Loader2 } from "lucide-react";
 
@@ -97,24 +98,35 @@ const ExpertsSection = () => {
   };
 
   return (
-    <section className="py-24 bg-gradient-to-b from-secondary/30 to-background">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
-            Connect with <span className="text-primary">Top Experts</span>
+    <section className="section-spacing bg-gradient-to-b from-secondary/30 to-background overflow-hidden relative">
+      {/* Background Accents */}
+      <div className="absolute top-0 left-0 -z-10 w-1/3 h-1/3 bg-primary/5 blur-[120px] rounded-full animate-pulse" />
+      
+      <div className="container mx-auto px-6">
+        <div className="text-center max-w-4xl mx-auto mb-20 md:mb-32 animate-slide-up">
+          <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-primary/10 border border-primary/20 text-[10px] font-black uppercase tracking-[0.4em] text-primary italic mb-8">
+            <Award className="w-4 h-4" />
+            Elite Global Taskforce
+          </div>
+          <h2 className="heading-responsive">
+            Connect with <span className="text-primary NOT-italic">Top Experts.</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base md:text-xl text-muted-foreground font-bold italic tracking-tight leading-relaxed opacity-70 mt-8">
             Get personalized guidance from industry leaders. Share your vision and accelerate your digital journey.
           </p>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-2 mb-14">
+        <div className="flex flex-wrap justify-center gap-3 mb-20 animate-slide-up" style={{ animationDelay: '100ms' }}>
           {categories.map((category) => (
             <Button
               key={category}
               variant={selectedCategory === category ? "default" : "outline"}
               onClick={() => handleCategoryChange(category)}
-              className={selectedCategory === category ? "bg-foreground text-background hover:bg-foreground/90" : "hover:bg-secondary/50"}
+              className={`h-12 rounded-[18px] px-8 font-black text-[10px] uppercase tracking-widest transition-all italic border-none ${
+                selectedCategory === category 
+                ? "bg-primary text-primary-foreground shadow-xl shadow-primary/20 scale-105" 
+                : "bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground"
+              }`}
             >
               {category}
             </Button>
@@ -137,82 +149,73 @@ const ExpertsSection = () => {
             </Button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 animate-slide-up" style={{ animationDelay: '200ms' }}>
             {experts.map((expert) => (
             <Dialog key={expert._id} open={isDialogOpen && selectedExpert?._id === expert._id} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
-                <div
+                <Card
                   onClick={() => setSelectedExpert(expert)}
-                  className="group bg-card rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden cursor-pointer border border-border hover:border-primary/20"
+                  className="neural-card p-0 overflow-hidden cursor-pointer group shadow-2xl"
                 >
                   {/* Profile Header */}
-                  <div className="h-32 bg-secondary/50 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-50 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="h-32 bg-secondary/30 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-30 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:rotate-12 transition-transform">
+                      <Star className="w-32 h-32 text-primary" />
+                    </div>
                   </div>
 
                   {/* Profile Content */}
-                  <div className="px-8 pb-8 -mt-14 relative z-10">
-                    <div className="w-24 h-24 bg-primary rounded-2xl flex items-center justify-center text-primary-foreground text-4xl font-bold mb-4 shadow-xl border-4 border-card ring-1 ring-border/50">
+                  <div className="px-8 pb-10 -mt-14 relative z-10">
+                    <div className="w-24 h-24 bg-primary text-primary-foreground rounded-[28px] flex items-center justify-center text-4xl font-black mb-6 shadow-2xl border-4 border-background ring-1 ring-border/20 group-hover:scale-110 transition-transform italic">
                       {expert.firstName[0]}{expert.lastName[0]}
                     </div>
 
-                    <h3 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors">{expert.firstName} {expert.lastName}</h3>
-                    <p className="text-sm font-medium text-muted-foreground mb-4">{expert.role}</p>
+                    <h3 className="text-2xl font-black tracking-tight text-foreground group-hover:text-primary transition-colors italic uppercase leading-none mb-2">{expert.firstName} {expert.lastName}</h3>
+                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground mb-6 opacity-60">{expert.role}</p>
 
                     {/* Rating & Connections */}
-                    <div className="flex items-center gap-5 mb-5 text-sm">
-                      <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/10 text-primary rounded-full">
-                        <Star className="w-4 h-4 fill-primary" />
-                        <span className="font-bold">{expert.rating || "4.9"}</span>
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 text-primary rounded-xl">
+                        <Star className="w-3.5 h-3.5 fill-primary" />
+                        <span className="text-xs font-black italic">{expert.rating || "4.9"}</span>
                       </div>
-                      <div className="flex items-center gap-1.5 text-muted-foreground">
-                        <MessageCircle className="w-4 h-4" />
-                        <span>{expert.connections || "500+"} connected</span>
+                      <div className="flex items-center gap-2 text-muted-foreground">
+                        <MessageCircle className="w-4 h-4 text-primary" />
+                        <span className="text-[10px] font-black tracking-widest uppercase italic">{expert.connections || "500+"}</span>
                       </div>
                     </div>
 
                     {/* Meta Info */}
-                    <div className="space-y-2 mb-6">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <MapPin className="w-4 h-4 text-primary" />
-                        <span>{expert.location || "Remote"}</span>
+                    <div className="grid grid-cols-2 gap-4 mb-8">
+                      <div className="p-3 rounded-2xl bg-secondary/30 border border-border/20">
+                        <p className="text-[8px] font-black uppercase tracking-widest text-muted-foreground mb-1">Region</p>
+                        <p className="text-[10px] font-bold truncate italic">{expert.location || "Remote"}</p>
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <Award className="w-4 h-4 text-primary" />
-                        <span>{expert.experience || "5+ Years Exp."}</span>
+                      <div className="p-3 rounded-2xl bg-secondary/30 border border-border/20">
+                        <p className="text-[8px] font-black uppercase tracking-widest text-muted-foreground mb-1">Tenure</p>
+                        <p className="text-[10px] font-bold truncate italic">{expert.experience || "5+ Years"}</p>
                       </div>
                     </div>
-
-                    {/* Skills */}
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {expert.skills.slice(0, 3).map((skill, idx) => (
-                        <span key={idx} className="px-3 py-1 bg-secondary text-secondary-foreground rounded-lg text-[10px] uppercase tracking-wider font-bold">
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Bio */}
-                    <p className="text-sm text-muted-foreground mb-8 line-clamp-2 leading-relaxed">{expert.bio}</p>
 
                     {/* Action Buttons */}
-                    <div className="flex gap-3 mt-auto">
+                    <div className="flex gap-4 mt-auto">
                       <Button
-                        className="flex-1 bg-foreground text-background hover:bg-foreground/90 font-bold rounded-xl h-12 shadow-md group-hover:shadow-lg transition-all"
+                        className="flex-1 h-14 rounded-2xl font-black bg-foreground text-background shadow-xl group-hover:scale-[1.02] active:scale-95 transition-all text-[10px] uppercase tracking-widest italic border-none"
                         onClick={(e) => {
                           e.stopPropagation();
                           setSelectedExpert(expert);
                           setIsDialogOpen(true);
                         }}
                       >
-                        Connect Now
+                        Initiate Node
                       </Button>
-                      <Button variant="outline" size="icon" className="w-12 h-12 rounded-xl hover:text-primary hover:border-primary/30 transition-all">
-                        <Heart className="w-5 h-5 transition-transform active:scale-125" />
+                      <Button variant="outline" size="icon" className="w-14 h-14 rounded-2xl hover:bg-red-500 hover:text-white hover:border-none transition-all border-border/40">
+                        <Heart className="w-5 h-5 transition-transform active:scale-150" />
                       </Button>
                     </div>
                   </div>
-                </div>
+                </Card>
               </DialogTrigger>
 
               <DialogContent className="max-w-2xl p-0 overflow-hidden border-none rounded-3xl bg-background">

@@ -1,135 +1,129 @@
 import { Zap, CheckCircle, TrendingUp, Clock, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 const CTASection = () => {
   return (
-    <section className="py-24 relative overflow-hidden bg-background">
-      {/* Background decorative elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-      <div className="absolute bottom-0 left-0 w-72 h-72 bg-secondary/50 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+    <section className="section-spacing bg-background relative overflow-hidden">
+      {/* Background Decor */}
+      <div className="absolute top-0 right-0 -z-10 w-1/2 h-1/2 bg-primary/2 opacity-30 blur-[150px] rounded-full animate-pulse" />
+      <div className="absolute bottom-0 left-0 -z-10 w-1/3 h-1/3 bg-secondary/10 blur-[120px] rounded-full" />
       
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-16 md:gap-24 items-center">
           {/* Left Content */}
-          <div>
-            <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full border border-primary/20">
-              <Zap className="w-5 h-5 text-primary" />
-              <span className="text-sm font-bold text-primary uppercase tracking-wider">Quick Launch</span>
+          <div className="animate-slide-up space-y-10">
+            <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-primary/10 border border-primary/20 text-[10px] font-black uppercase tracking-[0.4em] text-primary italic">
+              <Zap className="w-4 h-4" />
+              Quick Launch Protocol
             </div>
 
-            <h2 className="text-5xl md:text-6xl font-bold mb-8 leading-tight tracking-tight">
+            <h2 className="heading-responsive">
               Launch your{" "}
-              <span className="text-primary underline decoration-primary/20 decoration-8 underline-offset-8">
-                website & services
+              <span className="text-primary NOT-italic">
+                Services
               </span>{" "}
-              in minutes
+              in minutes.
             </h2>
 
-            <p className="text-xl text-muted-foreground mb-12 leading-relaxed font-medium max-w-xl">
+            <p className="text-base md:text-xl text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-xl opacity-70">
               Build a stunning website, showcase your skills, and start getting clients — all from one powerful dashboard.
             </p>
 
-            <div className="space-y-6 mb-12">
+            <div className="space-y-8">
               <div className="flex items-start gap-4 group">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                  <CheckCircle className="w-5 h-5" />
+                <div className="w-12 h-12 rounded-2xl bg-secondary/50 flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500 shadow-xl italic">
+                  <CheckCircle className="w-5 h-5 stroke-[2.5px]" />
                 </div>
                 <div>
-                  <p className="font-bold text-foreground text-lg">Professional Website</p>
-                  <p className="text-muted-foreground text-sm font-medium">No coding required — drag, drop, and deploy</p>
+                  <p className="font-black text-foreground text-lg italic uppercase tracking-tighter leading-none mb-2">Professional Website</p>
+                  <p className="text-muted-foreground text-sm font-bold italic opacity-60">No coding required — drag, drop, and deploy absolute precision.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4 group">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                  <TrendingUp className="w-5 h-5" />
+                <div className="w-12 h-12 rounded-2xl bg-secondary/50 flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500 shadow-xl italic">
+                  <TrendingUp className="w-5 h-5 stroke-[2.5px]" />
                 </div>
                 <div>
-                  <p className="font-bold text-foreground text-lg">Instant Client Access</p>
-                  <p className="text-muted-foreground text-sm font-medium">Start receiving verified project inquiries today</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4 group">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                  <Zap className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="font-bold text-foreground text-lg">Built-in Analytics</p>
-                  <p className="text-muted-foreground text-sm font-medium">Track your growth and performance in real-time</p>
+                  <p className="font-black text-foreground text-lg italic uppercase tracking-tighter leading-none mb-2">Instant Client Access</p>
+                  <p className="text-muted-foreground text-sm font-bold italic opacity-60">Start receiving verified project inquiries through secure relay nodes.</p>
                 </div>
               </div>
             </div>
 
             <Button
               size="lg"
-              className="rounded-2xl px-10 py-8 text-lg font-bold shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 transition-all gap-3"
+              className="h-16 md:h-20 rounded-[22px] md:rounded-[28px] px-10 md:px-12 font-black text-lg md:text-xl bg-foreground text-background shadow-2xl hover:scale-105 active:scale-95 transition-all uppercase tracking-widest italic border-none group"
               onClick={() => window.location.href = "#launch"}
             >
               Get Started Now
-              <Rocket className="w-6 h-6 animate-pulse" />
+              <Rocket className="ml-4 w-6 h-6 animate-pulse group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>
 
           {/* Right Card - Activity Feed */}
-          <div className="relative">
-            <div className="bg-secondary/40 border border-border/50 p-10 rounded-[3rem] shadow-sm relative overflow-hidden backdrop-blur-sm">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+          <div className="animate-slide-up" style={{ animationDelay: '100ms' }}>
+            <Card className="neural-card p-10 md:p-12 relative overflow-hidden group shadow-2xl">
+              <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none group-hover:rotate-12 transition-transform">
+                <Rocket className="w-48 h-48 text-primary" />
+              </div>
               
               {/* User Header */}
-              <div className="bg-card p-6 rounded-3xl mb-8 border border-border/50 shadow-sm relative z-10 transition-transform hover:-translate-y-1 duration-300">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xl font-bold shadow-lg shadow-primary/20">
+              <div className="bg-background/50 p-6 rounded-[28px] mb-8 border border-border/40 shadow-xl relative z-10">
+                <div className="flex items-center gap-5">
+                  <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center text-primary-foreground text-2xl font-black shadow-2xl italic">
                     AT
                   </div>
                   <div>
-                    <p className="font-bold text-foreground text-lg tracking-tight">Aman Tiwari</p>
-                    <p className="text-sm text-primary font-bold">myportfolio.in/aman</p>
+                    <p className="font-black text-foreground text-xl tracking-tighter italic uppercase leading-none mb-1">Aman Tiwari</p>
+                    <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] italic">myportfolio.in/aman</p>
                   </div>
                 </div>
               </div>
 
               {/* Highlighted Stats Box */}
-              <div className="bg-primary rounded-3xl p-10 flex flex-col items-center justify-center mb-8 shadow-2xl shadow-primary/30 relative z-10">
-                <Zap className="w-16 h-16 text-primary-foreground mb-4 drop-shadow-md animate-pulse" />
-                <p className="text-primary-foreground font-black text-2xl tracking-tight">Active Profile</p>
-                <p className="text-primary-foreground/80 font-bold mt-2 uppercase tracking-widest text-xs">Getting Real Results</p>
+              <div className="bg-primary rounded-[32px] p-10 flex flex-col items-center justify-center mb-8 shadow-2xl shadow-primary/30 relative z-10 transition-transform hover:scale-[1.02] duration-500">
+                <Zap className="w-20 h-20 text-primary-foreground mb-6 drop-shadow-2xl animate-pulse stroke-[3px]" />
+                <p className="text-primary-foreground font-black text-3xl tracking-tighter italic uppercase">Active Profile</p>
+                <p className="text-primary-foreground/70 font-black mt-3 uppercase tracking-[0.3em] text-[10px] italic">Optimized Performance</p>
               </div>
 
               {/* Activity Feed */}
               <div className="space-y-4 relative z-10">
-                <p className="text-xs font-black text-muted-foreground uppercase tracking-[0.2em] mb-6 inline-block pb-1 border-b-2 border-primary/20">Recent Activity</p>
+                <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.4em] mb-6 italic opacity-50">Recent Data Stream</p>
                 
                 {/* Activity Item 1 */}
-                <div className="bg-card/80 backdrop-blur-md p-5 rounded-2xl border border-border/50 hover:border-primary/30 hover:shadow-lg transition-all group">
+                <div className="bg-background/40 backdrop-blur-xl p-6 rounded-[24px] border border-border/40 hover:border-primary/40 hover:bg-background/60 transition-all group/item shadow-lg">
                   <div className="flex items-start gap-4">
-                    <div className="w-3 h-3 rounded-full bg-green-500 mt-2 animate-ping shadow-[0_0_10px_rgba(34,197,94,0.5)]"></div>
+                    <div className="w-3 h-3 rounded-full bg-green-500 mt-2.5 animate-ping opacity-75"></div>
                     <div className="flex-1">
-                      <p className="font-bold text-foreground text-sm">New project inquiry</p>
-                      <p className="text-primary font-black text-xl mt-1 tracking-tight">₹5,000</p>
+                      <p className="font-black text-foreground text-xs uppercase tracking-widest italic opacity-60">New project inquiry</p>
+                      <p className="text-primary font-black text-2xl mt-1 tracking-tighter italic leading-none">₹5,000</p>
                     </div>
-                    <div className="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center text-green-500">
-                      <TrendingUp className="w-5 h-5" />
+                    <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center text-green-500 shadow-inner">
+                      <TrendingUp className="w-6 h-6 stroke-[3px]" />
                     </div>
                   </div>
                 </div>
 
                 {/* Activity Item 2 */}
-                <div className="bg-card/80 backdrop-blur-md p-5 rounded-2xl border border-border/50 hover:border-primary/30 hover:shadow-lg transition-all group">
+                <div className="bg-background/40 backdrop-blur-xl p-6 rounded-[24px] border border-border/40 hover:border-primary/40 hover:bg-background/60 transition-all group/item shadow-lg">
                   <div className="flex items-start gap-4">
-                    <div className="w-3 h-3 rounded-full bg-amber-500 mt-2 shadow-[0_0_10px_rgba(245,158,11,0.5)]"></div>
+                    <div className="w-3 h-3 rounded-full bg-amber-500 mt-2.5 shadow-[0_0_15px_rgba(245,158,11,0.5)]"></div>
                     <div className="flex-1">
-                      <p className="font-bold text-foreground text-sm">Review received</p>
-                      <div className="flex items-center gap-1 mt-1">
-                         <span className="text-amber-500 font-black text-xl">5.0</span>
-                         <span className="text-muted-foreground text-xs font-bold uppercase ml-1">/ Perfect Rating</span>
+                      <p className="font-black text-foreground text-xs uppercase tracking-widest italic opacity-60">Review received</p>
+                      <div className="flex items-center gap-2 mt-1">
+                         <span className="text-amber-500 font-black text-2xl tracking-tighter italic leading-none">5.0</span>
+                         <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest italic opacity-40 ml-1">/ Node Ranking</span>
                       </div>
                     </div>
-                    <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-500">
-                      <CheckCircle className="w-5 h-5" />
+                    <div className="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-500 shadow-inner">
+                      <CheckCircle className="w-6 h-6 stroke-[3px]" />
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </Card>
           </div>
         </div>
       </div>

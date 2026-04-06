@@ -437,7 +437,7 @@ const ProjectDetail = () => {
                     <Input
                       id="email"
                       type="email"
-                      placeholder="OPERATOR@DEVFOLIOMARKETPLACE.COM"
+                      placeholder="SUPPORT@DEVFOLIOMARKETPLACE.COM"
                       className="h-14 rounded-2xl bg-background border-border/50 focus:border-primary/50 font-bold px-5"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}

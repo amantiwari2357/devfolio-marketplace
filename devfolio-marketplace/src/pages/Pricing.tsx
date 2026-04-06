@@ -74,70 +74,71 @@ const Pricing = () => {
       
       <main className="section-spacing pt-32 md:pt-40 relative">
         <div className="container mx-auto px-6 relative">
-          <div className="text-center max-w-4xl mx-auto mb-16 md:mb-24 space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/50 border border-border/50 text-[10px] font-black uppercase tracking-[0.2em] text-primary italic">
-              <Sparkles className="w-4 h-4" />
-              Flexible Licensing
+          <div className="text-center max-w-4xl mx-auto mb-20 md:mb-32 space-y-10 animate-slide-up">
+            <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-secondary/10 border border-border/40 backdrop-blur-md text-[10px] font-black uppercase tracking-[0.4em] text-primary italic">
+              <Sparkles className="w-4 h-4 animate-pulse" />
+              Flexible Licensing Protocol
             </div>
             <h1 className="heading-responsive">
-              Simple, <span className="text-primary italic">Transparent.</span>
+              Simple, <span className="text-primary NOT-italic">Transparent.</span>
             </h1>
-            <p className="text-base md:text-xl text-muted-foreground font-bold italic tracking-tight opacity-70">
+            <p className="text-base md:text-xl text-muted-foreground font-bold italic tracking-tight max-w-3xl mx-auto opacity-70 mt-8">
               Scale your impact without complexity. Every plan is built to maximize your potential.
             </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 mb-24 md:mb-40 animate-slide-up">
             {plans.map((plan, index) => (
               <Card 
                 key={index} 
-                className={`p-10 rounded-[40px] bg-card border-border/50 relative overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5 ${
-                  plan.popular ? 'ring-2 ring-primary bg-secondary/20 shadow-xl' : 'hover:border-primary/20 bg-secondary/10'
+                className={`neural-card p-10 md:p-12 relative overflow-hidden transition-all duration-700 hover:scale-[1.02] ${
+                  plan.popular ? 'ring-2 ring-primary bg-secondary/20 shadow-2xl' : ''
                 }`}
               >
                 {plan.popular && (
                   <div className="absolute top-0 right-0">
-                    <div className="bg-primary text-primary-foreground px-6 py-2 rounded-bl-3xl text-xs font-black uppercase tracking-[0.2em]">
+                    <div className="bg-primary text-primary-foreground px-8 py-3 rounded-bl-[32px] text-[10px] font-black uppercase tracking-[0.3em] italic">
                       Most Popular
                     </div>
                   </div>
                 )}
                 
-                <div className="space-y-8">
-                  <div className="space-y-4">
-                    <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+                <div className="space-y-10">
+                  <div className="space-y-6">
+                    <div className="w-16 h-16 rounded-[22px] bg-secondary/50 flex items-center justify-center text-primary shadow-inner group-hover:rotate-6 transition-all">
                       {plan.icon}
                     </div>
-                    <h3 className="text-3xl font-black tracking-tight text-foreground">{plan.name}</h3>
-                    <p className="text-muted-foreground font-medium">{plan.description}</p>
+                    <div className="space-y-2">
+                      <h3 className="text-3xl font-black tracking-tighter text-foreground italic uppercase leading-none">{plan.name}</h3>
+                      <p className="text-sm font-bold text-muted-foreground/60 italic leading-snug">{plan.description}</p>
+                    </div>
                   </div>
 
-                  <div className="space-y-1">
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-5xl font-black tracking-tighter text-foreground">{plan.price}</span>
-                      <span className="text-muted-foreground font-bold text-sm uppercase tracking-widest">/ {plan.period}</span>
+                  <div className="space-y-2">
+                    <div className="flex items-baseline gap-3">
+                      <span className="text-5xl md:text-6xl font-black tracking-tighter text-foreground italic">{plan.price}</span>
+                      <span className="text-muted-foreground font-black text-[10px] uppercase tracking-[0.3em] opacity-40 italic">/ {plan.period}</span>
                     </div>
                   </div>
 
                   <Button 
-                    className={`w-full rounded-2xl py-8 font-black text-lg transition-all shadow-xl hover:scale-[1.02] active:scale-[0.98] ${
+                    className={`w-full h-16 rounded-[22px] font-black text-lg transition-all shadow-2xl hover:scale-[1.05] active:scale-[0.95] uppercase tracking-[0.2em] italic border-none ${
                       plan.popular 
-                        ? 'bg-primary text-primary-foreground shadow-primary/20' 
-                        : 'bg-foreground text-background shadow-foreground/10'
+                        ? 'bg-primary text-primary-foreground shadow-primary/30' 
+                        : 'bg-foreground text-background shadow-foreground/20'
                     }`}
                   >
                     {plan.cta}
                   </Button>
 
-                  <div className="space-y-4 pt-4 border-t border-border/50">
-                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">What's included</p>
-                    <ul className="space-y-4">
+                  <div className="space-y-6 pt-10 border-t border-border/20">
+                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground italic">Neural Features</p>
+                    <ul className="space-y-5">
                       {plan.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-start gap-3 group">
-                          <div className="mt-1 p-0.5 rounded-full bg-primary/20 text-primary group-hover:scale-110 transition-transform">
+                        <li key={idx} className="flex items-start gap-4 group/item">
+                          <div className="mt-1 p-0.5 rounded-full bg-primary/20 text-primary group-hover/item:scale-125 transition-transform">
                             <Check className="w-3.5 h-3.5 stroke-[4]" />
                           </div>
-                          <span className="text-sm font-bold text-foreground/80 leading-tight">{feature}</span>
+                          <span className="text-sm font-bold text-foreground/80 leading-tight italic opacity-90">{feature}</span>
                         </li>
                       ))}
                     </ul>

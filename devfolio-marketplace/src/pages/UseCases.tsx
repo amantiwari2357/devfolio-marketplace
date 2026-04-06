@@ -106,21 +106,21 @@ const UseCases = () => {
       />
       <Header />
       
-      <main className="pt-32 pb-24 overflow-hidden">
+      <main className="section-spacing pt-32 md:pt-40 relative overflow-hidden">
         {/* Background Accents */}
         <div className="fixed top-0 right-0 -z-10 w-1/3 h-1/3 bg-primary/5 blur-[120px] pointer-events-none rounded-full" />
         <div className="fixed bottom-0 left-0 -z-10 w-1/3 h-1/3 bg-primary/5 blur-[120px] pointer-events-none rounded-full" />
 
-        <div className="container mx-auto px-4 relative">
-          <div className="text-center max-w-3xl mx-auto mb-20 space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/50 border border-border/50 text-xs font-black uppercase tracking-[0.2em] text-primary">
+        <div className="container mx-auto px-6 relative">
+          <div className="text-center max-w-4xl mx-auto mb-20 md:mb-32 space-y-10 animate-slide-up">
+            <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-secondary/10 border border-border/40 backdrop-blur-md text-[10px] font-black uppercase tracking-[0.4em] text-primary italic">
               <Sparkles className="w-4 h-4" />
-              Advanced Architecture
+              Advanced Architecture Protocol
             </div>
-            <h1 className="text-5xl md:text-7xl font-black tracking-tight text-foreground leading-tight">
-              Software <span className="text-primary italic">Intelligence.</span>
+            <h1 className="heading-responsive">
+              Software <span className="text-primary NOT-italic">Intelligence.</span>
             </h1>
-            <p className="text-xl text-muted-foreground font-medium leading-relaxed">
+            <p className="text-base md:text-xl text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-3xl mx-auto opacity-70 mt-8">
               Engineering future-proof digital infrastructure with white-glove precision.
             </p>
           </div>
@@ -178,38 +178,38 @@ const UseCases = () => {
                         Our specialized architects will contact you within 24 hours to map out your {service.title} roadmap.
                       </p>
                     </DialogHeader>
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                      <div className="space-y-2">
-                        <Label htmlFor="name" className="text-xs font-black uppercase tracking-widest text-muted-foreground">Full Identity</Label>
+                    <form onSubmit={handleSubmit} className="space-y-8">
+                      <div className="space-y-4">
+                        <Label htmlFor="name" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-3 italic px-2">Full Identity</Label>
                         <Input 
                           id="name" 
                           name="name" 
-                          placeholder="Your professional name" 
+                          placeholder="ENTER_YOUR_NAME" 
                           value={formData.name}
                           onChange={handleInputChange}
-                          className="rounded-xl py-6 bg-secondary/20 border-border/50 focus:border-primary/50 font-bold"
+                          className="h-14 md:h-16 rounded-[18px] md:rounded-[22px] px-8 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-[10px] md:text-xs uppercase tracking-widest placeholder:opacity-40"
                           required 
                         />
                       </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="phone" className="text-xs font-black uppercase tracking-widest text-muted-foreground">Encrypted Link (Phone)</Label>
+                      <div className="space-y-4">
+                        <Label htmlFor="phone" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-3 italic px-2">Encrypted Link (Phone)</Label>
                         <Input 
                           id="phone" 
                           name="phone" 
                           type="tel" 
-                          placeholder="+91 ...." 
+                          placeholder="9031359720" 
                           value={formData.phone}
                           onChange={handleInputChange}
-                          className="rounded-xl py-6 bg-secondary/20 border-border/50 focus:border-primary/50 font-bold"
+                          className="h-14 md:h-16 rounded-[18px] md:rounded-[22px] px-8 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-[10px] md:text-xs uppercase tracking-widest placeholder:opacity-40"
                           required 
                         />
                       </div>
-                      <div className="space-y-2">
-                        <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Operating Sector</Label>
+                      <div className="space-y-4">
+                        <Label className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-3 italic px-2">Operating Sector</Label>
                         <Input 
                           value={service.title} 
                           disabled 
-                          className="rounded-xl py-6 bg-secondary/50 border-border/10 font-black text-primary opacity-100"
+                          className="h-14 md:h-16 rounded-[18px] md:rounded-[22px] px-8 bg-secondary/50 border-border/10 font-black text-[10px] md:text-xs uppercase tracking-widest text-primary opacity-100 italic"
                         />
                       </div>
                       <Button type="submit" className="w-full rounded-xl py-8 font-black text-xl bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-primary/20" disabled={isSubmitting}>

@@ -61,18 +61,21 @@ const TestimonialsSection = () => {
   }
 
   return (
-    <section className="py-24 bg-background">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
-            Don't Just Take <span className="text-primary">Our Word</span> for It
+    <section className="section-spacing bg-background relative overflow-hidden">
+      {/* Background Accent */}
+      <div className="absolute top-0 right-0 -z-10 w-1/3 h-1/3 bg-primary/5 blur-[120px] rounded-full animate-pulse" />
+      
+      <div className="container mx-auto px-6">
+        <div className="text-center max-w-4xl mx-auto mb-20 md:mb-32 animate-slide-up">
+           <h2 className="heading-responsive">
+            Don't Just Take <span className="text-primary NOT-italic">Our Word</span> for It.
           </h2>
-          <p className="text-lg text-muted-foreground mt-4 max-w-2xl mx-auto font-medium">
+          <p className="text-base md:text-xl text-muted-foreground font-bold italic tracking-tight leading-relaxed opacity-70 mt-8">
             Join the community of professionals who have transformed their digital journey with our platform.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 animate-slide-up" style={{ animationDelay: '100ms' }}>
           {testimonials.map((testimonial) => (
             <TestimonialCard key={testimonial._id} {...testimonial} />
           ))}

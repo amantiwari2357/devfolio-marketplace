@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Zap } from "lucide-react";
+import { Zap, ArrowRight, Activity, Calendar as CalendarIcon } from "lucide-react";
 import api from "@/services/api";
 
 const services = [
@@ -83,18 +83,8 @@ const ServicesSection = () => {
   const days = getDaysInMonth(currentMonth);
 
   const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
   ];
 
   const handleDateClick = (index: number) => {
@@ -135,208 +125,163 @@ const ServicesSection = () => {
       const result = await api.post("/availabilities", bookingData);
 
       if (result.data.success) {
-        toast.success("Booking successful!");
+        toast.success("Strategic connection established!");
         setSelectedDateObj(null);
         setSelectedTime(null);
       } else {
-        toast.error("Booking failed: " + result.data.message);
+        toast.error("Link failure: " + result.data.message);
       }
     } catch (error) {
       console.error("Error booking:", error);
-      toast.error("Error booking consultation. Please try again.");
+      toast.error("Protocol error. Please retry synchronization.");
     }
   };
 
   const handlePrevMonth = () => {
-    setCurrentMonth(
-      new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1)
-    );
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1));
   };
 
   const handleNextMonth = () => {
-    setCurrentMonth(
-      new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1)
-    );
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1));
   };
 
   const timeSlots = [
-    "09:00 AM",
-    "09:30 AM",
-    "10:00 AM",
-    "10:30 AM",
-    "11:00 AM",
-    "11:30 AM",
-    "12:00 PM",
-    "12:30 PM",
-    "01:00 PM",
-    "01:30 PM",
-    "02:00 PM",
-    "02:30 PM",
-    "03:00 PM",
-    "03:30 PM",
-    "04:00 PM",
-    "04:30 PM",
-    "05:00 PM",
-    "05:30 PM",
-    "06:00 PM",
-    "06:30 PM",
-    "07:00 PM",
-    "07:30 PM",
-    "08:00 PM",
-    "08:30 PM",
+    "09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
+    "12:00 PM", "12:30 PM", "01:00 PM", "01:30 PM", "02:00 PM", "02:30 PM",
+    "03:00 PM", "03:30 PM", "04:00 PM", "04:30 PM", "05:00 PM", "05:30 PM",
+    "06:00 PM", "06:30 PM", "07:00 PM", "07:30 PM", "08:00 PM", "08:30 PM",
   ];
 
   return (
-    <section className="py-24 bg-gradient-to-b from-background to-secondary/30">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
-            My <span className="text-primary">Services</span> & Consultation
+    <section className="section-spacing bg-background relative overflow-hidden">
+       {/* Background Accents */}
+       <div className="absolute top-0 left-0 -z-10 w-1/3 h-1/3 bg-primary/2 opacity-30 blur-[150px] rounded-full animate-pulse" />
+       
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-24 md:mb-32 space-y-10 animate-slide-up">
+          <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-secondary/10 border border-border/40 backdrop-blur-md text-[10px] font-black uppercase tracking-[0.4em] text-primary italic">
+            <Zap className="w-4 h-4 animate-pulse" />
+            Specialized Neural Services
+          </div>
+          <h2 className="heading-responsive">
+            Strategic <span className="text-primary NOT-italic">Solutions.</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Book a strategy session or explore specialized digital services tailored to your project.
+          <p className="text-base md:text-xl text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-3xl mx-auto opacity-70">
+            Book a strategy session or explore specialized digital infrastructure tailored to your mission.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
-          {/* LEFT SIDE */}
-          <div className="lg:sticky lg:top-32">
-            <Card className="bg-secondary/40 border-border/50 p-8 rounded-[2rem] shadow-sm">
-              <div className="bg-card p-8 rounded-3xl mb-6 shadow-sm border border-border/50">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
-                    <Zap className="w-6 h-6" />
+        <div className="grid lg:grid-cols-2 gap-16 md:gap-24 items-start">
+          {/* LEFT SIDE - CALENDAR */}
+          <div className="lg:sticky lg:top-32 animate-slide-up">
+            <Card className="neural-card p-10 md:p-12 relative overflow-hidden group shadow-2xl">
+              <div className="relative z-10 space-y-12">
+                <div className="flex items-center gap-6">
+                  <div className="w-16 h-16 rounded-[22px] bg-secondary/50 flex items-center justify-center text-primary shadow-inner group-hover:rotate-6 transition-all">
+                    <Zap className="w-8 h-8" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-lg">Book a Consultation</h4>
-                    <p className="text-xs text-muted-foreground font-medium">
-                      Discuss your project idea & requirements
+                    <h4 className="text-xl md:text-2xl font-black tracking-tighter text-foreground italic uppercase leading-none">Book Consultation.</h4>
+                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground mt-2 opacity-50 italic">
+                      Discuss your project roadmap
                     </p>
                   </div>
                 </div>
 
-                {/* Month Navigation */}
-                <div className="flex items-center justify-between mb-4">
-                  <Button variant="ghost" size="sm" onClick={handlePrevMonth}>
-                    ‹
-                  </Button>
-                  <h3 className="text-sm font-semibold">
-                    {monthNames[currentMonth.getMonth()]}{" "}
-                    {currentMonth.getFullYear()}
-                  </h3>
-                  <Button variant="ghost" size="sm" onClick={handleNextMonth}>
-                    ›
-                  </Button>
-                </div>
+                <div className="bg-background/50 backdrop-blur-xl rounded-[32px] p-8 border border-border/20 shadow-inner">
+                  {/* Month Navigation */}
+                  <div className="flex items-center justify-between mb-8">
+                    <Button variant="ghost" size="sm" onClick={handlePrevMonth} className="font-black hover:bg-secondary/20">
+                      PREV
+                    </Button>
+                    <h3 className="text-sm font-black uppercase tracking-[0.2em] text-primary italic">
+                      {monthNames[currentMonth.getMonth()]}{" "}
+                      {currentMonth.getFullYear()}
+                    </h3>
+                    <Button variant="ghost" size="sm" onClick={handleNextMonth} className="font-black hover:bg-secondary/20">
+                      NEXT
+                    </Button>
+                  </div>
 
-                {/* Calendar */}
-                <div className="grid grid-cols-7 gap-1 mb-4">
-                  {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(
-                    (day) => (
-                      <div
-                        key={day}
-                        className="p-1 text-center text-xs font-medium text-muted-foreground"
-                      >
+                  {/* Calendar Grid */}
+                  <div className="grid grid-cols-7 gap-3 mb-8">
+                    {["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].map((day) => (
+                      <div key={day} className="p-1 text-center text-[9px] font-black tracking-widest text-muted-foreground/40 italic">
                         {day}
                       </div>
-                    )
-                  )}
+                    ))}
 
-                  {days.map((dayObj, idx) => (
-                    <div
-                      key={idx}
-                      onClick={() => handleDateClick(idx)}
-                      className={`p-2 text-center text-xs cursor-pointer rounded-lg ${
-                        dayObj.currentMonth
-                          ? selectedDateObj &&
-                            selectedDateObj.getDate() === dayObj.day &&
-                            selectedDateObj.getMonth() ===
-                              currentMonth.getMonth()
-                            ? "bg-foreground text-background"
-                            : "bg-muted hover:bg-muted/80"
-                          : "text-muted-foreground"
-                      }`}
-                    >
-                      {dayObj.day}
-                    </div>
-                  ))}
-                </div>
-
-                {/* Selected Info */}
-                <div className="flex items-center justify-between">
-                  <p className="text-sm">
-                    <span className="text-muted-foreground">Next available</span>
-                    <br />
-                    <span className="font-semibold">
-                      {selectedTime || "Select Time"},{" "}
-                      {selectedDateObj
-                        ? selectedDateObj.toLocaleDateString("en-US", {
-                            month: "short",
-                            day: "numeric",
-                          })
-                        : "Select Date"}
-                    </span>
-                  </p>
-
-                  <button
-                    className="px-4 py-2 bg-foreground text-background rounded-lg text-sm font-medium"
-                    onClick={handleBookNow}
-                  >
-                    Book Now
-                  </button>
-                </div>
-              </div>
-
-              {/* Time Popup */}
-              <Dialog open={isTimePopupOpen} onOpenChange={setIsTimePopupOpen}>
-                <DialogContent className="sm:max-w-md">
-                  <DialogHeader>
-                    <DialogTitle>Select Time</DialogTitle>
-                  </DialogHeader>
-
-                  <div className="grid grid-cols-3 gap-2">
-                    {timeSlots.map((time) => (
-                      <Button
-                        key={time}
-                        variant={selectedTime === time ? "default" : "outline"}
-                        onClick={() => handleTimeSelect(time)}
-                        className="text-sm"
+                    {days.map((dayObj, idx) => (
+                      <div
+                        key={idx}
+                        onClick={() => handleDateClick(idx)}
+                        className={`aspect-square flex items-center justify-center text-[11px] font-black cursor-pointer rounded-xl transition-all ${
+                          dayObj.currentMonth
+                            ? selectedDateObj &&
+                              selectedDateObj.getDate() === dayObj.day &&
+                              selectedDateObj.getMonth() === currentMonth.getMonth()
+                              ? "bg-primary text-primary-foreground shadow-xl shadow-primary/30 scale-110"
+                              : "bg-secondary/40 text-foreground hover:bg-primary/20 hover:text-primary"
+                            : "text-muted-foreground/20 pointer-events-none"
+                        }`}
                       >
-                        {time}
-                      </Button>
+                        {dayObj.day}
+                      </div>
                     ))}
                   </div>
-                </DialogContent>
-              </Dialog>
+
+                  {/* Footer Stats */}
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-border/20">
+                    <div className="text-center md:text-left space-y-1">
+                       <p className="text-[9px] font-black uppercase tracking-[0.4em] text-muted-foreground italic">Selected Node</p>
+                       <p className="text-sm font-black text-foreground italic uppercase tracking-tight">
+                         {selectedTime || "SELECT_TIME"}, {" "}
+                         {selectedDateObj ? selectedDateObj.toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "SELECT_DATE"}
+                       </p>
+                    </div>
+
+                    <Button
+                      onClick={handleBookNow}
+                      className="h-14 px-10 rounded-[20px] font-black bg-primary text-primary-foreground hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-primary/30 uppercase tracking-[0.2em] italic border-none"
+                    >
+                      Authorize Connection
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </Card>
           </div>
 
-          {/* RIGHT SIDE */}
-          <div>
-            <Accordion
-              type="single"
-              collapsible
-              defaultValue="item-0"
-              className="space-y-4"
-            >
+          {/* RIGHT SIDE - SERVICES ACCORDION */}
+          <div className="space-y-8 animate-slide-up" style={{ animationDelay: '100ms' }}>
+            <Accordion type="single" collapsible defaultValue="item-0" className="space-y-6">
               {services.map((service, idx) => (
                 <AccordionItem
                   key={idx}
                   value={`item-${idx}`}
-                  className="border-b border-border pb-4"
+                  className="neural-card border-none px-8 md:px-10 rounded-[32px] overflow-hidden"
                 >
-                  <AccordionTrigger className="hover:no-underline">
-                    <div className="flex items-center gap-4 text-left">
-                      <span className="text-primary font-semibold">
+                  <AccordionTrigger className="hover:no-underline py-8 md:py-10">
+                    <div className="flex items-center gap-6 text-left">
+                      <span className="text-2xl md:text-3xl font-black text-primary NOT-italic opacity-30 select-none">
                         {service.number}
                       </span>
-                      <span className="text-xl font-semibold">
+                      <span className="text-xl md:text-2xl font-black tracking-tighter text-foreground italic uppercase">
                         {service.title}
                       </span>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="pl-12 text-muted-foreground">
-                    {service.description}
+                  <AccordionContent className="pb-10 pl-12 md:pl-16">
+                    <div className="space-y-6">
+                      <p className="text-base font-bold text-muted-foreground/80 leading-relaxed italic tracking-tight">
+                        {service.description}
+                      </p>
+                      <div className="pt-4">
+                        <Button variant="ghost" className="p-0 font-black text-[10px] tracking-[0.4em] uppercase text-primary italic hover:bg-transparent group">
+                           Explore Capability <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                        </Button>
+                      </div>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
               ))}
@@ -344,6 +289,30 @@ const ServicesSection = () => {
           </div>
         </div>
       </div>
+
+      {/* Time Popup */}
+      <Dialog open={isTimePopupOpen} onOpenChange={setIsTimePopupOpen}>
+        <DialogContent className="max-w-md p-8 bg-background/95 backdrop-blur-2xl border-border/40 rounded-[32px] shadow-2xl">
+          <DialogHeader className="mb-8">
+            <DialogTitle className="text-2xl font-black tracking-tighter text-foreground italic uppercase">Select Node <span className="text-primary NOT-italic">Time.</span></DialogTitle>
+          </DialogHeader>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {timeSlots.map((time) => (
+              <Button
+                key={time}
+                variant={selectedTime === time ? "default" : "outline"}
+                onClick={() => handleTimeSelect(time)}
+                className={`h-12 rounded-xl text-[10px] font-black uppercase tracking-widest italic border-border/20 transition-all ${
+                  selectedTime === time ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" : "hover:bg-secondary/20"
+                }`}
+              >
+                {time}
+              </Button>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };

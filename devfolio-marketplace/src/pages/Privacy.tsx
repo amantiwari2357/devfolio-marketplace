@@ -13,21 +13,21 @@ const Privacy = () => {
       />
       <Header />
       
-      <main className="pt-40 pb-32 overflow-hidden">
+      <main className="section-spacing pt-32 md:pt-40 relative overflow-hidden">
         {/* Background Mesh Flux */}
         <div className="absolute top-0 right-0 -z-10 w-2/3 h-2/3 bg-primary/2 opacity-30 blur-[180px] rounded-full animate-pulse" />
         <div className="absolute bottom-0 left-0 -z-10 w-1/2 h-1/2 bg-primary/2 opacity-20 blur-[150px] rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
 
         <div className="container mx-auto px-6 max-w-6xl relative">
-          <div className="text-center max-w-5xl mx-auto mb-24 space-y-10 animate-slide-up">
+          <div className="text-center max-w-5xl mx-auto mb-20 md:mb-32 space-y-10 animate-slide-up">
             <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-secondary/10 border border-border/40 backdrop-blur-md text-[10px] font-black uppercase tracking-[0.4em] text-primary italic">
               <Shield className="w-4 h-4 animate-pulse" />
               Data Sovereignty Protocol
             </div>
-            <h1 className="text-4xl md:text-6xl font-black mb-8 tracking-tighter text-foreground leading-[0.85] uppercase italic">
+            <h1 className="heading-responsive">
               Privacy <span className="text-primary NOT-italic">Protocol.</span>
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-3xl mx-auto opacity-70">
+            <p className="text-base md:text-xl text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-3xl mx-auto opacity-70 mt-8">
               Last updated: <span className="text-foreground font-black NOT-italic">January 15, 2025</span>
             </p>
           </div>

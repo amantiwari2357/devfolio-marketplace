@@ -104,48 +104,48 @@ const Contact = () => {
 
                 <form className="lg:col-span-7 space-y-10">
                   <div className="grid md:grid-cols-2 gap-8">
-                    <div className="space-y-3">
-                      <Label htmlFor="firstName" className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground ml-4 italic px-2">First Name</Label>
-                      <Input id="firstName" placeholder="EXECUTIVE" className="h-16 rounded-[22px] px-8 bg-background/50 border-border/40 focus:border-primary/50 focus:ring-primary/20 transition-all font-black text-xs uppercase tracking-widest placeholder:opacity-30" />
+                    <div className="space-y-4">
+                      <Label htmlFor="firstName" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-4 italic px-2">First Identity</Label>
+                      <Input id="firstName" placeholder="ENTER_FIRST_NAME" className="h-16 rounded-[22px] px-8 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-xs uppercase tracking-widest placeholder:opacity-40" />
                     </div>
-                    <div className="space-y-3">
-                      <Label htmlFor="lastName" className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground ml-4 italic px-2">Last Name</Label>
-                      <Input id="lastName" placeholder="NODE" className="h-16 rounded-[22px] px-8 bg-background/50 border-border/40 focus:border-primary/50 focus:ring-primary/20 transition-all font-black text-xs uppercase tracking-widest placeholder:opacity-30" />
+                    <div className="space-y-4">
+                      <Label htmlFor="lastName" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-4 italic px-2">Last Identity</Label>
+                      <Input id="lastName" placeholder="ENTER_LAST_NAME" className="h-16 rounded-[22px] px-8 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-xs uppercase tracking-widest placeholder:opacity-40" />
                     </div>
                   </div>
 
-                  <div className="space-y-3">
-                    <Label htmlFor="email" className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground ml-4 italic px-2">Digital Address</Label>
+                  <div className="space-y-4">
+                    <Label htmlFor="email" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-4 italic px-2">Signal Node (Email)</Label>
                     <Input
                       id="email"
                       type="email"
                       placeholder="OPERATOR@DEVFOLIOMARKETPLACE.COM"
-                      className="h-16 rounded-[22px] px-8 bg-background/50 border-border/40 focus:border-primary/50 focus:ring-primary/20 transition-all font-black text-xs uppercase tracking-widest placeholder:opacity-30"
+                      className="h-16 rounded-[22px] px-8 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-xs uppercase tracking-widest placeholder:opacity-40"
                     />
                   </div>
 
-                  <div className="space-y-3">
-                    <Label htmlFor="subject" className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground ml-4 italic px-2">Inquiry Type</Label>
+                  <div className="space-y-4">
+                    <Label htmlFor="subject" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-4 italic px-2">Inquiry Vector</Label>
                     <Input
                       id="subject"
                       placeholder="TECHNICAL_QUERY"
-                      className="h-16 rounded-[22px] px-8 bg-background/50 border-border/40 focus:border-primary/50 focus:ring-primary/20 transition-all font-black text-xs uppercase tracking-widest placeholder:opacity-30"
+                      className="h-16 rounded-[22px] px-8 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-xs uppercase tracking-widest placeholder:opacity-40"
                     />
                   </div>
 
-                  <div className="space-y-3">
-                    <Label htmlFor="message" className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground ml-4 italic px-2">Message Payload</Label>
+                  <div className="space-y-4">
+                    <Label htmlFor="message" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-4 italic px-2">Message Payload</Label>
                     <Textarea
                       id="message"
                       placeholder="INITIALIZE_MESSAGE_PAYLOAD..."
-                      className="rounded-[28px] bg-background/50 border-border/40 focus:border-primary/50 focus:ring-primary/20 transition-all font-black text-xs uppercase tracking-widest min-h-[200px] p-8 placeholder:opacity-30 resize-none"
+                      className="rounded-[28px] bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-xs uppercase tracking-widest min-h-[220px] p-10 placeholder:opacity-40 resize-none shadow-inner"
                     />
                   </div>
 
-                  <div className="pt-4">
-                    <Button type="submit" className="w-full h-16 rounded-[24px] font-black text-xl bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl shadow-primary/30 gap-6 uppercase tracking-[0.2em] border-none italic">
+                  <div className="pt-6">
+                    <Button type="submit" className="w-full h-20 rounded-[28px] font-black text-2xl bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl shadow-primary/30 gap-8 uppercase tracking-[0.25em] border-none italic group">
                       Dispatch Message
-                      <ArrowRight className="w-6 h-6 stroke-[4px]" />
+                      <ArrowRight className="w-8 h-8 stroke-[4px] group-hover:translate-x-2 transition-transform" />
                     </Button>
                   </div>
                 </form>

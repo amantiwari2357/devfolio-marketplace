@@ -13,22 +13,22 @@ const Terms = () => {
       />
       <Header />
 
-      <main className="pt-32 pb-24 overflow-hidden">
+      <main className="section-spacing pt-32 md:pt-40 relative overflow-hidden">
         {/* Background Accents */}
         <div className="fixed top-0 right-0 -z-10 w-1/3 h-1/3 bg-primary/5 blur-[120px] pointer-events-none rounded-full" />
         <div className="fixed bottom-0 left-0 -z-10 w-1/3 h-1/3 bg-primary/5 blur-[120px] pointer-events-none rounded-full" />
 
-        <div className="container mx-auto px-4 max-w-5xl relative">
-          <div className="text-center max-w-3xl mx-auto mb-20 space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/50 border border-border/50 text-xs font-black uppercase tracking-[0.2em] text-primary">
-              <Scale className="w-4 h-4" />
-              Legal Framework
+        <div className="container mx-auto px-6 max-w-5xl relative">
+          <div className="text-center max-w-3xl mx-auto mb-20 md:mb-32 space-y-10 animate-slide-up">
+            <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-secondary/10 border border-border/40 backdrop-blur-md text-[10px] font-black uppercase tracking-[0.4em] text-primary italic">
+              <Scale className="w-4 h-4 animate-pulse" />
+              Legal Framework Protocol
             </div>
-            <h1 className="text-5xl md:text-6xl font-black tracking-tight text-foreground leading-tight">
-              Terms of <span className="text-primary italic">Service.</span>
+            <h1 className="heading-responsive">
+              Terms of <span className="text-primary NOT-italic">Service.</span>
             </h1>
-            <p className="text-lg text-muted-foreground font-medium">
-              Last updated: <span className="text-foreground font-bold">January 15, 2025</span>
+            <p className="text-base md:text-xl text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-3xl mx-auto opacity-70 mt-8">
+              Last updated: <span className="text-foreground NOT-italic">January 15, 2025</span>
             </p>
           </div>
 
@@ -44,7 +44,7 @@ const Terms = () => {
                 </h2>
                 <div className="p-6 rounded-2xl bg-background/50 border border-border/50">
                   <p className="text-muted-foreground font-medium leading-relaxed">
-                    By accessing and using <span className="text-foreground font-bold">DEVFOLIO.</span> services, you accept and agree to be bound by the terms and provision of this agreement. Our ecosystem is built on mutual trust and professional integrity.
+                    By accessing and using <span className="text-foreground font-bold">DEVFOLIOMARKETPLACE.COM</span> services, you accept and agree to be bound by the terms and provision of this agreement. Our ecosystem is built on mutual trust and professional integrity.
                   </p>
                 </div>
               </section>
@@ -80,7 +80,7 @@ const Terms = () => {
                     <ShieldCheck className="w-5 h-5 text-amber-500" />
                   </div>
                   <p className="text-muted-foreground font-medium leading-relaxed">
-                    You are solely responsible for maintaining the cryptographic integrity of your account credentials. <span className="text-foreground font-bold text-amber-600">DEVFOLIO.</span> must be notified immediately of any unauthorized access detection.
+                    You are solely responsible for maintaining the cryptographic integrity of your account credentials. <span className="text-foreground font-bold text-amber-600">DEVFOLIOMARKETPLACE.COM</span> must be notified immediately of any unauthorized access detection.
                   </p>
                 </div>
               </section>
@@ -99,7 +99,7 @@ const Terms = () => {
                   <span className="text-primary">05.</span> Intellectual Property
                 </h2>
                 <p className="text-muted-foreground font-medium leading-relaxed">
-                  Experts retain 100% ownership of their knowledge assets. By utilizing our infrastructure, you grant <span className="text-foreground font-bold">DEVFOLIO.</span> a non-exclusive, global license to optimize, display, and distribute said assets within the platform boundaries.
+                  Experts retain 100% ownership of their knowledge assets. By utilizing our infrastructure, you grant <span className="text-foreground font-bold">DEVFOLIOMARKETPLACE.COM</span> a non-exclusive, global license to optimize, display, and distribute said assets within the platform boundaries.
                 </p>
               </section>
 
@@ -107,7 +107,7 @@ const Terms = () => {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                   <div className="space-y-2">
                     <h3 className="text-lg font-black tracking-tight">Legal Inquiry?</h3>
-                    <p className="text-muted-foreground font-medium">Reach our compliance team at <a href="mailto:devfoliomarketplace@gmail.com" className="text-primary hover:underline">support@devfoliomarketplace.com</a></p>
+                    <p className="text-muted-foreground font-medium">Reach our compliance team at <br/> <a href="tel:9031359720" className="text-foreground NOT-italic hover:text-primary transition-colors block mt-2">+91 9031359720</a> <a href="mailto:devfoliomarketplace@gmail.com" className="text-primary hover:underline block mt-1">support@devfoliomarketplace.com</a></p>
                   </div>
                   <div className="flex items-center gap-4">
                     <div className="p-3 rounded-2xl bg-secondary/50 text-muted-foreground">
