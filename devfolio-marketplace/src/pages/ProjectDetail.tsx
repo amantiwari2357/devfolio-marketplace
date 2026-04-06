@@ -29,6 +29,7 @@ const ProjectDetail = () => {
   });
   const [project, setProject] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [submitError, setSubmitError] = useState(false);
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -227,6 +228,7 @@ const ProjectDetail = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError(false);
     try {
       const response = await enquiryAPI.createEnquiry({
         name: formData.name,
@@ -247,12 +249,19 @@ const ProjectDetail = () => {
       }
     } catch (error) {
       console.error('Error submitting enquiry:', error);
+      setSubmitError(true);
       toast({
-        title: "Error",
-        description: "Failed to submit enquiry. Please try again.",
+        title: "Relay Failed",
+        description: "Standard terminal submission failed. Fallback enabled.",
         variant: "destructive",
       });
     }
+  };
+
+  const getMailtoLink = () => {
+    const subject = encodeURIComponent(`Enquiry for ${project?.title}`);
+    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`);
+    return `mailto:devfoliomarketplace@gmail.com?subject=${subject}&body=${body}`;
   };
 
   if (loading) {
@@ -428,7 +437,7 @@ const ProjectDetail = () => {
                     <Input
                       id="email"
                       type="email"
-                      placeholder="elon@mars.com"
+                      placeholder="OPERATOR@DEVFOLIOMARKETPLACE.COM"
                       className="h-14 rounded-2xl bg-background border-border/50 focus:border-primary/50 font-bold px-5"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -460,6 +469,20 @@ const ProjectDetail = () => {
                       required
                     />
                   </div>
+
+                   {submitError && (
+                    <div className="p-4 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-[10px] font-black uppercase tracking-widest italic animate-shake">
+                      <p className="mb-3">Transmition failed. Secure relay node unreachable.</p>
+                      <Button 
+                        type="button"
+                        variant="outline" 
+                        className="w-full border-destructive/50 hover:bg-destructive hover:text-white transition-all h-12"
+                        onClick={() => window.location.href = getMailtoLink()}
+                      >
+                        Mail Us Instead
+                      </Button>
+                    </div>
+                  )}
 
                   <Button type="submit" className="w-full h-16 rounded-2xl bg-primary text-primary-foreground font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
                     Authorize Request

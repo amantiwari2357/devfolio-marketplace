@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import api from "@/services/api";
 import SEO from "@/components/layout/SEO";
+import { AppSidebar } from "@/components/layout/AppSidebar";
 
 const Analytics = () => {
   const [analytics, setAnalytics] = useState({
@@ -49,18 +50,6 @@ const Analytics = () => {
     window.location.href = '/login';
   };
 
-  const navItems = [
-    { label: "Home", icon: <HomeIcon className="w-5 h-5" />, href: "/dashboard" },
-    { label: "Bookings", icon: <Calendar className="w-5 h-5" />, href: "/bookings" },
-    { label: "Priority DM", icon: <MessageSquare className="w-5 h-5" />, href: "/priority-dm" },
-    { label: "Services", icon: <BookOpen className="w-5 h-5" />, href: "/services" },
-  ];
-
-  const analysisItems = [
-    { label: "Analytics", icon: <TrendingUp className="w-5 h-5" />, href: "/analytics", active: true },
-    { label: "Settings", icon: <Settings className="w-5 h-5" />, href: "/settings" },
-  ];
-
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-6">
@@ -76,91 +65,22 @@ const Analytics = () => {
     <div className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground">
       <SEO title="System Analytics | Intelligence" description="Distilled telemetry stream and interaction velocity metrics across the DEVFOLIO node." />
       
-      <div className="flex h-screen overflow-hidden">
-        {/* Sidebar Protocol */}
-        <aside className="w-80 border-r border-border/40 bg-secondary/10 backdrop-blur-3xl flex flex-col p-10 relative z-20">
-          <div className="flex items-center gap-4 mb-14 animate-fade-in">
-            <div className="w-12 h-12 rounded-[18px] bg-primary flex items-center justify-center shadow-xl shadow-primary/20 transition-all hover:rotate-12">
-              <span className="text-primary-foreground font-black text-2xl">A</span>
-            </div>
-            <div className="group cursor-pointer">
-              <h2 className="font-black text-xl tracking-tighter text-foreground leading-[0.85] uppercase">DEVFOLIO<span className="text-primary italic">.</span></h2>
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground opacity-40">Intelligence Node</p>
-            </div>
-          </div>
-
-          <div className="flex-1 space-y-12 overflow-y-auto pr-2 custom-scrollbar animate-fade-in" style={{ animationDelay: '100ms' }}>
-            <div className="space-y-6">
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground ml-4 opacity-50 italic">Directory Interface</p>
-              <nav className="space-y-3">
-                {navItems.map((item) => (
-                  <a 
-                    key={item.label}
-                    href={item.href} 
-                    className="flex items-center gap-4 px-6 py-4 rounded-[22px] font-black text-muted-foreground hover:bg-secondary/50 hover:text-foreground transition-all group"
-                  >
-                    <div className="group-hover:scale-110 transition-transform">{item.icon}</div>
-                    <span className="text-xs uppercase tracking-widest">{item.label}</span>
-                  </a>
-                ))}
-              </nav>
-            </div>
-
-            <div className="space-y-6">
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground ml-4 opacity-50 italic">Scale Vector</p>
-              <nav className="space-y-3">
-                {analysisItems.map((item) => (
-                  <a 
-                    key={item.label}
-                    href={item.href} 
-                    className={`flex items-center gap-4 px-6 py-4 rounded-[22px] font-black transition-all group ${
-                      item.active 
-                        ? "bg-foreground text-background shadow-2xl shadow-foreground/10 translate-x-2" 
-                        : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground"
-                    }`}
-                  >
-                    <div className={item.active ? "text-primary" : "group-hover:scale-110 transition-transform"}>{item.icon}</div>
-                    <span className="text-xs uppercase tracking-widest">{item.label}</span>
-                  </a>
-                ))}
-              </nav>
-            </div>
-          </div>
-
-          <div className="pt-10 border-t border-border/20 space-y-6 animate-fade-in" style={{ animationDelay: '200ms' }}>
-            <div className="flex items-center gap-4 p-5 rounded-[24px] bg-background/50 shadow-inner border border-border/20 group hover:border-primary/20 transition-all cursor-pointer">
-              <div className="w-12 h-12 rounded-2xl bg-secondary/50 flex items-center justify-center font-black text-primary text-xl shadow-sm group-hover:scale-105 transition-transform">
-                {user?.firstName?.[0] || 'U'}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-black truncate text-foreground">{user?.firstName || 'Creator Node'}</p>
-                <p className="text-[10px] font-bold truncate text-muted-foreground opacity-60 uppercase tracking-widest">{user?.email?.split('@')[0]}</p>
-              </div>
-            </div>
-            <Button
-              onClick={handleLogout}
-              variant="ghost"
-              className="w-full flex items-center gap-4 px-6 py-4 rounded-[22px] font-black text-destructive/70 hover:bg-destructive/10 hover:text-destructive transition-all justify-start text-xs uppercase tracking-widest"
-            >
-              <LogOut className="w-5 h-5" />
-              Disconnect
-            </Button>
-          </div>
-        </aside>
+      <div className="flex h-screen overflow-hidden relative">
+        <AppSidebar activePath="/analytics" />
 
         {/* Main Telemetry Core */}
-        <main className="flex-1 overflow-y-auto p-16 bg-background relative selection:bg-primary selection:text-primary-foreground">
+        <main className="flex-1 overflow-y-auto p-6 md:p-16 lg:p-20 bg-background relative selection:bg-primary selection:text-primary-foreground pt-24 lg:pt-20">
           {/* Background blurs */}
           <div className="absolute top-0 right-0 -z-10 w-2/3 h-2/3 bg-primary/2 opacity-30 blur-[180px] rounded-full animate-pulse" />
           
-          <div className="max-w-[1200px] mx-auto space-y-16">
+          <div className="max-w-[1200px] mx-auto space-y-12 md:space-y-16">
             <header className="flex flex-col md:flex-row md:items-center justify-between gap-8 animate-slide-up">
               <div className="space-y-3">
                 <div className="flex items-center gap-3 text-primary animate-fade-in">
                   <Activity className="w-4 h-4" />
                   <span className="text-[10px] font-black uppercase tracking-[0.4em] italic">Intelligence Flux Stream</span>
                 </div>
-                <h1 className="text-6xl font-black tracking-tighter text-foreground leading-[0.9] italic">
+                <h1 className="heading-responsive">
                   System <span className="text-primary NOT-italic">Analytics.</span>
                 </h1>
               </div>
@@ -194,20 +114,20 @@ const Analytics = () => {
             </div>
 
             {/* Core Metrics Grid Fabric */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 animate-slide-up" style={{ animationDelay: '200ms' }}>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 animate-slide-up" style={{ animationDelay: '200ms' }}>
               {[
                 { label: "Total Reach", val: analytics.totalViews.toLocaleString(), sub: "+12.5%", trend: "up", icon: <Eye className="w-5 h-5" /> },
                 { label: "Unique Nodes", val: analytics.uniqueVisitors.toLocaleString(), sub: "+8.2%", trend: "up", icon: <Layers className="w-5 h-5" /> },
                 { label: "Session Pulsation", val: `${analytics.avgSessionDuration}m`, sub: "-2.4%", trend: "down", icon: <Activity className="w-5 h-5" /> },
                 { label: "Conversion Rate", val: "3.2%", sub: "+0.5%", trend: "up", icon: <Zap className="w-5 h-5" /> },
               ].map((metric, i) => (
-                <Card key={i} className="p-10 rounded-[44px] bg-secondary/10 border-border/40 backdrop-blur-3xl group hover:border-primary/40 transition-all duration-700 relative overflow-hidden shadow-2xl flex flex-col justify-between h-56">
+                <Card key={i} className="neural-card p-8 md:p-10 relative overflow-hidden shadow-2xl flex flex-col justify-between h-auto min-h-[180px]">
                   <div className="flex items-center justify-between">
                     <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground italic opacity-50">{metric.label}</p>
                     <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform">{metric.icon}</div>
                   </div>
                   <div className="space-y-2">
-                    <p className="text-4xl font-black tracking-tighter text-foreground italic leading-none">{metric.val}</p>
+                    <p className="text-2xl md:text-4xl font-black tracking-tighter text-foreground italic leading-none">{metric.val}</p>
                     <div className={`flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] italic ${metric.trend === 'up' ? 'text-green-500' : 'text-red-500'}`}>
                       <div className={`w-1.5 h-1.5 rounded-full ${metric.trend === 'up' ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]' : 'bg-red-500'}`} />
                       {metric.sub}
@@ -217,9 +137,9 @@ const Analytics = () => {
               ))}
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-10 animate-slide-up" style={{ animationDelay: '300ms' }}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 animate-slide-up" style={{ animationDelay: '300ms' }}>
               {/* Intelligent Segment Lists */}
-              <Card className="p-12 rounded-[56px] bg-secondary/10 border-border/40 backdrop-blur-3xl space-y-10 shadow-2xl relative overflow-hidden group">
+              <Card className="neural-card p-10 md:p-12 space-y-10 shadow-2xl relative overflow-hidden group">
                 <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none group-hover:rotate-12 transition-transform">
                    <BarChart3 className="w-40 h-40" />
                 </div>
@@ -262,7 +182,7 @@ const Analytics = () => {
               </Card>
 
               {/* Vectors of Origin Protocol */}
-              <Card className="p-12 rounded-[56px] bg-secondary/10 border-border/40 backdrop-blur-3xl space-y-12 shadow-2xl relative overflow-hidden group">
+              <Card className="neural-card p-10 md:p-12 space-y-12 shadow-2xl relative overflow-hidden group">
                 <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none group-hover:scale-110 transition-transform">
                    <Globe className="w-40 h-40" />
                 </div>
@@ -310,20 +230,20 @@ const Analytics = () => {
             </div>
 
             {/* Advanced Telemetry Visualization Core */}
-            <Card className="p-16 rounded-[64px] bg-foreground text-background border-none relative overflow-hidden group shadow-[0_50px_100px_-20px_rgba(0,0,0,.5)]">
+            <Card className="rounded-[40px] md:rounded-[64px] bg-foreground text-background border-none relative overflow-hidden group shadow-[0_50px_100px_-20px_rgba(0,0,0,.5)]">
               {/* Mesh background for the dark card */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-transparent opacity-40 group-hover:opacity-60 transition-opacity" />
               <div className="absolute top-0 right-0 p-16 opacity-5 pointer-events-none group-hover:scale-125 group-hover:rotate-12 transition-transform duration-1000">
                 <LineChart className="w-[400px] h-[400px] text-primary" />
               </div>
-              <div className="relative z-10 space-y-12">
+              <div className="relative z-10 space-y-12 p-8 md:p-16">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
                   <div className="space-y-3">
                     <div className="flex items-center gap-3 text-primary animate-pulse">
                       <Rocket className="w-6 h-6" />
                       <span className="text-[10px] font-black uppercase tracking-[0.5em] italic">Neural Flow Synchronization</span>
                     </div>
-                    <h3 className="text-5xl font-black tracking-tighter italic uppercase leading-none">Real-time Node Activity</h3>
+                    <h3 className="text-3xl md:text-5xl font-black tracking-tighter italic uppercase leading-none">Real-time Node Activity</h3>
                     <p className="text-background/50 font-bold italic uppercase tracking-widest text-xs ml-1 opacity-70">Global interaction pulses monitored across all verified platform sectors.</p>
                   </div>
                   <Button className="h-16 rounded-[22px] px-10 font-black bg-primary text-primary-foreground border-none hover:scale-105 active:scale-95 transition-all shadow-2xl">
@@ -331,7 +251,7 @@ const Analytics = () => {
                   </Button>
                 </div>
 
-                <div className="h-96 rounded-[48px] bg-background/5 border border-background/10 flex flex-col items-center justify-center text-center space-y-8 backdrop-blur-3xl relative overflow-hidden shadow-inner group/chart">
+                <div className="h-64 md:h-96 rounded-[32px] md:rounded-[48px] bg-background/5 border border-background/10 flex flex-col items-center justify-center text-center space-y-8 backdrop-blur-3xl relative overflow-hidden shadow-inner group/chart">
                    {/* Background neural grid */}
                    <div className="absolute inset-0 opacity-5 pointer-events-none group-hover/chart:opacity-10 transition-opacity duration-1000" style={{ backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
                    

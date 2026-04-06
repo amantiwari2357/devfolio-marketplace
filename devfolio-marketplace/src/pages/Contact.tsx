@@ -17,38 +17,34 @@ const Contact = () => {
       />
       <Header />
 
-      <main className="pt-40 pb-32 overflow-hidden selection:bg-primary selection:text-primary-foreground">
-        {/* Background Mesh Flux */}
-        <div className="absolute top-0 right-0 -z-10 w-2/3 h-2/3 bg-primary/2 opacity-30 blur-[180px] rounded-full animate-pulse" />
-        <div className="absolute bottom-0 left-0 -z-10 w-1/2 h-1/2 bg-primary/2 opacity-20 blur-[150px] rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
-
+      <main className="section-spacing pt-32 md:pt-40 relative">
         <div className="container mx-auto px-6 relative">
-          <div className="text-center max-w-5xl mx-auto mb-24 space-y-10 animate-slide-up">
+          <div className="text-center max-w-5xl mx-auto mb-16 md:mb-24 space-y-10 animate-slide-up">
             <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-secondary/10 border border-border/40 backdrop-blur-md text-[10px] font-black uppercase tracking-[0.4em] text-primary italic">
               <Activity className="w-4 h-4 animate-pulse" />
               Direct Communication Stream
             </div>
-            <h1 className="text-4xl md:text-6xl font-black mb-8 tracking-tighter text-foreground leading-[0.85] uppercase italic">
+            <h1 className="heading-responsive">
               Establish <span className="text-primary NOT-italic">Connection.</span>
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-3xl mx-auto opacity-70">
+            <p className="text-base md:text-xl text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-3xl mx-auto opacity-70">
               Facing a hurdle? Or just want to say hi? Our specialized success team is ready to assist you in real-time.
             </p>
           </div>
 
           {/* Quick Contact Protocol Cards */}
-          <div className="grid md:grid-cols-3 gap-8 mb-24 animate-slide-up" style={{ animationDelay: '100ms' }}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-24 animate-slide-up" style={{ animationDelay: '100ms' }}>
             {[
-              { icon: <Mail className="w-8 h-8" />, title: "Email Intelligence", sub: "Standard response in <12h", val: "support@devfolio.io", href: "mailto:support@devfolio.io" },
+              { icon: <Mail className="w-8 h-8" />, title: "Email Intelligence", sub: "Standard response in <12h", val: "support@devfoliomarketplace.com", href: "mailto:devfoliomarketplace@gmail.com" },
               { icon: <MessageSquare className="w-8 h-8" />, title: "Live Operations", sub: "Priority access protocol", action: "Initialize Secure Chat" },
-              { icon: <Phone className="w-8 h-8" />, title: "Direct Hotline", sub: "Mon-Fri, 9AM to 6PM IST", val: "+91-DEVFOLIO", href: "tel:+918000000000" },
+              { icon: <Phone className="w-8 h-8" />, title: "Direct Hotline", sub: "Mon-Fri, 9AM to 6PM IST", val: "9031359720", href: "tel:9031359720" },
             ].map((item, i) => (
-              <Card key={i} className="p-12 rounded-[44px] bg-secondary/10 border-border/40 backdrop-blur-3xl group hover:border-primary/40 transition-all duration-700 text-center space-y-6 shadow-xl relative overflow-hidden">
+              <Card key={i} className="neural-card p-10 md:p-12 text-center space-y-6 shadow-xl relative overflow-hidden group">
                 <div className="mx-auto w-20 h-20 rounded-[28px] bg-secondary/50 flex items-center justify-center text-primary mb-6 shadow-inner group-hover:scale-110 group-hover:rotate-6 transition-all">
                   {item.icon}
                 </div>
                 <div className="space-y-2">
-                  <h3 className="font-black text-2xl tracking-tighter text-foreground italic uppercase uppercase">{item.title}</h3>
+                  <h3 className="font-black text-xl md:text-2xl tracking-tighter text-foreground italic uppercase">{item.title}</h3>
                   <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50 italic">{item.sub}</p>
                 </div>
                 <div className="pt-4">
@@ -57,7 +53,7 @@ const Contact = () => {
                       {item.action}
                     </Button>
                   ) : (
-                    <a href={item.href} className="text-xl font-black text-primary italic underline decoration-primary/20 underline-offset-8 hover:decoration-primary transition-all">
+                    <a href={item.href} className="text-lg md:text-xl font-black text-primary italic underline decoration-primary/20 underline-offset-8 hover:decoration-primary transition-all truncate block">
                       {item.val}
                     </a>
                   )}
@@ -68,7 +64,7 @@ const Contact = () => {
 
           {/* Main Inquiry Core */}
           <div className="max-w-6xl mx-auto animate-slide-up" style={{ animationDelay: '200ms' }}>
-            <Card className="p-12 md:p-24 rounded-[56px] bg-secondary/10 border-border/40 backdrop-blur-3xl shadow-2xl relative overflow-hidden group">
+            <Card className="neural-card p-8 md:p-24 relative overflow-hidden group shadow-2xl">
               <div className="absolute top-0 right-0 p-16 opacity-0 group-hover:opacity-5 transition-all duration-1000 translate-x-12 translate-y-[-12px] group-hover:translate-x-0 group-hover:translate-y-0 pointer-events-none">
                 <Send className="w-[400px] h-[400px] text-primary" />
               </div>
@@ -123,7 +119,7 @@ const Contact = () => {
                     <Input
                       id="email"
                       type="email"
-                      placeholder="OPERATOR@DEVFOLIO.IO"
+                      placeholder="OPERATOR@DEVFOLIOMARKETPLACE.COM"
                       className="h-16 rounded-[22px] px-8 bg-background/50 border-border/40 focus:border-primary/50 focus:ring-primary/20 transition-all font-black text-xs uppercase tracking-widest placeholder:opacity-30"
                     />
                   </div>

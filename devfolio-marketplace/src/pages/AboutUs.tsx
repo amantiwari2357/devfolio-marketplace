@@ -41,7 +41,7 @@ const AboutUs = () => {
       />
       <Header />
       
-      <main className="pt-40 pb-32 overflow-hidden selection:bg-primary selection:text-primary-foreground">
+      <main className="section-spacing overflow-hidden selection:bg-primary selection:text-primary-foreground relative pt-32 md:pt-40">
         {/* Background Mesh Flux */}
         <div className="absolute top-0 right-0 -z-10 w-2/3 h-2/3 bg-primary/2 opacity-30 blur-[180px] rounded-full animate-pulse" />
         <div className="absolute bottom-0 left-0 -z-10 w-1/2 h-1/2 bg-primary/2 opacity-20 blur-[150px] rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
@@ -53,17 +53,17 @@ const AboutUs = () => {
               <Award className="w-4 h-4 animate-pulse" />
               Establishment Protocol
             </div>
-            <h1 className="text-4xl md:text-6xl font-black mb-8 tracking-tighter text-foreground leading-[0.85] uppercase italic">
+            <h1 className="heading-responsive">
               Empowering experts to <span className="text-primary NOT-italic">shape the future.</span>
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-3xl mx-auto opacity-70">
+            <p className="text-base md:text-xl text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-3xl mx-auto opacity-70">
               We're building the infrastructure for the next generation of knowledge sharing and professional services.
             </p>
           </div>
 
           {/* Story Protocol Card */}
-          <div className="max-w-6xl mx-auto mb-40 animate-slide-up" style={{ animationDelay: '100ms' }}>
-            <Card className="p-12 md:p-24 rounded-[56px] bg-secondary/10 border-border/40 backdrop-blur-3xl relative overflow-hidden group shadow-2xl">
+          <div className="max-w-6xl mx-auto mb-20 md:mb-40 animate-slide-up" style={{ animationDelay: '100ms' }}>
+            <Card className="neural-card p-8 md:p-24 relative overflow-hidden group shadow-2xl">
               <div className="absolute top-0 right-0 p-16 opacity-0 group-hover:opacity-5 transition-all duration-1000 translate-x-12 translate-y-[-12px] group-hover:translate-x-0 group-hover:translate-y-0">
                 <Rocket className="w-96 h-96 text-primary" />
               </div>
@@ -74,7 +74,7 @@ const AboutUs = () => {
                 </div>
                 <div className="grid lg:grid-cols-2 gap-16 items-start">
                   <div className="space-y-8">
-                    <h3 className="text-3xl font-black tracking-tighter text-foreground leading-none italic uppercase">
+                    <h3 className="text-xl md:text-3xl font-black tracking-tighter text-foreground leading-none italic uppercase">
                       Our <span className="text-primary NOT-italic">Story.</span>
                     </h3>
                     <div className="space-y-8 text-lg font-bold text-muted-foreground/80 leading-relaxed italic tracking-tight">
@@ -110,20 +110,20 @@ const AboutUs = () => {
                   <Fingerprint className="w-5 h-5" />
                   <span className="text-[10px] font-black uppercase tracking-[0.4em] italic">Core Philosophy</span>
                 </div>
-                 <h3 className="text-3xl font-black tracking-tighter italic uppercase leading-none">
+                 <h3 className="text-xl md:text-3xl font-black tracking-tighter italic uppercase leading-none">
                   Values that <span className="text-primary NOT-italic">drive us.</span>
                 </h3>
               </div>
               <p className="text-sm font-bold text-muted-foreground/50 italic uppercase tracking-[0.2em] max-w-xs">Distilled principles forming the DEVFOLIO alignment.</p>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
               {values.map((value, index) => (
-                <Card key={index} className="p-10 rounded-[44px] bg-secondary/10 border-border/40 backdrop-blur-3xl hover:border-primary/40 transition-all duration-700 group hover:shadow-2xl hover:shadow-primary/5 shadow-xl flex flex-col justify-between h-80">
-                  <div className="mb-8 p-6 rounded-[24px] bg-secondary/50 text-foreground group-hover:text-primary group-hover:bg-primary/20 transition-all inline-block shadow-inner w-fit group-hover:rotate-6">
+                <Card key={index} className="neural-card p-8 md:p-10 flex flex-col justify-between h-auto min-h-[300px]">
+                  <div className="mb-6 p-5 rounded-[20px] bg-secondary/50 text-foreground group-hover:text-primary group-hover:bg-primary/20 transition-all inline-block shadow-inner w-fit group-hover:rotate-6">
                     {value.icon}
                   </div>
                   <div className="space-y-4">
-                    <h4 className="text-2xl font-black tracking-tighter uppercase italic text-foreground leading-none">{value.title}</h4>
+                    <h4 className="text-xl md:text-2xl font-black tracking-tighter uppercase italic text-foreground leading-none">{value.title}</h4>
                     <p className="text-sm font-bold text-muted-foreground/70 leading-relaxed italic opacity-80">{value.description}</p>
                   </div>
                 </Card>
@@ -192,10 +192,10 @@ const AboutUs = () => {
                   <Globe className="w-10 h-10" />
                 </div>
               </div>
-              <h2 className="text-4xl md:text-6xl font-black tracking-tighter italic uppercase leading-[0.85]">
+              <h2 className="text-2xl md:text-6xl font-black tracking-tighter italic uppercase leading-[0.85]">
                 Become part of the <span className="text-primary italic">global elite.</span>
               </h2>
-              <p className="text-lg md:text-xl text-muted-foreground font-bold italic tracking-tight max-w-2xl mx-auto leading-relaxed opacity-70">
+              <p className="text-base md:text-xl text-muted-foreground font-bold italic tracking-tight max-w-2xl mx-auto leading-relaxed opacity-70">
                 Join a community of forward-thinking experts building their legacy on our digital infrastructure.
               </p>
               <div className="pt-10">

@@ -65,6 +65,58 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-black italic uppercase tracking-tighter;
+  }
+
+  /* Global Navigation and Interactive Elements */
+  nav a, [role="link"], .nav-link {
+    @apply font-bold uppercase tracking-widest italic transition-all duration-300;
+  }
+
+  /* Section Labels */
+  .section-label {
+    @apply text-[10px] font-black uppercase tracking-[0.5rem] italic text-primary/60;
+  }
+
+  /* Responsive Design Infrastructure */
+  .grid-fabric {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8;
+  }
+
+  .neural-card {
+    @apply p-6 md:p-10 lg:p-12 rounded-[24px] md:rounded-[44px] lg:rounded-[56px] bg-secondary/10 border border-border/40 backdrop-blur-3xl transition-all duration-500;
+  }
+
+  .section-spacing {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
+  .heading-responsive {
+    @apply text-3xl md:text-5xl lg:text-6xl font-black tracking-tighter italic uppercase leading-[0.85];
+  }
+}
+
+@keyframes scroll-y {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+.animate-scroll-y {
+  animation: scroll-y 40s linear infinite;
+}
+
+.mask-fade-y {
+  mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+}
+
+.animate-scroll-y:hover {
+  animation-play-state: paused;
 }

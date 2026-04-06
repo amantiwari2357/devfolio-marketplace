@@ -107,7 +107,7 @@ const Terms = () => {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                   <div className="space-y-2">
                     <h3 className="text-lg font-black tracking-tight">Legal Inquiry?</h3>
-                    <p className="text-muted-foreground font-medium">Reach our compliance team at <a href="mailto:[EMAIL_ADDRESS]" className="text-primary hover:underline">[EMAIL_ADDRESS]</a></p>
+                    <p className="text-muted-foreground font-medium">Reach our compliance team at <a href="mailto:devfoliomarketplace@gmail.com" className="text-primary hover:underline">support@devfoliomarketplace.com</a></p>
                   </div>
                   <div className="flex items-center gap-4">
                     <div className="p-3 rounded-2xl bg-secondary/50 text-muted-foreground">

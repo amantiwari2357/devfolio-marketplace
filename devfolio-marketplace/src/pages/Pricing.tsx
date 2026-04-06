@@ -72,26 +72,22 @@ const Pricing = () => {
       />
       <Header />
       
-      <main className="pt-32 pb-24 overflow-hidden">
-        {/* Background Accents */}
-        <div className="fixed top-0 right-0 -z-10 w-1/3 h-1/3 bg-primary/5 blur-[120px] pointer-events-none rounded-full" />
-        <div className="fixed bottom-0 left-0 -z-10 w-1/3 h-1/3 bg-primary/5 blur-[120px] pointer-events-none rounded-full" />
-
-        <div className="container mx-auto px-4 relative">
-          <div className="text-center max-w-3xl mx-auto mb-20 space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/50 border border-border/50 text-xs font-black uppercase tracking-[0.2em] text-primary">
+      <main className="section-spacing pt-32 md:pt-40 relative">
+        <div className="container mx-auto px-6 relative">
+          <div className="text-center max-w-4xl mx-auto mb-16 md:mb-24 space-y-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/50 border border-border/50 text-[10px] font-black uppercase tracking-[0.2em] text-primary italic">
               <Sparkles className="w-4 h-4" />
               Flexible Licensing
             </div>
-            <h1 className="text-5xl md:text-7xl font-black tracking-tight text-foreground leading-tight">
+            <h1 className="heading-responsive">
               Simple, <span className="text-primary italic">Transparent.</span>
             </h1>
-            <p className="text-xl text-muted-foreground font-medium leading-relaxed">
+            <p className="text-base md:text-xl text-muted-foreground font-bold italic tracking-tight opacity-70">
               Scale your impact without complexity. Every plan is built to maximize your potential.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-24">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
             {plans.map((plan, index) => (
               <Card 
                 key={index} 

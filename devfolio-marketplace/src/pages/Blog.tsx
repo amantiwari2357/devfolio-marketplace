@@ -167,7 +167,7 @@ const Blog = () => {
                 <div className="flex flex-col md:flex-row gap-6 max-w-2xl mx-auto pt-8">
                   <Input
                     type="email"
-                    placeholder="ENTER_NODE_ADDRESS@DEVFOLIO.IO"
+                    placeholder="ENTER_NODE_ADDRESS@DEVFOLIOMARKETPLACE.COM"
                     className="h-16 rounded-[22px] bg-background/10 border-background/20 text-background placeholder:text-background/30 focus:border-primary/50 transition-all font-black text-[10px] uppercase tracking-[0.3em] px-8 italic"
                   />
                   <Button className="h-16 rounded-[22px] px-10 font-black text-lg bg-primary text-primary-foreground hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-primary/30 uppercase tracking-[0.2em] border-none italic">

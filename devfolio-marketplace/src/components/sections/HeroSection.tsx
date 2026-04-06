@@ -20,6 +20,7 @@ const HeroSection = () => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -53,6 +54,7 @@ const HeroSection = () => {
   const handleEnquirySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError(false);
 
     try {
       await enquiryAPI.createEnquiry(enquiryForm);
@@ -62,23 +64,29 @@ const HeroSection = () => {
       document.getElementById('enquiry-dialog-close')?.click();
     } catch (error) {
       console.error('Error submitting enquiry:', error);
-      alert('Failed to submit enquiry. Please try again.');
+      setSubmitError(true);
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const getMailtoLink = () => {
+    const subject = encodeURIComponent(`Enquiry from ${enquiryForm.name}`);
+    const body = encodeURIComponent(`Name: ${enquiryForm.name}\nEmail: ${enquiryForm.email}\nPhone: ${enquiryForm.phone}\n\nMessage:\n${enquiryForm.message}`);
+    return `mailto:devfoliomarketplace@gmail.com?subject=${subject}&body=${body}`;
+  };
+
   if (isLoading) {
     return (
-      <section className="pt-32 pb-20 bg-gradient-to-b from-background to-secondary/30">
-        <div className="container mx-auto px-4">
+      <section className="section-spacing bg-gradient-to-b from-background to-secondary/30">
+        <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="h-16 bg-muted animate-pulse rounded mb-6"></div>
-              <div className="h-6 bg-muted animate-pulse rounded mb-4"></div>
-              <div className="h-10 bg-muted animate-pulse rounded w-48"></div>
+            <div className="space-y-8">
+              <div className="h-20 bg-muted animate-pulse rounded-3xl w-3/4"></div>
+              <div className="h-6 bg-muted animate-pulse rounded-xl w-full"></div>
+              <div className="h-16 bg-muted animate-pulse rounded-2xl w-48"></div>
             </div>
-            <div className="h-96 bg-muted animate-pulse rounded"></div>
+            <div className="h-[400px] md:h-[600px] bg-muted animate-pulse rounded-[44px]"></div>
           </div>
         </div>
       </section>
@@ -86,42 +94,40 @@ const HeroSection = () => {
   }
 
   return (
-    <section className="pt-32 pb-20 bg-gradient-to-b from-background to-secondary/30">
-      <div className="container mx-auto px-4">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              Your All-in-One
-              <br />
-              Creator <span className="text-primary">Storefront</span>
-            </h1>
+    <section className="section-spacing bg-gradient-to-b from-background to-secondary/30 relative overflow-hidden">
+      {/* Background Flux */}
+      <div className="absolute top-0 right-0 -z-10 w-1/2 h-1/2 bg-primary/2 opacity-30 blur-[150px] rounded-full animate-pulse" />
+      
+      <div className="container mx-auto px-6">
+        <div className="grid lg:grid-cols-2 gap-12 md:gap-20 items-center">
+          <div className="animate-slide-up space-y-8 md:space-y-12">
+            <div className="space-y-6">
+              <h1 className="heading-responsive">
+                Your All-in-One
+                <br />
+                Creator <span className="text-primary NOT-italic">Storefront.</span>
+              </h1>
 
-            <p className="text-xl text-muted-foreground mb-8">
-              Helping individuals and brands build modern, responsive websites and powerful digital solutions — all tailored to their business goals.            </p>
+              <p className="text-lg md:text-xl text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-xl opacity-70">
+                Helping individuals and brands build modern, responsive websites and powerful digital solutions — all tailored to their business goals.
+              </p>
+            </div>
 
-            <Button
-              size="lg"
-              className="bg-foreground text-background hover:bg-foreground/90 group"
-              onClick={handleLaunchStore}
-            >
-              Launch Your Store
-              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
-
-            {/* <div className="mt-8 space-y-2">
-              <div className="flex items-center gap-2">
-                <div className="flex">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <span className="text-sm font-medium">100k+ reviews</span>
-              </div>
-              <p className="text-sm text-muted-foreground">1mn+ professionals</p>
-            </div> */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button
+                size="lg"
+                className="h-16 md:h-20 rounded-[22px] md:rounded-[28px] px-10 md:px-12 font-black text-lg md:text-xl bg-foreground text-background hover:scale-105 active:scale-95 transition-all shadow-2xl group uppercase tracking-widest italic border-none"
+                onClick={handleLaunchStore}
+              >
+                Launch Your Store
+                <ArrowRight className="ml-4 w-6 h-6 group-hover:translate-x-2 transition-transform stroke-[3px]" />
+              </Button>
+            </div>
           </div>
 
-          <ProfileCards />
+          <div className="animate-slide-up" style={{ animationDelay: '100ms' }}>
+            <ProfileCards />
+          </div>
         </div>
       </div>
 
@@ -130,65 +136,92 @@ const HeroSection = () => {
         <DialogTrigger asChild>
           <button id="enquiry-dialog-trigger" style={{ display: 'none' }}>Open Enquiry</button>
         </DialogTrigger>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle>Launch Your Store - Get Started</DialogTitle>
-          </DialogHeader>
-          <form onSubmit={handleEnquirySubmit} className="space-y-4">
-            <div>
-              <Label htmlFor="name">Full Name</Label>
-              <Input
-                id="name"
-                type="text"
-                placeholder="Enter your full name"
-                value={enquiryForm.name}
-                onChange={(e) => setEnquiryForm(prev => ({ ...prev, name: e.target.value }))}
-              />
+        <DialogContent className="max-w-md p-0 border-none bg-transparent">
+          <Card className="neural-card p-10 md:p-12 relative overflow-hidden group shadow-2xl">
+            <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none group-hover:rotate-12 transition-transform">
+              <ArrowRight className="w-48 h-48 text-primary" />
             </div>
-            <div>
-              <Label htmlFor="email">Email Address</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="Enter your email"
-                value={enquiryForm.email}
-                onChange={(e) => setEnquiryForm(prev => ({ ...prev, email: e.target.value }))}
-              />
-            </div>
-            <div>
-              <Label htmlFor="phone">Phone Number</Label>
-              <Input
-                id="phone"
-                type="tel"
-                placeholder="Enter your phone number"
-                value={enquiryForm.phone}
-                onChange={(e) => setEnquiryForm(prev => ({ ...prev, phone: e.target.value }))}
-              />
-            </div>
-            <div>
-              <Label htmlFor="message">Tell us about your requirements</Label>
-              <Textarea
-                id="message"
-                placeholder="Describe your business, target audience, and what kind of store you want to launch..."
-                value={enquiryForm.message}
-                onChange={(e) => setEnquiryForm(prev => ({ ...prev, message: e.target.value }))}
-                rows={4}
-              />
-            </div>
-            <div className="flex gap-3 pt-4">
-              <Button type="submit" disabled={isSubmitting} className="flex-1">
-                {isSubmitting ? 'Submitting...' : 'Submit Enquiry'}
+            
+            <DialogHeader className="mb-10 text-center relative z-10">
+              <DialogTitle className="text-3xl font-black tracking-tighter text-foreground italic uppercase">Launch Your <span className="text-primary NOT-italic">Store.</span></DialogTitle>
+            </DialogHeader>
+            <form onSubmit={handleEnquirySubmit} className="space-y-6 relative z-10">
+              <div className="space-y-2.5">
+                <Label htmlFor="name" className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-60 italic">Architect Name</Label>
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="ENTER_YOUR_NAME"
+                  className="h-14 rounded-2xl bg-background/50 border-border/40 focus:border-primary/50 font-black text-xs uppercase tracking-widest px-6"
+                  value={enquiryForm.name}
+                  onChange={(e) => setEnquiryForm(prev => ({ ...prev, name: e.target.value }))}
+                />
+              </div>
+              <div className="space-y-2.5">
+                <Label htmlFor="email" className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-60 italic">Signal Node (Email)</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="OPERATOR@DEVFOLIOMARKETPLACE.COM"
+                  className="h-14 rounded-2xl bg-background/50 border-border/40 focus:border-primary/50 font-black text-xs uppercase tracking-widest px-6"
+                  value={enquiryForm.email}
+                  onChange={(e) => setEnquiryForm(prev => ({ ...prev, email: e.target.value }))}
+                />
+              </div>
+              <div className="space-y-2.5">
+                <Label htmlFor="phone" className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-60 italic">Coordinate (Phone)</Label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  placeholder="DIRECT_HOTLINE"
+                  className="h-14 rounded-2xl bg-background/50 border-border/40 focus:border-primary/50 font-black text-xs uppercase tracking-widest px-6"
+                  value={enquiryForm.phone}
+                  onChange={(e) => setEnquiryForm(prev => ({ ...prev, phone: e.target.value }))}
+                />
+              </div>
+              <div className="space-y-2.5">
+                <Label htmlFor="message" className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-60 italic">Protocol Brief</Label>
+                <Textarea
+                  id="message"
+                  placeholder="DEFINE_REQUIREMENTS..."
+                  className="rounded-2xl bg-background/50 border-border/40 focus:border-primary/50 font-bold text-xs uppercase tracking-widest p-6 min-h-[120px] resize-none"
+                  value={enquiryForm.message}
+                  onChange={(e) => setEnquiryForm(prev => ({ ...prev, message: e.target.value }))}
+                  rows={4}
+                />
+              </div>
+            {submitError && (
+              <div className="p-4 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-xs font-bold italic animate-shake">
+                <p className="mb-3">Transmition failed. Secure relay node unreachable.</p>
+                <Button 
+                  type="button"
+                  variant="outline" 
+                  className="w-full border-destructive/50 hover:bg-destructive hover:text-white transition-all text-[10px] uppercase tracking-widest h-12"
+                  onClick={() => window.location.href = getMailtoLink()}
+                >
+                  Mail Us Instead
+                </Button>
+              </div>
+            )}
+            <div className="flex gap-4 pt-6">
+              <Button type="submit" disabled={isSubmitting} className="flex-1 h-14 rounded-2xl font-black bg-primary text-primary-foreground shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all text-[10px] uppercase tracking-widest italic border-none">
+                {isSubmitting ? 'Transmitting...' : 'Dispatch Request'}
               </Button>
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => document.getElementById('enquiry-dialog-close')?.click()}
-                className="flex-1"
+                id="enquiry-dialog-close"
+                onClick={() => {
+                  const closeBtn = document.querySelector('[data-radix-collection-item]') as HTMLElement;
+                  closeBtn?.click();
+                }}
+                className="flex-1 h-14 rounded-2xl font-black text-[10px] uppercase tracking-widest italic"
               >
-                Cancel
+                Terminate
               </Button>
             </div>
           </form>
+          </Card>
         </DialogContent>
       </Dialog>
     </section>

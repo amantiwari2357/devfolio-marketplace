@@ -73,7 +73,7 @@ const Footer = () => {
             <div className="space-y-6">
               <p className="text-muted-foreground text-xs font-bold italic uppercase tracking-widest">
                 GURGAON SECTOR 39, INDIA<br/>
-                <span className="text-foreground NOT-italic">hello@devfolio.me</span>
+                <a href="mailto:devfoliomarketplace@gmail.com" className="text-foreground NOT-italic hover:text-primary transition-colors">support@devfoliomarketplace.com</a>
               </p>
               
               <div className="flex gap-4">

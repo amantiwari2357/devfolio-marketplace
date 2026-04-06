@@ -125,7 +125,7 @@ const ServicesSection = () => {
       date: selectedDateObj.toISOString(),
       time: selectedTime,
       userName: "amantiwari2357",
-      userEmail: "amankumartiwari5255@gmail.com",
+      userEmail: "devfoliomarketplace@gmail.com",
       userPhone: "9031359720",
       serviceType: "Consultation",
       notes: "Booked via Services Section",

@@ -16,6 +16,7 @@ import {
 import api from "@/services/api";
 import { connectSocket, getSocket } from "@/services/socket";
 import SEO from "@/components/layout/SEO";
+import { AppSidebar } from "@/components/layout/AppSidebar";
 
 type NullableTimeout = ReturnType<typeof setTimeout> | null;
 
@@ -140,18 +141,6 @@ const Settings = () => {
     window.location.href = '/login';
   };
 
-  const navItems = [
-    { label: "Home", icon: <HomeIcon className="w-5 h-5" />, href: "/dashboard" },
-    { label: "Bookings", icon: <Calendar className="w-5 h-5" />, href: "/bookings" },
-    { label: "Priority DM", icon: <MessageSquare className="w-5 h-5" />, href: "/priority-dm" },
-    { label: "Services", icon: <BookOpen className="w-5 h-5" />, href: "/services" },
-  ];
-
-  const analysisItems = [
-    { label: "Analytics", icon: <TrendingUp className="w-5 h-5" />, href: "/analytics" },
-    { label: "Settings", icon: <SettingsIcon className="w-5 h-5" />, href: "/settings", active: true },
-  ];
-
   if (initialLoading) {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-6">
@@ -167,91 +156,22 @@ const Settings = () => {
     <div className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground">
       <SEO title="System Protocol | Config" description="Manage your architect identity, security layers, and operational parameters within the DEVFOLIO network." />
       
-      <div className="flex h-screen overflow-hidden">
-        {/* Sidebar Protocol */}
-        <aside className="w-80 border-r border-border/40 bg-secondary/10 backdrop-blur-3xl flex flex-col p-10 relative z-20">
-          <div className="flex items-center gap-4 mb-14 animate-fade-in">
-            <div className="w-12 h-12 rounded-[18px] bg-primary flex items-center justify-center shadow-xl shadow-primary/20 transition-all hover:rotate-12">
-              <span className="text-primary-foreground font-black text-2xl">C</span>
-            </div>
-            <div className="group cursor-pointer">
-              <h2 className="font-black text-xl tracking-tighter text-foreground leading-[0.85] uppercase">DEVFOLIO<span className="text-primary italic">.</span></h2>
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground opacity-40">Config Node</p>
-            </div>
-          </div>
-
-          <div className="flex-1 space-y-12 overflow-y-auto pr-2 custom-scrollbar animate-fade-in" style={{ animationDelay: '100ms' }}>
-            <div className="space-y-6">
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground ml-4 opacity-50 italic">Directory Interface</p>
-              <nav className="space-y-3">
-                {navItems.map((item) => (
-                  <a 
-                    key={item.label}
-                    href={item.href} 
-                    className="flex items-center gap-4 px-6 py-4 rounded-[22px] font-black text-muted-foreground hover:bg-secondary/50 hover:text-foreground transition-all group"
-                  >
-                    <div className="group-hover:scale-110 transition-transform">{item.icon}</div>
-                    <span className="text-xs uppercase tracking-widest">{item.label}</span>
-                  </a>
-                ))}
-              </nav>
-            </div>
-
-            <div className="space-y-6">
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground ml-4 opacity-50 italic">Scale Vector</p>
-              <nav className="space-y-3">
-                {analysisItems.map((item) => (
-                  <a 
-                    key={item.label}
-                    href={item.href} 
-                    className={`flex items-center gap-4 px-6 py-4 rounded-[22px] font-black transition-all group ${
-                      item.active 
-                        ? "bg-foreground text-background shadow-2xl shadow-foreground/10 translate-x-2" 
-                        : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground"
-                    }`}
-                  >
-                    <div className={item.active ? "text-primary" : "group-hover:scale-110 transition-transform"}>{item.icon}</div>
-                    <span className="text-xs uppercase tracking-widest">{item.label}</span>
-                  </a>
-                ))}
-              </nav>
-            </div>
-          </div>
-
-          <div className="pt-10 border-t border-border/20 space-y-6 animate-fade-in" style={{ animationDelay: '200ms' }}>
-            <div className="flex items-center gap-4 p-5 rounded-[24px] bg-background/50 shadow-inner border border-border/20 group hover:border-primary/20 transition-all cursor-pointer">
-              <div className="w-12 h-12 rounded-2xl bg-secondary/50 flex items-center justify-center font-black text-primary text-xl shadow-sm group-hover:scale-105 transition-transform">
-                {user?.firstName?.[0] || 'U'}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-black truncate text-foreground">{user?.firstName || 'Creator Node'}</p>
-                <p className="text-[10px] font-bold truncate text-muted-foreground opacity-60 uppercase tracking-widest">{user?.email?.split('@')[0]}</p>
-              </div>
-            </div>
-            <Button
-              onClick={handleLogout}
-              variant="ghost"
-              className="w-full flex items-center gap-4 px-6 py-4 rounded-[22px] font-black text-destructive/70 hover:bg-destructive/10 hover:text-destructive transition-all justify-start text-xs uppercase tracking-widest"
-            >
-              <LogOut className="w-5 h-5" />
-              Disconnect
-            </Button>
-          </div>
-        </aside>
+      <div className="flex h-screen overflow-hidden relative">
+        <AppSidebar activePath="/settings" />
 
         {/* Main Interface Core */}
-        <main className="flex-1 overflow-y-auto p-16 bg-background relative selection:bg-primary selection:text-primary-foreground">
+        <main className="flex-1 overflow-y-auto p-6 md:p-16 bg-background relative selection:bg-primary selection:text-primary-foreground pt-24 md:pt-16">
           {/* Background blurs */}
           <div className="absolute top-0 right-0 -z-10 w-2/3 h-2/3 bg-primary/2 opacity-30 blur-[180px] rounded-full animate-pulse" />
           
-          <div className="max-w-[1000px] mx-auto space-y-16">
+          <div className="max-w-[1000px] mx-auto space-y-12 md:space-y-16">
             <header className="flex flex-col md:flex-row md:items-center justify-between gap-8 animate-slide-up">
               <div className="space-y-3">
                 <div className="flex items-center gap-3 text-primary">
                   <SettingsIcon className="w-4 h-4 animate-spin-slow" />
                   <span className="text-[10px] font-black uppercase tracking-[0.4em] italic">Authorized Configuration</span>
                 </div>
-                <h1 className="text-6xl font-black tracking-tighter text-foreground leading-[0.9] italic">
+                <h1 className="heading-responsive">
                   Node <span className="text-primary NOT-italic">Config.</span>
                 </h1>
               </div>
@@ -263,8 +183,8 @@ const Settings = () => {
               </div>
             </header>
 
-            <Tabs defaultValue="profile" className="space-y-12 group animate-slide-up" style={{ animationDelay: '100ms' }}>
-              <TabsList className="h-20 p-2 rounded-[28px] bg-secondary/10 border border-border/40 backdrop-blur-3xl grid grid-cols-4 gap-3 shadow-2xl">
+            <Tabs defaultValue="profile" className="space-y-8 md:space-y-12 group animate-slide-up" style={{ animationDelay: '100ms' }}>
+              <TabsList className="h-16 md:h-20 p-1 md:p-2 rounded-[20px] md:rounded-[28px] bg-secondary/10 border border-border/40 backdrop-blur-3xl grid grid-cols-4 gap-2 md:gap-3 shadow-2xl">
                 {[
                   { value: "profile", label: "Identity", icon: <User className="w-4 h-4" /> },
                   { value: "notifications", label: "Signals", icon: <Bell className="w-4 h-4" /> },
@@ -274,28 +194,28 @@ const Settings = () => {
                   <TabsTrigger 
                     key={tab.value}
                     value={tab.value} 
-                    className="rounded-[20px] font-black text-[10px] uppercase tracking-widest gap-2 data-[state=active]:bg-foreground data-[state=active]:text-background data-[state=active]:shadow-2xl transition-all h-full"
+                    className="rounded-[16px] md:rounded-[20px] font-black text-[10px] uppercase tracking-widest gap-2 data-[state=active]:bg-foreground data-[state=active]:text-background data-[state=active]:shadow-2xl transition-all h-full"
                   >
                     {tab.icon}
-                    <span className="hidden sm:inline italic">{tab.label}</span>
+                    <span className="hidden lg:inline italic">{tab.label}</span>
                   </TabsTrigger>
                 ))}
               </TabsList>
 
               {/* Identity Matrix Content */}
               <TabsContent value="profile" className="space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
-                <Card className="p-12 rounded-[44px] bg-secondary/10 border-border/40 backdrop-blur-3xl relative overflow-hidden group">
+                <Card className="neural-card p-8 md:p-12 relative overflow-hidden group">
                   <div className="absolute top-0 right-0 p-10 opacity-5 pointer-events-none group-hover:scale-110 transition-transform duration-700">
                     <Fingerprint className="w-48 h-48 text-primary" />
                   </div>
                   
                   <div className="relative z-10 space-y-12">
-                    <div className="flex items-center gap-8">
-                       <div className="w-28 h-28 rounded-[36px] bg-primary/20 flex items-center justify-center text-primary shadow-inner border border-primary/20 group-hover:rotate-6 transition-transform">
-                          <span className="text-4xl font-black">{user.firstName?.[0] || 'U'}</span>
+                    <div className="flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
+                       <div className="w-24 h-24 md:w-28 md:h-28 rounded-[28px] md:rounded-[36px] bg-primary/20 flex items-center justify-center text-primary shadow-inner border border-primary/20 group-hover:rotate-6 transition-transform shrink-0">
+                          <span className="text-3xl md:text-4xl font-black">{user.firstName?.[0] || 'U'}</span>
                        </div>
                        <div className="space-y-2">
-                          <h2 className="text-3xl font-black tracking-tighter text-foreground italic">Identity Core.</h2>
+                          <h2 className="text-2xl md:text-3xl font-black tracking-tighter text-foreground italic">Identity Core.</h2>
                           <p className="text-sm font-bold text-muted-foreground italic leading-relaxed opacity-60">Modify your public-facing expert identity across the DEVFOLIO node.</p>
                        </div>
                     </div>
@@ -345,9 +265,9 @@ const Settings = () => {
                       <Button
                         onClick={handleSaveProfile}
                         disabled={loading}
-                        className="h-20 rounded-[28px] px-16 font-black text-xl bg-primary text-primary-foreground shadow-2xl shadow-primary/30 hover:scale-105 active:scale-95 transition-all gap-4 uppercase tracking-widest border-none"
+                        className="h-16 md:h-20 w-full sm:w-auto rounded-[24px] md:rounded-[28px] px-12 md:px-16 font-black text-lg md:text-xl bg-primary text-primary-foreground shadow-2xl shadow-primary/30 hover:scale-105 active:scale-95 transition-all gap-4 uppercase tracking-widest border-none"
                       >
-                        <Save className="w-6 h-6" />
+                        <Save className="w-5 h-5 md:w-6 md:h-6" />
                         {loading ? "Syncing..." : "Sync Core"}
                       </Button>
                     </div>
@@ -357,7 +277,7 @@ const Settings = () => {
 
               {/* Other Tabs simplified but consistent */}
               <TabsContent value="notifications" className="space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
-                <Card className="p-12 rounded-[44px] bg-secondary/10 border-border/40 backdrop-blur-3xl relative overflow-hidden group">
+                <Card className="neural-card p-8 md:p-12 relative overflow-hidden group">
                   <div className="absolute top-0 right-0 p-10 opacity-5 pointer-events-none">
                     <Activity className="w-48 h-48 text-primary" />
                   </div>
@@ -375,20 +295,20 @@ const Settings = () => {
                         { id: "messageNotifications", label: "Direct Packet Pulse", desc: "Instant notification for incoming message fragments.", icon: <MessageSquare className="w-5 h-5" /> },
                         { id: "marketingEmails", label: "Expansion Briefs", desc: "Updates on network expansion and core logic scales.", icon: <Sparkles className="w-5 h-5" /> },
                       ].map((pref) => (
-                        <div key={pref.id} className="flex items-center justify-between p-8 rounded-[32px] bg-background/40 border border-border/20 group/item hover:border-primary/30 transition-all shadow-sm">
-                          <div className="flex items-center gap-6">
-                            <div className="w-14 h-14 rounded-2xl bg-secondary/50 flex items-center justify-center text-primary group-hover/item:scale-110 transition-transform shadow-inner">
+                        <div key={pref.id} className="flex flex-col sm:flex-row items-center justify-between p-6 md:p-8 rounded-[24px] md:rounded-[32px] bg-background/40 border border-border/20 group/item hover:border-primary/30 transition-all shadow-sm gap-6 sm:gap-4">
+                          <div className="flex items-center gap-4 md:gap-6 w-full sm:w-auto">
+                            <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-secondary/50 flex items-center justify-center text-primary group-hover/item:scale-110 transition-transform shadow-inner shrink-0">
                               {pref.icon}
                             </div>
                             <div className="space-y-1">
-                              <h3 className="font-black text-sm text-foreground uppercase tracking-widest">{pref.label}</h3>
-                              <p className="text-xs font-bold text-muted-foreground italic opacity-60">{pref.desc}</p>
+                              <h3 className="font-black text-xs md:text-sm text-foreground uppercase tracking-widest">{pref.label}</h3>
+                              <p className="text-[10px] md:text-xs font-bold text-muted-foreground italic opacity-60">{pref.desc}</p>
                             </div>
                           </div>
                           <Switch
                             checked={(notifications as any)[pref.id]}
                             onCheckedChange={(checked) => handleNotificationChange(pref.id as any, checked)}
-                            className="scale-125 data-[state=checked]:bg-primary"
+                            className="scale-110 md:scale-125 data-[state=checked]:bg-primary"
                           />
                         </div>
                       ))}
@@ -398,7 +318,7 @@ const Settings = () => {
               </TabsContent>
 
               <TabsContent value="privacy" className="space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
-                <Card className="p-12 rounded-[44px] bg-secondary/10 border-border/40 backdrop-blur-3xl relative overflow-hidden group">
+                <Card className="neural-card p-8 md:p-12 relative overflow-hidden group">
                   <div className="absolute top-0 right-0 p-10 opacity-5 pointer-events-none">
                     <ShieldCheck className="w-48 h-48 text-primary" />
                   </div>
@@ -410,14 +330,14 @@ const Settings = () => {
                     </div>
 
                     <div className="space-y-10">
-                      <div className="p-8 rounded-[36px] bg-background/50 border border-border/30 shadow-inner">
+                      <div className="p-6 md:p-8 rounded-[28px] md:rounded-[36px] bg-background/50 border border-border/30 shadow-inner">
                         <Label className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground mb-6 block ml-2 italic">Node Visibility Vector</Label>
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                           {["public", "private", "unlisted"].map((option) => (
                             <Button
                               key={option}
                               variant={privacy.profileVisibility === option ? "default" : "outline"}
-                              className={`h-20 rounded-[22px] font-black text-xs uppercase tracking-[0.2em] transition-all shadow-xl ${
+                              className={`h-16 md:h-20 rounded-[18px] md:rounded-[22px] font-black text-xs uppercase tracking-[0.2em] transition-all shadow-xl ${
                                 privacy.profileVisibility === option 
                                   ? "bg-foreground text-background scale-105" 
                                   : "bg-secondary/30 text-muted-foreground hover:bg-secondary/50 border-border/40"
@@ -436,20 +356,20 @@ const Settings = () => {
                         { id: "showPhone", label: "Signal reveal (Phone)", desc: "Display communication numbers to authorized nodes.", icon: <Phone className="w-5 h-5" /> },
                         { id: "allowMessages", label: "Pulse intake protocol", desc: "Authorize non-expert nodes to initiate message packets.", icon: <MessageSquare className="w-5 h-5" /> },
                       ].map((pref) => (
-                        <div key={pref.id} className="flex items-center justify-between p-8 rounded-[32px] bg-background/40 border border-border/20 group/item hover:border-primary/30 transition-all shadow-sm">
-                          <div className="flex items-center gap-6">
-                            <div className="w-14 h-14 rounded-2xl bg-secondary/50 flex items-center justify-center text-primary group-hover/item:scale-110 transition-transform shadow-inner">
+                        <div key={pref.id} className="flex flex-col sm:flex-row items-center justify-between p-6 md:p-8 rounded-[24px] md:rounded-[32px] bg-background/40 border border-border/20 group/item hover:border-primary/30 transition-all shadow-sm gap-6 sm:gap-4">
+                          <div className="flex items-center gap-4 md:gap-6 w-full sm:w-auto">
+                            <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-secondary/50 flex items-center justify-center text-primary group-hover/item:scale-110 transition-transform shadow-inner shrink-0">
                               {pref.icon}
                             </div>
                             <div className="space-y-1">
-                              <h3 className="font-black text-sm text-foreground uppercase tracking-widest">{pref.label}</h3>
-                              <p className="text-xs font-bold text-muted-foreground italic opacity-60">{pref.desc}</p>
+                              <h3 className="font-black text-xs md:text-sm text-foreground uppercase tracking-widest">{pref.label}</h3>
+                              <p className="text-[10px] md:text-xs font-bold text-muted-foreground italic opacity-60">{pref.desc}</p>
                             </div>
                           </div>
                           <Switch
                             checked={(privacy as any)[pref.id]}
                             onCheckedChange={(checked) => handlePrivacyChange(pref.id as any, checked)}
-                            className="scale-125 data-[state=checked]:bg-primary"
+                            className="scale-110 md:scale-125 data-[state=checked]:bg-primary"
                           />
                         </div>
                       ))}
@@ -459,7 +379,7 @@ const Settings = () => {
               </TabsContent>
 
               <TabsContent value="billing" className="space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
-                <Card className="p-12 rounded-[44px] bg-secondary/10 border-border/40 backdrop-blur-3xl relative overflow-hidden group">
+                <Card className="neural-card p-8 md:p-12 relative overflow-hidden group">
                   <div className="absolute top-0 right-0 p-10 opacity-5 pointer-events-none">
                     <CreditCard className="w-48 h-48 text-primary" />
                   </div>
@@ -471,32 +391,32 @@ const Settings = () => {
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-10">
-                       <Card className="p-10 rounded-[40px] bg-background border-border/40 shadow-2xl group/bill hover:border-primary/20 transition-all">
+                       <Card className="p-8 md:p-10 rounded-[32px] md:rounded-[40px] bg-background border-border/40 shadow-2xl group/bill hover:border-primary/20 transition-all">
                           <div className="space-y-6">
-                            <div className="w-16 h-16 rounded-3xl bg-secondary/50 flex items-center justify-center text-primary group-hover/bill:scale-110 transition-transform shadow-inner">
-                               <CreditCard className="w-8 h-8" />
+                            <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl md:rounded-3xl bg-secondary/50 flex items-center justify-center text-primary group-hover/bill:scale-110 transition-transform shadow-inner">
+                               <CreditCard className="w-6 h-6 md:w-8 md:h-8" />
                             </div>
                             <div className="space-y-2">
-                               <h3 className="text-2xl font-black tracking-tighter uppercase italic">Extraction Node</h3>
-                               <p className="text-xs font-bold text-muted-foreground leading-relaxed italic opacity-60">Default method for service deployment and equity transfers across the centralized exchange.</p>
+                               <h3 className="text-xl md:text-2xl font-black tracking-tighter uppercase italic">Extraction Node</h3>
+                               <p className="text-[10px] md:text-xs font-bold text-muted-foreground leading-relaxed italic opacity-60">Default method for service deployment and equity transfers across the centralized exchange.</p>
                             </div>
-                            <Button variant="outline" className="w-full h-16 rounded-2xl font-black text-xs uppercase tracking-widest border-border/40 hover:bg-secondary">Update Vector</Button>
+                            <Button variant="outline" className="w-full h-14 md:h-16 rounded-2xl font-black text-[10px] md:text-xs uppercase tracking-widest border-border/40 hover:bg-secondary">Update Vector</Button>
                           </div>
                        </Card>
 
-                       <Card className="p-10 rounded-[40px] bg-primary text-primary-foreground shadow-2xl shadow-primary/30 group/bill border-none relative overflow-hidden">
+                       <Card className="p-8 md:p-10 rounded-[32px] md:rounded-[40px] bg-primary text-primary-foreground shadow-2xl shadow-primary/30 group/bill border-none relative overflow-hidden">
                           <div className="absolute bottom-0 right-0 p-8 opacity-10 pointer-events-none group-hover:scale-125 transition-transform duration-1000">
-                             <Zap className="w-40 h-40" />
+                             <Zap className="w-32 h-32 md:w-40 md:h-40" />
                           </div>
                           <div className="relative z-10 space-y-6">
-                            <div className="w-16 h-16 rounded-3xl bg-background/20 flex items-center justify-center text-primary-foreground group-hover/bill:scale-110 transition-transform backdrop-blur-md">
-                               <Zap className="w-8 h-8 fill-primary-foreground" />
+                            <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl md:rounded-3xl bg-background/20 flex items-center justify-center text-primary-foreground group-hover/bill:scale-110 transition-transform backdrop-blur-md">
+                               <Zap className="w-6 h-6 md:w-8 md:h-8 fill-primary-foreground" />
                             </div>
                             <div className="space-y-2">
-                               <h3 className="text-2xl font-black tracking-tighter uppercase italic">Accelerate Tier</h3>
-                               <p className="text-xs font-black opacity-70 leading-relaxed italic uppercase tracking-wider">Maximize commission efficiency with the elite protocol activation.</p>
+                               <h3 className="text-xl md:text-2xl font-black tracking-tighter uppercase italic">Accelerate Tier</h3>
+                               <p className="text-[10px] md:text-xs font-black opacity-70 leading-relaxed italic uppercase tracking-wider">Maximize commission efficiency with the elite protocol activation.</p>
                             </div>
-                            <Button className="w-full h-16 rounded-2xl font-black text-xs uppercase tracking-widest bg-background text-foreground hover:scale-105 transition-all shadow-2xl">Optimize Level</Button>
+                            <Button className="w-full h-14 md:h-16 rounded-2xl font-black text-[10px] md:text-xs uppercase tracking-widest bg-background text-foreground hover:scale-105 transition-all shadow-2xl">Optimize Level</Button>
                           </div>
                        </Card>
                     </div>

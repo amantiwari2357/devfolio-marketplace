@@ -58,6 +58,9 @@ export default {
           section: "hsl(var(--dark-section))",
           foreground: "hsl(var(--dark-section-foreground))",
         },
+        fontFamily: {
+          sans: ["Jost", "sans-serif"],
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

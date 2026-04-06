@@ -100,7 +100,7 @@ const Privacy = () => {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
                   <div className="space-y-3">
                     <h3 className="text-2xl font-black tracking-tighter italic uppercase">Privacy Issue?</h3>
-                    <p className="text-lg font-bold text-muted-foreground/60 italic">Contact our DPO at <a href="mailto:privacy@devfolio.io" className="text-primary hover:underline decoration-primary/20 underline-offset-8">privacy@devfolio.io</a></p>
+                    <p className="text-lg font-bold text-muted-foreground/60 italic">Contact our DPO at <a href="mailto:devfoliomarketplace@gmail.com" className="text-primary hover:underline decoration-primary/20 underline-offset-8">support@devfoliomarketplace.com</a></p>
                   </div>
                   <div className="flex items-center gap-6 p-6 rounded-[28px] bg-background/50 border border-border/20 shadow-inner">
                     <div className="p-4 rounded-2xl bg-secondary/50 text-primary shadow-inner">
