@@ -40,15 +40,15 @@ const faqs = [
 
 const FAQSection = () => {
   return (
-    <section className="py-20 bg-background">
+    <section className="py-24 bg-gradient-to-b from-secondary/30 to-background">
       <div className="container mx-auto px-4 max-w-4xl">
-        <div className="mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Frequently asked questions
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+            Frequently Asked <span className="text-primary">Questions</span>
           </h2>
-          <p className="text-muted-foreground">
+          <p className="text-lg text-muted-foreground font-medium">
             Can't find the answer you are looking for?{" "}
-            <a href="#contact" className="text-primary hover:underline">
+            <a href="#contact" className="text-primary hover:underline font-bold">
               Reach out to us
             </a>
           </p>

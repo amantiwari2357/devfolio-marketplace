@@ -1,59 +1,103 @@
-import { Linkedin, Twitter, Instagram, Star } from "lucide-react";
+import { Linkedin, Twitter, Instagram, Star, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "../../../public/Images/logo.png";
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="bg-dark-section text-dark-foreground py-16">
+    <footer className="bg-background border-t border-border/50 pt-20 pb-10">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-          <div>
-            <div className="flex items-center gap-2 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
+          {/* Brand Column */}
+          <div className="md:col-span-1">
+            <div className="flex items-center gap-2 mb-8 group">
               <a href="/" className="flex items-center gap-2">
-                <img src={logo} alt="Devfolio Logo" className="h-36 md:h-40 top-10 w-auto" />
+                <img src={logo} alt="Devfolio Logo" className="h-40 w-auto group-hover:scale-105 transition-transform duration-300" />
+                <span className="text-2xl font-black tracking-tighter text-foreground group-hover:text-primary transition-colors">
+                  DEVFOLIO<span className="text-primary">.</span>
+                </span>
               </a>
             </div>
             
+            <p className="text-muted-foreground text-sm font-medium leading-relaxed mb-8 pr-4">
+              Building the next generation of digital solutions for individuals and brands worldwide.
+            </p>
+
             <Button 
               variant="outline" 
-              className="mb-6 bg-transparent border-dark-foreground/20 text-dark-foreground hover:bg-dark-foreground/10"
+              className="rounded-xl border-primary/20 bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground font-bold transition-all shadow-sm"
             >
-              <Star className="w-4 h-4 mr-2 fill-yellow-400 text-yellow-400" />
-              Top Profiles
+              <Star className="w-4 h-4 mr-2 fill-current" />
+              Explore Top Profiles
             </Button>
-            
-            <div className="space-y-2 text-sm text-dark-foreground/70">
-              <p>gurgaon sector 39, india</p>
-              <p>©2025 devfolio-marketplace</p>
-            </div>
           </div>
           
+          {/* Quick Links */}
           <div>
+            <h4 className="font-bold text-lg mb-8 tracking-tight">Platform</h4>
             <nav className="space-y-4">
-              <a href="/about" className="block text-dark-foreground hover:text-primary transition-colors">About</a>
-              <a href="/contact" className="block text-dark-foreground hover:text-primary transition-colors">Contact Us</a>
-              <a href="/terms" className="block text-dark-foreground hover:text-primary transition-colors">Terms Of Service</a>
-              <a href="/privacy" className="block text-dark-foreground hover:text-primary transition-colors">Privacy</a>
+              {["Use Cases", "Search", "Listing", "Pricing"].map((item) => (
+                <a 
+                  key={item}
+                  href={`/${item.toLowerCase().replace(" ", "-")}`} 
+                  className="group flex items-center text-muted-foreground hover:text-primary transition-colors font-medium text-sm"
+                >
+                  {item}
+                  <ArrowUpRight className="w-3 h-3 ml-1 opacity-0 group-hover:opacity-100 transition-all -translate-y-0.5" />
+                </a>
+              ))}
+            </nav>
+          </div>
+
+          {/* Company Links */}
+          <div>
+            <h4 className="font-bold text-lg mb-8 tracking-tight">Company</h4>
+            <nav className="space-y-4">
+              {["About", "Blog", "Contact", "Terms", "Privacy"].map((item) => (
+                <a 
+                  key={item}
+                  href={`/${item.toLowerCase()}`} 
+                  className="group flex items-center text-muted-foreground hover:text-primary transition-colors font-medium text-sm"
+                >
+                  {item}
+                  <ArrowUpRight className="w-3 h-3 ml-1 opacity-0 group-hover:opacity-100 transition-all -translate-y-0.5" />
+                </a>
+              ))}
             </nav>
           </div>
           
+          {/* Contact & Socials */}
           <div>
-            <nav className="space-y-4 mb-8">
-              <a href="/pricing" className="block text-dark-foreground hover:text-primary transition-colors">Pricing</a>
-              <a href="/blog" className="block text-dark-foreground hover:text-primary transition-colors">Blog</a>
-            </nav>
-            
-            <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-lg bg-dark-foreground/10 hover:bg-dark-foreground/20 flex items-center justify-center transition-colors">
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-lg bg-dark-foreground/10 hover:bg-dark-foreground/20 flex items-center justify-center transition-colors">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-lg bg-dark-foreground/10 hover:bg-dark-foreground/20 flex items-center justify-center transition-colors">
-                <Instagram className="w-5 h-5" />
-              </a>
+            <h4 className="font-bold text-lg mb-8 tracking-tight">Connect</h4>
+            <div className="space-y-6">
+              <p className="text-muted-foreground text-sm font-medium">
+                Gurgaon Sector 39, India<br/>
+                <span className="text-foreground">hello@devfolio.me</span>
+              </p>
+              
+              <div className="flex gap-4">
+                {[Linkedin, Twitter, Instagram].map((Icon, idx) => (
+                  <a 
+                    key={idx}
+                    href="#" 
+                    className="w-12 h-12 rounded-xl bg-secondary hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all shadow-sm group"
+                  >
+                    <Icon className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                  </a>
+                ))}
+              </div>
             </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-border/50 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
+            © {currentYear} Devfolio Marketplace. All rights reserved.
+          </p>
+          <div className="flex gap-8">
+            <span className="text-[10px] font-black text-primary/40 uppercase tracking-[0.3em]">Built with Passion</span>
           </div>
         </div>
       </div>

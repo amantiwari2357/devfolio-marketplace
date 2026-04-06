@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import HeroSection from "@/components/sections/HeroSection";
@@ -11,6 +12,19 @@ import FAQSection from "@/components/sections/FAQSection";
 import CTASection from "@/components/sections/CTASection";
 
 const Index = () => {
+  useEffect(() => {
+    document.title = "Devfolio Marketplace | Build, Launch, and Scale Your Services";
+    
+    // Set meta description
+    let metaDescription = document.querySelector('meta[name="description"]');
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta');
+      metaDescription.setAttribute('name', 'description');
+      document.head.appendChild(metaDescription);
+    }
+    metaDescription.setAttribute('content', 'Helping individuals and brands build modern, responsive websites and powerful digital solutions — all tailored to their business goals.');
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Header />

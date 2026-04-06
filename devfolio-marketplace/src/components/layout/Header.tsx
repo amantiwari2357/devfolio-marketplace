@@ -87,71 +87,79 @@ const Header = () => {
   }
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-8">
-          <a href="/" className="flex items-center gap-2">
-            <img src={logo} alt="Devfolio Logo" className="h-36 w-auto" />
-            <span className="text-xl font-bold text-foreground hover:text-primary transition-colors"></span>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
+      <div className="container mx-auto px-4 h-20 flex items-center justify-between">
+        <div className="flex items-center gap-12">
+          <a href="/" className="flex items-center gap-2 group">
+            <img src={logo} alt="Devfolio Logo" className="h-40 w-auto group-hover:scale-105 transition-transform duration-300" />
+
           </a>
 
           <nav className="hidden md:flex items-center gap-10">
-            <a href="/use-cases" className="text-sm text-foreground hover:text-primary transition-colors">
-              Use Cases
-            </a>
-            <a href="/search" className="text-sm text-foreground hover:text-primary transition-colors">Search</a>
-            <a href="/listing" className="text-sm text-foreground hover:text-primary transition-colors">Listing</a>
-            <a href="/pricing" className="text-sm text-foreground hover:text-primary transition-colors">Pricing</a>
+            {["Use Cases", "Search", "Listing", "Pricing"].map((item) => (
+              <a
+                key={item}
+                href={`/${item.toLowerCase().replace(" ", "-")}`}
+                className="text-sm font-bold text-muted-foreground hover:text-primary transition-all duration-300 relative group"
+              >
+                {item}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+              </a>
+            ))}
           </nav>
         </div>
 
         {isLoggedIn ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                className="relative rounded-full w-10 h-10 from-primary/10 to-primary-glow/10 hover:from-primary/20 hover:to-primary-glow/20 border border-primary/20 transition-all duration-300"
+              <Button
+                variant="ghost"
+                size="icon"
+                className="relative rounded-full w-10 h-10 from-primary/10 to-primary-glow/10 hover:from-primary/20 hover:to-primary-glow/20 border border-primary/20 transition-all duration-300 shadow-lg shadow-primary/5"
               >
                 <Avatar>
                   <AvatarImage src={user ? getAvatarUrl(user.email) : "https://api.dicebear.com/7.x/avataaars/svg?seed=User"} alt={user?.email || "User"} />
-                  <AvatarFallback>
+                  <AvatarFallback className="bg-primary/10 text-primary font-bold">
                     {user ? getInitials(user.email) : "US"}
                   </AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-64 bg-popover/95 backdrop-blur-md shadow-lg border-border z-[100]">
-              <DropdownMenuLabel className="font-normal">
+            <DropdownMenuContent align="end" className="w-64 bg-popover/95 backdrop-blur-xl shadow-2xl border-border/50 z-[100] rounded-2xl p-2">
+              <DropdownMenuLabel className="font-normal px-4 py-3">
                 <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium leading-none">{user?.username}</p>
-                  <p className="text-xs leading-none text-muted-foreground">{user?.email}</p>
+                  <p className="text-sm font-bold leading-none text-foreground">{user?.username}</p>
+                  <p className="text-xs leading-none text-muted-foreground font-medium">{user?.email}</p>
                 </div>
               </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => navigate('/profile')} className="cursor-pointer">
-                <User className="mr-2 h-4 w-4" />
-                <span>View Profile</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => navigate('/settings')} className="cursor-pointer">
-                <Edit className="mr-2 h-4 w-4" />
-                <span>Edit Profile</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => navigate('/onboarding-status')} className="cursor-pointer">
-                <CheckCircle2 className="mr-2 h-4 w-4" />
-                <span>Onboarding Status</span>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-destructive focus:text-destructive">
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Logout</span>
-              </DropdownMenuItem>
+              <DropdownMenuSeparator className="bg-border/50" />
+              <div className="p-1 space-y-1">
+                <DropdownMenuItem onClick={() => navigate('/profile')} className="cursor-pointer rounded-xl focus:bg-primary/10 focus:text-primary py-2.5 transition-colors font-medium">
+                  <User className="mr-3 h-4 w-4" />
+                  <span>View Profile</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate('/settings')} className="cursor-pointer rounded-xl focus:bg-primary/10 focus:text-primary py-2.5 transition-colors font-medium">
+                  <Edit className="mr-3 h-4 w-4" />
+                  <span>Edit Profile</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate('/onboarding-status')} className="cursor-pointer rounded-xl focus:bg-primary/10 focus:text-primary py-2.5 transition-colors font-medium">
+                  <CheckCircle2 className="mr-3 h-4 w-4" />
+                  <span>Onboarding Status</span>
+                </DropdownMenuItem>
+              </div>
+              <DropdownMenuSeparator className="bg-border/50" />
+              <div className="p-1">
+                <DropdownMenuItem onClick={handleLogout} className="cursor-pointer rounded-xl text-destructive focus:bg-destructive/10 focus:text-destructive py-2.5 transition-colors font-bold">
+                  <LogOut className="mr-3 h-4 w-4" />
+                  <span>Logout</span>
+                </DropdownMenuItem>
+              </div>
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
-           <Button
+          <Button
             onClick={() => navigate("/login")}
-            className="bg-gradient-to-r from-primary to-primary-glow hover:opacity-90 transition-opacity"
+            className="rounded-xl px-8 py-6 font-bold shadow-lg shadow-primary/10 hover:shadow-primary/20 transition-all border border-primary/20 bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground"
           >
             Login
           </Button>
