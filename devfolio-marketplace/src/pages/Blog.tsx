@@ -73,10 +73,10 @@ const Blog = () => {
               <BookOpen className="w-4 h-4 animate-pulse" />
               Intelligence Stream
             </div>
-            <h1 className="text-6xl md:text-8xl font-black mb-8 tracking-tighter text-foreground leading-[0.85] uppercase italic">
+            <h1 className="text-4xl md:text-6xl font-black mb-8 tracking-tighter text-foreground leading-[0.85] uppercase italic">
               Insights & <span className="text-primary NOT-italic">Intelligence.</span>
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-3xl mx-auto opacity-70">
+            <p className="text-lg md:text-xl text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-3xl mx-auto opacity-70">
               Decoding the future of the creator economy, one breakthrough at a time.
             </p>
           </div>
@@ -110,7 +110,7 @@ const Blog = () => {
                   </div>
                   
                   <div className="space-y-6 flex-1">
-                    <h3 className="text-3xl font-black leading-[1] tracking-tighter text-foreground group-hover:text-primary transition-all italic uppercase">
+                    <h3 className="text-2xl font-black leading-[1] tracking-tighter text-foreground group-hover:text-primary transition-all italic uppercase">
                       {post.title}
                     </h3>
                     <p className="text-sm font-bold text-muted-foreground/70 leading-relaxed italic line-clamp-4 opacity-80">
@@ -156,10 +156,10 @@ const Blog = () => {
                     <Rocket className="w-6 h-6" />
                     <span className="text-[10px] font-black uppercase tracking-[0.6em] italic">Intelligence Influx</span>
                   </div>
-                  <h2 className="text-5xl md:text-7xl font-black tracking-tighter italic uppercase leading-[0.85]">
+                  <h2 className="text-3xl md:text-5xl font-black tracking-tighter italic uppercase leading-[0.85]">
                     Subscribe to <span className="text-primary NOT-italic">Intelligence.</span>
                   </h2>
-                  <p className="text-xl md:text-2xl text-background/60 font-bold italic tracking-tight leading-relaxed max-w-3xl mx-auto opacity-80">
+                  <p className="text-lg md:text-xl text-background/60 font-bold italic tracking-tight leading-relaxed max-w-3xl mx-auto opacity-80">
                     The latest breakthroughs, protocol updates, and exclusive success stories delivered directly to your node.
                   </p>
                 </div>
@@ -168,9 +168,9 @@ const Blog = () => {
                   <Input
                     type="email"
                     placeholder="ENTER_NODE_ADDRESS@DEVFOLIO.IO"
-                    className="h-20 rounded-[28px] bg-background/10 border-background/20 text-background placeholder:text-background/30 focus:border-primary/50 transition-all font-black text-xs uppercase tracking-[0.3em] px-10 italic"
+                    className="h-16 rounded-[22px] bg-background/10 border-background/20 text-background placeholder:text-background/30 focus:border-primary/50 transition-all font-black text-[10px] uppercase tracking-[0.3em] px-8 italic"
                   />
-                  <Button className="h-20 rounded-[28px] px-12 font-black text-xl bg-primary text-primary-foreground hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-primary/30 uppercase tracking-[0.2em] border-none italic">
+                  <Button className="h-16 rounded-[22px] px-10 font-black text-lg bg-primary text-primary-foreground hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-primary/30 uppercase tracking-[0.2em] border-none italic">
                     Subscribe
                   </Button>
                 </div>

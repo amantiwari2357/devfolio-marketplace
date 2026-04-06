@@ -53,10 +53,10 @@ const AboutUs = () => {
               <Award className="w-4 h-4 animate-pulse" />
               Establishment Protocol
             </div>
-            <h1 className="text-6xl md:text-8xl font-black mb-8 tracking-tighter text-foreground leading-[0.85] uppercase italic">
+            <h1 className="text-4xl md:text-6xl font-black mb-8 tracking-tighter text-foreground leading-[0.85] uppercase italic">
               Empowering experts to <span className="text-primary NOT-italic">shape the future.</span>
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-3xl mx-auto opacity-70">
+            <p className="text-lg md:text-xl text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-3xl mx-auto opacity-70">
               We're building the infrastructure for the next generation of knowledge sharing and professional services.
             </p>
           </div>
@@ -74,7 +74,7 @@ const AboutUs = () => {
                 </div>
                 <div className="grid lg:grid-cols-2 gap-16 items-start">
                   <div className="space-y-8">
-                    <h3 className="text-5xl font-black tracking-tighter text-foreground leading-none italic uppercase">
+                    <h3 className="text-3xl font-black tracking-tighter text-foreground leading-none italic uppercase">
                       Our <span className="text-primary NOT-italic">Story.</span>
                     </h3>
                     <div className="space-y-8 text-lg font-bold text-muted-foreground/80 leading-relaxed italic tracking-tight">
@@ -110,7 +110,7 @@ const AboutUs = () => {
                   <Fingerprint className="w-5 h-5" />
                   <span className="text-[10px] font-black uppercase tracking-[0.4em] italic">Core Philosophy</span>
                 </div>
-                <h3 className="text-5xl font-black tracking-tighter italic uppercase leading-none">
+                 <h3 className="text-3xl font-black tracking-tighter italic uppercase leading-none">
                   Values that <span className="text-primary NOT-italic">drive us.</span>
                 </h3>
               </div>
@@ -145,7 +145,7 @@ const AboutUs = () => {
                     <Activity className="w-6 h-6" />
                     <span className="text-[10px] font-black uppercase tracking-[0.5em] italic">Universal Telemetry Flux</span>
                   </div>
-                  <h3 className="text-5xl md:text-7xl font-black tracking-tighter italic uppercase leading-[0.85]">
+                  <h3 className="text-4xl md:text-6xl font-black tracking-tighter italic uppercase leading-[0.85]">
                      Numbers that <span className="text-primary NOT-italic">matter.</span>
                   </h3>
                 </div>
@@ -154,7 +154,7 @@ const AboutUs = () => {
                   <div className="space-y-4 text-center group/stat">
                     <div className="relative inline-block">
                        <div className="absolute inset-0 bg-primary/20 blur-[40px] opacity-0 group-hover/stat:opacity-100 transition-opacity" />
-                       <p className="text-7xl md:text-8xl font-black tracking-tighter text-primary relative z-10 italic">10K+</p>
+                       <p className="text-5xl md:text-6xl font-black tracking-tighter text-primary relative z-10 italic">10K+</p>
                     </div>
                     <p className="text-background/40 font-black uppercase tracking-[0.4em] text-[10px] italic">Verified Creators</p>
                     <div className="w-16 h-1 bg-primary/20 mx-auto rounded-full group-hover/stat:w-24 transition-all" />
@@ -162,7 +162,7 @@ const AboutUs = () => {
                   <div className="space-y-4 text-center group/stat">
                     <div className="relative inline-block">
                        <div className="absolute inset-0 bg-primary/20 blur-[40px] opacity-0 group-hover/stat:opacity-100 transition-opacity" />
-                       <p className="text-7xl md:text-8xl font-black tracking-tighter text-primary relative z-10 italic">500K+</p>
+                       <p className="text-5xl md:text-6xl font-black tracking-tighter text-primary relative z-10 italic">500K+</p>
                     </div>
                     <p className="text-background/40 font-black uppercase tracking-[0.4em] text-[10px] italic">Active Sessions</p>
                     <div className="w-16 h-1 bg-primary/20 mx-auto rounded-full group-hover/stat:w-24 transition-all" />
@@ -170,7 +170,7 @@ const AboutUs = () => {
                   <div className="space-y-4 text-center group/stat">
                     <div className="relative inline-block">
                        <div className="absolute inset-0 bg-primary/20 blur-[40px] opacity-0 group-hover/stat:opacity-100 transition-opacity" />
-                       <p className="text-7xl md:text-8xl font-black tracking-tighter text-primary relative z-10 italic">150+</p>
+                       <p className="text-5xl md:text-6xl font-black tracking-tighter text-primary relative z-10 italic">150+</p>
                     </div>
                     <p className="text-background/40 font-black uppercase tracking-[0.4em] text-[10px] italic">Nations Reached</p>
                     <div className="w-16 h-1 bg-primary/20 mx-auto rounded-full group-hover/stat:w-24 transition-all" />
@@ -192,10 +192,10 @@ const AboutUs = () => {
                   <Globe className="w-10 h-10" />
                 </div>
               </div>
-              <h2 className="text-5xl md:text-7xl font-black tracking-tighter italic uppercase leading-[0.85]">
+              <h2 className="text-4xl md:text-6xl font-black tracking-tighter italic uppercase leading-[0.85]">
                 Become part of the <span className="text-primary italic">global elite.</span>
               </h2>
-              <p className="text-xl md:text-2xl text-muted-foreground font-bold italic tracking-tight max-w-2xl mx-auto leading-relaxed opacity-70">
+              <p className="text-lg md:text-xl text-muted-foreground font-bold italic tracking-tight max-w-2xl mx-auto leading-relaxed opacity-70">
                 Join a community of forward-thinking experts building their legacy on our digital infrastructure.
               </p>
               <div className="pt-10">

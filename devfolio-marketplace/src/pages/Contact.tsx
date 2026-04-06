@@ -28,10 +28,10 @@ const Contact = () => {
               <Activity className="w-4 h-4 animate-pulse" />
               Direct Communication Stream
             </div>
-            <h1 className="text-6xl md:text-8xl font-black mb-8 tracking-tighter text-foreground leading-[0.85] uppercase italic">
+            <h1 className="text-4xl md:text-6xl font-black mb-8 tracking-tighter text-foreground leading-[0.85] uppercase italic">
               Establish <span className="text-primary NOT-italic">Connection.</span>
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-3xl mx-auto opacity-70">
+            <p className="text-lg md:text-xl text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-3xl mx-auto opacity-70">
               Facing a hurdle? Or just want to say hi? Our specialized success team is ready to assist you in real-time.
             </p>
           </div>
@@ -76,7 +76,7 @@ const Contact = () => {
               <div className="relative z-10 grid lg:grid-cols-12 gap-20">
                 <div className="lg:col-span-5 space-y-10">
                   <div className="space-y-4">
-                    <h2 className="text-5xl font-black tracking-tighter text-foreground leading-[0.9] italic uppercase">
+                    <h2 className="text-3xl font-black tracking-tighter text-foreground leading-[0.9] italic uppercase">
                       Send us a <span className="text-primary NOT-italic">message.</span>
                     </h2>
                     <p className="text-lg font-bold text-muted-foreground/70 italic leading-relaxed tracking-tight max-w-xs">
@@ -147,9 +147,9 @@ const Contact = () => {
                   </div>
 
                   <div className="pt-4">
-                    <Button type="submit" className="w-full h-20 rounded-[32px] font-black text-2xl bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl shadow-primary/30 gap-6 uppercase tracking-[0.2em] border-none italic">
+                    <Button type="submit" className="w-full h-16 rounded-[24px] font-black text-xl bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl shadow-primary/30 gap-6 uppercase tracking-[0.2em] border-none italic">
                       Dispatch Message
-                      <ArrowRight className="w-8 h-8 stroke-[4px]" />
+                      <ArrowRight className="w-6 h-6 stroke-[4px]" />
                     </Button>
                   </div>
                 </form>

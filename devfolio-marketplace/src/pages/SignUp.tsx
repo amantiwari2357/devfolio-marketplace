@@ -92,7 +92,11 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen grid lg:grid-cols-2 bg-background selection:bg-primary selection:text-primary-foreground">
+    <div className="min-h-screen flex flex-col bg-background selection:bg-primary selection:text-primary-foreground overflow-hidden">
+      <Header />
+      
+      <main className="flex-1 mt-20 relative">
+        <div className="grid lg:grid-cols-2 min-h-[calc(100vh-80px)]">
       <SEO
         title="Join Devfolio"
         description="Create your Devfolio Marketplace account and start building your future today."
@@ -114,10 +118,10 @@ const SignUp = () => {
                 DEVFOLIO<span className="text-primary">.</span>
               </span>
             </Link>
-            <h1 className="text-4xl font-black tracking-tight mb-3 text-foreground">
+            <h1 className="text-3xl font-black tracking-tight mb-3 text-foreground">
               Create your account<span className="text-primary">.</span>
             </h1>
-            <p className="text-muted-foreground font-medium">Join 10,000+ creators and developers building the future.</p>
+            <p className="text-xs font-bold text-muted-foreground/60 italic uppercase tracking-widest">Join 10,000+ creators and developers building the future.</p>
           </div>
 
           <div className="space-y-4 mb-8">
@@ -216,7 +220,7 @@ const SignUp = () => {
 
             <Button
               type="submit"
-              className="w-full rounded-xl py-7 font-black text-lg shadow-xl shadow-primary/10 hover:shadow-primary/25 transition-all bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98]"
+              className="w-full rounded-xl py-6 font-black text-base shadow-xl shadow-primary/10 hover:shadow-primary/25 transition-all bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] border-none italic"
               disabled={isLoading}
             >
               {isLoading ? "Creating Account..." : "Create Free Account"}
@@ -248,7 +252,7 @@ const SignUp = () => {
                 <Star key={i} className="w-5 h-5 fill-primary text-primary" />
               ))}
             </div>
-            <h2 className="text-3xl font-black tracking-tight text-foreground">
+            <h2 className="text-2xl font-black tracking-tight text-foreground italic uppercase">
               Trusted by experts across <span className="text-primary underline decoration-primary/30 underline-offset-8">industry domains</span>.
             </h2>
           </div>
@@ -275,6 +279,9 @@ const SignUp = () => {
           </div>
         </div>
       </div>
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 };

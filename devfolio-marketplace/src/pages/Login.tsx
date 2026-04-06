@@ -9,6 +9,8 @@ import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
 import SEO from "@/components/layout/SEO";
 import logo from "../../public/Images/logo.png";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -48,10 +50,13 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-8 bg-background selection:bg-primary selection:text-primary-foreground relative overflow-hidden">
-      {/* Background Mesh Flux */}
-      <div className="absolute top-0 right-0 -z-10 w-2/3 h-2/3 bg-primary/5 opacity-40 blur-[180px] rounded-full animate-pulse" />
-      <div className="absolute bottom-0 left-0 -z-10 w-1/2 h-1/2 bg-primary/2 opacity-30 blur-[150px] rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+    <div className="min-h-screen flex flex-col bg-background selection:bg-primary selection:text-primary-foreground relative overflow-hidden">
+      <Header />
+      
+      <main className="flex-1 flex items-center justify-center p-8 pt-32 pb-20 relative">
+        {/* Background Mesh Flux */}
+        <div className="absolute top-0 right-0 -z-10 w-2/3 h-2/3 bg-primary/5 opacity-40 blur-[180px] rounded-full animate-pulse" />
+        <div className="absolute bottom-0 left-0 -z-10 w-1/2 h-1/2 bg-primary/2 opacity-30 blur-[150px] rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
 
       <SEO
         title="Neural Access | Portal"
@@ -84,10 +89,10 @@ const Login = () => {
                    <Fingerprint className="w-4 h-4" />
                    <span className="text-[10px] font-black uppercase tracking-[0.5em] italic">Biometric Ready</span>
                 </div>
-                <h1 className="text-5xl font-black tracking-tighter text-foreground italic uppercase leading-none">
+                <h1 className="text-3xl md:text-4xl font-black tracking-tighter text-foreground italic uppercase leading-none">
                   Welcome <span className="text-primary NOT-italic">Back.</span>
                 </h1>
-                <p className="text-sm font-bold text-muted-foreground/50 italic uppercase tracking-[0.2em] max-w-[280px] mx-auto opacity-70">Neural access initialization required for node entry.</p>
+                <p className="text-[10px] font-bold text-muted-foreground/50 italic uppercase tracking-[0.2em] max-w-[280px] mx-auto opacity-70">Neural access initialization required for node entry.</p>
               </div>
             </div>
 
@@ -200,7 +205,7 @@ const Login = () => {
               <div className="pt-4">
                 <Button
                   type="submit"
-                  className="w-full h-20 rounded-[32px] font-black text-2xl bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl shadow-primary/30 uppercase tracking-[0.2em] border-none italic group"
+                  className="w-full h-16 rounded-[24px] font-black text-xl bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl shadow-primary/30 uppercase tracking-[0.2em] border-none italic group"
                   disabled={isLoading}
                 >
                   {isLoading ? (
@@ -211,7 +216,7 @@ const Login = () => {
                   ) : (
                     <div className="flex items-center gap-6">
                        Initialize Access
-                       <ArrowRight className="w-8 h-8 stroke-[4px] group-hover:translate-x-2 transition-transform" />
+                       <ArrowRight className="w-6 h-6 stroke-[4px] group-hover:translate-x-2 transition-transform" />
                     </div>
                   )}
                 </Button>
@@ -232,7 +237,9 @@ const Login = () => {
             </form>
           </div>
         </Card>
-      </div>
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 };

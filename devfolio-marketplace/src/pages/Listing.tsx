@@ -285,29 +285,29 @@ const Listing = () => {
                <span className="text-[10px] font-black uppercase tracking-[0.5em] italic">Developer Architecture Engine Alpha</span>
             </div>
             
-            <h1 className="text-7xl md:text-9xl font-black tracking-tighter mb-10 text-foreground leading-[0.8] animate-slide-up uppercase italic">
+            <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-10 text-foreground leading-[0.8] animate-slide-up uppercase italic">
               Engineered <br /><span className="text-primary NOT-italic">Showcases.</span>
             </h1>
-            <p className="text-xl md:text-3xl font-bold text-muted-foreground/60 mb-16 max-w-3xl mx-auto italic leading-relaxed animate-slide-up delay-100 tracking-tight">
+            <p className="text-lg md:text-xl font-bold text-muted-foreground/60 mb-16 max-w-3xl mx-auto italic leading-relaxed animate-slide-up delay-100 tracking-tight">
               The high-performance platform for architects <span className="text-foreground">to deploy elite developer portfolios</span> with absolute technical precision.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-8 justify-center animate-slide-up delay-200">
               <Button 
                 size="lg" 
-                className="h-24 px-16 rounded-[32px] bg-primary text-primary-foreground text-2xl font-black uppercase tracking-[0.2em] shadow-[0_30px_60px_-15px_rgba(var(--primary),0.4)] hover:scale-110 active:scale-95 transition-all italic border-none group"
+                className="h-20 px-12 rounded-[28px] bg-primary text-primary-foreground text-xl font-black uppercase tracking-[0.2em] shadow-[0_30px_60px_-15px_rgba(var(--primary),0.4)] hover:scale-110 active:scale-95 transition-all italic border-none group"
                 onClick={() => setIsEnquiryOpen(true)}
               >
                 Start Initialization
-                <ArrowRight className="w-8 h-8 ml-4 stroke-[4px] group-hover:translate-x-2 transition-transform" />
+                <ArrowRight className="w-6 h-6 ml-4 stroke-[4px] group-hover:translate-x-2 transition-transform" />
               </Button>
               <Button 
                 size="lg" 
                 variant="outline"
-                className="h-24 px-16 rounded-[32px] border-border/40 bg-secondary/10 text-2xl font-black uppercase tracking-[0.2em] hover:bg-secondary/20 transition-all gap-4 italic border-none shadow-xl"
+                className="h-20 px-12 rounded-[28px] border-border/40 bg-secondary/10 text-xl font-black uppercase tracking-[0.2em] hover:bg-secondary/20 transition-all gap-4 italic border-none shadow-xl"
                 onClick={() => setIsTemplatesOpen(true)}
               >
-                <Layers className="w-8 h-8 text-primary" />
+                <Layers className="w-6 h-6 text-primary" />
                 View Modules
               </Button>
             </div>
@@ -320,8 +320,8 @@ const Listing = () => {
                    <Activity className="w-5 h-5 animate-pulse" />
                    System Capabilities
                 </div>
-                <h2 className="text-6xl font-black tracking-tighter mb-8 text-foreground leading-[0.85] italic uppercase">Elite Platform <span className="text-primary NOT-italic">Capabilities.</span></h2>
-                <p className="text-xl font-bold text-muted-foreground/60 italic leading-relaxed tracking-tight max-w-xl">
+                <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-8 text-foreground leading-[0.85] italic uppercase">Elite Platform <span className="text-primary NOT-italic">Capabilities.</span></h2>
+                <p className="text-lg font-bold text-muted-foreground/60 italic leading-relaxed tracking-tight max-w-xl">
                   Engineered specifically for technical architects to showcase high-fidelity logic modules in a premium environment curated for impact.
                 </p>
               </div>
@@ -387,7 +387,7 @@ const Listing = () => {
           <div className="mb-60 space-y-24">
             <div className="flex flex-col items-center justify-center text-center space-y-6">
                <div className="w-2 h-10 bg-primary rounded-full animate-pulse" />
-               <h2 className="text-6xl md:text-8xl font-black text-foreground tracking-tighter italic uppercase leading-[0.85]">
+               <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter italic uppercase leading-[0.85]">
                  Deployment <span className="text-primary NOT-italic">Trajectory.</span>
                </h2>
             </div>
@@ -421,10 +421,10 @@ const Listing = () => {
                  <Rocket className="w-8 h-8 fill-primary" />
                  <span className="text-[10px] font-black uppercase tracking-[0.6em] italic">Final Authorization Protocol</span>
               </div>
-              <h2 className="text-6xl md:text-8xl font-black text-foreground tracking-tighter leading-[0.85] italic uppercase">
+              <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter leading-[0.85] italic uppercase">
                 Authorize Your <br /><span className="text-primary NOT-italic block">Showcase Initialization.</span>
               </h2>
-              <p className="text-xl md:text-3xl font-bold text-muted-foreground/60 italic leading-relaxed max-w-3xl mx-auto tracking-tight">
+              <p className="text-lg md:text-xl font-bold text-muted-foreground/60 italic leading-relaxed max-w-3xl mx-auto tracking-tight">
                 Join a specialized network of senior technical architects deploying sovereign developer identities on the global creator protocol.
               </p>
               
@@ -432,11 +432,11 @@ const Listing = () => {
                 <Button 
                    onClick={() => setIsEnquiryOpen(true)}
                    size="lg" 
-                   className="h-24 px-20 rounded-[32px] bg-foreground text-background text-2xl font-black uppercase tracking-[0.2em] hover:scale-110 active:scale-95 transition-all shadow-2xl italic border-none"
+                   className="h-20 px-16 rounded-[28px] bg-foreground text-background text-xl font-black uppercase tracking-[0.2em] hover:scale-110 active:scale-95 transition-all shadow-2xl italic border-none"
                 >
                   Authorize Node
                 </Button>
-                <Button size="lg" variant="outline" className="h-24 px-20 rounded-[32px] border-border/40 bg-secondary/10 text-2xl font-black uppercase tracking-[0.2em] hover:bg-secondary/20 transition-all italic border-none shadow-xl" asChild>
+                <Button size="lg" variant="outline" className="h-20 px-16 rounded-[28px] border-border/40 bg-secondary/10 text-xl font-black uppercase tracking-[0.2em] hover:bg-secondary/20 transition-all italic border-none shadow-xl" asChild>
                   <Link to="/explore">
                     Discover Network
                   </Link>

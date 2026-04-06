@@ -148,10 +148,10 @@ const CreateCourse = () => {
                 <Sparkles className="w-4 h-4 animate-pulse" />
                 <span className="text-[10px] font-black uppercase tracking-[0.6em] italic">Asset Initialization Vector</span>
               </div>
-              <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-foreground leading-[0.8] italic uppercase">
+              <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-foreground leading-[0.8] italic uppercase">
                 Add Your <br /><span className="text-primary NOT-italic block md:inline">Expertise.</span>
               </h1>
-              <p className="text-lg md:text-xl font-bold text-muted-foreground/60 italic leading-relaxed tracking-tight max-w-2xl">
+              <p className="text-base md:text-lg font-bold text-muted-foreground/60 italic leading-relaxed tracking-tight max-w-2xl">
                 Showcase your digital solutions — websites, apps, and branding — all in one centralized directory node for global discovery.
               </p>
             </header>
@@ -163,8 +163,8 @@ const CreateCourse = () => {
                   <Zap className="w-56 h-56 text-primary" />
                 </div>
                 
-                <h2 className="text-3xl font-black tracking-tighter text-foreground mb-12 flex items-center gap-4 italic uppercase">
-                  <Activity className="w-8 h-8 text-primary" />
+                <h2 className="text-2xl font-black tracking-tighter text-foreground mb-12 flex items-center gap-4 italic uppercase">
+                  <Activity className="w-6 h-6 text-primary" />
                   Primary Configuration
                 </h2>
 
@@ -239,8 +239,8 @@ const CreateCourse = () => {
                 
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-12 gap-8 z-10 relative">
                   <div className="space-y-1">
-                    <h2 className="text-3xl font-black tracking-tighter text-foreground flex items-center gap-4 italic uppercase">
-                      <Code className="w-8 h-8 text-primary" />
+                    <h2 className="text-2xl font-black tracking-tighter text-foreground flex items-center gap-4 italic uppercase">
+                      <Code className="w-6 h-6 text-primary" />
                       Module Attributes
                     </h2>
                     <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground ml-12 opacity-50 italic">Define discrete system values</p>
@@ -301,7 +301,7 @@ const CreateCourse = () => {
                       <Zap className="w-5 h-5 fill-primary" />
                       <span className="text-[10px] font-black uppercase tracking-[0.6em] italic">Incentive Stream</span>
                    </div>
-                   <h2 className="text-5xl font-black tracking-tighter italic uppercase leading-none">Elite Integration <span className="text-primary NOT-italic block md:inline">Incentives.</span></h2>
+                   <h2 className="text-3xl font-black tracking-tighter italic uppercase leading-none">Elite Integration <span className="text-primary NOT-italic block md:inline">Incentives.</span></h2>
                 </div>
                 
                 <div className="grid sm:grid-cols-2 gap-10 relative z-10">
@@ -323,11 +323,11 @@ const CreateCourse = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-8 pt-12 border-t border-border/40">
-              <Button size="lg" className="h-24 flex-1 rounded-[32px] bg-primary text-primary-foreground text-2xl font-black uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 hover:scale-[1.03] active:scale-95 transition-all gap-4 border-none italic group">
+              <Button size="lg" className="h-20 flex-1 rounded-[28px] bg-primary text-primary-foreground text-xl font-black uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 hover:scale-[1.03] active:scale-95 transition-all gap-4 border-none italic group">
                 Deploy Configuration
-                <ChevronRight className="w-8 h-8 stroke-[4px] group-hover:translate-x-2 transition-transform" />
+                <ChevronRight className="w-6 h-6 stroke-[4px] group-hover:translate-x-2 transition-transform" />
               </Button>
-              <Button size="lg" variant="outline" className="h-24 flex-1 rounded-[32px] border-border/40 bg-secondary/10 text-2xl font-black uppercase tracking-[0.2em] hover:bg-secondary/20 transition-all italic border-none shadow-xl">
+              <Button size="lg" variant="outline" className="h-20 flex-1 rounded-[28px] border-border/40 bg-secondary/10 text-xl font-black uppercase tracking-[0.2em] hover:bg-secondary/20 transition-all italic border-none shadow-xl">
                 Store as Draft Node
               </Button>
             </div>

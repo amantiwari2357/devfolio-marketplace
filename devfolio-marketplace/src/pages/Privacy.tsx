@@ -24,10 +24,10 @@ const Privacy = () => {
               <Shield className="w-4 h-4 animate-pulse" />
               Data Sovereignty Protocol
             </div>
-            <h1 className="text-6xl md:text-8xl font-black mb-8 tracking-tighter text-foreground leading-[0.85] uppercase italic">
+            <h1 className="text-4xl md:text-6xl font-black mb-8 tracking-tighter text-foreground leading-[0.85] uppercase italic">
               Privacy <span className="text-primary NOT-italic">Protocol.</span>
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-3xl mx-auto opacity-70">
+            <p className="text-lg md:text-xl text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-3xl mx-auto opacity-70">
               Last updated: <span className="text-foreground font-black NOT-italic">January 15, 2025</span>
             </p>
           </div>
@@ -39,8 +39,8 @@ const Privacy = () => {
 
             <div className="relative z-10 space-y-16 text-foreground">
               <section className="space-y-8">
-                <h2 className="text-3xl font-black tracking-tighter flex items-center gap-4 italic uppercase">
-                  <span className="text-primary NOT-italic text-4xl">01.</span> Information Acquisition
+                <h2 className="text-2xl font-black tracking-tighter flex items-center gap-4 italic uppercase">
+                  <span className="text-primary NOT-italic text-3xl">01.</span> Information Acquisition
                 </h2>
                 <p className="text-lg font-bold text-muted-foreground/70 leading-relaxed italic tracking-tight">
                   We process data necessary to maintain a high-integrity ecosystem. This includes:
@@ -61,8 +61,8 @@ const Privacy = () => {
               </section>
 
               <section className="space-y-6">
-                <h2 className="text-3xl font-black tracking-tighter flex items-center gap-4 italic uppercase">
-                  <span className="text-primary NOT-italic text-4xl">02.</span> Intelligence Utilization
+                <h2 className="text-2xl font-black tracking-tighter flex items-center gap-4 italic uppercase">
+                  <span className="text-primary NOT-italic text-3xl">02.</span> Intelligence Utilization
                 </h2>
                 <div className="p-10 rounded-[32px] bg-primary/5 border border-primary/10 shadow-inner">
                   <p className="text-lg font-bold text-muted-foreground/70 leading-relaxed italic tracking-tight">
@@ -72,8 +72,8 @@ const Privacy = () => {
               </section>
 
               <section className="space-y-6">
-                <h2 className="text-3xl font-black tracking-tighter flex items-center gap-4 italic uppercase">
-                  <span className="text-primary NOT-italic text-4xl">03.</span> Security Shield
+                <h2 className="text-2xl font-black tracking-tighter flex items-center gap-4 italic uppercase">
+                  <span className="text-primary NOT-italic text-3xl">03.</span> Security Shield
                 </h2>
                 <p className="text-lg font-bold text-muted-foreground/70 leading-relaxed italic tracking-tight">
                   Our architecture implements industry-leading technical measures, including end-to-end encryption for priority DMs and isolated database shards to prevent unauthorized information leakage.
@@ -81,8 +81,8 @@ const Privacy = () => {
               </section>
 
               <section className="space-y-6">
-                <h2 className="text-3xl font-black tracking-tighter flex items-center gap-4 italic uppercase">
-                  <span className="text-primary NOT-italic text-4xl">04.</span> Data Sovereignty Rights
+                <h2 className="text-2xl font-black tracking-tighter flex items-center gap-4 italic uppercase">
+                  <span className="text-primary NOT-italic text-3xl">04.</span> Data Sovereignty Rights
                 </h2>
                 <p className="text-lg font-bold text-muted-foreground/70 leading-relaxed italic tracking-tight mb-6">
                   You maintain absolute control over your node's information, including:

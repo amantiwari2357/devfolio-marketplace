@@ -133,7 +133,7 @@ const Dashboard = () => {
                   <Activity className="w-4 h-4 animate-pulse" />
                   <span className="text-[10px] font-black uppercase tracking-[0.6em] italic">Active Telemetry Node</span>
                 </div>
-                <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-foreground leading-[0.8] italic uppercase">
+                <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-foreground leading-[0.8] italic uppercase">
                   Systems Online, <span className="text-primary NOT-italic block md:inline">{user?.firstName || 'OPERATOR'}.</span>
                 </h1>
                 <p className="text-lg font-bold text-muted-foreground/60 italic tracking-tight uppercase tracking-[0.2em]">Operational status: Optimal. Signal strength maximum.</p>
@@ -161,7 +161,7 @@ const Dashboard = () => {
                          <Zap className="w-4 h-4 fill-primary" />
                          <span className="text-[10px] font-black uppercase tracking-[0.4em] italic">Optimization Module</span>
                       </div>
-                      <h2 className="text-4xl font-black tracking-tighter text-foreground italic uppercase">Optimize Presence.</h2>
+                      <h2 className="text-2xl font-black tracking-tighter text-foreground italic uppercase">Optimize Presence.</h2>
                       <p className="text-lg font-bold italic text-muted-foreground/60 leading-relaxed tracking-tight">Complete your architect profile to maximize node conversion and platform discoverability.</p>
                    </div>
                   <div className="space-y-5">
@@ -194,7 +194,7 @@ const Dashboard = () => {
                          <Layers className="w-4 h-4 fill-primary" />
                          <span className="text-[10px] font-black uppercase tracking-[0.4em] italic">Network Intelligence</span>
                       </div>
-                      <h2 className="text-4xl font-black tracking-tighter text-foreground italic uppercase">Global Network.</h2>
+                      <h2 className="text-2xl font-black tracking-tighter text-foreground italic uppercase">Global Network.</h2>
                       <p className="text-lg font-bold italic text-muted-foreground/60 leading-relaxed tracking-tight">Observe how elite architect nodes scale their knowledge systems across the marketplace.</p>
                    </div>
                   <div className="flex items-center justify-between">
@@ -232,13 +232,13 @@ const Dashboard = () => {
                     <Zap className="w-4 h-4 fill-primary" />
                     Seasonal Protocol Influx
                   </div>
-                  <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.8] italic uppercase">
+                  <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-[0.8] italic uppercase">
                     LAUNCH YOUR <span className="text-primary NOT-italic group-hover:rotate-3 transition-transform block lg:inline-block">COURSE.</span>
                   </h2>
-                  <p className="text-2xl md:text-3xl text-background/60 font-bold italic max-w-xl leading-relaxed tracking-tight">Scale to ₹100K+ this epoch with <span className="text-primary font-black underline underline-offset-[12px] decoration-primary/30">Zero System Commissions.</span></p>
+                  <p className="text-lg md:text-xl text-background/60 font-bold italic max-w-xl leading-relaxed tracking-tight">Scale to ₹100K+ this epoch with <span className="text-primary font-black underline underline-offset-[12px] decoration-primary/30">Zero System Commissions.</span></p>
                 </div>
                 <div className="lg:col-span-2 flex flex-col xl:flex-row gap-8 items-center justify-center lg:justify-end">
-                  <Button className="h-24 px-16 rounded-[32px] font-black text-2xl bg-primary text-primary-foreground shadow-2xl shadow-primary/50 hover:scale-110 active:scale-95 transition-all uppercase tracking-[0.2em] border-none italic group/btn">
+                  <Button className="h-20 px-12 rounded-[28px] font-black text-xl bg-primary text-primary-foreground shadow-2xl shadow-primary/50 hover:scale-110 active:scale-95 transition-all uppercase tracking-[0.2em] border-none italic group/btn">
                     Start Launch
                     <ArrowRight className="w-8 h-8 stroke-[4px] ml-4 group-hover/btn:translate-x-2 transition-transform" />
                   </Button>
@@ -311,8 +311,8 @@ const Dashboard = () => {
                   <Activity className="w-14 h-14" />
                 </div>
                 <div className="space-y-6 max-w-lg">
-                   <h3 className="text-5xl font-black tracking-tighter text-foreground italic uppercase leading-[0.9]">Telemetry pending deployment.</h3>
-                   <p className="text-xl font-bold italic text-muted-foreground/60 leading-relaxed tracking-tight">Detailed telemetry nodes will begin populating across your operational dashboard once your first expert session protocol is established.</p>
+                   <h3 className="text-3xl font-black tracking-tighter text-foreground italic uppercase leading-[0.9]">Telemetry pending deployment.</h3>
+                   <p className="text-lg font-bold italic text-muted-foreground/60 leading-relaxed tracking-tight">Detailed telemetry nodes will begin populating across your operational dashboard once your first expert session protocol is established.</p>
                 </div>
                 <Button variant="outline" className="h-20 px-14 rounded-[28px] border-border/40 font-black text-xs uppercase tracking-[0.4em] hover:bg-secondary/20 transition-all shadow-2xl italic border-none bg-secondary/10">
                    Synchronize All Nodes

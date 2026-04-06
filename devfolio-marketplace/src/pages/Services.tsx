@@ -193,7 +193,7 @@ const Services = () => {
                   <BookOpen className="w-4 h-4" />
                   <span className="text-[10px] font-black uppercase tracking-[0.4em] italic">Active Protocol Inventory</span>
                 </div>
-                <h1 className="text-6xl font-black tracking-tighter text-foreground leading-[0.9] italic">
+                <h1 className="text-4xl md:text-5xl font-black tracking-tighter text-foreground leading-[0.9] italic">
                   Protocol <span className="text-primary NOT-italic">Inventory.</span>
                 </h1>
               </div>
@@ -212,7 +212,7 @@ const Services = () => {
                     placeholder="Scan available nodes..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="h-20 pl-16 rounded-[28px] bg-secondary/10 border-border/40 backdrop-blur-3xl focus:border-primary/50 font-black shadow-inner italic tracking-widest transition-all"
+                    className="h-16 pl-14 rounded-[22px] bg-secondary/10 border-border/40 backdrop-blur-3xl focus:border-primary/50 font-black shadow-inner italic tracking-widest transition-all text-xs"
                   />
                 </div>
                 <div className="flex gap-4 overflow-x-auto pb-4 custom-scrollbar lg:max-w-2xl">
@@ -220,13 +220,13 @@ const Services = () => {
                     <Button
                       key={cat.id}
                       onClick={() => setSelectedCategory(cat.id)}
-                      className={`h-20 px-8 rounded-[24px] font-black text-[10px] uppercase tracking-[0.3em] gap-3 transition-all shrink-0 shadow-2xl relative overflow-hidden group ${
+                      className={`h-14 px-6 rounded-[18px] font-black text-[10px] uppercase tracking-[0.3em] gap-3 transition-all shrink-0 shadow-xl relative overflow-hidden group ${
                         selectedCategory === cat.id 
                           ? "bg-foreground text-background scale-105 border-none" 
                           : "bg-secondary/10 text-muted-foreground hover:bg-secondary/20 border border-border/40 backdrop-blur-md"
                       }`}
                     >
-                      <div className={`p-2 rounded-lg ${selectedCategory === cat.id ? "bg-primary text-primary-foreground" : "bg-background/20"} transition-colors`}>
+                      <div className={`p-1.5 rounded-lg ${selectedCategory === cat.id ? "bg-primary text-primary-foreground" : "bg-background/20"} transition-colors`}>
                         {cat.icon}
                       </div>
                       <span className="italic">{cat.label}</span>
