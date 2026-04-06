@@ -10,6 +10,7 @@ import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import FAQSection from "@/components/sections/FAQSection";
 import CTASection from "@/components/sections/CTASection";
 import SEO from "@/components/layout/SEO";
+import { LiveProofToast } from "@/components/ui/LiveProofToast";
 
 const Index = () => {
   return (
@@ -34,6 +35,7 @@ const Index = () => {
         <CTASection />
       </main>
       <Footer />
+      <LiveProofToast />
     </div>
   );
 };

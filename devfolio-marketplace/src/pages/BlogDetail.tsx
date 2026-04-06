@@ -79,11 +79,35 @@ const BlogDetail = () => {
   const heroImg = heroImages[post.id % heroImages.length];
   const midImg = midImages[(post.id + 1) % midImages.length];
 
+  // Dynamic JSON-LD Schema Generation for Google Rich Snippets
+  const schemaMarkup = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": post.title,
+    "description": post.excerpt,
+    "image": [heroImg],
+    "datePublished": "2026-04-06T08:00:00+00:00",
+    "author": [{
+      "@type": "Organization",
+      "name": "Devfolio Protocol Team",
+      "url": "https://devfolio-marketplace.com/"
+    }],
+    "publisher": {
+      "@type": "Organization",
+      "name": "Devfolio Marketplace",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://devfolio-marketplace.com/logo.png"
+      }
+    }
+  });
+
   return (
     <div className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground">
       <SEO 
         title={`${post.title} | Intelligence`} 
         description={post.excerpt} 
+        schema={schemaMarkup}
       />
       <Header />
       
@@ -180,27 +204,25 @@ const BlogDetail = () => {
                   </nav>
 
                   {/* Advertisement Card - RESPONSIVE DYNAMIC */}
-                  <div className={`my-12 md:my-16 rounded-[24px] md:rounded-[36px] ${currentAd.bg} border border-border/40 md:border-2 md:border-primary/20 p-6 md:p-8 lg:p-10 shadow-[0_20px_60px_-20px_rgba(var(--primary),0.15)] relative overflow-hidden group/ad flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 md:gap-8 lg:text-left text-left`}>
-                    <div className="absolute top-[-50%] right-[-10%] md:right-0 lg:right-[15%] p-6 opacity-[0.03] md:opacity-5 group-hover/ad:scale-110 transition-transform duration-1000 rotate-12 pointer-events-none w-full md:w-[400px] h-full flex justify-center items-center">
+                  <div className={`my-12 md:my-16 rounded-[24px] md:rounded-[36px] ${currentAd.bg} border border-border/40 md:border-2 md:border-primary/20 p-6 md:p-8 lg:p-10 shadow-[0_20px_60px_-20px_rgba(var(--primary),0.15)] relative overflow-hidden group/ad`}>
+                    <div className="absolute top-[-50%] right-[-10%] md:right-0 p-6 opacity-[0.03] md:opacity-5 group-hover/ad:scale-110 transition-transform duration-1000 rotate-12 pointer-events-none w-full md:w-[400px] h-full flex justify-center items-center">
                       {currentAd.icon}
                     </div>
                     
-                    <div className="relative z-10 flex-1 w-full lg:max-w-xl xl:max-w-2xl">
-                      <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] text-primary mb-3 block">
+                    <div className="relative z-10 space-y-4 md:space-y-5 max-w-3xl">
+                      <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] text-primary block">
                         {currentAd.subtitle}
                       </span>
-                      <h3 className="text-2xl md:text-4xl lg:text-5xl font-black text-foreground uppercase tracking-tight mb-3 md:mb-4 leading-[0.9]">
+                      <h3 className="text-2xl md:text-4xl lg:text-5xl font-black text-foreground uppercase tracking-tight leading-[0.9]">
                         {currentAd.title1} <span className="text-primary italic">{currentAd.title2}</span>
                       </h3>
-                      <p className="font-bold text-xs md:text-sm lg:text-base text-foreground/80 leading-relaxed max-w-xl m-0">
+                      <p className="font-bold text-xs md:text-sm lg:text-base text-foreground/80 leading-relaxed max-w-xl pb-2">
                         {currentAd.desc}
                       </p>
-                    </div>
-                    
-                    <div className="relative z-10 w-full lg:w-auto shrink-0 flex items-center justify-start lg:justify-center mt-2 lg:mt-0">
+                      
                       <Button 
                         onClick={() => navigate('/signup')}
-                        className="w-full sm:w-auto lg:w-auto rounded-[16px] md:rounded-[20px] bg-foreground text-background font-black uppercase tracking-widest text-[10px] md:text-[11px] h-12 md:h-14 px-6 md:px-10 hover:scale-105 active:scale-95 transition-all shadow-xl overflow-hidden"
+                        className="w-full sm:w-min rounded-[16px] md:rounded-[20px] bg-foreground text-background font-black uppercase tracking-widest text-[10px] md:text-[11px] h-12 md:h-14 px-6 md:px-10 hover:scale-105 active:scale-95 transition-all shadow-xl overflow-hidden"
                       >
                         <span className="whitespace-nowrap">{currentAd.cta}</span> <Zap className="w-3 h-3 md:w-4 md:h-4 ml-2 md:ml-3 text-primary shrink-0" />
                       </Button>
