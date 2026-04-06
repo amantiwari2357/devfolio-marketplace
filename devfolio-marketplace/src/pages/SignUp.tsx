@@ -92,11 +92,11 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background selection:bg-primary selection:text-primary-foreground overflow-hidden">
+    <div className="min-h-screen flex flex-col bg-background selection:bg-primary selection:text-primary-foreground relative">
       <Header />
       
-      <main className="flex-1 mt-20 relative">
-        <div className="grid lg:grid-cols-2 min-h-[calc(100vh-80px)]">
+      <main className="flex-1 mt-24 relative">
+        <div className="grid lg:grid-cols-2 h-auto">
       <SEO
         title="Join Devfolio"
         description="Create your Devfolio Marketplace account and start building your future today."

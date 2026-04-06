@@ -8,9 +8,9 @@ const Footer = () => {
   return (
     <footer className="bg-background border-t border-border/50 pt-20 pb-10">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-16 mb-20">
           {/* Brand Column */}
-          <div className="md:col-span-1">
+          <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-8 group">
               <a href="/" className="flex items-center gap-2">
                 <img src={logo} alt="Devfolio Logo" className="h-40 w-auto group-hover:scale-105 transition-transform duration-300" />
@@ -20,22 +20,22 @@ const Footer = () => {
               </a>
             </div>
             
-            <p className="text-muted-foreground text-sm font-medium leading-relaxed mb-8 pr-4">
+            <p className="text-muted-foreground text-xs font-bold leading-relaxed mb-8 pr-4 italic uppercase tracking-wider opacity-60">
               Building the next generation of digital solutions for individuals and brands worldwide.
             </p>
 
             <Button 
               variant="outline" 
-              className="rounded-xl border-primary/20 bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground font-bold transition-all shadow-sm"
+              className="rounded-xl border-primary/20 bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground font-black transition-all shadow-sm text-[10px] uppercase tracking-widest h-12 px-6 italic"
             >
-              <Star className="w-4 h-4 mr-2 fill-current" />
-              Explore Top Profiles
+              <Star className="w-3.5 h-3.5 mr-2 fill-current" />
+              Explore Elite Profiles
             </Button>
           </div>
           
           {/* Quick Links */}
-          <div>
-            <h4 className="font-bold text-lg mb-8 tracking-tight">Platform</h4>
+          <div className="pt-8 md:pt-0">
+            <h4 className="font-black text-xs mb-8 tracking-[0.2em] uppercase italic opacity-40">System Node</h4>
             <nav className="space-y-4">
               {["Use Cases", "Search", "Listing", "Pricing"].map((item) => (
                 <a 
@@ -51,14 +51,14 @@ const Footer = () => {
           </div>
 
           {/* Company Links */}
-          <div>
-            <h4 className="font-bold text-lg mb-8 tracking-tight">Company</h4>
+          <div className="pt-8 md:pt-0">
+            <h4 className="font-black text-xs mb-8 tracking-[0.2em] uppercase italic opacity-40">Identity Flow</h4>
             <nav className="space-y-4">
               {["About", "Blog", "Contact", "Terms", "Privacy"].map((item) => (
                 <a 
                   key={item}
                   href={`/${item.toLowerCase()}`} 
-                  className="group flex items-center text-muted-foreground hover:text-primary transition-colors font-medium text-sm"
+                  className="group flex items-center text-muted-foreground hover:text-primary transition-colors font-bold text-xs uppercase tracking-widest italic"
                 >
                   {item}
                   <ArrowUpRight className="w-3 h-3 ml-1 opacity-0 group-hover:opacity-100 transition-all -translate-y-0.5" />
@@ -68,12 +68,12 @@ const Footer = () => {
           </div>
           
           {/* Contact & Socials */}
-          <div>
-            <h4 className="font-bold text-lg mb-8 tracking-tight">Connect</h4>
+          <div className="col-span-2 md:col-span-1 pt-12 md:pt-0 border-t md:border-t-0 border-border/20">
+            <h4 className="font-black text-xs mb-8 tracking-[0.2em] uppercase italic opacity-40">Frequency Connect</h4>
             <div className="space-y-6">
-              <p className="text-muted-foreground text-sm font-medium">
-                Gurgaon Sector 39, India<br/>
-                <span className="text-foreground">hello@devfolio.me</span>
+              <p className="text-muted-foreground text-xs font-bold italic uppercase tracking-widest">
+                GURGAON SECTOR 39, INDIA<br/>
+                <span className="text-foreground NOT-italic">hello@devfolio.me</span>
               </p>
               
               <div className="flex gap-4">

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, LogOut, Edit, CheckCircle2, User } from "lucide-react";
+import { ChevronDown, LogOut, Edit, CheckCircle2, User, Search, X, Filter, TrendingUp, Star, Clock, Zap, ArrowUpRight } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuLabel } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import logo from "../../../public/Images/logo.png";
@@ -14,6 +14,8 @@ const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const getAvatarUrl = (email: string) => {
     return `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`;
@@ -88,11 +90,10 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
-      <div className="container mx-auto px-4 h-20 flex items-center justify-between">
+      <div className="container mx-auto px-4 h-20 flex items-center justify-between gap-4">
         <div className="flex items-center gap-12">
           <a href="/" className="flex items-center gap-2 group">
             <img src={logo} alt="Devfolio Logo" className="h-40 w-auto group-hover:scale-105 transition-transform duration-300" />
-
           </a>
 
           <nav className="hidden md:flex items-center gap-10">
@@ -108,6 +109,96 @@ const Header = () => {
             ))}
           </nav>
         </div>
+
+        {/* Center Search - Mobile Focus */}
+        <div className="flex-1 max-w-sm hidden sm:block md:hidden">
+          <button 
+            onClick={() => setShowMobileSearch(true)}
+            className="w-full h-11 rounded-xl bg-secondary/30 border border-border/40 flex items-center px-4 gap-3 text-muted-foreground hover:bg-secondary/50 transition-all group"
+          >
+            <Search className="w-4 h-4 text-primary opacity-50 group-hover:opacity-100 transition-opacity" />
+            <span className="text-[10px] font-black uppercase tracking-widest italic opacity-40">Scan Network...</span>
+          </button>
+        </div>
+
+        {/* Mobile Search Icon for smallest screens */}
+        <div className="sm:hidden">
+          <Button variant="ghost" size="icon" onClick={() => setShowMobileSearch(true)} className="rounded-xl">
+             <Search className="w-5 h-5 text-primary" />
+          </Button>
+        </div>
+
+        {/* Neural Search Overlay - Mobile */}
+        {showMobileSearch && (
+          <div className="fixed inset-0 z-[100] bg-background/95 backdrop-blur-3xl animate-in fade-in duration-500 overflow-hidden">
+            {/* Neural Background Elements */}
+            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 blur-[120px] rounded-full pointer-events-none animate-pulse" />
+            <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/10 blur-[120px] rounded-full pointer-events-none animate-pulse delay-700" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.05),transparent_50%)] pointer-events-none" />
+
+            <div className="container mx-auto px-6 pt-6 relative z-10">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="flex-1 relative">
+                  <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-primary" />
+                  <input 
+                    autoFocus
+                    placeholder="INITIALIZE SEARCH..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full h-20 rounded-[28px] bg-secondary/10 border border-primary/20 pl-16 pr-8 font-black text-xs uppercase tracking-[0.3em] italic focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all shadow-2xl"
+                  />
+                </div>
+                <Button 
+                   variant="ghost" 
+                   size="icon" 
+                   onClick={() => setShowMobileSearch(false)}
+                   className="h-20 w-20 rounded-[28px] bg-secondary/10 border border-border/40"
+                >
+                  <X className="w-6 h-6" />
+                </Button>
+              </div>
+
+              <div className="space-y-10 animate-in slide-in-from-bottom-5 duration-500">
+                <div className="space-y-4">
+                  <h4 className="text-[10px] font-black uppercase tracking-[0.5em] text-primary/40 italic flex items-center gap-2">
+                    <Filter className="w-3 h-3" />
+                    Protocol Filters
+                  </h4>
+                  <div className="grid grid-cols-2 gap-4">
+                    {[
+                      { icon: <TrendingUp className="w-3 h-3" />, label: "Top Rated" },
+                      { icon: <Star className="w-3 h-3" />, label: "Elite Nodes" },
+                      { icon: <Clock className="w-3 h-3" />, label: "Newest Init" },
+                      { icon: <Zap className="w-3 h-3" />, label: "Instant Connect" }
+                    ].map((filter, i) => (
+                      <button 
+                        key={i}
+                        className="flex items-center gap-3 p-5 rounded-2xl bg-secondary/10 border border-border/20 hover:border-primary/40 transition-all group"
+                      >
+                         <div className="p-2 rounded-lg bg-background text-primary group-hover:scale-110 transition-transform">
+                           {filter.icon}
+                         </div>
+                         <span className="text-[10px] font-black uppercase tracking-widest italic">{filter.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  <h4 className="text-[10px] font-black uppercase tracking-[0.5em] text-primary/40 italic">Trending Nodes</h4>
+                  <div className="space-y-3">
+                    {["UI Architecture", "Neural Backend", "SaaS Strategy"].map((trend, i) => (
+                      <div key={i} className="flex items-center justify-between p-6 rounded-2xl bg-background/50 border border-border/20 hover:border-primary/20 transition-all cursor-pointer group">
+                        <span className="text-xs font-black uppercase tracking-widest italic">{trend}</span>
+                        <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-all" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {isLoggedIn ? (
           <DropdownMenu>
