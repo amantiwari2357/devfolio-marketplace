@@ -3,54 +3,19 @@ import Footer from "@/components/layout/Footer";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Calendar, ArrowRight, BookOpen, Sparkles, Mail, Activity, Rocket, Zap, Globe, Layers } from "lucide-react";
+import { Calendar, ArrowRight, BookOpen, Sparkles, Mail, Activity, Rocket, Zap, Globe, Layers, Eye } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import SEO from "@/components/layout/SEO";
+import { useState } from "react";
+import blogData from "@/data/blogs.json";
 
 const Blog = () => {
-  const posts = [
-    {
-      title: "10 Tips for Successful 1:1 Mentoring Sessions",
-      excerpt: "Learn how to make the most of your mentoring sessions and provide maximum value to your mentees.",
-      category: "Mentoring",
-      date: "Jan 10, 2025",
-      readTime: "5 min read"
-    },
-    {
-      title: "How to Price Your Services as a Creator",
-      excerpt: "A comprehensive guide to pricing strategies for creators at every stage of their journey.",
-      category: "Business",
-      date: "Jan 8, 2025",
-      readTime: "8 min read"
-    },
-    {
-      title: "Building Your Personal Brand on Social Media",
-      excerpt: "Strategies to grow your audience and establish yourself as an authority in your field.",
-      category: "Marketing",
-      date: "Jan 5, 2025",
-      readTime: "6 min read"
-    },
-    {
-      title: "The Future of the Creator Economy",
-      excerpt: "Exploring trends and opportunities in the rapidly evolving creator economy landscape.",
-      category: "Industry",
-      date: "Jan 3, 2025",
-      readTime: "10 min read"
-    },
-    {
-      title: "Creating Engaging Online Course Content",
-      excerpt: "Best practices for designing and delivering courses that keep students engaged and learning.",
-      category: "Education",
-      date: "Dec 28, 2024",
-      readTime: "7 min read"
-    },
-    {
-      title: "Monetization Strategies for Content Creators",
-      excerpt: "Diversify your income streams and build a sustainable creator business.",
-      category: "Business",
-      date: "Dec 25, 2024",
-      readTime: "9 min read"
-    }
-  ];
+  const navigate = useNavigate();
+  const [visibleCount, setVisibleCount] = useState(15);
+  const posts = blogData.slice(0, visibleCount);
+  const hasMore = visibleCount < blogData.length;
+
+  const loadMore = () => setVisibleCount((prev) => Math.min(prev + 15, blogData.length));
 
   const categories = ["All", "Business", "Mentoring", "Marketing", "Education", "Industry"];
 
@@ -98,22 +63,30 @@ const Blog = () => {
           </div>
 
           {/* Editorial Grid Protocol */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mb-32 animate-slide-up" style={{ animationDelay: '200ms' }}>
-            {posts.map((post, index) => (
-              <Card key={index} className="group rounded-[44px] bg-secondary/10 border-border/40 backdrop-blur-3xl hover:border-primary/40 transition-all duration-700 overflow-hidden cursor-pointer shadow-xl flex flex-col h-[480px]">
-                <div className="p-10 space-y-8 flex flex-col h-full">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 mb-16 animate-slide-up" style={{ animationDelay: '200ms' }}>
+            {posts.map((post: any, index: number) => (
+              <Card 
+                key={index} 
+                onClick={() => navigate(`/blog/${post.id}`)}
+                className="group rounded-[36px] md:rounded-[44px] bg-secondary/10 border-border/40 backdrop-blur-3xl hover:border-primary/40 transition-all duration-700 overflow-hidden cursor-pointer shadow-xl flex flex-col min-h-[400px] h-auto"
+              >
+                <div className="p-8 md:p-10 space-y-6 md:space-y-8 flex flex-col h-full relative z-10">
+                  <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-10 transition-opacity duration-1000 -z-10">
+                     <Layers className="w-32 h-32 text-primary rotate-12" />
+                  </div>
+                  
                   <div className="flex items-center justify-between">
-                    <span className="px-5 py-2 bg-primary/10 text-primary text-[10px] font-black uppercase tracking-[0.3em] rounded-full italic">
+                    <span className="px-5 py-2 bg-primary/10 text-primary text-[10px] font-black uppercase tracking-[0.3em] rounded-full italic shadow-sm">
                       {post.category}
                     </span>
                     <Sparkles className="w-5 h-5 text-primary/40 group-hover:text-primary transition-all group-hover:rotate-12" />
                   </div>
                   
-                  <div className="space-y-6 flex-1">
-                    <h3 className="text-2xl font-black leading-[1] tracking-tighter text-foreground group-hover:text-primary transition-all italic uppercase">
+                  <div className="space-y-6 flex-1 pt-4">
+                    <h3 className="text-2xl font-black leading-[1.1] tracking-tighter text-foreground group-hover:text-primary transition-colors duration-500 uppercase line-clamp-3">
                       {post.title}
                     </h3>
-                    <p className="text-sm font-bold text-muted-foreground/70 leading-relaxed italic line-clamp-4 opacity-80">
+                    <p className="text-sm font-bold text-muted-foreground/70 leading-relaxed italic line-clamp-3 opacity-80">
                       {post.excerpt}
                     </p>
                   </div>
@@ -124,9 +97,15 @@ const Blog = () => {
                         <Calendar className="w-3.5 h-3.5" />
                         <span>{post.date}</span>
                       </div>
-                      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/40 bg-secondary/30 px-4 py-1.5 rounded-[12px] italic">
-                        {post.readTime}
-                      </span>
+                      <div className="flex items-center gap-4">
+                        <span className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-primary/70 italic">
+                          <Eye className="w-3.5 h-3.5" />
+                          {post.views}
+                        </span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/40 bg-secondary/30 px-3 py-1.5 rounded-[12px] italic">
+                          {post.readTime}
+                        </span>
+                      </div>
                     </div>
 
                     <div className="pt-2">
@@ -140,6 +119,18 @@ const Blog = () => {
               </Card>
             ))}
           </div>
+
+          {hasMore && (
+            <div className="flex justify-center mb-32 animate-fade-in">
+              <Button 
+                onClick={loadMore}
+                className="h-16 rounded-[22px] px-12 font-black text-sm md:text-base border border-border/40 bg-secondary/10 hover:bg-secondary/20 text-foreground transition-all shadow-xl group uppercase tracking-widest italic"
+              >
+                Load More Protocols
+                <ArrowRight className="ml-4 w-5 h-5 opacity-40 group-hover:opacity-100 group-hover:translate-y-1 transition-all rotate-90" />
+              </Button>
+            </div>
+          )}
 
           {/* Intelligence Newsletter Protocol */}
           <div className="max-w-6xl mx-auto animate-slide-up" style={{ animationDelay: '300ms' }}>

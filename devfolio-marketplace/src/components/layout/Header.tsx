@@ -145,16 +145,16 @@ const Header = () => {
                     placeholder="INITIALIZE SEARCH..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full h-20 rounded-[28px] bg-secondary/10 border border-primary/20 pl-16 pr-8 font-black text-xs uppercase tracking-[0.3em] italic focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all shadow-2xl"
+                    className="w-full h-14 rounded-[20px] bg-secondary/10 border border-primary/20 pl-16 pr-8 font-black text-[10px] md:text-xs uppercase tracking-[0.3em] italic focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all shadow-2xl"
                   />
                 </div>
                 <Button 
                    variant="ghost" 
                    size="icon" 
                    onClick={() => setShowMobileSearch(false)}
-                   className="h-20 w-20 rounded-[28px] bg-secondary/10 border border-border/40"
+                   className="h-14 w-14 rounded-[20px] bg-secondary/10 border border-border/40 shrink-0"
                 >
-                  <X className="w-6 h-6" />
+                  <X className="w-5 h-5" />
                 </Button>
               </div>
 

@@ -26,6 +26,7 @@ const AboutUs = lazy(() => import("./pages/AboutUs"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Blog = lazy(() => import("./pages/Blog"));
+const BlogDetail = lazy(() => import("./pages/BlogDetail"));
 const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));
 const Profile = lazy(() => import("./pages/Profile"));
 const OnboardingStatus = lazy(() => import("./pages/OnboardingStatus"));
@@ -72,6 +73,7 @@ const App = () => (
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:id" element={<BlogDetail />} />
             <Route path="/project/:id" element={<ProjectDetail />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/onboarding-status" element={<OnboardingStatus />} />
