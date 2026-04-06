@@ -8,10 +8,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, ArrowLeft } from "lucide-react";
+import { 
+  ExternalLink, ArrowLeft, ShieldCheck, Zap, 
+  Layers, Code, MonitorSmartphone, Activity, 
+  Sparkles, Globe, Rocket, MessageSquare
+} from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { enquiryAPI } from "@/services/auth";
-
+import SEO from "@/components/layout/SEO";
 
 const ProjectDetail = () => {
   const { id } = useParams();
@@ -29,13 +33,11 @@ const ProjectDetail = () => {
   useEffect(() => {
     const fetchProject = async () => {
       try {
-        // Try to fetch from API first
         const response = await fetch(`https://devfolio-marketplace-1.onrender.com/api/projects/${id}`);
         if (response.ok) {
           const data = await response.json();
           setProject(data.project);
         } else {
-          // Fall back to static project data
           const staticProjects = [
             {
               _id: "1",
@@ -225,7 +227,6 @@ const ProjectDetail = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
       const response = await enquiryAPI.createEnquiry({
         name: formData.name,
@@ -256,183 +257,221 @@ const ProjectDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
-        <Header />
-        <main className="py-20 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex justify-center items-center h-64">
-              <div className="text-lg">Loading project details...</div>
-            </div>
-          </div>
-        </main>
-        <Footer />
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-4">
+        <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center animate-spin text-primary">
+          <Activity className="w-6 h-6" />
+        </div>
+        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">Tracing Module Path...</p>
       </div>
     );
   }
 
   if (!project) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Header />
-        <main className="py-20 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex justify-center items-center h-64">
-              <div className="text-lg">Project not found.</div>
-            </div>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
+     return (
+       <div className="min-h-screen bg-background flex items-center justify-center">
+         <div className="text-center space-y-4">
+            <Rocket className="w-12 h-12 mx-auto text-muted-foreground/30" />
+            <h3 className="text-3xl font-black tracking-tight text-foreground/40 italic">Null Address Found.</h3>
+            <Button onClick={() => navigate('/listing')} variant="outline" className="rounded-xl font-black text-xs uppercase tracking-widest">Return to Network</Button>
+         </div>
+       </div>
+     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground">
+      <SEO title={`${project.title} | Showcase`} description={project.description} />
       <Header />
-      <main className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+      
+      <main className="pt-32 pb-32 relative overflow-hidden">
+        {/* Background Accents */}
+        <div className="absolute top-0 right-0 -z-10 w-1/2 h-1/2 bg-primary/2 opacity-30 blur-[150px] rounded-full" />
+        <div className="absolute bottom-0 left-0 -z-10 w-1/3 h-1/3 bg-secondary/5 opacity-20 blur-[120px] rounded-full" />
+        
+        <div className="container mx-auto px-6 max-w-[1400px]">
           <Button
             variant="ghost"
             onClick={() => navigate(-1)}
-            className="mb-8"
+            className="mb-12 group h-12 px-6 rounded-2xl bg-secondary/10 hover:bg-secondary/20 transition-all font-black text-xs uppercase tracking-widest gap-3"
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            Back to Directory
           </Button>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
             {/* Project Overview */}
-            <div className="lg:col-span-2 space-y-8">
-              <Card>
-                <CardHeader>
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="w-16 h-16 rounded-lg bg-primary/10 flex items-center justify-center text-4xl">
-                      {project.icon}
-                    </div>
-                    <Badge variant="secondary">{project.pricing}</Badge>
+            <div className="lg:col-span-2 space-y-12">
+              <header className="space-y-6">
+                <div className="flex items-center gap-4">
+                   <div className="px-5 py-2 rounded-xl bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-widest">
+                      {project.category}
+                   </div>
+                   <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                      <ShieldCheck className="w-3.5 h-3.5 text-primary" />
+                      Verified Showcase
+                   </div>
+                </div>
+                
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+                  <div className="space-y-4">
+                    <h1 className="text-6xl font-black tracking-tighter text-foreground leading-[0.9]">
+                       {project.title}
+                    </h1>
+                    <p className="text-xl font-medium text-muted-foreground italic leading-relaxed max-w-2xl">
+                      {project.description}
+                    </p>
                   </div>
-                  <CardTitle className="text-3xl">{project.title}</CardTitle>
-                  <CardDescription className="text-lg">
-                    {project.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div>
-                    <h3 className="text-xl font-semibold mb-4">Key Features</h3>
-                    <ul className="space-y-2">
-                      {project.features?.map((feature: string, index: number) => (
-                        <li key={index} className="flex items-start">
-                          <span className="text-primary mr-2">✓</span>
-                          <span className="text-muted-foreground">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
+                  <div className="w-24 h-24 rounded-3xl bg-secondary/10 border border-border/50 flex items-center justify-center text-5xl shadow-inner shrink-0 scale-110">
+                    {project.icon}
                   </div>
+                </div>
+              </header>
 
-                  <div>
-                    <h3 className="text-xl font-semibold mb-4">Technologies Used</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {project.technologies?.map((tech: string, index: number) => (
-                        <Badge key={index} variant="outline">{tech}</Badge>
-                      ))}
-                    </div>
-                  </div>
+              <Card className="p-10 rounded-[40px] bg-secondary/10 border-border/50 relative overflow-hidden group">
+                 <div className="absolute top-0 right-0 p-10 opacity-5 pointer-events-none group-hover:scale-110 transition-transform">
+                    <Layers className="w-32 h-32 text-primary" />
+                 </div>
+                 
+                 <div className="space-y-10 relative z-10">
+                   <div>
+                     <h3 className="text-2xl font-black tracking-tight text-foreground mb-6 flex items-center gap-3">
+                        <Activity className="w-6 h-6 text-primary" />
+                        Integrated Features
+                     </h3>
+                     <div className="grid sm:grid-cols-2 gap-4">
+                       {project.features?.map((feature: string, index: number) => (
+                         <div key={index} className="flex items-start gap-4 p-5 rounded-2xl bg-background/50 border border-border/20 group/item hover:border-primary/20 transition-all">
+                           <div className="w-8 h-8 rounded-lg bg-secondary/50 flex items-center justify-center text-primary shrink-0 group-item:scale-110 transition-transform">
+                              <Zap className="w-4 h-4" />
+                           </div>
+                           <span className="text-sm font-bold text-muted-foreground/80 leading-relaxed italic">{feature}</span>
+                         </div>
+                       ))}
+                     </div>
+                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <h4 className="font-semibold mb-2">Timeline</h4>
-                      <p className="text-muted-foreground">{project.timeline || 'N/A'}</p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-2">Price Range</h4>
-                      <p className="text-muted-foreground">{project.priceRange || 'N/A'}</p>
-                    </div>
-                  </div>
+                   <div className="grid md:grid-cols-2 gap-10">
+                     <div className="space-y-6">
+                        <h3 className="text-xl font-black tracking-tight text-foreground flex items-center gap-3">
+                           <Code className="w-5 h-5 text-primary" />
+                           Logic Stack
+                        </h3>
+                        <div className="flex flex-wrap gap-2">
+                          {project.technologies?.map((tech: string, index: number) => (
+                            <div key={index} className="px-5 py-2.5 rounded-xl bg-background shadow-inner border border-border/20 text-[10px] font-black uppercase tracking-widest hover:border-primary/30 transition-all">
+                               {tech}
+                            </div>
+                          ))}
+                        </div>
+                     </div>
 
-                  <Button
-                    className="w-full"
-                    onClick={() => window.open(project.liveUrl, "_blank")}
-                  >
-                    <ExternalLink className="w-4 h-4 mr-2" />
-                    View Live Demo <span className="hidden sm:inline">→</span><span className=" text-color-primary text-2xl font-mono">Free</span>
-                  </Button>
-                </CardContent>
+                     <div className="space-y-6">
+                        <h3 className="text-xl font-black tracking-tight text-foreground flex items-center gap-3">
+                           <MonitorSmartphone className="w-5 h-5 text-primary" />
+                           Performance Vector
+                        </h3>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="p-4 rounded-xl bg-background/30 border border-border/20">
+                            <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Timeline</p>
+                            <p className="text-sm font-bold">{project.timeline || 'N/A'}</p>
+                          </div>
+                          <div className="p-4 rounded-xl bg-background/30 border border-border/20">
+                            <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Bracket</p>
+                            <p className="text-sm font-bold">{project.priceRange || 'N/A'}</p>
+                          </div>
+                        </div>
+                     </div>
+                   </div>
+
+                   <Button
+                     className="w-full h-20 rounded-[28px] bg-foreground text-background text-lg font-black uppercase tracking-widest shadow-2xl hover:scale-[1.02] active:scale-95 transition-all gap-4 flex items-center justify-center border-none"
+                     onClick={() => window.open(project.liveUrl, "_blank")}
+                   >
+                     <ExternalLink className="w-6 h-6" />
+                     Initialize Live Demo
+                     <div className="h-2 w-2 rounded-full bg-primary animate-pulse ml-2" />
+                   </Button>
+                 </div>
               </Card>
             </div>
 
             {/* Enquiry Form */}
-            <div className="lg:col-span-1">
-              <Card className="sticky top-24">
-                <CardHeader>
-                  <CardTitle>Get This Project</CardTitle>
-                  <CardDescription>
-                    Interested in this project? Send us an enquiry
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                      <Label htmlFor="name">Full Name</Label>
-                      <Input
-                        id="name"
-                        placeholder="Your full name"
-                        value={formData.name}
-                        onChange={(e) =>
-                          setFormData({ ...formData, name: e.target.value })
-                        }
-                        required
-                      />
-                    </div>
+            <aside className="lg:col-span-1">
+              <Card className="sticky top-32 p-8 rounded-[40px] bg-secondary/10 border-border/50 backdrop-blur-2xl relative overflow-hidden group">
+                <div className="absolute -top-12 -right-12 w-32 h-32 bg-primary/5 blur-[40px] rounded-full" />
+                
+                <header className="mb-10 text-center">
+                   <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mx-auto mb-6 transform group-hover:rotate-12 transition-transform">
+                      <MessageSquare className="w-7 h-7" />
+                   </div>
+                   <h2 className="text-3xl font-black tracking-tighter text-foreground mb-3">Request Node</h2>
+                   <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest italic opacity-70">
+                      Configure your integration
+                   </p>
+                </header>
 
-                    <div>
-                      <Label htmlFor="email">Email</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="Your email address"
-                        value={formData.email}
-                        onChange={(e) =>
-                          setFormData({ ...formData, email: e.target.value })
-                        }
-                        required
-                      />
-                    </div>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="space-y-2.5">
+                    <Label htmlFor="name" className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-60">Architect Name</Label>
+                    <Input
+                      id="name"
+                      placeholder="Elon T."
+                      className="h-14 rounded-2xl bg-background border-border/50 focus:border-primary/50 font-bold px-5"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      required
+                    />
+                  </div>
 
-                    <div>
-                      <Label htmlFor="phone">Phone Number</Label>
-                      <Input
-                        id="phone"
-                        type="tel"
-                        placeholder="+91 (555) 000-0000"
-                        value={formData.phone}
-                        onChange={(e) =>
-                          setFormData({ ...formData, phone: e.target.value })
-                        }
-                        required
-                      />
-                    </div>
+                  <div className="space-y-2.5">
+                    <Label htmlFor="email" className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-60">Signal Node (Email)</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="elon@mars.com"
+                      className="h-14 rounded-2xl bg-background border-border/50 focus:border-primary/50 font-bold px-5"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      required
+                    />
+                  </div>
 
-                    <div>
-                      <Label htmlFor="message">Message</Label>
-                      <Textarea
-                        id="message"
-                        placeholder="Tell us about your requirements..."
-                        value={formData.message}
-                        onChange={(e) =>
-                          setFormData({ ...formData, message: e.target.value })
-                        }
-                        rows={4}
-                        required
-                      />
-                    </div>
+                  <div className="space-y-2.5">
+                    <Label htmlFor="phone" className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-60">Coordinate (Phone)</Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder="+91 (555) 000-0000"
+                      className="h-14 rounded-2xl bg-background border-border/50 focus:border-primary/50 font-bold px-5"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      required
+                    />
+                  </div>
 
-                    <Button type="submit" className="w-full">
-                      Submit Enquiry
-                    </Button>
-                  </form>
-                </CardContent>
+                  <div className="space-y-2.5">
+                    <Label htmlFor="message" className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-60">Protocol Brief</Label>
+                    <Textarea
+                      id="message"
+                      placeholder="Define your requirements..."
+                      className="rounded-2xl bg-background border-border/50 focus:border-primary/50 font-medium p-5 min-h-[120px]"
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      required
+                    />
+                  </div>
+
+                  <Button type="submit" className="w-full h-16 rounded-2xl bg-primary text-primary-foreground font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
+                    Authorize Request
+                  </Button>
+                </form>
+                
+                <div className="mt-8 pt-6 border-t border-border/20 flex items-center justify-center gap-3">
+                   <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                   <p className="text-[10px] font-black uppercase tracking-widest opacity-40 italic">Global Sync Active</p>
+                </div>
               </Card>
-            </div>
+            </aside>
           </div>
         </div>
       </main>
