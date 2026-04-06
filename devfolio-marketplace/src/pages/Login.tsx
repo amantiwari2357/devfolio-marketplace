@@ -65,7 +65,7 @@ const Login = () => {
 
       <div className="w-full max-w-[500px] animate-slide-up">
         {/* Entry Module */}
-        <Card className="p-12 md:p-16 rounded-[56px] bg-secondary/10 border-border/40 backdrop-blur-3xl shadow-2xl relative overflow-hidden group">
+        <Card className="p-8 md:p-16 rounded-[48px] md:rounded-[56px] bg-secondary/10 border-border/40 backdrop-blur-3xl shadow-2xl relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-12 opacity-0 group-hover:opacity-5 transition-all duration-1000 translate-x-12 translate-y-[-12px] group-hover:translate-x-0 group-hover:translate-y-0 pointer-events-none">
             <Lock className="w-[300px] h-[300px] text-primary" />
           </div>
@@ -89,7 +89,7 @@ const Login = () => {
                    <Fingerprint className="w-4 h-4" />
                    <span className="text-[10px] font-black uppercase tracking-[0.5em] italic">Biometric Ready</span>
                 </div>
-                <h1 className="text-3xl md:text-4xl font-black tracking-tighter text-foreground italic uppercase leading-none">
+                <h1 className="text-2xl md:text-4xl font-black tracking-tighter text-foreground italic uppercase leading-none">
                   Welcome <span className="text-primary NOT-italic">Back.</span>
                 </h1>
                 <p className="text-[10px] font-bold text-muted-foreground/50 italic uppercase tracking-[0.2em] max-w-[280px] mx-auto opacity-70">Neural access initialization required for node entry.</p>
@@ -154,7 +154,7 @@ const Login = () => {
                   id="email"
                   type="email"
                   placeholder="OPERATOR@DEVFOLIO.IO"
-                  className="h-16 rounded-[22px] px-8 bg-background/50 border-border/40 focus:border-primary/50 focus:ring-primary/20 transition-all font-black text-xs uppercase tracking-widest placeholder:opacity-30"
+                  className="h-14 md:h-16 rounded-[18px] md:rounded-[22px] px-8 bg-background/50 border-border/40 focus:border-primary/50 focus:ring-primary/20 transition-all font-black text-[10px] md:text-xs uppercase tracking-widest placeholder:opacity-30"
                   value={formData.email}
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
@@ -173,7 +173,7 @@ const Login = () => {
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••••••"
-                    className="h-16 rounded-[22px] px-8 bg-background/50 border-border/40 focus:border-primary/50 focus:ring-primary/20 transition-all font-black text-xs uppercase tracking-widest placeholder:opacity-30"
+                    className="h-14 md:h-16 rounded-[18px] md:rounded-[22px] px-8 bg-background/50 border-border/40 focus:border-primary/50 focus:ring-primary/20 transition-all font-black text-[10px] md:text-xs uppercase tracking-widest placeholder:opacity-30"
                     value={formData.password}
                     onChange={(e) =>
                       setFormData({ ...formData, password: e.target.value })
@@ -205,13 +205,13 @@ const Login = () => {
               <div className="pt-4">
                 <Button
                   type="submit"
-                  className="w-full h-16 rounded-[24px] font-black text-xl bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl shadow-primary/30 uppercase tracking-[0.2em] border-none italic group"
+                  className="w-full h-14 md:h-16 rounded-[20px] md:rounded-[24px] font-black text-lg md:text-xl bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl shadow-primary/30 uppercase tracking-[0.2em] border-none italic group"
                   disabled={isLoading}
                 >
                   {isLoading ? (
                     <div className="flex items-center gap-4">
                       <div className="w-6 h-6 rounded-full border-[3px] border-primary-foreground/20 border-t-primary-foreground animate-spin" />
-                      <span className="text-xl">Establishing...</span>
+                      <span className="text-lg md:text-xl">Establishing...</span>
                     </div>
                   ) : (
                     <div className="flex items-center gap-6">

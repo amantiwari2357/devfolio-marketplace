@@ -103,7 +103,7 @@ const SignUp = () => {
       />
 
       {/* Left Side - Form */}
-      <div className="flex items-center justify-center p-8 lg:p-16 border-r border-border/50">
+      <div className="flex items-center justify-center p-6 lg:p-16 border-r border-border/50">
         <div className="w-full max-w-md">
           {/* Branding */}
           <div className="flex flex-col mb-12">
@@ -118,7 +118,7 @@ const SignUp = () => {
                 DEVFOLIO<span className="text-primary">.</span>
               </span>
             </Link>
-            <h1 className="text-3xl font-black tracking-tight mb-3 text-foreground">
+            <h1 className="text-2xl md:text-3xl font-black tracking-tight mb-3 text-foreground">
               Create your account<span className="text-primary">.</span>
             </h1>
             <p className="text-xs font-bold text-muted-foreground/60 italic uppercase tracking-widest">Join 10,000+ creators and developers building the future.</p>
@@ -152,22 +152,22 @@ const SignUp = () => {
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="firstName" className="text-sm font-bold tracking-tight">First name</Label>
+                <Label htmlFor="firstName" className="text-xs md:text-sm font-bold tracking-tight">First name</Label>
                 <Input
                   id="firstName"
                   placeholder="John"
-                  className="rounded-xl py-6 border-border/50 bg-secondary/30 focus:border-primary/50 focus:ring-primary/20 transition-all font-medium"
+                  className="rounded-xl py-4 md:py-6 border-border/50 bg-secondary/30 focus:border-primary/50 focus:ring-primary/20 transition-all font-medium"
                   value={formData.firstName}
                   onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="lastName" className="text-sm font-bold tracking-tight">Last name</Label>
+                <Label htmlFor="lastName" className="text-xs md:text-sm font-bold tracking-tight">Last name</Label>
                 <Input
                   id="lastName"
                   placeholder="Doe"
-                  className="rounded-xl py-6 border-border/50 bg-secondary/30 focus:border-primary/50 focus:ring-primary/20 transition-all font-medium"
+                  className="rounded-xl py-4 md:py-6 border-border/50 bg-secondary/30 focus:border-primary/50 focus:ring-primary/20 transition-all font-medium"
                   value={formData.lastName}
                   onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                   required
@@ -176,12 +176,12 @@ const SignUp = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-sm font-bold tracking-tight">Email address</Label>
+              <Label htmlFor="email" className="text-xs md:text-sm font-bold tracking-tight">Email address</Label>
               <Input
                 id="email"
                 type="email"
                 placeholder="name@example.com"
-                className="rounded-xl py-6 border-border/50 bg-secondary/30 focus:border-primary/50 focus:ring-primary/20 transition-all font-medium"
+                className="rounded-xl py-4 md:py-6 border-border/50 bg-secondary/30 focus:border-primary/50 focus:ring-primary/20 transition-all font-medium"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
@@ -189,13 +189,13 @@ const SignUp = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password" title="password" className="text-sm font-bold tracking-tight">Password</Label>
+              <Label htmlFor="password" title="password" className="text-xs md:text-sm font-bold tracking-tight">Password</Label>
               <div className="relative">
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
-                  className="rounded-xl py-6 border-border/50 bg-secondary/30 focus:border-primary/50 focus:ring-primary/20 transition-all font-medium"
+                  className="rounded-xl py-4 md:py-6 border-border/50 bg-secondary/30 focus:border-primary/50 focus:ring-primary/20 transition-all font-medium"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   required
@@ -220,7 +220,7 @@ const SignUp = () => {
 
             <Button
               type="submit"
-              className="w-full rounded-xl py-6 font-black text-base shadow-xl shadow-primary/10 hover:shadow-primary/25 transition-all bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] border-none italic"
+              className="w-full rounded-xl py-4 md:py-6 font-black text-sm md:text-base shadow-xl shadow-primary/10 hover:shadow-primary/25 transition-all bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] border-none italic"
               disabled={isLoading}
             >
               {isLoading ? "Creating Account..." : "Create Free Account"}
