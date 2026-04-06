@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Star, MessageCircle, Share2, Heart, MapPin, Award, Loader2 } from "lucide-react";
 
+import api from "@/services/api";
+
 const categories = [
   "Career", "Data & AI", "Study Abroad", "Software", "HR", "Finance", "Astrology", "Marketing", "Product & Design", "Others"
 ];
@@ -36,12 +38,8 @@ const ExpertsSection = () => {
     const fetchExperts = async () => {
       try {
         setLoading(true);
-        const response = await fetch('https://devfolio-marketplace-1.onrender.com/api/experts/all');
-        if (!response.ok) {
-          throw new Error('Failed to fetch experts');
-        }
-        const data = await response.json();
-        setExperts(data.experts || []);
+        const response = await api.get('/experts/all');
+        setExperts(response.data.experts || []);
       } catch (err) {
         console.error('Error fetching experts:', err);
         setError('Failed to load experts. Please try again later.');
@@ -75,19 +73,16 @@ const ExpertsSection = () => {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch("https://devfolio-marketplace-1.onrender.com/api/experts/enquiries", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          expertId: selectedExpert._id,
-          name: enquiryForm.name,
-          email: enquiryForm.email,
-          phone: enquiryForm.phone,
-          message: enquiryForm.message,
-        }),
+      const res = await api.post('/experts/enquiries', {
+        expertId: selectedExpert._id,
+        expertName: `${selectedExpert.firstName} ${selectedExpert.lastName}`,
+        name: enquiryForm.name,
+        email: enquiryForm.email,
+        phone: enquiryForm.phone,
+        message: enquiryForm.message,
       });
 
-      if (res.ok) {
+      if (res.status === 200 || res.status === 201) {
         toast.success("Connection request sent successfully! 🎉");
         setEnquiryForm({ name: "", email: "", phone: "", message: "" });
         setIsDialogOpen(false);
