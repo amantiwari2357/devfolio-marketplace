@@ -97,14 +97,14 @@ const ExpertsSection = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-b from-slate-50 to-white">
+    <section className="py-24 bg-gradient-to-b from-secondary/30 to-background">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Connect with <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Top Experts</span>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+            Connect with <span className="text-primary">Top Experts</span>
           </h2>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Get guidance from industry experts. Share your goals, get personalized advice, and accelerate your growth.
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Get personalized guidance from industry leaders. Share your vision and accelerate your digital journey.
           </p>
         </div>
 
@@ -114,7 +114,7 @@ const ExpertsSection = () => {
               key={category}
               variant={selectedCategory === category ? "default" : "outline"}
               onClick={() => handleCategoryChange(category)}
-              className={selectedCategory === category ? "bg-blue-600" : ""}
+              className={selectedCategory === category ? "bg-foreground text-background hover:bg-foreground/90" : "hover:bg-secondary/50"}
             >
               {category}
             </Button>
@@ -123,125 +123,122 @@ const ExpertsSection = () => {
 
         {loading ? (
           <div className="flex justify-center items-center py-20">
-            <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
-            <span className="ml-2 text-slate-600">Loading experts...</span>
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <span className="ml-2 text-muted-foreground">Finding experts...</span>
           </div>
         ) : error ? (
-          <div className="text-center py-20">
-            <p className="text-red-600 mb-4">{error}</p>
+          <div className="text-center py-20 bg-card rounded-3xl border border-border">
+            <p className="text-destructive mb-4">{error}</p>
             <Button
               onClick={() => window.location.reload()}
-              className="bg-blue-600 hover:bg-blue-700"
+              variant="outline"
             >
               Try Again
             </Button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {experts.map((expert) => (
             <Dialog key={expert._id} open={isDialogOpen && selectedExpert?._id === expert._id} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
                 <div
                   onClick={() => setSelectedExpert(expert)}
-                  className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer border border-slate-100"
+                  className="group bg-card rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden cursor-pointer border border-border hover:border-primary/20"
                 >
                   {/* Profile Header */}
-                  <div className="h-28 bg-gradient-to-r from-blue-500 to-purple-500 group-hover:from-blue-600 group-hover:to-purple-600 transition-all"></div>
+                  <div className="h-32 bg-secondary/50 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-50 group-hover:opacity-100 transition-opacity"></div>
+                  </div>
 
                   {/* Profile Content */}
-                  <div className="px-6 pb-6 -mt-12 relative z-10">
-                    <div className="w-24 h-24 bg-gradient-to-br from-blue-400 to-purple-400 rounded-2xl flex items-center justify-center text-white text-4xl font-bold mb-4 shadow-lg border-4 border-white">
+                  <div className="px-8 pb-8 -mt-14 relative z-10">
+                    <div className="w-24 h-24 bg-primary rounded-2xl flex items-center justify-center text-primary-foreground text-4xl font-bold mb-4 shadow-xl border-4 border-card ring-1 ring-border/50">
                       {expert.firstName[0]}{expert.lastName[0]}
                     </div>
 
-                    <h3 className="text-xl font-bold text-slate-900">{expert.firstName} {expert.lastName}</h3>
-                    <p className="text-sm text-blue-600 font-semibold mb-3">{expert.role}</p>
+                    <h3 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors">{expert.firstName} {expert.lastName}</h3>
+                    <p className="text-sm font-medium text-muted-foreground mb-4">{expert.role}</p>
 
                     {/* Rating & Connections */}
-                    <div className="flex items-center gap-4 mb-4 text-sm text-slate-600">
-                      <div className="flex items-center gap-1">
-                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        <span className="font-semibold">{expert.rating}</span>
+                    <div className="flex items-center gap-5 mb-5 text-sm">
+                      <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/10 text-primary rounded-full">
+                        <Star className="w-4 h-4 fill-primary" />
+                        <span className="font-bold">{expert.rating || "4.9"}</span>
                       </div>
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1.5 text-muted-foreground">
                         <MessageCircle className="w-4 h-4" />
-                        <span>{expert.connections} connections</span>
+                        <span>{expert.connections || "500+"} connected</span>
                       </div>
                     </div>
 
-                    {/* Location */}
-                    <div className="flex items-center gap-2 text-sm text-slate-600 mb-4">
-                      <MapPin className="w-4 h-4" />
-                      <span>{expert.location}</span>
-                    </div>
-
-                    {/* Experience Badge */}
-                    <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold mb-4">
-                      <Award className="w-3 h-3" />
-                      {expert.experience}
+                    {/* Meta Info */}
+                    <div className="space-y-2 mb-6">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <MapPin className="w-4 h-4 text-primary" />
+                        <span>{expert.location || "Remote"}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Award className="w-4 h-4 text-primary" />
+                        <span>{expert.experience || "5+ Years Exp."}</span>
+                      </div>
                     </div>
 
                     {/* Skills */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {expert.skills.slice(0, 2).map((skill, idx) => (
-                        <span key={idx} className="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-xs font-medium">
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {expert.skills.slice(0, 3).map((skill, idx) => (
+                        <span key={idx} className="px-3 py-1 bg-secondary text-secondary-foreground rounded-lg text-[10px] uppercase tracking-wider font-bold">
                           {skill}
                         </span>
                       ))}
-                      {expert.skills.length > 2 && (
-                        <span className="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-xs font-medium">
-                          +{expert.skills.length - 2}
-                        </span>
-                      )}
                     </div>
 
                     {/* Bio */}
-                    <p className="text-sm text-slate-600 mb-4 line-clamp-2">{expert.bio}</p>
+                    <p className="text-sm text-muted-foreground mb-8 line-clamp-2 leading-relaxed">{expert.bio}</p>
 
                     {/* Action Buttons */}
-                    <div className="flex gap-2">
+                    <div className="flex gap-3 mt-auto">
                       <Button
-                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                        className="flex-1 bg-foreground text-background hover:bg-foreground/90 font-bold rounded-xl h-12 shadow-md group-hover:shadow-lg transition-all"
                         onClick={(e) => {
                           e.stopPropagation();
                           setSelectedExpert(expert);
                           setIsDialogOpen(true);
                         }}
                       >
-                        <MessageCircle className="w-4 h-4 mr-2" />
-                        Connect
+                        Connect Now
                       </Button>
-                      <Button variant="outline" size="icon">
-                        <Heart className="w-4 h-4" />
+                      <Button variant="outline" size="icon" className="w-12 h-12 rounded-xl hover:text-primary hover:border-primary/30 transition-all">
+                        <Heart className="w-5 h-5 transition-transform active:scale-125" />
                       </Button>
                     </div>
                   </div>
                 </div>
               </DialogTrigger>
 
-              <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
-                <DialogHeader>
-                  <DialogTitle className="text-2xl">Connect with {expert.firstName}</DialogTitle>
-                </DialogHeader>
-
-                <div className="space-y-6">
+              <DialogContent className="max-w-2xl p-0 overflow-hidden border-none rounded-3xl bg-background">
+                <div className="h-2 bg-primary"></div>
+                <div className="p-8 space-y-8 max-h-[85vh] overflow-y-auto custom-scrollbar">
                   {/* Expert Summary */}
-                  <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-xl border border-blue-100">
-                    <div className="flex items-start gap-4">
-                      <div className="w-20 h-20 bg-gradient-to-br from-blue-400 to-purple-400 rounded-2xl flex items-center justify-center text-white text-2xl font-bold">
+                  <div className="bg-secondary/30 p-8 rounded-3xl border border-border/50">
+                    <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-6">
+                      <div className="w-24 h-24 bg-primary rounded-3xl flex items-center justify-center text-white text-3xl font-bold shadow-xl">
                         {expert.firstName[0]}{expert.lastName[0]}
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-xl font-bold text-slate-900">{expert.firstName} {expert.lastName}</h3>
-                        <p className="text-blue-600 font-semibold text-sm mb-2">{expert.role}</p>
-                        <div className="flex items-center gap-3 text-sm text-slate-600">
-                          <span className="flex items-center gap-1">
-                            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                            {expert.rating} ({expert.connections} connections)
+                        <h3 className="text-3xl font-bold text-foreground mb-1">{expert.firstName} {expert.lastName}</h3>
+                        <p className="text-primary font-semibold mb-4">{expert.role}</p>
+                        <div className="flex flex-wrap justify-center md:justify-start gap-4 text-sm text-muted-foreground font-medium">
+                          <span className="flex items-center gap-1.5 bg-background px-3 py-1 rounded-full border border-border shadow-sm">
+                            <Star className="w-4 h-4 fill-primary text-primary" />
+                            {expert.rating || "4.9"}
                           </span>
-                          <span className="flex items-center gap-1">
-                            <MapPin className="w-4 h-4" />
-                            {expert.location}
+                          <span className="flex items-center gap-1.5 bg-background px-3 py-1 rounded-full border border-border shadow-sm">
+                            <MessageCircle className="w-4 h-4 text-primary" />
+                            {expert.connections || "500+"}
+                          </span>
+                          <span className="flex items-center gap-1.5 bg-background px-3 py-1 rounded-full border border-border shadow-sm">
+                            <MapPin className="w-4 h-4 text-primary" />
+                            {expert.location || "Global"}
                           </span>
                         </div>
                       </div>
@@ -249,82 +246,101 @@ const ExpertsSection = () => {
                   </div>
 
                   {/* Bio & Skills */}
-                  <div>
-                    <h4 className="font-semibold text-slate-900 mb-2">About</h4>
-                    <p className="text-slate-600 text-sm mb-4">{expert.bio}</p>
-
-                    <h4 className="font-semibold text-slate-900 mb-3">Expertise</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {expert.skills.map((skill, idx) => (
-                        <span key={idx} className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
-                          {skill}
-                        </span>
-                      ))}
+                  <div className="grid md:grid-cols-2 gap-8">
+                    <div className="space-y-4">
+                      <h4 className="text-lg font-bold text-foreground flex items-center gap-2">
+                        <Award className="w-5 h-5 text-primary" />
+                        About Expert
+                      </h4>
+                      <p className="text-muted-foreground text-sm leading-relaxed">{expert.bio}</p>
+                    </div>
+                    <div className="space-y-4">
+                      <h4 className="text-lg font-bold text-foreground flex items-center gap-2">
+                        <Star className="w-5 h-5 text-primary" />
+                        Core Expertise
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {expert.skills.map((skill, idx) => (
+                          <span key={idx} className="px-3 py-1.5 bg-secondary text-secondary-foreground rounded-xl text-xs font-bold tracking-wide border border-border/50">
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
 
                   {/* Connection Request Form */}
-                  <div className="bg-slate-50 p-6 rounded-xl">
-                    <h4 className="font-semibold text-slate-900 mb-4">Send Connection Request</h4>
+                  <div className="bg-card p-8 rounded-3xl border border-border shadow-sm">
+                    <div className="mb-6">
+                      <h4 className="text-xl font-bold text-foreground mb-2">Start a Collaboration</h4>
+                      <p className="text-sm text-muted-foreground">Describe your project requirements and get expert insights.</p>
+                    </div>
 
-                    <form onSubmit={handleEnquirySubmit} className="space-y-4">
-                      <div>
-                        <Label className="text-slate-700 font-semibold">Full Name *</Label>
-                        <Input
-                          placeholder="Enter your name"
-                          value={enquiryForm.name}
-                          onChange={(e) => setEnquiryForm({ ...enquiryForm, name: e.target.value })}
-                          required
-                          className="mt-2"
-                        />
+                    <form onSubmit={handleEnquirySubmit} className="space-y-5">
+                      <div className="grid md:grid-cols-2 gap-5">
+                        <div className="space-y-2">
+                          <Label className="text-sm font-bold text-foreground ml-1">Full Name</Label>
+                          <Input
+                            placeholder="Aman Tiwari"
+                            value={enquiryForm.name}
+                            onChange={(e) => setEnquiryForm({ ...enquiryForm, name: e.target.value })}
+                            required
+                            className="bg-background rounded-xl border-border focus:ring-primary/20 h-12"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="text-sm font-bold text-foreground ml-1">Email Address</Label>
+                          <Input
+                            type="email"
+                            placeholder="hi@example.com"
+                            value={enquiryForm.email}
+                            onChange={(e) => setEnquiryForm({ ...enquiryForm, email: e.target.value })}
+                            required
+                            className="bg-background rounded-xl border-border focus:ring-primary/20 h-12"
+                          />
+                        </div>
                       </div>
 
-                      <div>
-                        <Label className="text-slate-700 font-semibold">Email *</Label>
-                        <Input
-                          type="email"
-                          placeholder="your.email@example.com"
-                          value={enquiryForm.email}
-                          onChange={(e) => setEnquiryForm({ ...enquiryForm, email: e.target.value })}
-                          required
-                          className="mt-2"
-                        />
-                      </div>
-
-                      <div>
-                        <Label className="text-slate-700 font-semibold">Phone *</Label>
+                      <div className="space-y-2">
+                        <Label className="text-sm font-bold text-foreground ml-1">WhatsApp / Phone</Label>
                         <Input
                           placeholder="+91 XXXXX XXXXX"
                           value={enquiryForm.phone}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, phone: e.target.value })}
                           required
-                          className="mt-2"
+                          className="bg-background rounded-xl border-border focus:ring-primary/20 h-12"
                         />
                       </div>
 
-                      <div>
-                        <Label className="text-slate-700 font-semibold">Tell them about your goals *</Label>
+                      <div className="space-y-2">
+                        <Label className="text-sm font-bold text-foreground ml-1">Your Vision & Goals</Label>
                         <Textarea
-                          placeholder="What would you like to discuss with this expert? Share your goals, challenges, or specific topics you'd like guidance on..."
+                          placeholder="Tell us about what you want to build or the specific guidance you need..."
                           rows={4}
                           value={enquiryForm.message}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, message: e.target.value })}
                           required
-                          className="mt-2 resize-none"
+                          className="bg-background rounded-xl border-border focus:ring-primary/20 min-h-[120px] resize-none"
                         />
                       </div>
 
                       <Button
                         type="submit"
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold h-11"
+                        className="w-full bg-foreground text-background hover:bg-foreground/90 font-bold rounded-xl h-14 text-lg shadow-lg"
                         disabled={isSubmitting}
                       >
-                        {isSubmitting ? "Sending Connection Request..." : "Send Connection Request"}
+                        {isSubmitting ? (
+                          <>
+                            <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                            Sending Request...
+                          </>
+                        ) : "Send Connection Request"}
                       </Button>
 
-                      <p className="text-xs text-slate-500 text-center">
-                        ✓ The expert will receive your message and respond within 24 hours
-                      </p>
+                      <div className="flex items-center justify-center gap-2 text-[10px] text-muted-foreground uppercase tracking-widest font-bold pt-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
+                        Direct Response inside 24 Hours
+                      </div>
                     </form>
                   </div>
                 </div>

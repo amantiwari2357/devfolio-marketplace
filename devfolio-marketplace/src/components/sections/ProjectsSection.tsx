@@ -1,7 +1,8 @@
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import ProjectCard from "@/components/cards/ProjectCard";
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import api from "@/services/api";
 
 const ProjectsSection = () => {
   const navigate = useNavigate();
@@ -78,11 +79,8 @@ const ProjectsSection = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch('https://devfolio-marketplace-1.onrender.com/api/projects/all');
-        if (response.ok) {
-          const data = await response.json();
-          setProjects(data.projects);
-        }
+        const response = await api.get('/projects/all');
+        setProjects(response.data.projects);
       } catch (error) {
         console.error('Error fetching projects:', error);
         // Fall back to static projects if API fails
@@ -96,18 +94,21 @@ const ProjectsSection = () => {
   }, []);
 
   return (
-    <section className="py-8 px-4 sm:px-6 lg:px-8 bg-background">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-12">
+    <section className="py-24 bg-background">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-16">
           <div>
-            <h2 className="font-bold mb-4 text-6xl text-pretty text-fuchsia-950">Our Projects</h2>
-            <p className="text-lg text-muted-foreground">
-              Explore our collection of professionally designed templates
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+              Featured <span className="text-primary">Projects</span>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl">
+              Explore our collection of professionally designed templates and digital solutions.
             </p>
           </div>
           <Button
             variant="outline"
             size="lg"
+            className="rounded-xl border-primary/20 hover:bg-primary/5 hover:text-primary transition-all"
             onClick={() => navigate("/search")}
           >
             View All Projects

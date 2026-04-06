@@ -13,6 +13,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useState } from "react";
+import { toast } from "sonner";
+import { Zap } from "lucide-react";
+import api from "@/services/api";
 
 const services = [
   {
@@ -114,7 +117,7 @@ const ServicesSection = () => {
 
   const handleBookNow = async () => {
     if (!selectedDateObj || !selectedTime) {
-      alert("Please select both date and time");
+      toast.error("Please select both date and time");
       return;
     }
 
@@ -129,25 +132,18 @@ const ServicesSection = () => {
     };
 
     try {
-      const response = await fetch("https://devfolio-marketplace-1.onrender.com/api/availabilities", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(bookingData),
-      });
+      const result = await api.post("/availabilities", bookingData);
 
-      const result = await response.json();
-
-      if (result.success) {
-        alert("Booking successful!");
-
+      if (result.data.success) {
+        toast.success("Booking successful!");
         setSelectedDateObj(null);
         setSelectedTime(null);
       } else {
-        alert("Booking failed: " + result.message);
+        toast.error("Booking failed: " + result.data.message);
       }
     } catch (error) {
       console.error("Error booking:", error);
-      alert("Error booking consultation. Please try again.");
+      toast.error("Error booking consultation. Please try again.");
     }
   };
 
@@ -191,19 +187,30 @@ const ServicesSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-background">
+    <section className="py-24 bg-gradient-to-b from-background to-secondary/30">
       <div className="container mx-auto px-4">
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <div className="text-center mb-20">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+            My <span className="text-primary">Services</span> & Consultation
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Book a strategy session or explore specialized digital services tailored to your project.
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* LEFT SIDE */}
           <div className="lg:sticky lg:top-32">
-            <Card className="bg-card-pink border-none p-8 rounded-3xl shadow-md">
-              <div className="bg-card p-6 rounded-2xl mb-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-full bg-card-pink" />
+            <Card className="bg-secondary/40 border-border/50 p-8 rounded-[2rem] shadow-sm">
+              <div className="bg-card p-8 rounded-3xl mb-6 shadow-sm border border-border/50">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+                    <Zap className="w-6 h-6" />
+                  </div>
                   <div>
-                    <p className="font-semibold text-sm">Book a Consultation</p>
-                    <p className="text-xs text-muted-foreground">
-                      Discuss your project idea
+                    <h4 className="font-bold text-lg">Book a Consultation</h4>
+                    <p className="text-xs text-muted-foreground font-medium">
+                      Discuss your project idea & requirements
                     </p>
                   </div>
                 </div>
