@@ -6,7 +6,8 @@ import {
   TrendingUp, Users, Eye, Clock, Calendar, 
   Download, ArrowUpRight, ArrowDownRight, 
   Globe, Share2, MousePointer2, Activity,
-  Home as HomeIcon, BookOpen, MessageSquare, Settings, LogOut, Sparkles
+  Home as HomeIcon, BookOpen, MessageSquare, Settings, LogOut, Sparkles,
+  Cpu, Zap, Fingerprint, Rocket, ShieldCheck, Layers, BarChart3, LineChart
 } from "lucide-react";
 import api from "@/services/api";
 import SEO from "@/components/layout/SEO";
@@ -62,147 +63,153 @@ const Analytics = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-4">
-        <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary animate-pulse">
-          <Activity className="w-6 h-6" />
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-6">
+        <div className="w-16 h-16 rounded-[24px] bg-primary/10 flex items-center justify-center text-primary animate-pulse shadow-inner">
+          <Cpu className="w-8 h-8" />
         </div>
-        <p className="text-xs font-black uppercase tracking-[0.3em] text-muted-foreground animate-pulse">Synchronizing Telemetry...</p>
+        <p className="text-[10px] font-black uppercase tracking-[0.5em] text-muted-foreground animate-pulse">Synchronizing Telemetry Flux...</p>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground">
-      <SEO title="Expert Telemetry" description="Analyze your reach, engagement, and conversion metrics in real-time." />
+      <SEO title="System Analytics | Intelligence" description="Distilled telemetry stream and interaction velocity metrics across the DEVFOLIO node." />
       
       <div className="flex h-screen overflow-hidden">
-        {/* Sidebar */}
-        <aside className="w-72 border-r border-border/50 bg-secondary/10 flex flex-col p-8 relative">
-          <div className="flex items-center gap-3 mb-12">
-            <div className="w-10 h-10 rounded-2xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
-              <span className="text-primary-foreground font-black text-xl">A</span>
+        {/* Sidebar Protocol */}
+        <aside className="w-80 border-r border-border/40 bg-secondary/10 backdrop-blur-3xl flex flex-col p-10 relative z-20">
+          <div className="flex items-center gap-4 mb-14 animate-fade-in">
+            <div className="w-12 h-12 rounded-[18px] bg-primary flex items-center justify-center shadow-xl shadow-primary/20 transition-all hover:rotate-12">
+              <span className="text-primary-foreground font-black text-2xl">A</span>
             </div>
-            <div>
-              <h2 className="font-black text-lg tracking-tighter text-foreground leading-none">DEVFOLIO<span className="text-primary">.</span></h2>
-              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground opacity-60">Intelligence Node</p>
+            <div className="group cursor-pointer">
+              <h2 className="font-black text-xl tracking-tighter text-foreground leading-[0.85] uppercase">DEVFOLIO<span className="text-primary italic">.</span></h2>
+              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground opacity-40">Intelligence Node</p>
             </div>
           </div>
 
-          <div className="flex-1 space-y-10 overflow-y-auto pr-2 custom-scrollbar">
-            <div className="space-y-4">
-              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground mb-4">Core Directory</p>
-              <nav className="space-y-2">
+          <div className="flex-1 space-y-12 overflow-y-auto pr-2 custom-scrollbar animate-fade-in" style={{ animationDelay: '100ms' }}>
+            <div className="space-y-6">
+              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground ml-4 opacity-50 italic">Directory Interface</p>
+              <nav className="space-y-3">
                 {navItems.map((item) => (
                   <a 
                     key={item.label}
                     href={item.href} 
-                    className="flex items-center gap-4 px-4 py-3.5 rounded-2xl font-bold text-muted-foreground hover:bg-secondary/50 hover:text-foreground transition-all"
+                    className="flex items-center gap-4 px-6 py-4 rounded-[22px] font-black text-muted-foreground hover:bg-secondary/50 hover:text-foreground transition-all group"
                   >
-                    {item.icon}
-                    <span className="text-sm">{item.label}</span>
+                    <div className="group-hover:scale-110 transition-transform">{item.icon}</div>
+                    <span className="text-xs uppercase tracking-widest">{item.label}</span>
                   </a>
                 ))}
               </nav>
             </div>
 
-            <div className="space-y-4">
-              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground mb-4">Insights & Scale</p>
-              <nav className="space-y-2">
+            <div className="space-y-6">
+              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground ml-4 opacity-50 italic">Scale Vector</p>
+              <nav className="space-y-3">
                 {analysisItems.map((item) => (
                   <a 
                     key={item.label}
                     href={item.href} 
-                    className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl font-bold transition-all ${
+                    className={`flex items-center gap-4 px-6 py-4 rounded-[22px] font-black transition-all group ${
                       item.active 
-                        ? "bg-primary text-primary-foreground shadow-xl shadow-primary/20" 
+                        ? "bg-foreground text-background shadow-2xl shadow-foreground/10 translate-x-2" 
                         : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground"
                     }`}
                   >
-                    {item.icon}
-                    <span className="text-sm">{item.label}</span>
+                    <div className={item.active ? "text-primary" : "group-hover:scale-110 transition-transform"}>{item.icon}</div>
+                    <span className="text-xs uppercase tracking-widest">{item.label}</span>
                   </a>
                 ))}
               </nav>
             </div>
           </div>
 
-          <div className="pt-8 border-t border-border/50 space-y-4">
-            <div className="flex items-center gap-3 p-4 rounded-2xl bg-background shadow-inner border border-border/20">
-              <div className="w-10 h-10 rounded-xl bg-secondary/50 flex items-center justify-center font-black text-primary">
+          <div className="pt-10 border-t border-border/20 space-y-6 animate-fade-in" style={{ animationDelay: '200ms' }}>
+            <div className="flex items-center gap-4 p-5 rounded-[24px] bg-background/50 shadow-inner border border-border/20 group hover:border-primary/20 transition-all cursor-pointer">
+              <div className="w-12 h-12 rounded-2xl bg-secondary/50 flex items-center justify-center font-black text-primary text-xl shadow-sm group-hover:scale-105 transition-transform">
                 {user?.firstName?.[0] || 'U'}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-black truncate text-foreground">{user?.firstName || 'Creator'}</p>
-                <p className="text-[10px] font-medium truncate text-muted-foreground">{user?.email}</p>
+                <p className="text-sm font-black truncate text-foreground">{user?.firstName || 'Creator Node'}</p>
+                <p className="text-[10px] font-bold truncate text-muted-foreground opacity-60 uppercase tracking-widest">{user?.email?.split('@')[0]}</p>
               </div>
             </div>
             <Button
               onClick={handleLogout}
               variant="ghost"
-              className="w-full flex items-center gap-4 px-4 py-4 rounded-2xl font-bold text-destructive hover:bg-destructive/10 hover:text-destructive transition-all justify-start"
+              className="w-full flex items-center gap-4 px-6 py-4 rounded-[22px] font-black text-destructive/70 hover:bg-destructive/10 hover:text-destructive transition-all justify-start text-xs uppercase tracking-widest"
             >
               <LogOut className="w-5 h-5" />
-              <span className="text-sm">Disconnect</span>
+              Disconnect
             </Button>
           </div>
         </aside>
 
-        {/* Main Content */}
-        <main className="flex-1 overflow-y-auto p-12 bg-background relative">
-          <div className="absolute top-0 right-0 -z-10 w-1/2 h-1/2 bg-primary/2 opacity-30 blur-[150px] rounded-full" />
+        {/* Main Telemetry Core */}
+        <main className="flex-1 overflow-y-auto p-16 bg-background relative selection:bg-primary selection:text-primary-foreground">
+          {/* Background blurs */}
+          <div className="absolute top-0 right-0 -z-10 w-2/3 h-2/3 bg-primary/2 opacity-30 blur-[180px] rounded-full animate-pulse" />
           
-          <div className="max-w-6xl mx-auto space-y-12">
-            <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2 text-primary">
+          <div className="max-w-[1200px] mx-auto space-y-16">
+            <header className="flex flex-col md:flex-row md:items-center justify-between gap-8 animate-slide-up">
+              <div className="space-y-3">
+                <div className="flex items-center gap-3 text-primary animate-fade-in">
                   <Activity className="w-4 h-4" />
-                  <span className="text-xs font-black uppercase tracking-widest">Telemetry Stream</span>
+                  <span className="text-[10px] font-black uppercase tracking-[0.4em] italic">Intelligence Flux Stream</span>
                 </div>
-                <h1 className="text-5xl font-black tracking-tight text-foreground leading-tight">
-                  Expert <span className="text-primary italic">Telemetry.</span>
+                <h1 className="text-6xl font-black tracking-tighter text-foreground leading-[0.9] italic">
+                  System <span className="text-primary NOT-italic">Analytics.</span>
                 </h1>
               </div>
-              <Button variant="outline" className="rounded-xl px-6 py-6 font-bold bg-secondary/30 border-border/50 gap-2 hover:bg-secondary/50 transition-all">
-                <Download className="w-4 h-4" />
+              <Button variant="outline" className="h-16 rounded-[22px] px-8 font-black bg-secondary/10 border-border/40 gap-4 hover:bg-foreground hover:text-background transition-all shadow-2xl backdrop-blur-md uppercase tracking-[0.2em] text-[10px] italic">
+                <Download className="w-5 h-5" />
                 Capture Intel (Export)
               </Button>
             </header>
 
-            {/* Strategy Selectors */}
-            <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-secondary/30 border border-border/50 w-fit">
-              {["7D", "30D", "3M", "6M"].map((range) => (
-                <Button
-                  key={range}
-                  size="sm"
-                  onClick={() => setTimeRange(range)}
-                  className={`px-6 py-2.5 rounded-xl font-black text-xs transition-all ${
-                    timeRange === range 
-                      ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
-                      : "bg-transparent text-muted-foreground hover:bg-secondary/50"
-                  }`}
-                >
-                  {range}
-                </Button>
-              ))}
+            {/* Strategy Selectors Matrix */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 animate-slide-up" style={{ animationDelay: '100ms' }}>
+              <div className="flex items-center gap-3 p-2 rounded-[24px] bg-secondary/10 border border-border/40 backdrop-blur-3xl w-fit shadow-inner">
+                {["7D", "30D", "3M", "6M"].map((range) => (
+                  <Button
+                    key={range}
+                    onClick={() => setTimeRange(range)}
+                    className={`h-12 px-8 rounded-[18px] font-black text-[10px] uppercase tracking-widest transition-all ${
+                      timeRange === range 
+                        ? "bg-foreground text-background shadow-xl shadow-foreground/10 scale-105 border-none" 
+                        : "bg-transparent text-muted-foreground hover:bg-secondary/50"
+                    }`}
+                  >
+                    {range}
+                  </Button>
+                ))}
+              </div>
+              <div className="flex items-center gap-4 text-muted-foreground/40 italic">
+                 <ShieldCheck className="w-4 h-4" />
+                 <span className="text-[10px] font-black uppercase tracking-[0.3em]">Verified End-to-End Metrics</span>
+              </div>
             </div>
 
-            {/* Core Metrics Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {/* Core Metrics Grid Fabric */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 animate-slide-up" style={{ animationDelay: '200ms' }}>
               {[
-                { label: "Total Reach", val: analytics.totalViews.toLocaleString(), sub: "+12.5%", trend: "up", icon: <Eye className="w-4 h-4" /> },
-                { label: "Unique Nodes", val: analytics.uniqueVisitors.toLocaleString(), sub: "+8.2%", trend: "up", icon: <Users className="w-4 h-4" /> },
-                { label: "Session Pulsation", val: `${analytics.avgSessionDuration}m`, sub: "-2.4%", trend: "down", icon: <Clock className="w-4 h-4" /> },
-                { label: "Conversion Rate", val: "3.2%", sub: "+0.5%", trend: "up", icon: <TrendingUp className="w-4 h-4" /> },
+                { label: "Total Reach", val: analytics.totalViews.toLocaleString(), sub: "+12.5%", trend: "up", icon: <Eye className="w-5 h-5" /> },
+                { label: "Unique Nodes", val: analytics.uniqueVisitors.toLocaleString(), sub: "+8.2%", trend: "up", icon: <Layers className="w-5 h-5" /> },
+                { label: "Session Pulsation", val: `${analytics.avgSessionDuration}m`, sub: "-2.4%", trend: "down", icon: <Activity className="w-5 h-5" /> },
+                { label: "Conversion Rate", val: "3.2%", sub: "+0.5%", trend: "up", icon: <Zap className="w-5 h-5" /> },
               ].map((metric, i) => (
-                <Card key={i} className="p-8 rounded-[32px] bg-secondary/10 border-border/50 group hover:border-primary/30 transition-all relative overflow-hidden">
-                  <div className="flex items-center justify-between mb-4">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">{metric.label}</p>
-                    <div className="p-1.5 rounded-lg bg-primary/10 text-primary">{metric.icon}</div>
+                <Card key={i} className="p-10 rounded-[44px] bg-secondary/10 border-border/40 backdrop-blur-3xl group hover:border-primary/40 transition-all duration-700 relative overflow-hidden shadow-2xl flex flex-col justify-between h-56">
+                  <div className="flex items-center justify-between">
+                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground italic opacity-50">{metric.label}</p>
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform">{metric.icon}</div>
                   </div>
-                  <div className="space-y-1">
-                    <p className="text-3xl font-black tracking-tight text-foreground">{metric.val}</p>
-                    <div className={`flex items-center gap-1 text-[10px] font-black uppercase tracking-widest ${metric.trend === 'up' ? 'text-green-500' : 'text-red-500'}`}>
-                      {metric.trend === 'up' ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
+                  <div className="space-y-2">
+                    <p className="text-4xl font-black tracking-tighter text-foreground italic leading-none">{metric.val}</p>
+                    <div className={`flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] italic ${metric.trend === 'up' ? 'text-green-500' : 'text-red-500'}`}>
+                      <div className={`w-1.5 h-1.5 rounded-full ${metric.trend === 'up' ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]' : 'bg-red-500'}`} />
                       {metric.sub}
                     </div>
                   </div>
@@ -210,39 +217,43 @@ const Analytics = () => {
               ))}
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-8">
-              {/* Intelligent Lists */}
-              <Card className="p-10 rounded-[40px] bg-secondary/10 border-border/50 space-y-8">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xl font-black tracking-tight flex items-center gap-3">
-                    <Sparkles className="w-5 h-5 text-primary" />
-                    High-Velocity Segments
-                  </h3>
-                  <Badge variant="secondary" className="rounded-lg font-black bg-primary/10 text-primary border-none">TOP NODES</Badge>
+            <div className="grid lg:grid-cols-2 gap-10 animate-slide-up" style={{ animationDelay: '300ms' }}>
+              {/* Intelligent Segment Lists */}
+              <Card className="p-12 rounded-[56px] bg-secondary/10 border-border/40 backdrop-blur-3xl space-y-10 shadow-2xl relative overflow-hidden group">
+                <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none group-hover:rotate-12 transition-transform">
+                   <BarChart3 className="w-40 h-40" />
                 </div>
-                <div className="space-y-4">
+                <div className="flex items-center justify-between relative z-10">
+                  <div className="space-y-1">
+                    <h3 className="text-2xl font-black tracking-tighter italic uppercase flex items-center gap-4">
+                      <Sparkles className="w-6 h-6 text-primary" />
+                      High-Velocity Segments
+                    </h3>
+                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground opacity-40 italic ml-10">Active Interaction Nodes</p>
+                  </div>
+                  <Badge className="rounded-xl px-4 py-1.5 font-black bg-foreground/10 text-foreground border-none backdrop-blur-md text-[10px] tracking-widest uppercase">INTEL</Badge>
+                </div>
+                <div className="space-y-4 relative z-10">
                   {analytics.topPages.length === 0 ? (
-                    <div className="text-center py-12 space-y-4">
-                      <div className="w-12 h-12 rounded-full bg-secondary/50 flex items-center justify-center mx-auto opacity-20">
-                        <Activity className="w-6 h-6" />
-                      </div>
-                      <p className="text-sm font-bold text-muted-foreground">Insufficient segment telemetry.</p>
+                    <div className="text-center py-20 space-y-6 rounded-[32px] bg-background/20 border border-dashed border-border/50">
+                      <Activity className="w-16 h-16 text-muted-foreground/20 mx-auto animate-pulse" />
+                      <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground italic">Insufficient segment telemetry mapping.</p>
                     </div>
                   ) : (
                     analytics.topPages.map((page: any, index: number) => (
-                      <div key={index} className="flex items-center justify-between p-4 rounded-2xl bg-background/50 border border-border/50 group hover:border-primary/20 transition-all">
-                        <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 rounded-xl bg-secondary/50 flex items-center justify-center text-xs font-black text-primary border border-border/50">
+                      <div key={index} className="flex items-center justify-between p-6 rounded-[28px] bg-background/50 border border-border/20 group/item hover:border-primary/30 transition-all shadow-inner backdrop-blur-xl">
+                        <div className="flex items-center gap-6">
+                          <div className="w-12 h-12 rounded-2xl bg-secondary/80 flex items-center justify-center text-xs font-black text-primary border border-border/20 shadow-inner group-hover/item:scale-110 transition-transform">
                             {index + 1}
                           </div>
                           <div>
-                            <p className="font-black text-sm text-foreground">{page.name}</p>
-                            <p className="text-[10px] font-medium text-muted-foreground tracking-wider">{page.path}</p>
+                            <p className="font-black text-lg text-foreground italic uppercase tracking-tighter">{page.name}</p>
+                            <p className="text-[10px] font-bold text-muted-foreground opacity-50 uppercase tracking-[0.2em]">{page.path}</p>
                           </div>
                         </div>
                         <div className="text-right">
-                          <p className="font-black text-foreground">{page.views.toLocaleString()}</p>
-                          <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">INTEL PULSE</p>
+                          <p className="font-black text-2xl text-foreground italic leading-none">{page.views.toLocaleString()}</p>
+                          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-40">PULSE</p>
                         </div>
                       </div>
                     ))
@@ -250,37 +261,46 @@ const Analytics = () => {
                 </div>
               </Card>
 
-              <Card className="p-10 rounded-[40px] bg-secondary/10 border-border/50 space-y-8">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xl font-black tracking-tight flex items-center gap-3">
-                    <Globe className="w-5 h-5 text-primary" />
-                    Vectors of Origin
-                  </h3>
-                  <Badge variant="secondary" className="rounded-lg font-black bg-primary/10 text-primary border-none">TRAFFIC</Badge>
+              {/* Vectors of Origin Protocol */}
+              <Card className="p-12 rounded-[56px] bg-secondary/10 border-border/40 backdrop-blur-3xl space-y-12 shadow-2xl relative overflow-hidden group">
+                <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none group-hover:scale-110 transition-transform">
+                   <Globe className="w-40 h-40" />
                 </div>
-                <div className="space-y-6">
+                <div className="flex items-center justify-between relative z-10">
+                  <div className="space-y-1">
+                    <h3 className="text-2xl font-black tracking-tighter italic uppercase flex items-center gap-4">
+                      <Fingerprint className="w-6 h-6 text-primary" />
+                      Vectors of Origin
+                    </h3>
+                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground opacity-40 italic ml-10">Global Distribution Protocol</p>
+                  </div>
+                  <Badge className="rounded-xl px-4 py-1.5 font-black bg-foreground/10 text-foreground border-none backdrop-blur-md text-[10px] tracking-widest uppercase">TRAFFIC</Badge>
+                </div>
+                <div className="space-y-8 relative z-10">
                   {analytics.trafficSources.length === 0 ? (
-                    <div className="text-center py-12 space-y-4">
-                      <div className="w-12 h-12 rounded-full bg-secondary/50 flex items-center justify-center mx-auto opacity-20">
-                        <Share2 className="w-6 h-6" />
-                      </div>
-                      <p className="text-sm font-bold text-muted-foreground">Calibration required for vector mapping.</p>
+                    <div className="text-center py-20 space-y-6 rounded-[32px] bg-background/20 border border-dashed border-border/50">
+                      <Share2 className="w-16 h-16 text-muted-foreground/20 mx-auto animate-pulse" />
+                      <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground italic">Calibration required for vector mapping flux.</p>
                     </div>
                   ) : (
                     analytics.trafficSources.map((source: any, index: number) => (
-                      <div key={index} className="space-y-3">
-                        <div className="flex items-center justify-between px-1">
-                          <div className="flex items-center gap-2">
-                            <Share2 className="w-3.5 h-3.5 text-primary" />
-                            <span className="text-xs font-black uppercase tracking-widest opacity-80">{source.name}</span>
+                      <div key={index} className="space-y-4 group/vector">
+                        <div className="flex items-center justify-between px-2">
+                          <div className="flex items-center gap-4">
+                            <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover/vector:scale-110 transition-transform">
+                               <Share2 className="w-4 h-4" />
+                            </div>
+                            <span className="text-[10px] font-black uppercase tracking-[0.4em] italic opacity-80">{source.name} Vector</span>
                           </div>
-                          <span className="text-xs font-black text-primary">{source.percentage}%</span>
+                          <span className="text-xl font-black text-foreground italic">{source.percentage}%</span>
                         </div>
-                        <div className="h-2 w-full bg-secondary/50 rounded-full overflow-hidden border border-border/50 p-0.5">
+                        <div className="h-4 w-full bg-secondary/80 rounded-full overflow-hidden border border-border/20 p-1.5 backdrop-blur-md shadow-inner">
                           <div
-                            className="bg-primary h-full rounded-full shadow-lg shadow-primary/20 transition-all duration-1000"
+                            className="bg-primary h-full rounded-full shadow-[0_0_15px_rgba(var(--primary-rgb),.4)] transition-all duration-1000 relative overflow-hidden"
                             style={{ width: `${source.percentage}%` }}
-                          />
+                          >
+                             <div className="absolute inset-0 bg-white/20 animate-pulse" />
+                          </div>
                         </div>
                       </div>
                     ))
@@ -289,33 +309,45 @@ const Analytics = () => {
               </Card>
             </div>
 
-            {/* Advanced Telemetry Visualization */}
-            <Card className="p-10 rounded-[40px] bg-foreground text-background border-none relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none group-hover:scale-110 transition-transform">
-                <Activity className="w-64 h-64 text-primary" />
+            {/* Advanced Telemetry Visualization Core */}
+            <Card className="p-16 rounded-[64px] bg-foreground text-background border-none relative overflow-hidden group shadow-[0_50px_100px_-20px_rgba(0,0,0,.5)]">
+              {/* Mesh background for the dark card */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-transparent opacity-40 group-hover:opacity-60 transition-opacity" />
+              <div className="absolute top-0 right-0 p-16 opacity-5 pointer-events-none group-hover:scale-125 group-hover:rotate-12 transition-transform duration-1000">
+                <LineChart className="w-[400px] h-[400px] text-primary" />
               </div>
-              <div className="relative z-10 space-y-8">
-                <div className="flex items-center justify-between">
-                  <div className="space-y-1">
-                    <h3 className="text-2xl font-black tracking-tight">Real-time Node Activity</h3>
-                    <p className="text-background/60 font-medium">Monitoring global interaction pulses across all verified sectors.</p>
-                  </div>
-                  <div className="hidden md:flex gap-4">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                      <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-60">Live Stream</span>
+              <div className="relative z-10 space-y-12">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3 text-primary animate-pulse">
+                      <Rocket className="w-6 h-6" />
+                      <span className="text-[10px] font-black uppercase tracking-[0.5em] italic">Neural Flow Synchronization</span>
                     </div>
+                    <h3 className="text-5xl font-black tracking-tighter italic uppercase leading-none">Real-time Node Activity</h3>
+                    <p className="text-background/50 font-bold italic uppercase tracking-widest text-xs ml-1 opacity-70">Global interaction pulses monitored across all verified platform sectors.</p>
                   </div>
+                  <Button className="h-16 rounded-[22px] px-10 font-black bg-primary text-primary-foreground border-none hover:scale-105 active:scale-95 transition-all shadow-2xl">
+                     Initialize Stream
+                  </Button>
                 </div>
 
-                <div className="h-64 rounded-3xl bg-background/5 border border-background/10 flex flex-col items-center justify-center text-center space-y-4 backdrop-blur-sm relative overflow-hidden">
-                   {/* Background grid for "chart" feel */}
-                   <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+                <div className="h-96 rounded-[48px] bg-background/5 border border-background/10 flex flex-col items-center justify-center text-center space-y-8 backdrop-blur-3xl relative overflow-hidden shadow-inner group/chart">
+                   {/* Background neural grid */}
+                   <div className="absolute inset-0 opacity-5 pointer-events-none group-hover/chart:opacity-10 transition-opacity duration-1000" style={{ backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
                    
-                   <TrendingUp className="w-16 h-16 text-primary opacity-20" />
-                   <div className="space-y-1">
-                     <p className="text-sm font-black uppercase tracking-widest text-background/80">Pending Visualization</p>
-                     <p className="text-xs font-medium text-background/40">Telemetric density is currently establishing equilibrium.</p>
+                   <div className="relative">
+                      <div className="absolute inset-0 bg-primary/20 blur-[60px] animate-pulse rounded-full" />
+                      <Activity className="w-24 h-24 text-primary relative z-10 animate-pulse" />
+                   </div>
+                   
+                   <div className="space-y-2 relative z-10">
+                     <p className="text-2xl font-black uppercase tracking-[0.4em] text-background italic">Telemetric Density Establishing</p>
+                     <div className="flex items-center justify-center gap-4 opacity-40">
+                        <div className="w-12 h-1 bg-background/20 rounded-full overflow-hidden">
+                           <div className="h-full bg-primary animate-loading-bar w-full" />
+                        </div>
+                        <p className="text-[10px] font-black uppercase tracking-widest">Calibrating Flow Vectors...</p>
+                     </div>
                    </div>
                 </div>
               </div>
