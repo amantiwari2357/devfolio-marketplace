@@ -1,85 +1,121 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Card } from "@/components/ui/card";
+import { Scale, ShieldCheck, FileText, Info, Database } from "lucide-react";
+import SEO from "@/components/layout/SEO";
 
 const Terms = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground">
+      <SEO 
+        title="Terms of Service" 
+        description="Read the terms and conditions for using Devfolio Marketplace. We ensure a fair and transparent environment for all creators." 
+      />
       <Header />
-      <main className="pt-24 pb-16">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <h1 className="text-5xl font-bold mb-8 text-foreground">Terms of Service</h1>
-          <p className="text-muted-foreground mb-8">Last updated: January 2025</p>
+      
+      <main className="pt-32 pb-24 overflow-hidden">
+        {/* Background Accents */}
+        <div className="fixed top-0 right-0 -z-10 w-1/3 h-1/3 bg-primary/5 blur-[120px] pointer-events-none rounded-full" />
+        <div className="fixed bottom-0 left-0 -z-10 w-1/3 h-1/3 bg-primary/5 blur-[120px] pointer-events-none rounded-full" />
 
-          <Card className="p-8 bg-card border-border">
-            <div className="space-y-8 text-foreground">
-              <section>
-                <h2 className="text-2xl font-bold mb-4">1. Acceptance of Terms</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  By accessing and using devfolio-marketplace's services, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to these terms, please do not use our services.
+        <div className="container mx-auto px-4 max-w-5xl relative">
+          <div className="text-center max-w-3xl mx-auto mb-20 space-y-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/50 border border-border/50 text-xs font-black uppercase tracking-[0.2em] text-primary">
+              <Scale className="w-4 h-4" />
+              Legal Framework
+            </div>
+            <h1 className="text-5xl md:text-6xl font-black tracking-tight text-foreground leading-tight">
+              Terms of <span className="text-primary italic">Service.</span>
+            </h1>
+            <p className="text-lg text-muted-foreground font-medium">
+              Last updated: <span className="text-foreground font-bold">January 15, 2025</span>
+            </p>
+          </div>
+
+          <Card className="p-8 md:p-16 rounded-[40px] bg-secondary/30 border-border/50 shadow-2xl shadow-primary/5 relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none group-hover:rotate-12 transition-transform duration-700">
+              <FileText className="w-64 h-64 text-primary" />
+            </div>
+
+            <div className="relative z-10 space-y-12 text-foreground">
+              <section className="space-y-4">
+                <h2 className="text-2xl font-black tracking-tight flex items-center gap-3">
+                  <span className="text-primary">01.</span> Acceptance of Terms
+                </h2>
+                <div className="p-6 rounded-2xl bg-background/50 border border-border/50">
+                  <p className="text-muted-foreground font-medium leading-relaxed">
+                    By accessing and using <span className="text-foreground font-bold">DEVFOLIO.</span> services, you accept and agree to be bound by the terms and provision of this agreement. Our ecosystem is built on mutual trust and professional integrity.
+                  </p>
+                </div>
+              </section>
+
+              <section className="space-y-4">
+                <h2 className="text-2xl font-black tracking-tight flex items-center gap-3">
+                  <span className="text-primary">02.</span> Scope of Service
+                </h2>
+                <p className="text-muted-foreground font-medium leading-relaxed mb-6">
+                  Our platform architecturally facilitates connections between global experts and their audience through:
+                </p>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {[
+                    "One-on-one professional mentoring",
+                    "High-engagement group webinars",
+                    "Structured digital course delivery",
+                    "Encrypted priority messaging"
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-3 p-4 rounded-xl bg-primary/5 border border-primary/10">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                      <span className="text-sm font-bold text-foreground/80">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section className="space-y-4">
+                <h2 className="text-2xl font-black tracking-tight flex items-center gap-3">
+                  <span className="text-primary">03.</span> Identity & Security
+                </h2>
+                <div className="flex gap-4 p-6 rounded-2xl bg-amber-500/5 border border-amber-500/20">
+                  <div className="mt-1">
+                    <ShieldCheck className="w-5 h-5 text-amber-500" />
+                  </div>
+                  <p className="text-muted-foreground font-medium leading-relaxed">
+                    You are solely responsible for maintaining the cryptographic integrity of your account credentials. <span className="text-foreground font-bold text-amber-600">DEVFOLIO.</span> must be notified immediately of any unauthorized access detection.
+                  </p>
+                </div>
+              </section>
+
+              <section className="space-y-4">
+                <h2 className="text-2xl font-black tracking-tight flex items-center gap-3">
+                  <span className="text-primary">04.</span> Financial Protocol
+                </h2>
+                <p className="text-muted-foreground font-medium leading-relaxed">
+                  All transactions are executed through decentralized and secure third-party processors. Commission structures are plan-dependent and subject to the selected tier at the time of session creation.
                 </p>
               </section>
 
-              <section>
-                <h2 className="text-2xl font-bold mb-4">2. Use of Service</h2>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  devfolio-marketplace provides a platform for creators to connect with their audience through various services including but not limited to:
-                </p>
-                <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4">
-                  <li>One-on-one mentoring sessions</li>
-                  <li>Group webinars and workshops</li>
-                  <li>Digital courses and content</li>
-                  <li>Priority messaging services</li>
-                </ul>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold mb-4">3. User Accounts</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account. You agree to notify us immediately of any unauthorized use of your account.
+              <section className="space-y-4">
+                <h2 className="text-2xl font-black tracking-tight flex items-center gap-3">
+                  <span className="text-primary">05.</span> Intellectual Property
+                </h2>
+                <p className="text-muted-foreground font-medium leading-relaxed">
+                  Experts retain 100% ownership of their knowledge assets. By utilizing our infrastructure, you grant <span className="text-foreground font-bold">DEVFOLIO.</span> a non-exclusive, global license to optimize, display, and distribute said assets within the platform boundaries.
                 </p>
               </section>
 
-              <section>
-                <h2 className="text-2xl font-bold mb-4">4. Payment Terms</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  All payments are processed securely through our payment partners. Platform fees and commissions vary based on your subscription plan. Creators are responsible for any applicable taxes on their earnings.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold mb-4">5. Content Policy</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  Creators retain ownership of their content but grant devfolio-marketplace a license to host, display, and distribute the content through our platform. All content must comply with our community guidelines and applicable laws.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold mb-4">6. Cancellation and Refunds</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  Refund policies are set by individual creators for their services. Platform subscriptions can be cancelled at any time, with no refunds for partial months.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold mb-4">7. Limitation of Liability</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  devfolio-marketplace acts as a platform facilitating connections between creators and users. We are not responsible for the quality, accuracy, or legality of content provided by creators.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold mb-4">8. Changes to Terms</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  We reserve the right to modify these terms at any time. We will notify users of significant changes via email or platform notification.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-bold mb-4">9. Contact Information</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  For questions about these terms, please contact us at legal@devfolio-marketplace.io
-                </p>
+              <section className="pt-12 border-t border-border/50">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                  <div className="space-y-2">
+                    <h3 className="text-lg font-black tracking-tight">Legal Inquiry?</h3>
+                    <p className="text-muted-foreground font-medium">Reach our compliance team at <a href="mailto:legal@devfolio.io" className="text-primary hover:underline">legal@devfolio.io</a></p>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 rounded-2xl bg-secondary/50 text-muted-foreground">
+                      <Database className="w-5 h-5" />
+                    </div>
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground max-w-[200px]">Your data is your legacy. We are its guardians.</p>
+                  </div>
+                </div>
               </section>
             </div>
           </Card>
