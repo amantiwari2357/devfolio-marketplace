@@ -6,6 +6,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { Eye, EyeOff, ShieldCheck } from "lucide-react";
 import { authAPI } from "@/services/auth";
 import { toast } from "sonner";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 import SEO from "@/components/layout/SEO";
 import logo from "../../public/Images/logo.png";
 

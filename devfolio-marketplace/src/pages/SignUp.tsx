@@ -8,6 +8,8 @@ import { Card } from "@/components/ui/card";
 import { authAPI } from "@/services/auth";
 import { toast } from "sonner";
 import SEO from "@/components/layout/SEO";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 import logo from "../../public/Images/logo.png";
 
 const SignUp = () => {
