@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import api from "@/services/api";
 import SEO from "@/components/layout/SEO";
+import logo from "../../public/Images/logo.png";
 
 const CreateCourse = () => {
   const [user, setUser] = useState(null);
@@ -72,13 +73,9 @@ const CreateCourse = () => {
         {/* Sidebar Protocol */}
         <aside className="w-80 border-r border-border/40 bg-secondary/10 backdrop-blur-3xl flex flex-col p-10 relative shrink-0 z-20">
           <div className="flex items-center gap-4 mb-14 animate-fade-in">
-            <div className="w-12 h-12 rounded-[18px] bg-primary flex items-center justify-center shadow-2xl shadow-primary/30 transition-all hover:rotate-12">
-              <span className="text-primary-foreground font-black text-2xl italic">I</span>
-            </div>
-            <div className="group cursor-pointer">
-              <h2 className="font-black text-xl tracking-tighter text-foreground leading-[0.85] uppercase italic">DEVFOLIO<span className="text-primary NOT-italic">.</span></h2>
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground opacity-40">Init Node</p>
-            </div>
+            <a href="/" className="group cursor-pointer block">
+              <img src={logo} alt="Devfolio Logo" className="h-24 w-auto group-hover:scale-105 transition-transform duration-300" />
+            </a>
           </div>
 
           <div className="flex-1 space-y-12 overflow-y-auto pr-2 custom-scrollbar animate-fade-in" style={{ animationDelay: '100ms' }}>
