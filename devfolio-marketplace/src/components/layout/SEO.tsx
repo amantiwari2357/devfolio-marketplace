@@ -14,6 +14,16 @@ const SEO = ({ title, description = DEFAULT_DESCRIPTION, keywords = DEFAULT_KEYW
     // Set title
     const fullTitle = `${title} | Devfolio Marketplace`;
     document.title = fullTitle;
+
+    // Set Canonical URL
+    const canonicalUrl = window.location.origin + window.location.pathname;
+    let canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalLink);
+    }
+    canonicalLink.setAttribute('href', canonicalUrl);
     
     // Set meta description
     let metaDescription = document.querySelector('meta[name="description"]');
