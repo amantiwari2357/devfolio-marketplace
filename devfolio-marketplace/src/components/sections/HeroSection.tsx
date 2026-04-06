@@ -97,7 +97,7 @@ const HeroSection = () => {
             </h1>
 
             <p className="text-xl text-muted-foreground mb-8">
-            Helping individuals and brands build modern, responsive websites and powerful digital solutions — all tailored to their business goals.            </p>
+              Helping individuals and brands build modern, responsive websites and powerful digital solutions — all tailored to their business goals.            </p>
 
             <Button
               size="lg"
@@ -108,7 +108,7 @@ const HeroSection = () => {
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
 
-            <div className="mt-8 space-y-2">
+            {/* <div className="mt-8 space-y-2">
               <div className="flex items-center gap-2">
                 <div className="flex">
                   {[1, 2, 3, 4, 5].map((i) => (
@@ -118,7 +118,7 @@ const HeroSection = () => {
                 <span className="text-sm font-medium">100k+ reviews</span>
               </div>
               <p className="text-sm text-muted-foreground">1mn+ professionals</p>
-            </div>
+            </div> */}
           </div>
 
           <ProfileCards />
