@@ -1,48 +1,35 @@
 import { Card } from "@/components/ui/card";
-
 const profiles = [
-  { 
-    name: "Krishna Upadhyay", 
-    role: "DevOps Engineer", 
-    badge: "TCS", 
+  {
+    name: "Aman Tiwari",
+    role: "DevOps Engineer",
+    badge: "100acress.com",
     color: "bg-card-green",
-    linkedin: "https://www.linkedin.com/in/krishna-upadhyay-12345678/"
+    linkedin: "https://www.linkedin.com/in/aman-tiwari-7a87323b4?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
   },
-  { 
-    name: "Vaibhav Koushik", 
-    role: "Full Stack Developer", 
-    badge: "scaller", 
+  {
+    name: "Aman Mishra",
+    role: "Full Stack Developer",
+    badge: "75way Technology",
     color: "bg-card-pink",
-    linkedin: "https://www.linkedin.com/in/vaibhav-koushik-12345678/"
+    linkedin: "www.linkedin.com/in/iamanmishra"
   },
-  { 
-    name: "Aman Tiwari", 
-    role: "Full Stack Developer", 
-    badge: "100acress.com", 
+  {
+    name: "Vivek Jhaa",
+    role: "Full Stack Developer",
+    badge: "100acress.com",
     color: "bg-card-yellow",
-    linkedin: "https://www.linkedin.com/in/aman-tiwari-12345678/"
+    linkedin: ""
   },
-  { 
-    name: "Aman Mishra", 
-    role: "Full Stack Developer", 
-    badge: "75way technologies", 
-    color: "bg-card-pink",
-    linkedin: "https://www.linkedin.com/in/priya-nair-12345678/"
-  },
-  { 
-    name: "Shivam Rajput", 
-    role: "Sco Expert", 
-    badge: "100acress.com", 
+
+  {
+    name: "Shivam Rajput",
+    role: "Sco Expert",
+    badge: "100acress.com",
     color: "bg-card-green",
     linkedin: "https://www.linkedin.com/in/shivam-rajput-12345678/"
   },
-  { 
-    name: "Simran Kaur", 
-    role: "Business Consultant", 
-    badge: "IIM Ahmedabad", 
-    color: "bg-card-yellow",
-    linkedin: "https://www.linkedin.com/in/simran-kaur-12345678/"
-  },
+
 ];
 
 const ProfileCards = () => {
@@ -50,7 +37,7 @@ const ProfileCards = () => {
     <div className="relative">
       <div className="grid grid-cols-2 gap-4">
         {profiles.map((profile, idx) => (
-          <Card 
+          <Card
             key={idx}
             className={`${profile.color} border-none p-4 hover:scale-105 transition-transform duration-300 shadow-sm cursor-pointer`}
             onClick={() => window.open(profile.linkedin, '_blank', 'noopener,noreferrer')}
