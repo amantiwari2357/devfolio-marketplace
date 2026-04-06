@@ -3,10 +3,11 @@ import Footer from "@/components/layout/Footer";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Search as SearchIcon, Filter } from "lucide-react";
+import { Search as SearchIcon, Filter, Rocket, Sparkles, Activity, Layers, Command } from "lucide-react";
 import ProjectCard from "@/components/cards/ProjectCard";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import SEO from "@/components/layout/SEO";
 
 const Search = () => {
   const navigate = useNavigate();
@@ -27,10 +28,11 @@ const Search = () => {
       const response = await fetch('https://devfolio-marketplace-1.onrender.com/api/projects/all');
       const data = await response.json();
       
-      // Transform backend data to match ProjectCard props
       const transformedProjects = (data.projects || []).map((project: any) => ({
         id: project._id,
+        _id: project._id,
         name: project.title,
+        title: project.title,
         description: project.description,
         category: project.category,
         icon: project.icon,
@@ -39,13 +41,13 @@ const Search = () => {
         technologies: project.technologies || [],
         timeline: project.timeline,
         priceRange: project.priceRange,
-        liveUrl: project.liveUrl
+        liveUrl: project.liveUrl,
+        price: project.price
       }));
       
       setProjects(transformedProjects);
       setFilteredProjects(transformedProjects);
       
-      // Extract unique categories
       const uniqueCategories = ["All", ...new Set(transformedProjects.map((p: any) => p.category))];
       setCategories(uniqueCategories as string[]);
     } catch (error) {
@@ -70,7 +72,6 @@ const Search = () => {
   const filterProjects = (query: string, category: string) => {
     let filtered = projects;
 
-    // Filter by search query
     if (query) {
       filtered = filtered.filter(
         (project) =>
@@ -82,7 +83,6 @@ const Search = () => {
       );
     }
 
-    // Filter by category
     if (category !== "All") {
       filtered = filtered.filter((project) => project.category === category);
     }
@@ -91,63 +91,95 @@ const Search = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground">
+      <SEO title="Search Network | Directory" description="Explore the decentralized ecosystem of high-fidelity projects and services." />
       <Header />
-      <main className="pt-24 pb-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto mb-12">
-            <h1 className="text-5xl font-bold mb-6 text-center text-foreground">
-              Browse Projects
+      
+      <main className="pt-32 pb-32 relative overflow-hidden">
+        {/* Background Accents */}
+        <div className="absolute top-0 right-0 -z-10 w-1/2 h-1/2 bg-primary/2 opacity-30 blur-[150px] rounded-full" />
+        <div className="absolute bottom-0 left-0 -z-10 w-1/3 h-1/3 bg-secondary/2 opacity-20 blur-[120px] rounded-full" />
+        
+        <div className="container mx-auto px-6 max-w-[1400px]">
+          <div className="max-w-4xl mx-auto mb-20 text-center space-y-6">
+            <div className="flex items-center justify-center gap-3 mb-4 animate-fade-in">
+               <span className="px-5 py-2 rounded-full bg-secondary/10 border border-border/50 text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground flex items-center gap-2">
+                  <Activity className="w-3.5 h-3.5 text-primary" />
+                  Live Directory
+               </span>
+            </div>
+            
+            <h1 className="text-7xl font-black tracking-tighter text-foreground leading-[1] italic animate-slide-up">
+               SEARCH <span className="text-muted-foreground/30 font-normal">DIRECTORY.</span>
             </h1>
-            <p className="text-xl text-muted-foreground text-center mb-8">
-              Discover amazing projects across various categories
+            <p className="text-xl font-medium text-muted-foreground italic leading-relaxed max-w-2xl mx-auto animate-fade-in">
+               Discover authorized modules, design systems, and technical architectures across the network.
             </p>
 
-            <div className="flex gap-4 mb-6">
-              <div className="relative flex-1">
-                <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                <Input
-                  placeholder="Search by name, expertise, or skill..."
-                  className="pl-12 h-14 text-lg"
-                  value={searchQuery}
-                  onChange={(e) => handleSearch(e.target.value)}
-                />
+            <div className="relative mt-12 group max-w-3xl mx-auto animate-fade-in">
+              <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-secondary/10 rounded-[36px] blur-xl opacity-0 group-hover:opacity-100 transition-all duration-700" />
+              <div className="relative flex gap-4 p-2 rounded-[32px] bg-secondary/10 border border-border/50 backdrop-blur-2xl shadow-2xl">
+                <div className="relative flex-1 group/input">
+                  <SearchIcon className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-primary drop-shadow-sm transition-transform group-hover/input:scale-110" />
+                  <Input
+                    placeholder="Search by module, logic, or architect..."
+                    className="pl-16 h-16 rounded-2xl bg-background border-none focus:ring-0 shadow-inner text-lg font-bold placeholder:font-medium placeholder:italic text-foreground"
+                    value={searchQuery}
+                    onChange={(e) => handleSearch(e.target.value)}
+                  />
+                  <div className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-1 opacity-20 pointer-events-none group-focus-within:opacity-0 transition-opacity">
+                     <Command className="w-3.5 h-3.5" />
+                     <span className="text-[10px] font-black uppercase">K</span>
+                  </div>
+                </div>
+                <Button size="lg" className="rounded-2xl h-16 px-10 bg-primary text-primary-foreground font-black text-xs uppercase tracking-widest gap-3 shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
+                  <Filter className="w-4 h-4" />
+                  Filters
+                </Button>
               </div>
-              <Button size="lg" variant="outline" className="gap-2">
-                <Filter className="w-5 h-5" />
-                Filters
-              </Button>
             </div>
 
-            <div className="flex flex-wrap gap-2 mb-8">
+            <div className="flex flex-wrap items-center justify-center gap-3 mt-10 animate-fade-in">
               {categories.map((category) => (
-                <Button
+                <button
                   key={category}
-                  variant={category === selectedCategory ? "default" : "outline"}
-                  size="sm"
                   onClick={() => handleCategoryFilter(category)}
+                  className={`px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${
+                    category === selectedCategory 
+                    ? "bg-foreground text-background shadow-lg scale-105" 
+                    : "bg-secondary/10 text-muted-foreground border border-border/40 hover:bg-secondary/20"
+                  }`}
                 >
                   {category}
-                </Button>
+                </button>
               ))}
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 animate-fade-in">
             {loading ? (
-              <div className="col-span-full flex items-center justify-center py-12">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-              </div>
+              Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="h-[400px] rounded-[32px] bg-secondary/5 border border-border/20 animate-pulse flex items-center justify-center">
+                   <Layers className="w-12 h-12 text-muted-foreground/10" />
+                </div>
+              ))
             ) : filteredProjects.length > 0 ? (
               filteredProjects.map((project) => (
                 <ProjectCard
                   key={project.id}
                   project={project}
+                  className="animate-fade-in"
                 />
               ))
             ) : (
-              <div className="col-span-full text-center py-12">
-                <p className="text-muted-foreground text-lg">No projects found matching your criteria</p>
+              <div className="col-span-full py-32 text-center space-y-6">
+                <div className="w-24 h-24 rounded-[40px] bg-secondary/10 flex items-center justify-center text-muted-foreground/30 mx-auto transform rotate-12">
+                   <Rocket className="w-12 h-12" />
+                </div>
+                <div>
+                   <h3 className="text-4xl font-black tracking-tight text-foreground/40 italic">Null Address.</h3>
+                   <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest opacity-40 mt-2">Try adjusting your search criteria</p>
+                </div>
               </div>
             )}
           </div>

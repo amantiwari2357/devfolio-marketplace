@@ -314,7 +314,7 @@ const CreateCourse = () => {
           </div>
         </main>
       </div>
-      <Footer className="hidden" /> {/* Hid footer on dashboard style pages */}
+      <Footer /> {/* Hid footer on dashboard style pages */}
     </div>
   );
 };
