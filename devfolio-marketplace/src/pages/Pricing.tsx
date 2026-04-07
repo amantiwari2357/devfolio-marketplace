@@ -90,7 +90,7 @@ const Pricing = () => {
             {plans.map((plan, index) => (
               <Card 
                 key={index} 
-                className={`neural-card p-10 md:p-12 relative overflow-hidden transition-all duration-700 hover:scale-[1.02] ${
+                className={`p-10 md:p-12 rounded-[40px] bg-secondary/10 border-border/40 backdrop-blur-3xl relative overflow-hidden transition-all duration-700 hover:scale-[1.02] ${
                   plan.popular ? 'ring-2 ring-primary bg-secondary/20 shadow-2xl' : ''
                 }`}
               >

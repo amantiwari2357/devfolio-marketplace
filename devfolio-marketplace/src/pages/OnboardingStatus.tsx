@@ -126,11 +126,11 @@ const OnboardingStatusPage = () => {
                 Back to Explore
               </Button>
               <div>
-                <h1 className="text-4xl font-black tracking-tight text-foreground">
+                <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
                   Application <span className="text-primary">Status.</span>
                 </h1>
-                <p className="text-muted-foreground font-medium mt-2">
-                  {lastUpdated && `System synchronised at ${lastUpdated.toLocaleTimeString()}`}
+                <p className="text-base md:text-lg text-muted-foreground font-medium mt-2">
+                  {lastUpdated && `Last updated at ${lastUpdated.toLocaleTimeString()}`}
                 </p>
               </div>
             </div>
@@ -171,7 +171,7 @@ const OnboardingStatusPage = () => {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
               {/* Requests Carousel/Grid */}
               <div className={selectedProject ? "lg:col-span-5 space-y-6" : "lg:col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"}>
-                <h2 className="text-sm font-black text-muted-foreground uppercase tracking-[0.2em] mb-4">Active Requests</h2>
+                <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">Active Requests</h2>
                 {projects.map((proj: any) => {
                   const projStatus = getOverallStatus(proj);
                   const isActive = selectedProject?._id === proj._id || selectedProject?.id === proj.id;

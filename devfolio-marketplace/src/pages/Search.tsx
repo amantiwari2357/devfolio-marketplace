@@ -102,18 +102,18 @@ const Search = () => {
         
         <div className="container mx-auto px-6 max-w-[1400px]">
           <div className="max-w-4xl mx-auto mb-20 text-center space-y-6">
-            <div className="flex items-center justify-center gap-3 mb-4 animate-fade-in">
-               <span className="px-5 py-2 rounded-full bg-secondary/10 border border-border/50 text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground flex items-center gap-2">
-                  <Activity className="w-3.5 h-3.5 text-primary" />
-                  Live Directory
+            <div className="flex items-center justify-center gap-2 mb-4 animate-fade-in">
+               <span className="px-4 py-2 rounded-full bg-secondary/10 border border-border/40 text-xs font-semibold text-muted-foreground flex items-center gap-2 shadow-sm">
+                  <Activity className="w-4 h-4 text-primary" />
+                  Project Directory
                </span>
             </div>
             
-            <h1 className="text-4xl font-black tracking-tighter text-foreground leading-[1] italic animate-slide-up">
-               SEARCH <span className="text-muted-foreground/30 font-normal">DIRECTORY.</span>
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground leading-tight animate-slide-up">
+               Search <span className="text-primary">Directory.</span>
             </h1>
-            <p className="text-sm font-medium text-muted-foreground italic leading-relaxed max-w-2xl mx-auto animate-fade-in">
-               Discover authorized modules, design systems, and technical architectures across the network.
+            <p className="text-base md:text-lg font-medium text-muted-foreground leading-relaxed max-w-2xl mx-auto animate-fade-in">
+               Discover projects, services, and expert portfolios across the network.
             </p>
 
             <div className="relative mt-12 group max-w-3xl mx-auto animate-fade-in">
@@ -144,10 +144,10 @@ const Search = () => {
                 <button
                   key={category}
                   onClick={() => handleCategoryFilter(category)}
-                  className={`px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${
+                  className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${
                     category === selectedCategory 
-                    ? "bg-foreground text-background shadow-lg scale-105" 
-                    : "bg-secondary/10 text-muted-foreground border border-border/40 hover:bg-secondary/20"
+                    ? "bg-foreground text-background shadow-md scale-105 border-none" 
+                    : "bg-secondary/10 text-muted-foreground border border-border/40 hover:bg-secondary/20 hover:text-foreground"
                   }`}
                 >
                   {category}

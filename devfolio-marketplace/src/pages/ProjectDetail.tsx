@@ -266,11 +266,11 @@ const ProjectDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-4">
-        <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center animate-spin text-primary">
-          <Activity className="w-6 h-6" />
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-6">
+        <div className="w-16 h-16 rounded-[22px] bg-primary/10 flex items-center justify-center text-primary animate-pulse shadow-sm">
+          <Activity className="w-8 h-8" />
         </div>
-        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">Tracing Module Path...</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground animate-pulse">Loading Project...</p>
       </div>
     );
   }
@@ -278,10 +278,10 @@ const ProjectDetail = () => {
   if (!project) {
      return (
        <div className="min-h-screen bg-background flex items-center justify-center">
-         <div className="text-center space-y-4">
-            <Rocket className="w-12 h-12 mx-auto text-muted-foreground/30" />
-            <h3 className="text-3xl font-black tracking-tight text-foreground/40 italic">Null Address Found.</h3>
-            <Button onClick={() => navigate('/listing')} variant="outline" className="rounded-xl font-black text-xs uppercase tracking-widest">Return to Network</Button>
+         <div className="text-center space-y-6">
+            <Layers className="w-16 h-16 mx-auto text-muted-foreground/30" />
+            <h3 className="text-3xl font-bold tracking-tight text-foreground/60">Project Not Found.</h3>
+            <Button onClick={() => navigate('/listing')} variant="outline" className="rounded-xl font-bold text-sm">Return to Directory</Button>
          </div>
        </div>
      );
@@ -312,25 +312,25 @@ const ProjectDetail = () => {
             <div className="lg:col-span-2 space-y-12">
               <header className="space-y-6">
                 <div className="flex items-center gap-4">
-                   <div className="px-5 py-2 rounded-xl bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-widest">
+                   <div className="px-4 py-1.5 rounded-lg bg-primary/10 text-primary text-xs font-bold shadow-sm border border-primary/20">
                       {project.category}
                    </div>
-                   <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-                      <ShieldCheck className="w-3.5 h-3.5 text-primary" />
-                      Verified Showcase
+                   <div className="text-xs font-semibold text-muted-foreground flex items-center gap-2 shadow-sm">
+                      <ShieldCheck className="w-4 h-4 text-primary" />
+                      Verified Project
                    </div>
                 </div>
                 
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
                   <div className="space-y-4">
-                    <h1 className="text-3xl font-black tracking-tighter text-foreground leading-[0.9]">
+                    <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
                        {project.title}
                     </h1>
-                    <p className="text-sm font-medium text-muted-foreground italic leading-relaxed max-w-2xl">
+                    <p className="text-base md:text-lg font-medium text-muted-foreground leading-relaxed max-w-2xl">
                       {project.description}
                     </p>
                   </div>
-                  <div className="w-24 h-24 rounded-3xl bg-secondary/10 border border-border/50 flex items-center justify-center text-5xl shadow-inner shrink-0 scale-110">
+                  <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-secondary/10 border border-border/40 flex items-center justify-center text-4xl shadow-sm shrink-0">
                     {project.icon}
                   </div>
                 </div>

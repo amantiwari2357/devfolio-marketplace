@@ -22,10 +22,10 @@ const Privacy = () => {
           <div className="text-center max-w-4xl mx-auto mb-16 md:mb-20 space-y-6 animate-slide-up">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 border border-border/40 backdrop-blur-md text-xs font-semibold text-primary">
               <Shield className="w-4 h-4" />
-              Data Sovereignty Protocol
+              Data Privacy
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
-              Privacy <span className="text-primary">Protocol.</span>
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
+              Privacy <span className="text-primary">Policy.</span>
             </h1>
             <p className="text-base md:text-lg text-muted-foreground font-medium max-w-2xl mx-auto mt-6">
               Last updated: <span className="text-foreground font-semibold">January 15, 2025</span>
@@ -43,14 +43,14 @@ const Privacy = () => {
                   <span className="text-primary text-2xl">01.</span> Information Acquisition
                 </h2>
                 <p className="text-sm font-medium text-muted-foreground leading-relaxed">
-                  We process data necessary to maintain a high-integrity ecosystem. This includes:
+                  We process data necessary to maintain a secure ecosystem. This includes:
                 </p>
                 <div className="grid sm:grid-cols-2 gap-4">
                   {[
-                    "Cryptographically hashed account credentials",
+                    "Securely hashed account credentials",
                     "Verified professional profile metadata",
-                    "Encrypted processing identifiers",
-                    "Usage pattern intelligence"
+                    "Secure processing identifiers",
+                    "Usage pattern data"
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-3 p-4 rounded-xl bg-background/50 border border-border/20 shadow-sm group/item hover:border-primary/30 transition-all">
                       <div className="w-2 h-2 rounded-full bg-primary shadow-sm" />
@@ -62,11 +62,11 @@ const Privacy = () => {
 
               <section className="space-y-4">
                 <h2 className="text-xl font-bold tracking-tight flex items-center gap-2">
-                  <span className="text-primary text-2xl">02.</span> Intelligence Utilization
+                  <span className="text-primary text-2xl">02.</span> Information Usage
                 </h2>
                 <div className="p-6 rounded-2xl bg-primary/5 border border-primary/10 shadow-sm">
                   <p className="text-sm font-medium text-muted-foreground leading-relaxed">
-                    Collected intelligence is exclusively utilized to architect, secure, and optimize your experience. We do not engage in information liquidation or unauthorized third-party transfers.
+                    Collected information is exclusively utilized to secure, and optimize your experience. We do not sell your personal data or share it with unauthorized third parties.
                   </p>
                 </div>
               </section>
@@ -82,10 +82,10 @@ const Privacy = () => {
 
               <section className="space-y-4">
                 <h2 className="text-xl font-bold tracking-tight flex items-center gap-2">
-                  <span className="text-primary text-2xl">04.</span> Data Sovereignty Rights
+                  <span className="text-primary text-2xl">04.</span> Data Privacy Rights
                 </h2>
                 <p className="text-sm font-medium text-muted-foreground leading-relaxed mb-4">
-                  You maintain absolute control over your node's information, including:
+                  You maintain complete control over your personal information, including:
                 </p>
                 <div className="flex flex-wrap gap-3">
                   {["Access Request", "Error Correction", "Node Deletion", "Portability Export"].map((tag, tIdx) => (

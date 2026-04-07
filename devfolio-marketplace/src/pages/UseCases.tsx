@@ -117,11 +117,11 @@ const UseCases = () => {
               <Sparkles className="w-4 h-4" />
               Use Cases
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
-              Software <span className="text-primary">Intelligence.</span>
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
+              Software <span className="text-primary">Solutions.</span>
             </h1>
             <p className="text-base md:text-lg text-muted-foreground font-medium max-w-3xl mx-auto mt-6">
-              Engineering future-proof digital infrastructure with white-glove precision.
+              Engineering future-proof digital infrastructure with professional precision.
             </p>
           </div>
 
@@ -160,22 +160,22 @@ const UseCases = () => {
                 }}>
                   <DialogTrigger asChild>
                     <Button 
-                      className="w-full h-12 md:h-14 rounded-xl font-bold text-base bg-secondary/50 border-border/50 hover:bg-primary hover:text-primary-foreground hover:shadow-lg hover:shadow-primary/20 transition-all gap-2"
+                      className="w-full h-12 rounded-xl font-bold text-sm bg-secondary/50 border-border/40 hover:bg-primary hover:text-primary-foreground hover:shadow-sm hover:shadow-primary/20 transition-all gap-2"
                     >
-                      Analyze Project
-                      <ArrowRight className="w-5 h-5" />
+                      Discuss Project
+                      <ArrowRight className="w-4 h-4" />
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="rounded-[40px] border-border/50 bg-background md:p-12">
+                  <DialogContent className="rounded-3xl border-border/40 bg-background md:p-10 shadow-xl">
                     <DialogHeader className="space-y-4 mb-8">
                       <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
                         {service.icon}
                       </div>
                       <DialogTitle className="text-2xl md:text-3xl font-bold tracking-tight leading-tight text-foreground">
-                        Initiate <span className="text-primary">Intelligence.</span>
+                        Discuss <span className="text-primary">Project.</span>
                       </DialogTitle>
                       <p className="text-muted-foreground font-medium">
-                        Our specialized architects will contact you within 24 hours to map out your {service.title} roadmap.
+                        Our specialized experts will contact you within 24 hours to discuss your {service.title} requirements.
                       </p>
                     </DialogHeader>
                     <form onSubmit={handleSubmit} className="space-y-8">
@@ -223,34 +223,34 @@ const UseCases = () => {
           </div>
 
           <div className="max-w-5xl mx-auto">
-            <Card className="p-12 md:p-20 rounded-[40px] bg-foreground text-background border-none relative overflow-hidden text-center group">
+            <Card className="p-8 md:p-16 rounded-[40px] bg-foreground text-background border-none relative overflow-hidden text-center group shadow-xl">
               <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none group-hover:scale-110 transition-transform duration-700">
                 <Globe className="w-64 h-64 text-primary" />
               </div>
               
-              <div className="relative z-10 space-y-10">
+              <div className="relative z-10 space-y-8">
                 <div className="space-y-4">
                   <h2 className="text-3xl md:text-4xl font-bold tracking-tight leading-tight">
                     Have a <span className="text-primary">Vision?</span>
                   </h2>
                   <p className="text-base md:text-lg text-background/80 font-medium max-w-2xl mx-auto leading-relaxed">
-                    Collaborate with <span className="text-background font-bold">Devfolio</span> specialized engineers to turn abstract concepts into mission-critical tech.
+                    Collaborate with <span className="text-background font-bold">Devfolio</span> verified experts to turn ideas into reality.
                   </p>
                 </div>
                 
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button size="lg" className="rounded-xl px-8 h-12 md:h-14 font-bold text-base bg-primary text-primary-foreground hover:scale-[1.02] transition-all shadow-lg">
-                      Request Strategic Audit
+                    <Button size="lg" className="rounded-xl px-8 h-12 font-bold text-sm bg-primary text-primary-foreground hover:scale-105 active:scale-95 transition-all shadow-md mt-4">
+                      Request Consultation
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="rounded-[40px] border-border/50 bg-background md:p-12 text-foreground">
+                  <DialogContent className="rounded-3xl border-border/40 bg-background md:p-10 text-foreground shadow-xl">
                     <DialogHeader className="space-y-4 mb-8">
                       <DialogTitle className="text-2xl md:text-3xl font-bold tracking-tight leading-tight">
-                        Strategic <span className="text-primary">Audit.</span>
+                        Request <span className="text-primary">Consultation.</span>
                       </DialogTitle>
                       <p className="text-muted-foreground font-medium">
-                        Initiate a high-level consultation with our platform solutions team.
+                        Schedule a meeting with our platform solutions team.
                       </p>
                     </DialogHeader>
                     <form onSubmit={handleSubmit} className="space-y-6">
@@ -295,14 +295,14 @@ const UseCases = () => {
                           ))}
                         </select>
                       </div>
-                      <Button type="submit" className="w-full h-12 md:h-14 rounded-xl font-bold text-base bg-primary text-primary-foreground hover:scale-[1.02] transition-all shadow-lg" disabled={isSubmitting}>
-                        {isSubmitting ? 'Submitting...' : 'Authorize Consultation'}
+                      <Button type="submit" className="w-full h-12 rounded-xl font-bold text-sm bg-primary text-primary-foreground hover:scale-105 active:scale-95 transition-all shadow-md mt-4" disabled={isSubmitting}>
+                        {isSubmitting ? 'Submitting...' : 'Request Consultation'}
                       </Button>
                     </form>
                   </DialogContent>
                 </Dialog>
                 
-                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-background/40">Powered by the Expert Ecosystem.</p>
+                <p className="text-xs font-semibold text-background/50">Powered by the Expert Ecosystem.</p>
               </div>
             </Card>
           </div>

@@ -59,26 +59,26 @@ const VerifyEmail = () => {
           <img 
             src={logo} 
             alt="Devfolio Logo" 
-            className="h-32 md:h-40 w-auto group-hover:scale-105 transition-transform duration-500"
+            className="h-24 md:h-32 w-auto group-hover:scale-105 transition-transform duration-500"
             fetchPriority="high"
           />
-          <span className="text-3xl font-black tracking-tighter text-foreground group-hover:text-primary transition-all italic uppercase">
-            DEVFOLIOMARKETPLACE<span className="text-primary NOT-italic">.COM</span>
+          <span className="text-2xl font-bold tracking-tight text-foreground group-hover:text-primary transition-all">
+            devfoliomarketplace<span className="text-primary">.com</span>
           </span>
         </Link>
       </div>
 
-      <Card className="w-full max-w-md neural-card p-10 md:p-12 relative overflow-hidden group shadow-2xl animate-slide-up" style={{ animationDelay: '100ms' }}>
-        <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-5 transition-all duration-1000 rotate-12">
-          <Fingerprint className="w-48 h-48 text-primary" />
+      <Card className="w-full max-w-md p-8 md:p-10 rounded-[32px] bg-secondary/10 border-border/40 backdrop-blur-3xl relative overflow-hidden group shadow-lg animate-slide-up" style={{ animationDelay: '100ms' }}>
+        <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:rotate-12 transition-all duration-1000">
+          <Fingerprint className="w-32 h-32 text-primary" />
         </div>
 
-        <div className="text-center mb-10 space-y-4">
-          <h1 className="text-2xl md:text-3xl font-black tracking-tighter italic uppercase text-foreground leading-none">
-            Account <span className="text-primary NOT-italic">Verification.</span>
+        <div className="text-center mb-8 space-y-2 relative z-10">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">
+            Verify <span className="text-primary">Account.</span>
           </h1>
-          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground opacity-50 italic">
-            {status === 'loading' ? 'Establishing identity' : 'Protocol Status'}
+          <p className="text-sm font-medium text-muted-foreground">
+            {status === 'loading' ? 'Confirming your email address...' : 'Verification status'}
           </p>
         </div>
 
@@ -98,47 +98,47 @@ const VerifyEmail = () => {
           )}
 
           {status === 'success' && (
-            <div className="flex flex-col items-center gap-8 py-4 animate-in fade-in zoom-in duration-700">
-              <div className="w-24 h-24 rounded-[28px] bg-primary/10 flex items-center justify-center text-primary shadow-2xl shadow-primary/10">
-                <CheckCircle2 className="w-12 h-12" />
+            <div className="flex flex-col items-center gap-6 py-4 animate-in fade-in zoom-in duration-700">
+              <div className="w-16 h-16 rounded-[22px] bg-primary/10 flex items-center justify-center text-primary shadow-sm">
+                <CheckCircle2 className="w-8 h-8" />
               </div>
-              <div className="text-center space-y-3">
-                <p className="font-black text-xl text-foreground uppercase tracking-tight italic">{message}</p>
-                <p className="text-[10px] font-black text-primary uppercase tracking-[0.3em] animate-pulse italic">
-                  Redirecting to access terminal...
+              <div className="text-center space-y-2">
+                <p className="font-bold text-xl text-foreground tracking-tight">{message}</p>
+                <p className="text-xs font-semibold text-primary/80 animate-pulse">
+                  Redirecting to login...
                 </p>
               </div>
               <Button
                 onClick={() => navigate('/login')}
-                className="w-full h-16 rounded-[22px] font-black text-lg bg-primary text-primary-foreground hover:scale-[1.05] active:scale-[0.95] transition-all shadow-2xl shadow-primary/30 uppercase tracking-[0.2em] italic border-none"
+                className="w-full h-14 rounded-xl font-bold text-base bg-primary text-primary-foreground hover:scale-105 active:scale-95 transition-all shadow-lg mt-4"
               >
-                Go to Login <ArrowRight className="ml-4 w-6 h-6 stroke-[3px]" />
+                Go to Login <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </div>
           )}
 
           {status === 'error' && (
-            <div className="flex flex-col items-center gap-8 py-4 animate-in fade-in slide-in-from-bottom-8 duration-700">
-              <div className="w-24 h-24 rounded-[28px] bg-destructive/10 flex items-center justify-center text-destructive">
-                <AlertCircle className="w-12 h-12" />
+            <div className="flex flex-col items-center gap-6 py-4 animate-in fade-in slide-in-from-bottom-8 duration-700">
+              <div className="w-16 h-16 rounded-[22px] bg-destructive/10 flex items-center justify-center text-destructive">
+                <AlertCircle className="w-8 h-8" />
               </div>
-              <div className="text-center space-y-3">
-                <p className="font-black text-xl text-foreground uppercase tracking-tight italic">Verification Error</p>
-                <p className="text-sm font-bold text-muted-foreground/60 italic opacity-80">{message}</p>
+              <div className="text-center space-y-2">
+                <p className="font-bold text-xl text-foreground tracking-tight">Verification Error</p>
+                <p className="text-sm font-medium text-muted-foreground">{message}</p>
               </div>
-              <div className="flex flex-col gap-4 w-full">
+              <div className="flex flex-col gap-3 w-full mt-4">
                 <Button
                   onClick={() => navigate('/login')}
-                  className="w-full h-16 rounded-[22px] font-black text-lg bg-primary text-primary-foreground hover:scale-[1.05] active:scale-[0.95] transition-all shadow-2xl shadow-primary/30 uppercase tracking-[0.2em] italic border-none"
+                  className="w-full h-14 rounded-xl font-bold text-base bg-primary text-primary-foreground hover:scale-105 active:scale-95 transition-all shadow-lg"
                 >
-                  Return to Terminal
+                  Return to Login
                 </Button>
                 <Button
                   variant="outline"
                   onClick={() => navigate('/signup')}
-                  className="w-full h-16 rounded-[22px] font-black text-sm bg-transparent border-border/50 hover:bg-secondary/50 uppercase tracking-[0.2em] italic"
+                  className="w-full h-14 rounded-xl font-bold text-sm bg-transparent border-border/40 hover:bg-secondary/20 transition-all"
                 >
-                  Establish New Node
+                  Create New Account
                 </Button>
               </div>
             </div>

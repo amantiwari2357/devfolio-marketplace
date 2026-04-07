@@ -22,7 +22,7 @@ const Terms = () => {
           <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20 space-y-6 animate-slide-up">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 border border-border/40 backdrop-blur-md text-xs font-semibold text-primary">
               <Scale className="w-4 h-4" />
-              Legal Framework Protocol
+              Legal Framework
             </div>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
               Terms of <span className="text-primary">Service.</span>
@@ -80,7 +80,7 @@ const Terms = () => {
                     <ShieldCheck className="w-5 h-5 text-amber-500" />
                   </div>
                   <p className="text-sm font-medium text-muted-foreground leading-relaxed">
-                    You are solely responsible for maintaining the cryptographic integrity of your account credentials. <span className="text-foreground font-semibold text-amber-600">DEVFOLIOMARKETPLACE.COM</span> must be notified immediately of any unauthorized access detection.
+                    You are solely responsible for maintaining the security of your account credentials. <span className="text-foreground font-semibold text-amber-600">Devfolio Marketplace</span> must be notified immediately of any unauthorized access.
                   </p>
                 </div>
               </section>
