@@ -53,10 +53,10 @@ const Analytics = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-6">
-        <div className="w-16 h-16 rounded-[24px] bg-primary/10 flex items-center justify-center text-primary animate-pulse shadow-inner">
-          <Cpu className="w-8 h-8" />
+        <div className="w-16 h-16 rounded-[24px] bg-primary/10 flex items-center justify-center text-primary animate-pulse shadow-sm">
+          <Activity className="w-8 h-8" />
         </div>
-        <p className="text-[10px] font-black uppercase tracking-[0.5em] text-muted-foreground animate-pulse">Synchronizing Telemetry Flux...</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground animate-pulse">Loading Analytics...</p>
       </div>
     );
   }
@@ -74,32 +74,32 @@ const Analytics = () => {
           <div className="absolute top-0 right-0 -z-10 w-2/3 h-2/3 bg-primary/2 opacity-30 blur-[180px] rounded-full animate-pulse" />
           
           <div className="max-w-[1200px] mx-auto space-y-12 md:space-y-16">
-            <header className="flex flex-col md:flex-row md:items-center justify-between gap-8 animate-slide-up">
+            <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-8 animate-slide-up">
               <div className="space-y-3">
-                <div className="flex items-center gap-3 text-primary animate-fade-in">
-                  <Activity className="w-4 h-4" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.4em] italic">Intelligence Flux Stream</span>
+                <div className="flex items-center gap-2 text-primary animate-fade-in">
+                  <Activity className="w-4 h-4 opacity-70" />
+                  <span className="text-xs font-semibold uppercase tracking-wider text-primary/80">Platform Dashboard</span>
                 </div>
-                <h1 className="heading-responsive">
-                  System <span className="text-primary NOT-italic">Analytics.</span>
+                <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
+                  System <span className="text-primary">Analytics.</span>
                 </h1>
               </div>
-              <Button variant="outline" className="h-16 rounded-[22px] px-8 font-black bg-secondary/10 border-border/40 gap-4 hover:bg-foreground hover:text-background transition-all shadow-2xl backdrop-blur-md uppercase tracking-[0.2em] text-[10px] italic">
-                <Download className="w-5 h-5" />
-                Capture Intel (Export)
+              <Button variant="outline" className="w-full md:w-auto h-12 md:h-14 rounded-xl px-6 font-bold bg-secondary/10 border-border/40 gap-3 hover:bg-foreground hover:text-background transition-all shadow-sm text-sm">
+                <Download className="w-4 h-4" />
+                Export Report
               </Button>
             </header>
 
             {/* Strategy Selectors Matrix */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 animate-slide-up" style={{ animationDelay: '100ms' }}>
-              <div className="flex items-center gap-3 p-2 rounded-[24px] bg-secondary/10 border border-border/40 backdrop-blur-3xl w-fit shadow-inner">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-8 animate-slide-up" style={{ animationDelay: '100ms' }}>
+              <div className="flex items-center gap-2 p-1.5 rounded-xl bg-secondary/10 border border-border/40 backdrop-blur-xl w-full md:w-fit shadow-sm overflow-x-auto hide-scrollbar">
                 {["7D", "30D", "3M", "6M"].map((range) => (
                   <Button
                     key={range}
                     onClick={() => setTimeRange(range)}
-                    className={`h-12 px-8 rounded-[18px] font-black text-[10px] uppercase tracking-widest transition-all ${
+                    className={`h-10 px-6 rounded-lg font-bold text-xs uppercase tracking-wider transition-all flex-shrink-0 ${
                       timeRange === range 
-                        ? "bg-foreground text-background shadow-xl shadow-foreground/10 scale-105 border-none" 
+                        ? "bg-foreground text-background shadow-md scale-[1.02] border-none" 
                         : "bg-transparent text-muted-foreground hover:bg-secondary/50"
                     }`}
                   >
@@ -107,9 +107,9 @@ const Analytics = () => {
                   </Button>
                 ))}
               </div>
-              <div className="flex items-center gap-4 text-muted-foreground/40 italic">
+              <div className="flex items-center gap-3 text-muted-foreground/60">
                  <ShieldCheck className="w-4 h-4" />
-                 <span className="text-[10px] font-black uppercase tracking-[0.3em]">Verified End-to-End Metrics</span>
+                 <span className="text-xs font-semibold uppercase tracking-wider">Verified Live Data</span>
               </div>
             </div>
 
@@ -117,19 +117,19 @@ const Analytics = () => {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 animate-slide-up" style={{ animationDelay: '200ms' }}>
               {[
                 { label: "Total Reach", val: analytics.totalViews.toLocaleString(), sub: "+12.5%", trend: "up", icon: <Eye className="w-5 h-5" /> },
-                { label: "Unique Nodes", val: analytics.uniqueVisitors.toLocaleString(), sub: "+8.2%", trend: "up", icon: <Layers className="w-5 h-5" /> },
-                { label: "Session Pulsation", val: `${analytics.avgSessionDuration}m`, sub: "-2.4%", trend: "down", icon: <Activity className="w-5 h-5" /> },
+                { label: "Unique Visitors", val: analytics.uniqueVisitors.toLocaleString(), sub: "+8.2%", trend: "up", icon: <Users className="w-5 h-5" /> },
+                { label: "Session Duration", val: `${analytics.avgSessionDuration}m`, sub: "-2.4%", trend: "down", icon: <Clock className="w-5 h-5" /> },
                 { label: "Conversion Rate", val: "3.2%", sub: "+0.5%", trend: "up", icon: <Zap className="w-5 h-5" /> },
               ].map((metric, i) => (
-                <Card key={i} className="neural-card p-8 md:p-10 relative overflow-hidden shadow-2xl flex flex-col justify-between h-auto min-h-[180px]">
-                  <div className="flex items-center justify-between">
-                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground italic opacity-50">{metric.label}</p>
-                    <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform">{metric.icon}</div>
+                <Card key={i} className="p-6 md:p-8 relative overflow-hidden shadow-sm hover:shadow-md transition-shadow border-border/60 rounded-3xl flex flex-col justify-between h-auto min-h-[160px] bg-card">
+                  <div className="flex items-center justify-between mb-4">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground/80">{metric.label}</p>
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">{metric.icon}</div>
                   </div>
-                  <div className="space-y-2">
-                    <p className="text-2xl md:text-4xl font-black tracking-tighter text-foreground italic leading-none">{metric.val}</p>
-                    <div className={`flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] italic ${metric.trend === 'up' ? 'text-green-500' : 'text-red-500'}`}>
-                      <div className={`w-1.5 h-1.5 rounded-full ${metric.trend === 'up' ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]' : 'bg-red-500'}`} />
+                  <div className="space-y-1">
+                    <p className="text-3xl md:text-4xl font-bold tracking-tight text-foreground leading-none">{metric.val}</p>
+                    <div className={`flex items-center gap-1.5 text-xs font-semibold ${metric.trend === 'up' ? 'text-green-500' : 'text-red-500'}`}>
+                      <div className={`w-1.5 h-1.5 rounded-full ${metric.trend === 'up' ? 'bg-green-500' : 'bg-red-500'}`} />
                       {metric.sub}
                     </div>
                   </div>

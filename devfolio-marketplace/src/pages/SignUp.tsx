@@ -247,29 +247,29 @@ const SignUp = () => {
 
             <div className="max-w-md mx-auto space-y-8 relative z-10 transition-all duration-1000">
               <div className="space-y-4">
-                <div className="flex gap-1">
+                <div className="flex gap-1 mb-2">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-5 h-5 fill-primary text-primary" />
                   ))}
                 </div>
-                <h2 className="text-3xl font-black tracking-tighter text-foreground italic uppercase leading-none">
-                  Trusted by experts across <span className="text-primary NOT-italic underline decoration-primary/30 underline-offset-8">industry domains</span>.
+                <h2 className="text-3xl font-bold tracking-tight text-foreground leading-snug">
+                  Trusted by professionals across <span className="text-primary underline decoration-primary/30 underline-offset-8">global industries</span>.
                 </h2>
                 <div className="h-[600px] overflow-hidden mask-fade-y relative mt-8">
                   <div className="flex flex-col gap-6 animate-scroll-y py-12">
                     {[...testimonials, ...testimonials, ...testimonials].map((t, idx) => (
-                      <Card key={idx} className={`p-10 border-none bg-gradient-to-br ${t.grad} shadow-2xl backdrop-blur-xl group hover:scale-[1.02] transition-all duration-700 rounded-[32px] w-full relative overflow-hidden`}>
-                        <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:rotate-12 transition-transform">
-                          <Star className="w-24 h-24 text-foreground" />
+                      <Card key={idx} className={`p-8 border-none bg-gradient-to-br ${t.grad} shadow-xl backdrop-blur-xl group hover:-translate-y-1 transition-all duration-300 rounded-3xl w-full relative overflow-hidden flex flex-col`}>
+                        <div className="absolute top-0 right-0 p-6 opacity-5">
+                          <Star className="w-20 h-20 text-foreground" />
                         </div>
-                        <p className="text-foreground font-black italic leading-relaxed text-sm relative z-10 mb-8 opacity-80">"{t.quote}"</p>
-                        <div className="flex items-center gap-5 border-t border-foreground/10 pt-8 relative z-10">
-                          <div className="w-14 h-14 rounded-2xl bg-background flex items-center justify-center font-black text-sm shadow-2xl text-primary italic">
+                        <p className="text-foreground font-medium leading-relaxed text-sm relative z-10 mb-8 opacity-90">"{t.quote}"</p>
+                        <div className="flex items-center gap-4 border-t border-foreground/10 pt-6 relative z-10 mt-auto">
+                          <div className="w-12 h-12 rounded-full bg-background/50 border border-background/20 flex items-center justify-center font-bold text-sm shadow-sm text-primary">
                             {t.name.split(' ').map(n => n[0]).join('')}
                           </div>
                           <div>
-                            <p className="font-black text-sm text-foreground uppercase tracking-tighter italic leading-none mb-1">{t.name}</p>
-                            <p className="text-[9px] text-muted-foreground font-black uppercase tracking-[0.2em] opacity-40 italic">{t.title}</p>
+                            <p className="font-bold text-sm text-foreground leading-tight mb-0.5">{t.name}</p>
+                            <p className="text-[10px] md:text-xs text-muted-foreground font-semibold uppercase tracking-wider opacity-80">{t.title}</p>
                           </div>
                         </div>
                       </Card>
@@ -277,9 +277,9 @@ const SignUp = () => {
                   </div>
                 </div>
 
-                <div className="pt-10 text-center">
-                  <div className="bg-background/20 rounded-[32px] p-10 backdrop-blur-3xl border border-border/10 shadow-2xl animate-pulse">
-                    <p className="text-[11px] font-black text-muted-foreground uppercase tracking-[0.6em] italic">Join the Neural Revolution</p>
+                <div className="pt-8 text-center">
+                  <div className="bg-background/20 rounded-2xl p-6 backdrop-blur-md border border-border/10 shadow-sm animate-pulse">
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Join 10,000+ Active Users</p>
                   </div>
                 </div>          </div>
             </div>

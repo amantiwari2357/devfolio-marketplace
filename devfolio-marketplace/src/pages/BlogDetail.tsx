@@ -173,8 +173,8 @@ const BlogDetail = () => {
               />
               <div className="absolute bottom-0 left-0 p-6 md:p-10 z-20 w-full flex justify-between items-end">
                  <div className="flex items-center gap-3 bg-background/60 backdrop-blur-md px-4 py-2 rounded-xl border border-border/40">
-                    <Activity className="w-4 h-4 text-primary" />
-                    <span className="text-xs font-semibold tracking-wide">Intelligence Secured</span>
+                    <CheckCircle2 className="w-4 h-4 text-primary" />
+                    <span className="text-xs font-semibold tracking-wide">Verified Post</span>
                  </div>
               </div>
             </div>
@@ -196,7 +196,7 @@ const BlogDetail = () => {
                     </h2>
                     <ul className="space-y-3 list-none m-0 p-0 text-sm font-semibold text-muted-foreground">
                       <li><a href="#architecture" className="hover:text-primary transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> 1. Overview & Architecture</a></li>
-                      <li><a href="#strategic-implementation" className="hover:text-primary transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> 2. Deep Intelligence Analysis</a></li>
+                      <li><a href="#strategic-implementation" className="hover:text-primary transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> 2. Deep Analysis</a></li>
                       <li><a href="#optimization" className="hover:text-primary transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> 3. Advanced Optimization Protocols</a></li>
                       <li><a href="#faq" className="hover:text-primary transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> 4. Frequently Asked Questions</a></li>
                     </ul>
@@ -402,7 +402,7 @@ const BlogDetail = () => {
                           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                           <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
                         </div>
-                        <span className="text-xs font-semibold uppercase tracking-widest">System Ready</span>
+                        <span className="text-xs font-semibold uppercase tracking-widest">Start Building</span>
                       </div>
                       
                       <h4 className="text-2xl md:text-3xl font-bold leading-tight">

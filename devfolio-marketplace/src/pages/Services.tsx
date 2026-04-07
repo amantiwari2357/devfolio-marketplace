@@ -86,10 +86,10 @@ const Services = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-6">
-        <div className="w-16 h-16 rounded-[24px] bg-primary/10 flex items-center justify-center text-primary animate-pulse shadow-inner">
-          <Cpu className="w-8 h-8" />
+        <div className="w-16 h-16 rounded-[22px] bg-primary/10 flex items-center justify-center text-primary animate-pulse shadow-sm">
+          <BookOpen className="w-8 h-8" />
         </div>
-        <p className="text-[10px] font-black uppercase tracking-[0.5em] text-muted-foreground animate-pulse">Cataloging System Nodes...</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground animate-pulse">Loading Services...</p>
       </div>
     );
   }
@@ -108,18 +108,18 @@ const Services = () => {
           
           <div className="max-w-[1200px] mx-auto space-y-12 md:space-y-16">
             <header className="flex flex-col md:flex-row md:items-center justify-between gap-8 animate-slide-up">
-              <div className="space-y-3">
-                <div className="flex items-center gap-3 text-primary animate-fade-in">
-                  <BookOpen className="w-4 h-4" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.4em] italic">Active Protocol Inventory</span>
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-primary animate-fade-in">
+                  <BookOpen className="w-4 h-4 md:w-5 md:h-5 text-primary/80" />
+                  <span className="text-xs font-semibold uppercase tracking-wider">Explore Capabilities</span>
                 </div>
-                <h1 className="heading-responsive">
-                  Protocol <span className="text-primary NOT-italic">Inventory.</span>
+                <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
+                  Expert <span className="text-primary">Services.</span>
                 </h1>
               </div>
-              <Button className="h-16 rounded-[22px] px-10 font-black bg-primary text-primary-foreground shadow-2xl shadow-primary/30 hover:scale-105 active:scale-95 transition-all gap-4 uppercase tracking-[0.2em] border-none italic">
-                <Plus className="w-5 h-5 stroke-[4px]" />
-                Initialize Asset
+              <Button className="h-12 md:h-14 rounded-xl px-8 font-bold bg-primary text-primary-foreground shadow-lg hover:scale-105 active:scale-95 transition-all gap-3 text-sm">
+                <Plus className="w-5 h-5 stroke-[3px]" />
+                Create Service
               </Button>
             </header>
 

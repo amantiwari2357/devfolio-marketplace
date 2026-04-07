@@ -262,9 +262,9 @@ const Listing = () => {
   ];
 
   const steps = [
-    { number: "01", title: "Node Integration", description: "Synchronize your GitHub node to authorize automatic project discovery." },
-    { number: "02", title: "Architect Profile", description: "Define your technical trajectory with custom parameters and identifiers." },
-    { number: "03", title: "Global Sync", description: "Deploy your sovereign showcase to the world with absolute precision." }
+    { number: "01", title: "Connect GitHub", description: "Synchronize your GitHub account to authorize automatic project discovery." },
+    { number: "02", title: "Create Profile", description: "Define your technical trajectory with custom parameters and identifiers." },
+    { number: "03", title: "Deploy Global", description: "Deploy your sovereign showcase to the world with absolute precision." }
   ];
 
   return (
@@ -281,8 +281,8 @@ const Listing = () => {
           {/* Hero Section */}
           <div className="text-center max-w-5xl mx-auto mb-40 relative">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 border border-border/40 text-foreground mb-8 backdrop-blur-md animate-fade-in shadow-sm">
-               <Zap className="w-4 h-4 text-primary fill-primary/20 animate-pulse" />
-               <span className="text-xs font-semibold">Developer Architecture Engine</span>
+               <Zap className="w-4 h-4 text-primary" />
+               <span className="text-xs font-semibold">Developer Portfolios</span>
             </div>
             
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-8 text-foreground leading-tight animate-slide-up">

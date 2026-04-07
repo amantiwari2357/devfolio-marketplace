@@ -33,15 +33,15 @@ const Blog = () => {
         <div className="absolute bottom-0 left-0 -z-10 w-1/2 h-1/2 bg-primary/2 opacity-20 blur-[150px] rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
 
         <div className="container mx-auto px-6 relative">
-          <div className="text-center max-w-4xl mx-auto mb-16 md:mb-24 space-y-6 animate-slide-up">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 border border-border/40 backdrop-blur-md text-xs font-semibold text-primary">
+          <div className="text-center max-w-4xl mx-auto mb-12 md:mb-16 space-y-4 md:space-y-6 animate-slide-up">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 border border-border/40 backdrop-blur-md text-xs font-semibold text-primary shadow-sm">
               <BookOpen className="w-4 h-4" />
-              Intelligence Stream
+              Creator Blog
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
-              Insights & <span className="text-primary">Intelligence.</span>
+            <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
+              Insights & <span className="text-primary">Resources.</span>
             </h1>
-            <p className="text-base md:text-lg text-muted-foreground font-medium max-w-2xl mx-auto mt-6">
+            <p className="text-base md:text-lg text-muted-foreground font-medium max-w-2xl mx-auto mt-4 leading-relaxed">
               Decoding the future of the creator economy, one breakthrough at a time.
             </p>
           </div>
@@ -132,23 +132,22 @@ const Blog = () => {
             </div>
           )}
 
-          {/* Intelligence Newsletter Protocol */}
-          <div className="max-w-5xl mx-auto animate-slide-up mb-24" style={{ animationDelay: '300ms' }}>
-            <Card className="p-10 md:p-20 rounded-[40px] bg-foreground text-background border-none relative overflow-hidden group shadow-xl">
-              {/* Mesh background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-transparent opacity-40 group-hover:opacity-60 transition-opacity" />
-              <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none group-hover:scale-110 transition-transform duration-1000">
-                <Mail className="w-64 h-64 text-primary" />
+          {/* Newsletter Section */}
+          <div className="max-w-5xl mx-auto animate-slide-up mb-16 md:mb-24" style={{ animationDelay: '300ms' }}>
+            <Card className="p-8 md:p-16 rounded-[32px] md:rounded-[40px] bg-foreground text-background border-none relative overflow-hidden group shadow-2xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-transparent opacity-40 group-hover:opacity-60 transition-opacity duration-700" />
+              <div className="absolute top-0 right-0 p-8 md:p-12 opacity-5 pointer-events-none group-hover:scale-105 transition-transform duration-1000">
+                <Mail className="w-48 h-48 md:w-64 md:h-64 text-primary" />
               </div>
               
               <div className="relative z-10 text-center space-y-8">
                 <div className="space-y-4">
-                  <div className="flex items-center justify-center gap-2 text-primary animate-pulse">
-                    <Rocket className="w-5 h-5" />
-                    <span className="text-xs font-semibold uppercase tracking-widest">Newsletter</span>
+                  <div className="flex items-center justify-center gap-2 text-primary">
+                    <Mail className="w-4 h-4 md:w-5 md:h-5" />
+                    <span className="text-[10px] md:text-xs font-semibold uppercase tracking-widest">Newsletter</span>
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight leading-tight">
-                    Subscribe to <span className="text-primary">Intelligence.</span>
+                  <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight">
+                    Stay in the <span className="text-primary">loop.</span>
                   </h2>
                   <p className="text-base md:text-lg text-background/80 font-medium max-w-2xl mx-auto leading-relaxed">
                     The latest breakthroughs, platform updates, and exclusive success stories delivered directly to your inbox.

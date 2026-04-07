@@ -21,9 +21,9 @@ const NotFound = () => {
       <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
 
       <div className="text-center space-y-12 max-w-3xl px-8 animate-slide-up">
-        <div className="flex items-center justify-center gap-4 text-primary animate-pulse">
-          <Activity className="w-5 h-5" />
-          <span className="text-[10px] font-black uppercase tracking-[0.6em] italic">Signal Disruption Detected</span>
+        <div className="flex items-center justify-center gap-2 text-primary">
+          <Activity className="w-4 h-4 md:w-5 md:h-5" />
+          <span className="text-xs font-semibold uppercase tracking-wider">404 Error</span>
         </div>
 
         <div className="relative inline-block">
@@ -34,24 +34,24 @@ const NotFound = () => {
         </div>
 
         <div className="space-y-6 -mt-24 relative z-10">
-          <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-foreground italic uppercase leading-[0.85]">
-            Node <span className="text-primary NOT-italic">Not Found.</span>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
+            Page <span className="text-primary">Not Found.</span>
           </h2>
-          <p className="text-lg md:text-xl font-bold text-muted-foreground/60 italic leading-relaxed tracking-tight max-w-xl mx-auto">
-            The requested pathway <span className="text-foreground font-black uppercase text-sm bg-secondary/20 px-3 py-1 rounded-lg">{location.pathname}</span> does not exist on the DEVFOLIO network graph.
+          <p className="text-base md:text-lg font-medium text-muted-foreground leading-relaxed max-w-xl mx-auto">
+            The requested page <span className="text-foreground font-bold px-2 py-1 rounded bg-secondary/20">{location.pathname}</span> does not exist or has been moved.
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-6 justify-center pt-8">
-          <Button asChild className="h-20 px-16 rounded-[28px] bg-primary text-primary-foreground text-xl font-black uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 hover:scale-105 active:scale-95 transition-all gap-4 italic border-none group">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
+          <Button asChild className="h-14 px-10 rounded-xl bg-primary text-primary-foreground text-sm font-bold shadow-lg hover:scale-105 transition-all gap-2">
             <a href="/">
-              <ArrowLeft className="w-6 h-6 stroke-[4px] group-hover:-translate-x-2 transition-transform" />
-              Return to Origin
+              <ArrowLeft className="w-4 h-4" />
+              Back to Home
             </a>
           </Button>
-          <Button asChild variant="outline" className="h-20 px-16 rounded-[28px] border-border/40 bg-secondary/10 text-xl font-black uppercase tracking-[0.2em] hover:bg-secondary/20 transition-all italic border-none shadow-xl">
+          <Button asChild variant="outline" className="h-14 px-10 rounded-xl border-border/40 bg-secondary/10 text-sm font-bold hover:bg-secondary/20 transition-all shadow-sm">
             <a href="/explore">
-              Explore Network
+              Explore Services
             </a>
           </Button>
         </div>

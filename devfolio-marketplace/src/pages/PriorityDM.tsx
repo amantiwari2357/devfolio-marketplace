@@ -61,10 +61,10 @@ const PriorityDM = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-6">
-        <div className="w-16 h-16 rounded-[24px] bg-primary/10 flex items-center justify-center text-primary animate-pulse shadow-inner">
-          <Cpu className="w-8 h-8" />
+        <div className="w-16 h-16 rounded-[22px] bg-primary/10 flex items-center justify-center text-primary animate-pulse shadow-sm">
+          <ShieldCheck className="w-8 h-8" />
         </div>
-        <p className="text-[10px] font-black uppercase tracking-[0.5em] text-muted-foreground animate-pulse">Establishing Secure Link...</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground animate-pulse">Loading Support...</p>
       </div>
     );
   }
@@ -83,18 +83,18 @@ const PriorityDM = () => {
           
           <div className="max-w-[1200px] mx-auto space-y-12 md:space-y-16">
             <header className="flex flex-col md:flex-row md:items-center justify-between gap-8 animate-slide-up">
-              <div className="space-y-3">
-                <div className="flex items-center gap-3 text-primary animate-fade-in">
-                  <ShieldCheck className="w-4 h-4" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.4em] italic">Encryption Active | High-Urgency</span>
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-primary animate-fade-in">
+                  <ShieldCheck className="w-4 h-4 md:w-5 md:h-5 text-primary/80" />
+                  <span className="text-xs font-semibold uppercase tracking-wider">Support Channel</span>
                 </div>
-                <h1 className="heading-responsive">
-                  Priority <span className="text-primary NOT-italic">Protocol.</span>
+                <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
+                  Priority <span className="text-primary">Support.</span>
                 </h1>
               </div>
-              <Badge className="h-12 md:h-14 rounded-xl md:rounded-2xl px-6 md:px-8 font-black text-[10px] md:text-xs uppercase tracking-[0.3em] bg-amber-500/10 text-amber-500 border border-amber-500/20 shadow-xl shadow-amber-500/5 animate-pulse flex gap-3 w-fit">
+              <Badge className="h-10 md:h-12 rounded-xl px-4 md:px-6 font-bold text-xs bg-amber-500/10 text-amber-500 border border-amber-500/20 shadow-sm flex items-center gap-2 w-fit">
                  <Zap className="w-4 h-4 fill-amber-500" />
-                 High-Urgency Lane
+                 Priority Access
               </Badge>
             </header>
 
@@ -109,10 +109,10 @@ const PriorityDM = () => {
                       <Headset className="w-6 h-6 md:w-8 md:h-8" />
                     </div>
                     <div className="space-y-1">
-                       <h2 className="font-black text-lg md:text-xl tracking-tighter text-foreground italic leading-none">Support Architect</h2>
-                       <p className="text-[10px] font-black uppercase tracking-[0.4em] text-green-500 flex items-center gap-2">
-                          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
-                          Node Live
+                       <h2 className="font-bold text-lg md:text-xl tracking-tight text-foreground leading-none">Support Agent</h2>
+                       <p className="text-xs font-semibold tracking-wider text-green-500 flex items-center gap-2 uppercase">
+                          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-sm" />
+                          Online
                        </p>
                     </div>
                   </div>
@@ -128,8 +128,8 @@ const PriorityDM = () => {
                         <MessageSquare className="w-10 h-10" />
                       </div>
                       <div className="space-y-3 max-w-sm">
-                        <h3 className="text-3xl font-black tracking-tighter text-foreground italic opacity-40 leading-none uppercase">Information Void.</h3>
-                        <p className="text-sm font-bold text-muted-foreground/60 leading-relaxed italic uppercase tracking-widest">Initiate a message packet to established high-priority communication with the architect layer.</p>
+                        <h3 className="text-2xl font-bold tracking-tight text-foreground opacity-60 leading-tight">No Messages Yet.</h3>
+                        <p className="text-sm font-medium text-muted-foreground leading-relaxed">Send a message to start your priority support session.</p>
                       </div>
                     </div>
                   ) : (

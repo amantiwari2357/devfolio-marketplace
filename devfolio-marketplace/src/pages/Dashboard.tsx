@@ -35,7 +35,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground">
-      <SEO title="Neural Dashboard | Operations" description="Authorized administrative view of the expert performance metrics and system telemetry." />
+      <SEO title="Dashboard | Overview" description="Your central hub for tracking performance, bookings, and analytics." />
       
       <div className="flex h-screen overflow-hidden relative">
         <AppSidebar activePath="/dashboard" />
@@ -48,23 +48,23 @@ const Dashboard = () => {
           
           <div className="max-w-[1300px] mx-auto space-y-16 md:space-y-20">
             <header className="flex flex-col xl:flex-row xl:items-end justify-between gap-10 animate-slide-up">
-              <div className="space-y-6">
-                <div className="flex items-center gap-3 text-primary animate-fade-in">
-                  <Activity className="w-4 h-4 animate-pulse" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.6em] italic">Active Telemetry Node</span>
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-primary animate-fade-in">
+                  <Activity className="w-4 h-4 md:w-5 md:h-5 text-primary/80" />
+                  <span className="text-xs font-semibold uppercase tracking-wider">Dashboard Overview</span>
                 </div>
-                <h1 className="heading-responsive">
-                  Systems Online, <span className="text-primary NOT-italic block md:inline">{user?.firstName || 'OPERATOR'}.</span>
+                <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
+                  Welcome back, <br className="hidden md:block" /><span className="text-primary">{user?.firstName || 'Creator'}.</span>
                 </h1>
-                <p className="text-sm md:text-lg font-bold text-muted-foreground/60 italic tracking-tight uppercase tracking-[0.2em] leading-relaxed">Operational status: Optimal. Signal strength maximum.</p>
+                <p className="text-base md:text-lg text-muted-foreground font-medium leading-relaxed">Here's what's happening with your projects today.</p>
               </div>
-              <div className="flex flex-wrap items-center gap-6">
-                <Button variant="outline" className="h-16 rounded-[22px] px-8 font-black bg-secondary/10 border-border/40 gap-4 hover:bg-secondary/20 transition-all text-[10px] uppercase tracking-[0.3em] shadow-xl italic border-none">
-                  <ExternalLink className="w-5 h-5 text-primary" />
-                  devfoliomarketplace.com/{user?.email?.split('@')[0] || 'profile'}
+              <div className="flex flex-wrap items-center gap-4">
+                <Button variant="outline" className="h-12 md:h-14 rounded-xl px-6 font-bold bg-secondary/10 border-border/40 gap-3 hover:bg-secondary/20 transition-all text-sm shadow-sm">
+                  <ExternalLink className="w-4 h-4" />
+                  View Public Profile
                 </Button>
-                <Button className="h-16 rounded-[22px] px-10 font-black bg-primary text-primary-foreground shadow-2xl shadow-primary/30 hover:scale-[1.05] active:scale-95 transition-all text-[10px] uppercase tracking-[0.3em] italic border-none">
-                  Deploy Assets
+                <Button className="h-12 md:h-14 rounded-xl px-8 font-bold bg-primary text-primary-foreground shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all text-sm">
+                  Create Service
                 </Button>
               </div>
             </header>
@@ -166,28 +166,26 @@ const Dashboard = () => {
               </div>
             </Card>
 
-            {/* Performance Telemetry Matrix */}
             <div className="space-y-12 animate-slide-up" style={{ animationDelay: '300ms' }}>
-              <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-                <div className="space-y-4">
-                   <div className="flex items-center gap-4">
-                      <div className="w-2 h-8 bg-primary rounded-full animate-pulse" />
-                      <p className="text-[10px] font-black uppercase tracking-[0.6em] text-muted-foreground flex items-center gap-4 italic opacity-70">
-                         Performance Matrix
-                         <Activity className="w-5 h-5 opacity-30" />
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div className="space-y-2">
+                   <div className="flex items-center gap-2">
+                      <div className="w-2 h-6 bg-primary rounded-full animate-pulse" />
+                      <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                         Performance Metrics
                       </p>
                    </div>
-                   <h3 className="text-4xl font-black tracking-tighter italic uppercase">Node Telemetry.</h3>
+                   <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground leading-tight">System Analytics.</h3>
                 </div>
-                <div className="p-3 rounded-[24px] bg-secondary/10 border border-border/40 flex gap-2 backdrop-blur-3xl shadow-xl">
+                <div className="flex items-center gap-2 p-1.5 rounded-xl bg-secondary/10 border border-border/40 backdrop-blur-xl w-full md:w-fit shadow-sm overflow-x-auto hide-scrollbar">
                   {["7D", "30D", "3M", "6M"].map((range) => (
                     <Button
                       key={range}
                       size="sm"
                       onClick={() => setTimeRange(range)}
-                      className={`h-12 px-8 rounded-[18px] font-black text-[10px] transition-all tracking-[0.2em] italic border-none ${
+                      className={`h-10 px-6 rounded-lg font-bold text-xs uppercase tracking-wider transition-all flex-shrink-0 ${
                         timeRange === range 
-                          ? "bg-foreground text-background shadow-2xl shadow-foreground/10 scale-105" 
+                          ? "bg-foreground text-background shadow-md scale-[1.02] border-none" 
                           : "bg-transparent text-muted-foreground hover:bg-secondary/50"
                       }`}
                     >
@@ -224,18 +222,16 @@ const Dashboard = () => {
                 ))}
               </div>
 
-              <Card className="p-16 md:p-32 rounded-[32px] md:rounded-[64px] bg-secondary/5 border-border/20 border-dashed backdrop-blur-sm flex flex-col items-center justify-center text-center space-y-10 relative overflow-hidden group hover:border-primary/20 transition-all">
-                <div className="absolute inset-0 opacity-[0.03] pointer-events-none group-hover:opacity-[0.05] transition-all duration-1000" style={{ backgroundImage: 'radial-gradient(circle, currentColor 1.5px, transparent 1.5px)', backgroundSize: '60px 60px' }} />
-                
-                <div className="w-28 h-28 rounded-[44px] bg-secondary/30 flex items-center justify-center text-muted-foreground/20 shadow-inner group-hover:rotate-[20deg] group-hover:scale-110 transition-all duration-700">
-                  <Activity className="w-14 h-14" />
+              <Card className="p-12 md:p-24 rounded-[32px] md:rounded-[40px] bg-secondary/5 border-border/40 border-dashed backdrop-blur-sm flex flex-col items-center justify-center text-center space-y-8 relative overflow-hidden group hover:border-primary/40 transition-all">
+                <div className="w-20 h-20 rounded-[28px] bg-secondary/30 flex items-center justify-center text-muted-foreground/40 group-hover:scale-105 transition-all duration-700">
+                  <Activity className="w-10 h-10" />
                 </div>
-                <div className="space-y-6 max-w-lg">
-                   <h3 className="text-3xl font-black tracking-tighter text-foreground italic uppercase leading-[0.9]">Telemetry pending deployment.</h3>
-                   <p className="text-lg font-bold italic text-muted-foreground/60 leading-relaxed tracking-tight">Detailed telemetry nodes will begin populating across your operational dashboard once your first expert session protocol is established.</p>
+                <div className="space-y-4 max-w-lg">
+                   <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground leading-tight">No data available yet.</h3>
+                   <p className="text-base text-muted-foreground font-medium leading-relaxed">Detailed metrics will begin showing up here once you have traffic or complete your first session.</p>
                 </div>
-                <Button variant="outline" className="h-20 px-14 rounded-[28px] border-border/40 font-black text-xs uppercase tracking-[0.4em] hover:bg-secondary/20 transition-all shadow-2xl italic border-none bg-secondary/10">
-                   Synchronize All Nodes
+                <Button variant="outline" className="h-12 md:h-14 rounded-xl px-10 font-bold text-sm bg-secondary/10 border-border/40 hover:bg-foreground hover:text-background transition-all shadow-sm">
+                   Refresh Data
                 </Button>
               </Card>
             </div>

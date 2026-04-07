@@ -45,10 +45,10 @@ const Bookings = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-6">
-        <div className="w-16 h-16 rounded-[24px] bg-primary/10 flex items-center justify-center text-primary animate-pulse shadow-inner">
-          <Cpu className="w-8 h-8" />
+        <div className="w-16 h-16 rounded-[24px] bg-primary/10 flex items-center justify-center text-primary animate-pulse shadow-sm">
+          <Calendar className="w-8 h-8" />
         </div>
-        <p className="text-[10px] font-black uppercase tracking-[0.5em] text-muted-foreground animate-pulse">Synchronizing Temporal Log...</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground animate-pulse">Loading Bookings...</p>
       </div>
     );
   }
@@ -68,43 +68,43 @@ const Bookings = () => {
           <div className="max-w-[1200px] mx-auto space-y-12 md:space-y-16">
             <header className="flex flex-col md:flex-row md:items-center justify-between gap-8 animate-slide-up">
               <div className="space-y-3">
-                <div className="flex items-center gap-3 text-primary animate-fade-in">
+                <div className="flex items-center gap-2 text-primary animate-fade-in">
                   <Calendar className="w-4 h-4" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.4em] italic">Active Schedule Matrix</span>
+                  <span className="text-xs font-semibold uppercase tracking-wider">Schedule Overview</span>
                 </div>
-                <h1 className="heading-responsive">
-                  Temporal <span className="text-primary NOT-italic">Log.</span>
+                <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
+                  Your <span className="text-primary">Bookings.</span>
                 </h1>
               </div>
               <div className="flex flex-col sm:flex-row items-center gap-4">
-                 <div className="hidden lg:flex items-center gap-4 px-6 py-4 rounded-xl bg-secondary/10 border border-border/40 backdrop-blur-md group-focus-within:border-primary/40 transition-all shadow-inner">
+                 <div className="hidden lg:flex items-center gap-4 px-4 py-3 rounded-xl bg-secondary/10 border border-border/40 backdrop-blur-md group-focus-within:border-primary/40 transition-all shadow-sm">
                     <Search className="w-4 h-4 text-muted-foreground group-focus-within:text-primary" />
-                    <input type="text" placeholder="Scan coordinates..." className="bg-transparent border-none focus:ring-0 text-[10px] font-black uppercase tracking-widest text-foreground placeholder:text-muted-foreground/40 w-48" />
+                    <input type="text" placeholder="Search bookings..." className="bg-transparent border-none focus:ring-0 text-sm font-semibold text-foreground placeholder:text-muted-foreground/40 w-48" />
                  </div>
-                 <Button className="h-14 md:h-16 w-full sm:w-auto rounded-[22px] px-10 font-black bg-primary text-primary-foreground shadow-2xl shadow-primary/30 hover:scale-105 active:scale-95 transition-all gap-4 uppercase tracking-[0.2em] border-none italic">
-                    <Plus className="w-5 h-5" />
-                    Archive New Epoch
+                 <Button className="h-12 md:h-14 w-full sm:w-auto rounded-xl px-8 font-bold bg-primary text-primary-foreground shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all gap-3">
+                    <Plus className="w-4 h-4" />
+                    Add Booking
                  </Button>
               </div>
             </header>
 
             {bookings.length === 0 ? (
-              <Card className="neural-card p-12 md:p-32 text-center flex flex-col items-center justify-center space-y-10 relative overflow-hidden group animate-fade-in shadow-2xl">
+              <Card className="p-12 md:p-24 text-center flex flex-col items-center justify-center space-y-8 relative overflow-hidden group animate-fade-in shadow-xl">
                 <div className="absolute inset-0 opacity-5 pointer-events-none group-hover:scale-110 transition-transform duration-1000" style={{ backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
                 
-                <div className="w-32 h-32 rounded-[44px] bg-secondary/50 flex items-center justify-center text-primary/30 border border-border/20 shadow-inner group-hover:rotate-12 group-hover:scale-110 transition-all duration-700">
-                  <Calendar className="w-16 h-16" />
+                <div className="w-24 h-24 rounded-[32px] bg-secondary/50 flex items-center justify-center text-primary/40 shadow-inner group-hover:scale-105 transition-all duration-700">
+                  <Calendar className="w-10 h-10" />
                 </div>
                 
-                <div className="space-y-4 max-w-md">
-                  <h2 className="text-4xl font-black tracking-tighter text-foreground italic uppercase opacity-40 leading-none">Zero Node Alignment.</h2>
-                  <p className="text-muted-foreground font-bold italic tracking-widest text-sm uppercase opacity-60 leading-relaxed">
-                    You haven't initialized any expert sessions yet. Access our verified directory to begin your knowledge transfer.
+                <div className="space-y-3 max-w-md">
+                  <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground leading-tight">No Bookings Found.</h2>
+                  <p className="text-muted-foreground font-medium text-base leading-relaxed">
+                    You haven't scheduled any sessions yet. Browse our directory to get started.
                   </p>
                 </div>
                 
-                <Button className="rounded-[24px] px-16 py-10 font-black text-xs uppercase tracking-[0.4em] bg-primary text-primary-foreground hover:scale-105 active:scale-95 transition-all shadow-2xl group-hover:translate-y-[-4px] border-none">
-                  Sync Universal Directory
+                <Button className="rounded-xl px-10 h-14 font-bold text-base bg-primary text-primary-foreground hover:scale-105 transition-all shadow-lg">
+                  Browse Directory
                 </Button>
               </Card>
             ) : (
@@ -195,12 +195,12 @@ const Bookings = () => {
                         </div>
                       </div>
                       <div className="flex flex-col sm:flex-row gap-4 w-full xl:w-auto">
-                        <Button variant="outline" className="h-14 md:h-20 rounded-[20px] md:rounded-[24px] px-8 md:px-12 font-black text-[10px] uppercase tracking-[0.4em] bg-secondary/10 border-border/40 hover:bg-foreground hover:text-background transition-all shadow-xl italic border-none">
-                           Reschedule Node
+                        <Button variant="outline" className="h-12 md:h-14 rounded-xl px-8 font-bold text-sm bg-secondary/10 border-border/40 hover:bg-foreground hover:text-background transition-all shadow-sm">
+                           Reschedule
                         </Button>
-                        <Button className="h-14 md:h-20 rounded-[20px] md:rounded-[24px] px-8 md:px-12 font-black text-[10px] md:text-xs uppercase tracking-[0.4em] bg-primary text-primary-foreground shadow-2xl shadow-primary/30 hover:scale-105 active:scale-95 transition-all gap-4 border-none italic">
-                           Enter Session Node
-                           <ChevronRight className="w-4 h-4 md:w-5 md:h-5 stroke-[4px]" />
+                        <Button className="h-12 md:h-14 rounded-xl px-8 font-bold text-sm bg-primary text-primary-foreground shadow-lg hover:scale-105 transition-all gap-2">
+                           View Details
+                           <ChevronRight className="w-4 h-4" />
                         </Button>
                       </div>
                     </div>

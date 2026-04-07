@@ -16,7 +16,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground">
       <SEO 
-        title="DEVFOLIO | The Creator Protocol" 
+        title="Devfolio | Professional Marketplace" 
         description="The premier marketplace for the global creator economy. Build, launch, and scale your digital future with elite mentors and world-class services." 
       />
       <Header />

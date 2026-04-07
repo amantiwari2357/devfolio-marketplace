@@ -48,36 +48,36 @@ const AboutUs = () => {
 
         <div className="container mx-auto px-6 relative">
           {/* Hero Section */}
-          <div className="text-center max-w-4xl mx-auto mb-20 space-y-6 animate-slide-up">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 border border-border/40 backdrop-blur-md text-xs font-semibold text-primary">
+          <div className="text-center max-w-4xl mx-auto mb-16 md:mb-20 space-y-4 md:space-y-6 animate-slide-up">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 border border-border/40 backdrop-blur-md text-xs font-semibold text-primary shadow-sm">
               <Award className="w-4 h-4" />
-              Establishment Protocol
+              Award-Winning Platform
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
+            <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
               Empowering experts to <span className="text-primary">shape the future.</span>
             </h1>
-            <p className="text-base md:text-lg text-muted-foreground font-medium max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-muted-foreground font-medium max-w-2xl mx-auto leading-relaxed">
               We're building the infrastructure for the next generation of knowledge sharing and professional services.
             </p>
           </div>
 
           {/* Story Protocol Card */}
-          <div className="max-w-5xl mx-auto mb-20 md:mb-28 animate-slide-up" style={{ animationDelay: '100ms' }}>
-            <Card className="neural-card p-8 md:p-12 relative overflow-hidden group shadow-lg">
-              <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-5 transition-all duration-1000 translate-x-8 translate-y-[-8px] group-hover:translate-x-0 group-hover:translate-y-0">
-                <Rocket className="w-64 h-64 text-primary" />
+          <div className="max-w-5xl mx-auto mb-16 md:mb-24 animate-slide-up" style={{ animationDelay: '100ms' }}>
+            <Card className="p-8 md:p-12 relative overflow-hidden group shadow-xl hover:shadow-2xl transition-shadow duration-500 rounded-[32px] md:rounded-[40px] bg-card border-border/60">
+              <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:scale-105 transition-transform duration-700 pointer-events-none">
+                <Rocket className="w-32 h-32 md:w-64 md:h-64 text-primary" />
               </div>
               <div className="relative z-10 space-y-8">
                 <div className="flex items-center gap-3 text-primary">
-                   <div className="w-8 h-1 bg-primary rounded-full" />
-                   <h2 className="text-xs font-bold uppercase tracking-widest">Genesis Protocol</h2>
+                   <div className="w-8 h-1 bg-primary rounded-full shadow-sm" />
+                   <h2 className="text-xs font-bold uppercase tracking-widest text-primary/80">Our Vision</h2>
                 </div>
-                <div className="grid lg:grid-cols-2 gap-12 items-start">
+                <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-start">
                   <div className="space-y-6">
-                    <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground leading-tight">
+                    <h3 className="text-2xl md:text-4xl font-bold tracking-tight text-foreground leading-tight">
                       Our <span className="text-primary">Story.</span>
                     </h3>
-                    <div className="space-y-4 text-base font-medium text-muted-foreground leading-relaxed">
+                    <div className="space-y-4 text-sm md:text-base font-medium text-muted-foreground leading-relaxed">
                       <p>
                         Devfolio was founded with a single, radical idea: that <span className="text-foreground font-bold">expertise should be accessible.</span> We recognized a gap between global experts and the communities that need their guidance.
                       </p>
@@ -132,39 +132,39 @@ const AboutUs = () => {
           </div>
 
           {/* Global Impact Protocol */}
-          <div className="max-w-5xl mx-auto mb-24 animate-slide-up" style={{ animationDelay: '300ms' }}>
-            <Card className="p-10 md:p-20 rounded-[40px] bg-foreground text-background border-none relative overflow-hidden group shadow-xl">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-transparent opacity-40 group-hover:opacity-60 transition-opacity" />
-              <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none group-hover:scale-110 transition-transform duration-1000">
-                <Globe className="w-64 h-64 text-primary" />
+          <div className="max-w-5xl mx-auto mb-16 md:mb-24 animate-slide-up" style={{ animationDelay: '300ms' }}>
+            <Card className="p-8 md:p-16 rounded-[32px] md:rounded-[40px] bg-foreground text-background border-none relative overflow-hidden group shadow-2xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-transparent opacity-40 group-hover:opacity-60 transition-opacity duration-700" />
+              <div className="absolute top-0 right-0 p-8 md:p-12 opacity-5 pointer-events-none group-hover:scale-105 transition-transform duration-1000">
+                <Globe className="w-48 h-48 md:w-64 md:h-64 text-primary" />
               </div>
               
-              <div className="relative z-10 space-y-16">
+              <div className="relative z-10 space-y-12 md:space-y-16">
                 <div className="text-center space-y-4">
                   <div className="flex items-center justify-center gap-2 text-primary animate-pulse">
-                    <Activity className="w-5 h-5" />
-                    <span className="text-xs font-semibold uppercase tracking-widest">Universal Telemetry</span>
+                    <Activity className="w-4 h-4 md:w-5 md:h-5" />
+                    <span className="text-[10px] md:text-xs font-semibold uppercase tracking-widest">Global Reach</span>
                   </div>
                   <h3 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight">
                      Numbers that <span className="text-primary">matter.</span>
                   </h3>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-12">
-                  <div className="space-y-3 text-center group/stat">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 md:gap-12">
+                  <div className="space-y-2 md:space-y-3 text-center group/stat">
                     <p className="text-4xl md:text-5xl font-bold text-primary">10K+</p>
-                    <p className="text-background/60 font-medium text-sm">Verified Creators</p>
-                    <div className="w-12 h-1 bg-primary/20 mx-auto rounded-full group-hover/stat:w-20 transition-all" />
+                    <p className="text-background/80 font-medium text-sm">Verified Creators</p>
+                    <div className="w-12 h-1.5 bg-primary/20 mx-auto rounded-full group-hover/stat:w-20 group-hover/stat:bg-primary/50 transition-all duration-300" />
                   </div>
-                  <div className="space-y-3 text-center group/stat">
+                  <div className="space-y-2 md:space-y-3 text-center group/stat">
                     <p className="text-4xl md:text-5xl font-bold text-primary">500K+</p>
-                    <p className="text-background/60 font-medium text-sm">Active Sessions</p>
-                    <div className="w-12 h-1 bg-primary/20 mx-auto rounded-full group-hover/stat:w-20 transition-all" />
+                    <p className="text-background/80 font-medium text-sm">Active Sessions</p>
+                    <div className="w-12 h-1.5 bg-primary/20 mx-auto rounded-full group-hover/stat:w-20 group-hover/stat:bg-primary/50 transition-all duration-300" />
                   </div>
-                  <div className="space-y-3 text-center group/stat">
+                  <div className="space-y-2 md:space-y-3 text-center group/stat">
                     <p className="text-4xl md:text-5xl font-bold text-primary">150+</p>
-                    <p className="text-background/60 font-medium text-sm">Nations Reached</p>
-                    <div className="w-12 h-1 bg-primary/20 mx-auto rounded-full group-hover/stat:w-20 transition-all" />
+                    <p className="text-background/80 font-medium text-sm">Nations Reached</p>
+                    <div className="w-12 h-1.5 bg-primary/20 mx-auto rounded-full group-hover/stat:w-20 group-hover/stat:bg-primary/50 transition-all duration-300" />
                   </div>
                 </div>
               </div>
@@ -172,25 +172,25 @@ const AboutUs = () => {
           </div>
 
           {/* Join Protocol Section */}
-          <div className="relative rounded-[40px] p-10 md:p-20 text-center overflow-hidden border border-border/40 bg-secondary/10 backdrop-blur-3xl animate-slide-up shadow-xl scroll-mt-32">
+          <div className="relative rounded-[32px] md:rounded-[40px] p-8 md:p-20 text-center overflow-hidden border border-border/60 bg-secondary/10 backdrop-blur-xl animate-slide-up shadow-lg scroll-mt-32">
             {/* Background neural flux */}
-            <div className="absolute inset-0 bg-grid-white/[0.02] opacity-20 -z-10" />
-            <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/3 w-64 h-64 bg-primary/5 blur-[80px] rounded-full" />
+            <div className="absolute inset-0 bg-grid-white/[0.02] opacity-30 -z-10" />
+            <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/3 w-64 h-64 bg-primary/5 blur-[80px] rounded-full point-events-none" />
             
-            <div className="max-w-3xl mx-auto space-y-8">
+            <div className="max-w-3xl mx-auto space-y-6 md:space-y-8 relative z-10">
               <div className="flex justify-center">
-                <div className="w-16 h-16 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shadow-sm animate-bounce">
-                  <Globe className="w-8 h-8" />
+                <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
+                  <Globe className="w-6 h-6 md:w-8 md:h-8" />
                 </div>
               </div>
               <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight">
                 Become part of the <span className="text-primary">global elite.</span>
               </h2>
-              <p className="text-base md:text-lg text-muted-foreground font-medium max-w-xl mx-auto leading-relaxed">
+              <p className="text-sm md:text-lg text-muted-foreground font-medium max-w-xl mx-auto leading-relaxed">
                 Join a community of forward-thinking experts building their legacy on our digital infrastructure.
               </p>
-              <div className="pt-6">
-                <Button size="lg" className="h-14 rounded-xl px-10 font-bold text-base bg-primary text-primary-foreground hover:scale-105 active:scale-95 transition-all shadow-lg">
+              <div className="pt-4 md:pt-6">
+                <Button size="lg" className="w-full sm:w-auto h-12 md:h-14 rounded-xl px-8 md:px-10 font-bold text-sm md:text-base bg-primary text-primary-foreground hover:-translate-y-0.5 active:translate-y-0 transition-all shadow-md">
                   Join the Waitlist
                 </Button>
               </div>

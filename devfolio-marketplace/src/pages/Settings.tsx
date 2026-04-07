@@ -144,10 +144,10 @@ const Settings = () => {
   if (initialLoading) {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-6">
-        <div className="w-16 h-16 rounded-[24px] bg-primary/10 flex items-center justify-center text-primary animate-pulse shadow-inner">
-          <Cpu className="w-8 h-8" />
+        <div className="w-16 h-16 rounded-[22px] bg-primary/10 flex items-center justify-center text-primary animate-pulse shadow-sm">
+          <SettingsIcon className="w-8 h-8" />
         </div>
-        <p className="text-[10px] font-black uppercase tracking-[0.5em] text-muted-foreground animate-pulse">Initializing Config Node...</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground animate-pulse">Loading Settings...</p>
       </div>
     );
   }
@@ -166,19 +166,19 @@ const Settings = () => {
           
           <div className="max-w-[1000px] mx-auto space-y-12 md:space-y-16">
             <header className="flex flex-col md:flex-row md:items-center justify-between gap-8 animate-slide-up">
-              <div className="space-y-3">
-                <div className="flex items-center gap-3 text-primary">
-                  <SettingsIcon className="w-4 h-4 animate-spin-slow" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.4em] italic">Authorized Configuration</span>
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-primary">
+                  <SettingsIcon className="w-4 h-4 md:w-5 md:h-5" />
+                  <span className="text-xs font-semibold uppercase tracking-wider">Account Preferences</span>
                 </div>
-                <h1 className="heading-responsive">
-                  Node <span className="text-primary NOT-italic">Config.</span>
+                <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
+                  User <span className="text-primary">Settings.</span>
                 </h1>
               </div>
               <div className="flex gap-4">
-                 <Button variant="outline" className="h-14 rounded-2xl px-8 font-black bg-secondary/30 border-border/50 gap-3 hover:bg-secondary/50 transition-all text-xs uppercase tracking-widest shadow-xl">
+                 <Button variant="outline" className="h-12 md:h-14 rounded-xl px-8 font-bold bg-secondary/10 border-border/40 gap-3 hover:bg-secondary/20 transition-all text-sm shadow-sm">
                     <Lock className="w-4 h-4" />
-                    Security Audit
+                    Security Settings
                  </Button>
               </div>
             </header>

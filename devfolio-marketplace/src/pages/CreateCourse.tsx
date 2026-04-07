@@ -55,12 +55,11 @@ const CreateCourse = () => {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-6">
         <div className="relative">
-          <div className="absolute inset-0 bg-primary/20 blur-[30px] rounded-full animate-pulse" />
-          <div className="w-16 h-16 rounded-[22px] bg-primary/10 border border-primary/20 flex items-center justify-center text-primary animate-pulse relative z-10">
+          <div className="w-16 h-16 rounded-[22px] bg-primary/10 border border-primary/20 flex items-center justify-center text-primary animate-pulse shadow-sm relative z-10">
             <Plus className="w-8 h-8 stroke-[3px]" />
           </div>
         </div>
-        <p className="text-[10px] font-black uppercase tracking-[0.6em] text-muted-foreground animate-pulse italic">Initializing Node Cluster...</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground animate-pulse">Loading Editor...</p>
       </div>
     );
   }
@@ -140,16 +139,16 @@ const CreateCourse = () => {
           <div className="absolute bottom-0 left-0 -z-10 w-1/2 h-1/2 bg-secondary/2 opacity-20 blur-[150px] rounded-full" />
           
           <div className="max-w-[1000px] mx-auto space-y-20 animate-slide-up">
-            <header className="space-y-8">
-              <div className="flex items-center gap-3 text-primary animate-fade-in">
-                <Sparkles className="w-4 h-4 animate-pulse" />
-                <span className="text-[10px] font-black uppercase tracking-[0.6em] italic">Asset Initialization Vector</span>
+            <header className="space-y-6 md:space-y-8">
+              <div className="flex items-center gap-2 text-primary animate-fade-in">
+                <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-primary/80" />
+                <span className="text-xs font-semibold uppercase tracking-wider">Create New Service</span>
               </div>
-              <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-foreground leading-[0.8] italic uppercase">
-                Add Your <br /><span className="text-primary NOT-italic block md:inline">Expertise.</span>
+              <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
+                Add Your <br className="hidden md:block" /><span className="text-primary">Expertise.</span>
               </h1>
-              <p className="text-base md:text-lg font-bold text-muted-foreground/60 italic leading-relaxed tracking-tight max-w-2xl">
-                Showcase your digital solutions — websites, apps, and branding — all in one centralized directory node for global discovery.
+              <p className="text-base md:text-lg text-muted-foreground font-medium max-w-2xl leading-relaxed">
+                Showcase your digital solutions — websites, apps, and branding — all in one centralized directory for global discovery.
               </p>
             </header>
 
@@ -160,18 +159,18 @@ const CreateCourse = () => {
                   <Zap className="w-56 h-56 text-primary" />
                 </div>
                 
-                <h2 className="text-2xl font-black tracking-tighter text-foreground mb-12 flex items-center gap-4 italic uppercase">
-                  <Activity className="w-6 h-6 text-primary" />
+                <h2 className="text-xl md:text-2xl font-bold text-foreground mb-8 md:mb-10 flex items-center gap-3">
+                  <Activity className="w-5 h-5 text-primary" />
                   Primary Configuration
                 </h2>
 
-                <div className="space-y-10 relative z-10">
-                  <div className="space-y-3">
-                    <Label htmlFor="serviceTitle" className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground ml-4 italic px-2">Asset Identifier (Title)</Label>
+                <div className="space-y-8 relative z-10">
+                  <div className="space-y-2">
+                    <Label htmlFor="serviceTitle" className="text-xs font-semibold text-foreground ml-1">Service Title</Label>
                     <Input
                       id="serviceTitle"
-                      placeholder="EX. ELITE PERFORMANCE ENGINEERING"
-                      className="h-16 rounded-[22px] px-8 bg-background/50 border-border/40 focus:border-primary/50 focus:ring-primary/20 transition-all font-black text-xs uppercase tracking-widest placeholder:opacity-30"
+                      placeholder="e.g., Full-Stack Web Development"
+                      className="h-12 md:h-14 rounded-xl px-4 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all text-sm md:text-base placeholder:text-muted-foreground/50"
                     />
                   </div>
 
@@ -319,13 +318,13 @@ const CreateCourse = () => {
               </Card>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-8 pt-12 border-t border-border/40">
-              <Button size="lg" className="h-20 flex-1 rounded-[28px] bg-primary text-primary-foreground text-xl font-black uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 hover:scale-[1.03] active:scale-95 transition-all gap-4 border-none italic group">
-                Deploy Configuration
-                <ChevronRight className="w-6 h-6 stroke-[4px] group-hover:translate-x-2 transition-transform" />
+            <div className="flex flex-col sm:flex-row gap-4 md:gap-6 pt-10 border-t border-border/20">
+              <Button size="lg" className="h-14 md:h-16 flex-1 rounded-xl bg-primary text-primary-foreground text-sm md:text-base font-bold shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all gap-3 group">
+                Publish Service
+                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Button size="lg" variant="outline" className="h-20 flex-1 rounded-[28px] border-border/40 bg-secondary/10 text-xl font-black uppercase tracking-[0.2em] hover:bg-secondary/20 transition-all italic border-none shadow-xl">
-                Store as Draft Node
+              <Button size="lg" variant="outline" className="h-14 md:h-16 flex-1 rounded-xl border-border/40 bg-secondary/10 text-sm md:text-base font-bold hover:bg-secondary/20 transition-all shadow-sm">
+                Save Draft
               </Button>
             </div>
             

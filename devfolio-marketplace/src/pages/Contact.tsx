@@ -19,15 +19,15 @@ const Contact = () => {
 
       <main className="section-spacing pt-32 md:pt-40 relative">
         <div className="container mx-auto px-6 relative">
-          <div className="text-center max-w-4xl mx-auto mb-16 md:mb-20 space-y-6 animate-slide-up">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 border border-border/40 backdrop-blur-md text-xs font-semibold text-primary">
+          <div className="text-center max-w-4xl mx-auto mb-16 md:mb-20 space-y-4 md:space-y-6 animate-slide-up">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 border border-border/40 backdrop-blur-md text-xs font-semibold text-primary shadow-sm">
               <Activity className="w-4 h-4" />
-              Contact
+              Contact Support
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
-              Establish <span className="text-primary">Connection.</span>
+            <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
+              Get in <span className="text-primary">Touch.</span>
             </h1>
-            <p className="text-base md:text-lg text-muted-foreground font-medium max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-muted-foreground font-medium max-w-2xl mx-auto leading-relaxed">
               Facing a hurdle? Or just want to say hi? Our specialized success team is ready to assist you in real-time.
             </p>
           </div>
@@ -62,11 +62,11 @@ const Contact = () => {
             ))}
           </div>
 
-          {/* Main Inquiry Core */}
+          {/* Contact Inquiry Section */}
           <div className="max-w-5xl mx-auto animate-slide-up mb-24" style={{ animationDelay: '200ms' }}>
-            <Card className="neural-card p-8 md:p-14 relative overflow-hidden group shadow-lg">
-              <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none group-hover:scale-110 transition-transform duration-1000">
-                <Send className="w-64 h-64 text-primary" />
+            <Card className="p-8 md:p-14 relative overflow-hidden group shadow-lg rounded-[32px] md:rounded-[40px] border-border/60">
+              <div className="absolute top-0 right-0 p-8 md:p-12 opacity-5 pointer-events-none group-hover:scale-105 transition-transform duration-1000">
+                <Send className="w-48 h-48 md:w-64 md:h-64 text-primary" />
               </div>
 
               <div className="relative z-10 grid lg:grid-cols-12 gap-12">

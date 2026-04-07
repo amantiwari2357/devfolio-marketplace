@@ -101,11 +101,11 @@ const Profile = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-4">
-        <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary animate-pulse">
-           <UserIcon className="w-6 h-6" />
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-6">
+        <div className="w-16 h-16 rounded-[22px] bg-primary/10 flex items-center justify-center text-primary animate-pulse shadow-sm">
+           <UserIcon className="w-8 h-8" />
         </div>
-        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">Synchronizing Profile Node...</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground animate-pulse">Loading Profile...</p>
       </div>
     );
   }
@@ -152,19 +152,19 @@ const Profile = () => {
                   </div>
 
                   <div className="flex-1 space-y-6 text-center md:text-left">
-                     <div className="space-y-2">
-                        <div className="flex items-center justify-center md:justify-start gap-3 mb-2">
-                           <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary bg-primary/10 px-4 py-1.5 rounded-full border border-primary/20 flex items-center gap-2">
-                              <Zap className="w-3 h-3" />
-                              Active Node
+                     <div className="space-y-4">
+                        <div className="flex items-center justify-center md:justify-start gap-4 mb-2">
+                           <span className="text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-4 py-1.5 rounded-full border border-primary/20 flex items-center gap-2">
+                              <Zap className="w-4 h-4" />
+                              Active Status
                            </span>
-                           <span className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground opacity-60">Architect ID: {user?._id?.slice(-8).toUpperCase()}</span>
+                           <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground opacity-60">ID: {user?._id?.slice(-8).toUpperCase()}</span>
                         </div>
-                        <h1 className="text-5xl font-black tracking-tighter text-foreground leading-tight italic">
+                        <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
                            {user?.username}
                         </h1>
-                        <p className="text-lg font-medium text-muted-foreground max-w-xl mx-auto md:mx-0 leading-relaxed italic">
-                           {user?.bio || "No system bio initialized. Senior Architect at Devfolio Directory."}
+                        <p className="text-base md:text-lg font-medium text-muted-foreground max-w-xl mx-auto md:mx-0 leading-relaxed">
+                           {user?.bio || "No biography provided. Community member at Devfolio."}
                         </p>
                      </div>
 
