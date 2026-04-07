@@ -11,29 +11,31 @@ const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-16 mb-20">
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-1">
-            <div className="flex items-center gap-2 mb-8 group">
+            <div className="flex items-center gap-2 mb-6 group">
               <a href="/" className="flex flex-col items-start gap-4">
-                <img src={logo} alt="Devfolio Logo" className="h-32 md:h-40 w-auto group-hover:scale-105 transition-transform duration-300" />
+                <img src={logo} alt="Devfolio Logo" className="h-10 md:h-12 w-auto group-hover:scale-105 transition-transform duration-300" />
               </a>
             </div>
             
-            <p className="text-muted-foreground text-xs font-bold leading-relaxed mb-8 pr-4 italic uppercase tracking-wider opacity-60">
+            <p className="text-muted-foreground text-sm font-medium leading-relaxed mb-6 pr-4">
               Building the next generation of digital solutions for individuals and brands worldwide.
             </p>
 
-            <Button 
-              variant="outline" 
-              className="rounded-xl border-primary/20 bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground font-black transition-all shadow-sm text-[10px] uppercase tracking-widest h-12 px-6 italic"
-            >
-              <Star className="w-3.5 h-3.5 mr-2 fill-current" />
-              Explore Elite Profiles
-            </Button>
+            <a href="/search" className="inline-block mt-2">
+              <Button 
+                variant="outline" 
+                className="rounded-xl border-primary/20 bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground font-semibold transition-all shadow-sm text-sm h-12 px-6"
+              >
+                <Star className="w-4 h-4 mr-2 fill-current" />
+                Explore Elite Profiles
+              </Button>
+            </a>
           </div>
           
           {/* Quick Links */}
           <div className="pt-8 md:pt-0">
-            <h4 className="font-black text-xs mb-8 tracking-[0.2em] uppercase italic opacity-40">System Node</h4>
-            <nav className="space-y-4">
+            <h4 className="font-semibold text-sm mb-6 text-foreground">System Node</h4>
+            <nav className="space-y-3">
               {["Use Cases", "Search", "Listing", "Pricing"].map((item) => (
                 <a 
                   key={item}
@@ -49,13 +51,13 @@ const Footer = () => {
 
           {/* Company Links */}
           <div className="pt-8 md:pt-0">
-            <h4 className="font-black text-xs mb-8 tracking-[0.2em] uppercase italic opacity-40">Identity Flow</h4>
-            <nav className="space-y-4">
+            <h4 className="font-semibold text-sm mb-6 text-foreground">Identity Flow</h4>
+            <nav className="space-y-3">
               {["About", "Blog", "Contact", "Terms", "Privacy"].map((item) => (
                 <a 
                   key={item}
                   href={`/${item.toLowerCase()}`} 
-                  className="group flex items-center text-muted-foreground hover:text-primary transition-colors font-bold text-xs uppercase tracking-widest italic"
+                  className="group flex items-center text-muted-foreground hover:text-primary transition-colors font-medium text-sm"
                 >
                   {item}
                   <ArrowUpRight className="w-3 h-3 ml-1 opacity-0 group-hover:opacity-100 transition-all -translate-y-0.5" />
@@ -66,12 +68,12 @@ const Footer = () => {
           
           {/* Contact & Socials */}
           <div className="col-span-2 md:col-span-1 pt-12 md:pt-0 border-t md:border-t-0 border-border/20">
-            <h4 className="font-black text-xs mb-8 tracking-[0.2em] uppercase italic opacity-40">Frequency Connect</h4>
+            <h4 className="font-semibold text-sm mb-6 text-foreground">Frequency Connect</h4>
             <div className="space-y-6">
-              <p className="text-muted-foreground text-xs font-bold italic uppercase tracking-widest leading-relaxed">
+              <p className="text-muted-foreground text-sm font-medium leading-relaxed">
                 GURGAON SECTOR 39, INDIA<br/>
-                <a href="tel:9031359720" className="text-foreground NOT-italic hover:text-primary transition-colors block mt-2">+91 9031359720</a>
-                <a href="mailto:devfoliomarketplace@gmail.com" className="text-foreground NOT-italic hover:text-primary transition-colors block mt-1">support@devfoliomarketplace.com</a>
+                <a href="tel:9031359720" className="text-foreground hover:text-primary transition-colors block mt-2">+91 9031359720</a>
+                <a href="mailto:devfoliomarketplace@gmail.com" className="text-foreground hover:text-primary transition-colors block mt-1">support@devfoliomarketplace.com</a>
               </p>
               
               <div className="flex gap-4">
@@ -79,9 +81,9 @@ const Footer = () => {
                   <a 
                     key={idx}
                     href="#" 
-                    className="w-12 h-12 rounded-xl bg-secondary hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all shadow-sm group"
+                    className="w-10 h-10 rounded-xl bg-secondary hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all shadow-sm group"
                   >
-                    <Icon className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                    <Icon className="w-4 h-4 group-hover:scale-110 transition-transform" />
                   </a>
                 ))}
               </div>
@@ -90,12 +92,12 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-border/50 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
+        <div className="border-t border-border/50 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-sm font-medium text-muted-foreground">
             © {currentYear} Devfolio Marketplace. All rights reserved.
           </p>
           <div className="flex gap-8">
-            <span className="text-[10px] font-black text-primary/40 uppercase tracking-[0.3em]">Built with Passion</span>
+            <span className="text-xs font-semibold text-muted-foreground">Built with Passion</span>
           </div>
         </div>
       </div>
