@@ -12,114 +12,108 @@ const CTASection = () => {
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 md:gap-24 items-center">
           {/* Left Content */}
-          <div className="animate-slide-up space-y-10">
-            <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-primary/10 border border-primary/20 text-[10px] font-black uppercase tracking-[0.4em] text-primary italic">
-              <Zap className="w-4 h-4" />
+          <div className="animate-slide-up space-y-8">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-xs font-semibold text-primary">
+              <Zap className="w-4 h-4 fill-primary" />
               Quick Launch Protocol
             </div>
 
             <h2 className="heading-responsive">
               Launch your{" "}
-              <span className="text-primary NOT-italic">
+              <span className="text-primary">
                 Services
               </span>{" "}
               in minutes.
             </h2>
 
-            <p className="text-base md:text-xl text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-xl opacity-70">
+            <p className="text-sm md:text-lg text-muted-foreground font-medium leading-relaxed max-w-xl">
               Build a stunning website, showcase your skills, and start getting clients — all from one powerful dashboard.
             </p>
 
-            <div className="space-y-8">
+            <div className="space-y-6">
               <div className="flex items-start gap-4 group">
-                <div className="w-12 h-12 rounded-2xl bg-secondary/50 flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500 shadow-xl italic">
-                  <CheckCircle className="w-5 h-5 stroke-[2.5px]" />
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-secondary/50 flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 shadow-sm">
+                  <CheckCircle className="w-5 h-5 md:w-6 md:h-6" />
                 </div>
                 <div>
-                  <p className="font-black text-foreground text-lg italic uppercase tracking-tighter leading-none mb-2">Professional Website</p>
-                  <p className="text-muted-foreground text-sm font-bold italic opacity-60">No coding required — drag, drop, and deploy absolute precision.</p>
+                  <p className="font-bold text-foreground text-base md:text-lg leading-tight mb-1">Professional Website</p>
+                  <p className="text-muted-foreground text-xs md:text-sm font-medium">No coding required — drag, drop, and deploy with absolute precision.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4 group">
-                <div className="w-12 h-12 rounded-2xl bg-secondary/50 flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500 shadow-xl italic">
-                  <TrendingUp className="w-5 h-5 stroke-[2.5px]" />
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-secondary/50 flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 shadow-sm">
+                  <TrendingUp className="w-5 h-5 md:w-6 md:h-6" />
                 </div>
                 <div>
-                  <p className="font-black text-foreground text-lg italic uppercase tracking-tighter leading-none mb-2">Instant Client Access</p>
-                  <p className="text-muted-foreground text-sm font-bold italic opacity-60">Start receiving verified project inquiries through secure relay nodes.</p>
+                  <p className="font-bold text-foreground text-base md:text-lg leading-tight mb-1">Instant Client Access</p>
+                  <p className="text-muted-foreground text-xs md:text-sm font-medium">Start receiving verified project inquiries through secure relay nodes.</p>
                 </div>
               </div>
             </div>
 
             <Button
               size="lg"
-              className="h-16 md:h-20 rounded-[22px] md:rounded-[28px] px-10 md:px-12 font-black text-lg md:text-xl bg-foreground text-background shadow-2xl hover:scale-105 active:scale-95 transition-all uppercase tracking-widest italic border-none group"
+              className="w-full sm:w-auto h-12 md:h-14 rounded-xl px-8 font-bold text-sm md:text-base bg-foreground text-background shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all group"
               onClick={() => window.location.href = "#launch"}
             >
               Get Started Now
-              <Rocket className="ml-4 w-6 h-6 animate-pulse group-hover:translate-x-1 transition-transform" />
+              <Rocket className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>
 
           {/* Right Card - Activity Feed */}
           <div className="animate-slide-up" style={{ animationDelay: '100ms' }}>
-            <Card className="neural-card p-10 md:p-12 relative overflow-hidden group shadow-2xl">
+            <Card className="bg-card border border-border/50 p-6 md:p-10 relative overflow-hidden group shadow-xl hover:shadow-2xl transition-shadow duration-500 rounded-[32px]">
               <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none group-hover:rotate-12 transition-transform">
                 <Rocket className="w-48 h-48 text-primary" />
               </div>
               
               {/* User Header */}
-              <div className="bg-background/50 p-6 rounded-[28px] mb-8 border border-border/40 shadow-xl relative z-10">
-                <div className="flex items-center gap-5">
-                  <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center text-primary-foreground text-2xl font-black shadow-2xl italic">
-                    AT
-                  </div>
-                  <div>
-                    <p className="font-black text-foreground text-xl tracking-tighter italic uppercase leading-none mb-1">Aman Tiwari</p>
-                    <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] italic">myportfolio.in/aman</p>
-                  </div>
+              <div className="bg-secondary/40 p-5 md:p-6 rounded-2xl mb-6 border border-border/60 shadow-sm relative z-10 flex items-center gap-4">
+                <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl bg-primary flex items-center justify-center text-primary-foreground text-lg md:text-xl font-bold shadow-md">
+                  AT
+                </div>
+                <div>
+                  <p className="font-bold text-foreground text-base md:text-lg leading-tight mb-1">Aman Tiwari</p>
+                  <p className="text-xs font-semibold text-primary">myportfolio.in/aman</p>
                 </div>
               </div>
 
               {/* Highlighted Stats Box */}
-              <div className="bg-primary rounded-[32px] p-10 flex flex-col items-center justify-center mb-8 shadow-2xl shadow-primary/30 relative z-10 transition-transform hover:scale-[1.02] duration-500">
-                <Zap className="w-20 h-20 text-primary-foreground mb-6 drop-shadow-2xl animate-pulse stroke-[3px]" />
-                <p className="text-primary-foreground font-black text-3xl tracking-tighter italic uppercase">Active Profile</p>
-                <p className="text-primary-foreground/70 font-black mt-3 uppercase tracking-[0.3em] text-[10px] italic">Optimized Performance</p>
+              <div className="bg-primary rounded-2xl md:rounded-[24px] p-6 md:p-8 flex flex-col items-center justify-center mb-6 shadow-lg relative z-10 transition-transform hover:-translate-y-1 duration-300">
+                <Zap className="w-12 h-12 md:w-16 md:h-16 text-primary-foreground mb-4 drop-shadow-md fill-primary-foreground/20" />
+                <p className="text-primary-foreground font-bold text-xl md:text-2xl text-center">Active Profile</p>
+                <p className="text-primary-foreground/90 font-semibold uppercase tracking-wider text-[10px] md:text-xs mt-2 text-center">Optimized Performance</p>
               </div>
 
               {/* Activity Feed */}
-              <div className="space-y-4 relative z-10">
-                <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.4em] mb-6 italic opacity-50">Recent Data Stream</p>
+              <div className="space-y-3 relative z-10">
+                <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-4 px-1">Recent Activity</p>
                 
                 {/* Activity Item 1 */}
-                <div className="bg-background/40 backdrop-blur-xl p-6 rounded-[24px] border border-border/40 hover:border-primary/40 hover:bg-background/60 transition-all group/item shadow-lg">
-                  <div className="flex items-start gap-4">
-                    <div className="w-3 h-3 rounded-full bg-green-500 mt-2.5 animate-ping opacity-75"></div>
-                    <div className="flex-1">
-                      <p className="font-black text-foreground text-xs uppercase tracking-widest italic opacity-60">New project inquiry</p>
-                      <p className="text-primary font-black text-2xl mt-1 tracking-tighter italic leading-none">₹5,000</p>
-                    </div>
-                    <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center text-green-500 shadow-inner">
-                      <TrendingUp className="w-6 h-6 stroke-[3px]" />
-                    </div>
+                <div className="bg-card p-4 md:p-5 rounded-xl md:rounded-[20px] border border-border/60 hover:border-primary/40 transition-all group/item shadow-sm flex items-center gap-4">
+                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse mt-0.5" />
+                  <div className="flex-1">
+                    <p className="font-semibold text-muted-foreground text-[10px] md:text-xs uppercase tracking-wide">New project inquiry</p>
+                    <p className="text-foreground font-bold text-lg md:text-xl mt-0.5 leading-none">₹5,000</p>
+                  </div>
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-green-500/10 flex items-center justify-center text-green-500 shrink-0">
+                    <TrendingUp className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
                 </div>
 
                 {/* Activity Item 2 */}
-                <div className="bg-background/40 backdrop-blur-xl p-6 rounded-[24px] border border-border/40 hover:border-primary/40 hover:bg-background/60 transition-all group/item shadow-lg">
-                  <div className="flex items-start gap-4">
-                    <div className="w-3 h-3 rounded-full bg-amber-500 mt-2.5 shadow-[0_0_15px_rgba(245,158,11,0.5)]"></div>
-                    <div className="flex-1">
-                      <p className="font-black text-foreground text-xs uppercase tracking-widest italic opacity-60">Review received</p>
-                      <div className="flex items-center gap-2 mt-1">
-                         <span className="text-amber-500 font-black text-2xl tracking-tighter italic leading-none">5.0</span>
-                         <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest italic opacity-40 ml-1">/ Node Ranking</span>
-                      </div>
+                <div className="bg-card p-4 md:p-5 rounded-xl md:rounded-[20px] border border-border/60 hover:border-primary/40 transition-all group/item shadow-sm flex items-center gap-4">
+                  <div className="w-2 h-2 rounded-full bg-amber-500 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="font-semibold text-muted-foreground text-[10px] md:text-xs uppercase tracking-wide">Review received</p>
+                    <div className="flex items-end gap-1.5 mt-0.5">
+                       <span className="text-foreground font-bold text-lg md:text-xl leading-none">5.0</span>
+                       <span className="text-xs font-semibold text-amber-500 mb-0.5">/ 5.0</span>
                     </div>
-                    <div className="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-500 shadow-inner">
-                      <CheckCircle className="w-6 h-6 stroke-[3px]" />
-                    </div>
+                  </div>
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-500 shrink-0">
+                    <CheckCircle className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
                 </div>
               </div>

@@ -6,9 +6,9 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-background border-t border-border/50 pt-20 pb-10">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-16 mb-20">
+    <footer className="bg-background border-t border-border/50 pt-12 md:pt-20 pb-8 md:pb-10">
+      <div className="container mx-auto px-6 md:px-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10 md:gap-16 mb-12 md:mb-20">
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-6 group">
@@ -33,8 +33,8 @@ const Footer = () => {
           </div>
           
           {/* Quick Links */}
-          <div className="pt-8 md:pt-0">
-            <h4 className="font-semibold text-sm mb-6 text-foreground">System Node</h4>
+          <div className="col-span-1">
+            <h4 className="font-semibold text-sm mb-5 text-foreground">System Node</h4>
             <nav className="space-y-3">
               {["Use Cases", "Search", "Listing", "Pricing"].map((item) => (
                 <a 
@@ -43,15 +43,15 @@ const Footer = () => {
                   className="group flex items-center text-muted-foreground hover:text-primary transition-colors font-medium text-sm"
                 >
                   {item}
-                  <ArrowUpRight className="w-3 h-3 ml-1 opacity-0 group-hover:opacity-100 transition-all -translate-y-0.5" />
+                  <ArrowUpRight className="w-3 h-3 ml-1 opacity-0 md:group-hover:opacity-100 transition-all -translate-y-0.5" />
                 </a>
               ))}
             </nav>
           </div>
 
           {/* Company Links */}
-          <div className="pt-8 md:pt-0">
-            <h4 className="font-semibold text-sm mb-6 text-foreground">Identity Flow</h4>
+          <div className="col-span-1">
+            <h4 className="font-semibold text-sm mb-5 text-foreground">Identity Flow</h4>
             <nav className="space-y-3">
               {["About", "Blog", "Contact", "Terms", "Privacy"].map((item) => (
                 <a 
@@ -60,15 +60,15 @@ const Footer = () => {
                   className="group flex items-center text-muted-foreground hover:text-primary transition-colors font-medium text-sm"
                 >
                   {item}
-                  <ArrowUpRight className="w-3 h-3 ml-1 opacity-0 group-hover:opacity-100 transition-all -translate-y-0.5" />
+                  <ArrowUpRight className="w-3 h-3 ml-1 opacity-0 md:group-hover:opacity-100 transition-all -translate-y-0.5" />
                 </a>
               ))}
             </nav>
           </div>
           
           {/* Contact & Socials */}
-          <div className="col-span-2 md:col-span-1 pt-12 md:pt-0 border-t md:border-t-0 border-border/20">
-            <h4 className="font-semibold text-sm mb-6 text-foreground">Frequency Connect</h4>
+          <div className="col-span-2 md:col-span-1 pt-4 md:pt-0 border-t md:border-t-0 border-border/10 md:border-none">
+            <h4 className="font-semibold text-sm mb-5 text-foreground">Frequency Connect</h4>
             <div className="space-y-6">
               <p className="text-muted-foreground text-sm font-medium leading-relaxed">
                 GURGAON SECTOR 39, INDIA<br/>
@@ -98,12 +98,12 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-border/50 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm font-medium text-muted-foreground">
+        <div className="border-t border-border/50 pt-6 pb-4 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+          <p className="text-xs md:text-sm font-medium text-muted-foreground">
             © {currentYear} Devfolio Marketplace. All rights reserved.
           </p>
           <div className="flex gap-8">
-            <span className="text-xs font-semibold text-muted-foreground">Built with Passion</span>
+            <span className="text-[10px] md:text-xs font-semibold text-muted-foreground uppercase tracking-wider">Built with Passion</span>
           </div>
         </div>
       </div>
