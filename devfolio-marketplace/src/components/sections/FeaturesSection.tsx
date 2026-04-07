@@ -53,16 +53,16 @@ const FeaturesSection = () => {
       <div className="absolute top-0 right-0 -z-10 w-1/2 h-1/2 bg-primary/2 opacity-30 blur-[150px] rounded-full animate-pulse" />
       
       <div className="container mx-auto px-6">
-        <div className="text-center max-w-4xl mx-auto mb-20 md:mb-32 animate-slide-up">
+        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24 animate-slide-up">
           <h2 className="heading-responsive">
-            Why Choose <span className="text-primary NOT-italic">My Services.</span>
+            Why Choose <span className="text-primary">My Services.</span>
           </h2>
-          <p className="text-base md:text-xl text-muted-foreground font-bold italic tracking-tight leading-relaxed opacity-70 mt-8">
+          <p className="text-sm md:text-lg text-muted-foreground font-medium leading-relaxed mt-6">
             Experience the advantage of a tailored digital strategy and cutting-edge technical execution.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 animate-slide-up" style={{ animationDelay: '100ms' }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 animate-slide-up" style={{ animationDelay: '100ms' }}>
           {features.map((feature, idx) => (
             <FeatureCard key={idx} {...feature} />
           ))}

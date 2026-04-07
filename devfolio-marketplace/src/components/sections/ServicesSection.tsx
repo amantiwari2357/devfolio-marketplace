@@ -159,14 +159,14 @@ const ServicesSection = () => {
 
       <div className="container mx-auto px-6">
         <div className="text-center mb-10 md:mb-14 space-y-4 animate-slide-up">
-          <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-secondary/10 border border-border/40 backdrop-blur-md text-[10px] font-black uppercase tracking-[0.4em] text-primary italic">
-            <Zap className="w-4 h-4 animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/30 border border-border/40 backdrop-blur-md text-xs font-semibold text-primary">
+            <Zap className="w-3.5 h-3.5 fill-primary" />
             Specialized Neural Services
           </div>
           <h2 className="heading-responsive">
             Strategic <span className="text-primary NOT-italic">Solutions.</span>
           </h2>
-          <p className="text-sm md:text-base text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-3xl mx-auto opacity-70">
+          <p className="text-sm md:text-base text-muted-foreground font-medium leading-relaxed max-w-3xl mx-auto">
             Book a strategy session or explore specialized digital infrastructure tailored to your mission.
           </p>
         </div>
@@ -174,39 +174,38 @@ const ServicesSection = () => {
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-start">
           {/* LEFT SIDE - CALENDAR */}
           <div className="lg:sticky lg:top-32 animate-slide-up">
-            <Card className="neural-card p-10 md:p-12 relative overflow-hidden group shadow-2xl">
-              <div className="relative z-10 space-y-6">
-                <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 rounded-[22px] bg-secondary/50 flex items-center justify-center text-primary shadow-inner group-hover:rotate-6 transition-all">
-                    <Zap className="w-8 h-8" />
+            <Card className="bg-card border-border/60 shadow-md p-6 md:p-10 relative overflow-hidden group rounded-[32px]">
+              <div className="relative z-10 space-y-6 md:space-y-8">
+                <div className="flex items-center gap-4 md:gap-6">
+                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:rotate-6 transition-transform shadow-sm">
+                    <Zap className="w-6 h-6 md:w-8 md:h-8" />
                   </div>
                   <div>
-                    <h4 className="text-base md:text-lg font-black tracking-tighter text-foreground italic uppercase leading-none">Book Consultation.</h4>
-                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground mt-2 opacity-50 italic">
+                    <h4 className="text-lg md:text-xl font-bold tracking-tight text-foreground leading-tight">Book Consultation</h4>
+                    <p className="text-xs md:text-sm font-medium text-muted-foreground mt-1">
                       Discuss your project roadmap
                     </p>
                   </div>
                 </div>
 
-                <div className="bg-background/50 backdrop-blur-xl rounded-[32px] p-4 border border-border/20 shadow-inner">
-                  {/* Month Navigation */}
-                  <div className="flex items-center justify-between mb-8">
-                    <Button variant="ghost" size="sm" onClick={handlePrevMonth} className="font-black hover:bg-secondary/20">
-                      PREV
+                <div className="bg-secondary/20 rounded-2xl md:rounded-[24px] p-4 md:p-6 border border-border/40">
+                  <div className="flex items-center justify-between mb-6 gap-2">
+                    <Button variant="outline" size="sm" onClick={handlePrevMonth} className="font-semibold text-xs shrink-0 px-3 bg-background border-border/40 text-foreground hover:bg-secondary/40 active:scale-95 transition-all">
+                      Prev
                     </Button>
-                    <h3 className="text-sm font-black uppercase tracking-[0.2em] text-primary italic">
+                    <h3 className="text-sm md:text-base font-bold text-foreground text-center truncate">
                       {monthNames[currentMonth.getMonth()]}{" "}
                       {currentMonth.getFullYear()}
                     </h3>
-                    <Button variant="ghost" size="sm" onClick={handleNextMonth} className="font-black hover:bg-secondary/20">
-                      NEXT
+                    <Button variant="outline" size="sm" onClick={handleNextMonth} className="font-semibold text-xs shrink-0 px-3 bg-background border-border/40 text-foreground hover:bg-secondary/40 active:scale-95 transition-all">
+                      Next
                     </Button>
                   </div>
 
                   {/* Calendar Grid */}
-                  <div className="grid grid-cols-7 gap-3 mb-8">
-                    {["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].map((day) => (
-                      <div key={day} className="p-1 text-center text-[9px] font-black tracking-widest text-muted-foreground/40 italic">
+                  <div className="grid grid-cols-7 gap-2 md:gap-3 mb-6">
+                    {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+                      <div key={day} className="p-1 text-center text-[10px] md:text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                         {day}
                       </div>
                     ))}
@@ -215,13 +214,13 @@ const ServicesSection = () => {
                       <div
                         key={idx}
                         onClick={() => handleDateClick(idx)}
-                        className={`aspect-square flex items-center justify-center text-[11px] font-black cursor-pointer rounded-xl transition-all ${dayObj.currentMonth
+                        className={`aspect-square flex items-center justify-center text-xs md:text-sm font-semibold cursor-pointer rounded-lg md:rounded-xl transition-all ${dayObj.currentMonth
                           ? selectedDateObj &&
                             selectedDateObj.getDate() === dayObj.day &&
                             selectedDateObj.getMonth() === currentMonth.getMonth()
-                            ? "bg-primary text-primary-foreground shadow-xl shadow-primary/30 scale-110"
-                            : "bg-secondary/40 text-foreground hover:bg-primary/20 hover:text-primary"
-                          : "text-muted-foreground/20 pointer-events-none"
+                            ? "bg-primary text-primary-foreground shadow-md scale-105"
+                            : "bg-background text-foreground hover:bg-primary/10 hover:text-primary border border-border/30 hover:border-primary/20 shadow-sm"
+                          : "text-muted-foreground/30 pointer-events-none"
                           }`}
                       >
                         {dayObj.day}
@@ -230,18 +229,18 @@ const ServicesSection = () => {
                   </div>
 
                   {/* Footer Stats */}
-                  <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-border/20">
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-6 border-t border-border/20">
                     <div className="text-center md:text-left space-y-1">
-                      <p className="text-[9px] font-black uppercase tracking-[0.4em] text-muted-foreground italic">Selected Node</p>
-                      <p className="text-sm font-black text-foreground italic uppercase tracking-tight">
-                        {selectedTime || "SELECT_TIME"}, {" "}
-                        {selectedDateObj ? selectedDateObj.toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "SELECT_DATE"}
+                      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Selected Time</p>
+                      <p className="text-sm font-bold text-foreground">
+                        {selectedTime || "Select Time"},{" "}
+                        {selectedDateObj ? selectedDateObj.toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "Select Date"}
                       </p>
                     </div>
 
                     <Button
                       onClick={handleBookNow}
-                      className="h-14 px-10 rounded-[20px] font-black bg-primary text-primary-foreground hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-primary/30 uppercase tracking-[0.2em] italic border-none"
+                      className="w-full md:w-auto h-12 px-6 rounded-xl font-bold bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-md"
                     >
                       Authorize Connection
                     </Button>
@@ -253,31 +252,31 @@ const ServicesSection = () => {
 
           {/* RIGHT SIDE - SERVICES ACCORDION */}
           <div className="space-y-3 animate-slide-up" style={{ animationDelay: '100ms' }}>
-            <Accordion type="single" collapsible defaultValue="item-0" className="space-y-2">
+            <Accordion type="single" collapsible defaultValue="item-0" className="space-y-3">
               {services.map((service, idx) => (
                 <AccordionItem
                   key={idx}
                   value={`item-${idx}`}
-                  className="neural-card border-none px-4 md:px-6 rounded-[32px] overflow-hidden"
+                  className="bg-card border border-border/40 px-5 md:px-8 rounded-2xl md:rounded-[32px] overflow-hidden shadow-sm"
                 >
-                  <AccordionTrigger className="hover:no-underline py-4 md:py-5">
-                    <div className="flex items-center gap-6 text-left">
-                      <span className="text-lg md:text-xl font-black text-primary NOT-italic opacity-30 select-none">
+                  <AccordionTrigger className="hover:no-underline py-5 md:py-6">
+                    <div className="flex items-center gap-4 text-left">
+                      <span className="text-lg md:text-xl font-bold text-primary/40 select-none">
                         {service.number}
                       </span>
-                      <span className="text-sm md:text-base font-black tracking-tighter text-foreground italic uppercase">
+                      <span className="text-sm md:text-base font-bold text-foreground">
                         {service.title}
                       </span>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="pb-4 px-0">
-                    <div className="space-y-3">
-                      <p className="text-sm font-bold text-muted-foreground/80 leading-relaxed italic tracking-tight">
+                  <AccordionContent className="pb-6">
+                    <div className="space-y-4 pr-4">
+                      <p className="text-sm font-medium text-muted-foreground leading-relaxed">
                         {service.description}
                       </p>
                       <div className="pt-2">
-                        <Button variant="ghost" className="p-0 font-black text-[10px] tracking-[0.4em] uppercase text-primary italic hover:bg-transparent group">
-                          Explore Capability <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                        <Button variant="ghost" className="p-0 font-semibold text-xs md:text-sm text-primary hover:bg-transparent hover:text-primary/80 group">
+                          Explore Capability <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </Button>
                       </div>
                     </div>
@@ -291,18 +290,18 @@ const ServicesSection = () => {
 
       {/* Time Popup */}
       <Dialog open={isTimePopupOpen} onOpenChange={setIsTimePopupOpen}>
-        <DialogContent className="max-w-md p-8 bg-background/95 backdrop-blur-2xl border-border/40 rounded-[32px] shadow-2xl">
-          <DialogHeader className="mb-8">
-            <DialogTitle className="text-lg font-black tracking-tighter text-foreground italic uppercase">Select Node <span className="text-primary NOT-italic">Time.</span></DialogTitle>
+        <DialogContent className="max-w-md p-6 bg-card border border-border rounded-2xl shadow-2xl">
+          <DialogHeader className="mb-6">
+            <DialogTitle className="text-lg font-bold text-foreground">Select Time</DialogTitle>
           </DialogHeader>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
             {timeSlots.map((time) => (
               <Button
                 key={time}
                 variant={selectedTime === time ? "default" : "outline"}
                 onClick={() => handleTimeSelect(time)}
-                className={`h-12 rounded-xl text-[10px] font-black uppercase tracking-widest italic border-border/20 transition-all ${selectedTime === time ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" : "hover:bg-secondary/20"
+                className={`h-10 md:h-12 rounded-lg md:rounded-xl text-xs font-semibold transition-all ${selectedTime === time ? "bg-primary text-primary-foreground shadow-sm shadow-primary/20" : "hover:bg-secondary/30"
                   }`}
               >
                 {time}
