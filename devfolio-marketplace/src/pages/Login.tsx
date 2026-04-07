@@ -92,7 +92,7 @@ const Login = () => {
   return (
     <div className="min-h-screen flex flex-col bg-background selection:bg-primary selection:text-primary-foreground relative">
       <Header />
-      
+
       <main className="flex-1 mt-24 relative overflow-hidden">
         <div className="grid lg:grid-cols-2 h-auto">
           <SEO
@@ -104,12 +104,13 @@ const Login = () => {
           <div className="flex items-center justify-center p-6 lg:p-16 border-r border-border/50 relative">
             {/* Background Neural Flux for Left Side */}
             <div className="absolute top-0 right-0 -z-10 w-2/3 h-2/3 bg-primary/5 opacity-40 blur-[180px] rounded-full animate-pulse" />
-            
+
             <div className="w-full max-w-md animate-slide-up">
               {/* Branding Protocol */}
               <div className="flex flex-col mb-12">
                 <Link to="/" className="flex items-center gap-2 group mb-8">
-                  <div className="relative">
+                  {/* <div className="relative">
+                  
                     <div className="absolute inset-0 bg-primary/20 blur-[30px] rounded-full animate-pulse" />
                     <img
                       src={logo}
@@ -117,7 +118,7 @@ const Login = () => {
                       className="h-32 w-auto group-hover:scale-105 transition-transform duration-500 relative z-10"
                       fetchPriority="high"
                     />
-                  </div>
+                  </div> */}
                 </Link>
                 <div className="space-y-4">
                   <div className="flex items-center gap-3 text-primary animate-pulse">
@@ -185,17 +186,17 @@ const Login = () => {
               <form onSubmit={handleSubmit} className="space-y-8">
                 <div className="space-y-4">
                   <Label htmlFor="email" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-4 italic px-2">Digital Identity (Email)</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="OPERATOR@DEVFOLIOMARKETPLACE.COM"
-                      className="h-14 md:h-16 rounded-[18px] md:rounded-[22px] px-8 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-[10px] md:text-xs uppercase tracking-widest placeholder:opacity-40"
-                      value={formData.email}
-                      onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
-                      required
-                    />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="OPERATOR@DEVFOLIOMARKETPLACE.COM"
+                    className="h-14 md:h-16 rounded-[18px] md:rounded-[22px] px-8 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-[10px] md:text-xs uppercase tracking-widest placeholder:opacity-40"
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
+                    required
+                  />
                 </div>
 
                 <div className="space-y-4">
@@ -250,8 +251,8 @@ const Login = () => {
                       </div>
                     ) : (
                       <div className="flex items-center gap-6">
-                         Initialize Access
-                         <ArrowRight className="w-6 h-6 stroke-[4px] group-hover:translate-x-2 transition-transform" />
+                        Initialize Access
+                        <ArrowRight className="w-6 h-6 stroke-[4px] group-hover:translate-x-2 transition-transform" />
                       </div>
                     )}
                   </Button>
@@ -265,8 +266,8 @@ const Login = () => {
                     </Link>
                   </p>
                   <div className="flex items-center gap-4 text-muted-foreground/30 italic">
-                     <ShieldCheck className="w-4 h-4" />
-                     <span className="text-[10px] font-black uppercase tracking-[0.4em]">AES-256 Bit Encryption</span>
+                    <ShieldCheck className="w-4 h-4" />
+                    <span className="text-[10px] font-black uppercase tracking-[0.4em]">AES-256 Bit Encryption</span>
                   </div>
                 </div>
               </form>
@@ -277,7 +278,7 @@ const Login = () => {
           <div className="hidden lg:flex flex-col bg-secondary/30 p-16 justify-center relative overflow-hidden">
             {/* Background Mesh Flux for Right Side */}
             <div className="absolute bottom-0 left-0 -z-10 w-full h-full bg-primary/5 opacity-30 blur-[150px] rounded-full animate-pulse" />
-            
+
             <div className="max-w-md mx-auto space-y-8 relative z-10 transition-all duration-1000">
               <div className="space-y-4">
                 <div className="flex gap-1">
