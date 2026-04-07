@@ -77,10 +77,16 @@ const Footer = () => {
               </p>
               
               <div className="flex gap-4">
-                {[Linkedin, Twitter, Instagram].map((Icon, idx) => (
+                {[
+                  { Icon: Linkedin, href: "https://www.linkedin.com/in/aman-tiwari-7a87323b4?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" },
+                  { Icon: Twitter, href: "https://x.com/amantiwari2357" },
+                  { Icon: Instagram, href: "https://www.instagram.com/amantiwari2357/" }
+                ].map(({ Icon, href }, idx) => (
                   <a 
                     key={idx}
-                    href="#" 
+                    href={href} 
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-10 h-10 rounded-xl bg-secondary hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all shadow-sm group"
                   >
                     <Icon className="w-4 h-4 group-hover:scale-110 transition-transform" />
