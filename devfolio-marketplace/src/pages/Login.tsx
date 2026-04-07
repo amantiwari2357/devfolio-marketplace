@@ -125,18 +125,18 @@ const Login = () => {
                     <Fingerprint className="w-4 h-4" />
                     <span className="text-[10px] font-black uppercase tracking-[0.5em] italic">Biometric Ready</span>
                   </div>
-                  <h1 className="text-2xl md:text-4xl font-black tracking-tighter text-foreground italic uppercase leading-none">
-                    Welcome <span className="text-primary NOT-italic">Back.</span>
+                  <h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-3 text-foreground">
+                    Welcome back<span className="text-primary">.</span>
                   </h1>
-                  <p className="text-[10px] font-bold text-muted-foreground/50 italic uppercase tracking-[0.2em] opacity-70">Neural access initialization required for node entry.</p>
+                  <p className="text-sm font-medium text-muted-foreground">Log in to your account and continue your journey.</p>
                 </div>
               </div>
 
               {/* Social Authentication Matrix */}
-              <div className="grid grid-cols-2 gap-6 mb-12">
+              <div className="grid grid-cols-2 gap-4 mb-8">
                 <Button
                   variant="outline"
-                  className="h-16 rounded-[22px] border-border/40 bg-background/50 hover:bg-foreground hover:text-background transition-all font-black text-[10px] uppercase tracking-[0.2em] gap-4 shadow-inner italic border-none"
+                  className="h-12 md:h-14 rounded-xl border border-border/50 bg-card hover:bg-accent/50 hover:border-primary/20 transition-all font-bold text-sm gap-3"
                   type="button"
                 >
                   <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24">
@@ -162,7 +162,7 @@ const Login = () => {
 
                 <Button
                   variant="outline"
-                  className="h-16 rounded-[22px] border-border/40 bg-background/50 hover:bg-foreground hover:text-background transition-all font-black text-[10px] uppercase tracking-[0.2em] gap-4 shadow-inner italic border-none"
+                  className="h-12 md:h-14 rounded-xl border border-border/50 bg-card hover:bg-accent/50 hover:border-primary/20 transition-all font-bold text-sm gap-3"
                   type="button"
                 >
                   <svg className="w-4 h-4 flex-shrink-0" fill="#0A66C2" viewBox="0 0 24 24">
@@ -177,20 +177,20 @@ const Login = () => {
                 <div className="absolute inset-0 flex items-center">
                   <span className="w-full border-t border-border/20" />
                 </div>
-                <div className="relative flex justify-center">
-                  <span className="bg-secondary/10 backdrop-blur-3xl px-6 text-[10px] text-muted-foreground font-black italic uppercase tracking-[0.5em]">Secure Terminal Entry</span>
+                <div className="relative flex justify-center text-xs tracking-wide">
+                  <span className="bg-background px-4 text-muted-foreground font-semibold">Or use email</span>
                 </div>
               </div>
 
               {/* Access Payload Form */}
               <form onSubmit={handleSubmit} className="space-y-8">
-                <div className="space-y-4">
-                  <Label htmlFor="email" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-4 italic px-2">Digital Identity (Email)</Label>
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-sm font-semibold text-foreground ml-1">Email Address</Label>
                   <Input
                     id="email"
                     type="email"
-                    placeholder="OPERATOR@DEVFOLIOMARKETPLACE.COM"
-                    className="h-14 md:h-16 rounded-[18px] md:rounded-[22px] px-8 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-[10px] md:text-xs uppercase tracking-widest placeholder:opacity-40"
+                    placeholder="hello@example.com"
+                    className="h-12 md:h-14 rounded-xl px-4 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all text-sm md:text-base placeholder:text-muted-foreground/50"
                     value={formData.email}
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
@@ -199,17 +199,17 @@ const Login = () => {
                   />
                 </div>
 
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between px-2">
-                    <Label htmlFor="password" title="password" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-2 italic">Access Key (Password)</Label>
-                    <Link to="/forgot-password" title="forgot password" className="text-[11px] font-black italic text-primary uppercase tracking-[0.3em] hover:text-foreground transition-all">Reset Vector</Link>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between px-1">
+                    <Label htmlFor="password" title="password" className="text-sm font-semibold text-foreground">Password</Label>
+                    <Link to="/forgot-password" title="forgot password" className="text-xs font-semibold text-primary hover:text-primary/80 transition-all">Forgot your password?</Link>
                   </div>
                   <div className="relative">
                     <Input
                       id="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="••••••••••••"
-                      className="h-14 md:h-16 rounded-[18px] md:rounded-[22px] px-8 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-[10px] md:text-xs uppercase tracking-widest placeholder:opacity-40"
+                      className="h-12 md:h-14 rounded-xl px-4 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all text-sm md:text-base placeholder:text-muted-foreground/50"
                       value={formData.password}
                       onChange={(e) =>
                         setFormData({ ...formData, password: e.target.value })
@@ -241,33 +241,33 @@ const Login = () => {
                 <div className="pt-4">
                   <Button
                     type="submit"
-                    className="w-full h-14 md:h-16 rounded-[20px] md:rounded-[24px] font-black text-lg md:text-xl bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl shadow-primary/30 uppercase tracking-[0.2em] border-none italic group"
+                    className="w-full h-12 md:h-14 rounded-xl font-bold text-sm md:text-base shadow-lg shadow-primary/10 hover:shadow-primary/25 transition-all bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] border-none group"
                     disabled={isLoading}
                   >
                     {isLoading ? (
                       <div className="flex items-center gap-4">
-                        <div className="w-6 h-6 rounded-full border-[3px] border-primary-foreground/20 border-t-primary-foreground animate-spin" />
-                        <span className="text-lg md:text-xl">Establishing...</span>
+                        <div className="w-5 h-5 rounded-full border-2 border-primary-foreground/20 border-t-primary-foreground animate-spin" />
+                        <span>Logging in...</span>
                       </div>
                     ) : (
-                      <div className="flex items-center gap-6">
-                        Initialize Access
-                        <ArrowRight className="w-6 h-6 stroke-[4px] group-hover:translate-x-2 transition-transform" />
+                      <div className="flex items-center gap-2">
+                        Log In
+                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                       </div>
                     )}
                   </Button>
                 </div>
 
                 <div className="flex flex-col items-center gap-4 pt-4">
-                  <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground italic">
-                    New operator?{" "}
-                    <Link to="/signup" className="text-primary hover:text-foreground transition-all underline decoration-primary/20 underline-offset-8">
-                      Establish Identity
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Don't have an account?{" "}
+                    <Link to="/signup" className="text-primary hover:underline transition-all font-bold">
+                      Sign up
                     </Link>
                   </p>
                   <div className="flex items-center gap-4 text-muted-foreground/30 italic">
                     <ShieldCheck className="w-4 h-4" />
-                    <span className="text-[10px] font-black uppercase tracking-[0.4em]">AES-256 Bit Encryption</span>
+                    {/* <span className="text-[10px] font-black uppercase tracking-[0.4em]">AES-256 Bit Encryption</span> */}
                   </div>
                 </div>
               </form>

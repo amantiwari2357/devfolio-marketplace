@@ -112,15 +112,15 @@ const UseCases = () => {
         <div className="fixed bottom-0 left-0 -z-10 w-1/3 h-1/3 bg-primary/5 blur-[120px] pointer-events-none rounded-full" />
 
         <div className="container mx-auto px-6 relative">
-          <div className="text-center max-w-4xl mx-auto mb-20 md:mb-32 space-y-10 animate-slide-up">
-            <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-secondary/10 border border-border/40 backdrop-blur-md text-[10px] font-black uppercase tracking-[0.4em] text-primary italic">
+          <div className="text-center max-w-4xl mx-auto mb-16 md:mb-24 space-y-6 animate-slide-up">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 border border-border/40 backdrop-blur-md text-xs font-semibold text-primary">
               <Sparkles className="w-4 h-4" />
-              Advanced Architecture Protocol
+              Use Cases
             </div>
-            <h1 className="heading-responsive">
-              Software <span className="text-primary NOT-italic">Intelligence.</span>
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
+              Software <span className="text-primary">Intelligence.</span>
             </h1>
-            <p className="text-base md:text-xl text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-3xl mx-auto opacity-70 mt-8">
+            <p className="text-base md:text-lg text-muted-foreground font-medium max-w-3xl mx-auto mt-6">
               Engineering future-proof digital infrastructure with white-glove precision.
             </p>
           </div>
@@ -136,9 +136,9 @@ const UseCases = () => {
                   {service.icon}
                 </div>
 
-                <div className="space-y-4 mb-8">
-                  <h3 className="text-2xl font-black tracking-tight text-foreground">{service.title}</h3>
-                  <p className="text-muted-foreground font-medium leading-relaxed">
+                <div className="space-y-3 mb-6">
+                  <h3 className="text-xl font-bold text-foreground">{service.title}</h3>
+                  <p className="text-sm font-medium text-muted-foreground">
                     {service.description}
                   </p>
                 </div>
@@ -160,7 +160,7 @@ const UseCases = () => {
                 }}>
                   <DialogTrigger asChild>
                     <Button 
-                      className="w-full rounded-2xl py-8 font-black text-lg bg-secondary/50 border-border/50 hover:bg-primary hover:text-primary-foreground group-hover:shadow-xl group-hover:shadow-primary/20 transition-all gap-3"
+                      className="w-full h-12 md:h-14 rounded-xl font-bold text-base bg-secondary/50 border-border/50 hover:bg-primary hover:text-primary-foreground hover:shadow-lg hover:shadow-primary/20 transition-all gap-2"
                     >
                       Analyze Project
                       <ArrowRight className="w-5 h-5" />
@@ -171,49 +171,49 @@ const UseCases = () => {
                       <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
                         {service.icon}
                       </div>
-                      <DialogTitle className="text-4xl font-black tracking-tight leading-tight">
-                        Initiate <span className="text-primary italic">Intelligence.</span>
+                      <DialogTitle className="text-2xl md:text-3xl font-bold tracking-tight leading-tight text-foreground">
+                        Initiate <span className="text-primary">Intelligence.</span>
                       </DialogTitle>
                       <p className="text-muted-foreground font-medium">
                         Our specialized architects will contact you within 24 hours to map out your {service.title} roadmap.
                       </p>
                     </DialogHeader>
                     <form onSubmit={handleSubmit} className="space-y-8">
-                      <div className="space-y-4">
-                        <Label htmlFor="name" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-3 italic px-2">Full Identity</Label>
+                      <div className="space-y-2">
+                        <Label htmlFor="name" className="text-sm font-semibold text-foreground ml-1">Full Name</Label>
                         <Input 
                           id="name" 
                           name="name" 
-                          placeholder="ENTER_YOUR_NAME" 
+                          placeholder="Your Name" 
                           value={formData.name}
                           onChange={handleInputChange}
-                          className="h-14 md:h-16 rounded-[18px] md:rounded-[22px] px-8 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-[10px] md:text-xs uppercase tracking-widest placeholder:opacity-40"
+                          className="h-12 md:h-14 rounded-xl px-4 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all text-sm md:text-base placeholder:text-muted-foreground/50"
                           required 
                         />
                       </div>
-                      <div className="space-y-4">
-                        <Label htmlFor="phone" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-3 italic px-2">Encrypted Link (Phone)</Label>
+                      <div className="space-y-2">
+                        <Label htmlFor="phone" className="text-sm font-semibold text-foreground ml-1">Phone Number</Label>
                         <Input 
                           id="phone" 
                           name="phone" 
                           type="tel" 
-                          placeholder="9031359720" 
+                          placeholder="+91 0000000000" 
                           value={formData.phone}
                           onChange={handleInputChange}
-                          className="h-14 md:h-16 rounded-[18px] md:rounded-[22px] px-8 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-[10px] md:text-xs uppercase tracking-widest placeholder:opacity-40"
+                          className="h-12 md:h-14 rounded-xl px-4 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all text-sm md:text-base placeholder:text-muted-foreground/50"
                           required 
                         />
                       </div>
-                      <div className="space-y-4">
-                        <Label className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-3 italic px-2">Operating Sector</Label>
+                      <div className="space-y-2">
+                        <Label className="text-sm font-semibold text-foreground ml-1">Operating Sector</Label>
                         <Input 
                           value={service.title} 
                           disabled 
-                          className="h-14 md:h-16 rounded-[18px] md:rounded-[22px] px-8 bg-secondary/50 border-border/10 font-black text-[10px] md:text-xs uppercase tracking-widest text-primary opacity-100 italic"
+                          className="h-12 md:h-14 rounded-xl px-4 bg-secondary/50 border-border/10 font-bold text-sm md:text-base text-primary opacity-100"
                         />
                       </div>
-                      <Button type="submit" className="w-full rounded-xl py-8 font-black text-xl bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-primary/20" disabled={isSubmitting}>
-                        {isSubmitting ? 'Synchronizing...' : 'Authorize Call Back'}
+                      <Button type="submit" className="w-full h-12 md:h-14 rounded-xl font-bold text-base bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg" disabled={isSubmitting}>
+                        {isSubmitting ? 'Submitting...' : 'Request Call Back'}
                       </Button>
                     </form>
                   </DialogContent>
@@ -230,24 +230,24 @@ const UseCases = () => {
               
               <div className="relative z-10 space-y-10">
                 <div className="space-y-4">
-                  <h2 className="text-3xl md:text-5xl font-black tracking-tight leading-tight">
-                    Have a <span className="text-primary italic">Vision?</span>
+                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight leading-tight">
+                    Have a <span className="text-primary">Vision?</span>
                   </h2>
-                  <p className="text-xl text-background/60 font-medium max-w-2xl mx-auto leading-relaxed">
-                    Collaborate with <span className="text-background font-bold underline decoration-primary/50 underline-offset-8">DEVFOLIO.</span> specialized engineers to turn abstract concepts into mission-critical tech.
+                  <p className="text-base md:text-lg text-background/80 font-medium max-w-2xl mx-auto leading-relaxed">
+                    Collaborate with <span className="text-background font-bold">Devfolio</span> specialized engineers to turn abstract concepts into mission-critical tech.
                   </p>
                 </div>
                 
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button size="lg" className="rounded-2xl px-12 py-8 font-black text-lg bg-primary text-primary-foreground hover:scale-105 transition-all shadow-2xl shadow-primary/30">
+                    <Button size="lg" className="rounded-xl px-8 h-12 md:h-14 font-bold text-base bg-primary text-primary-foreground hover:scale-[1.02] transition-all shadow-lg">
                       Request Strategic Audit
                     </Button>
                   </DialogTrigger>
                   <DialogContent className="rounded-[40px] border-border/50 bg-background md:p-12 text-foreground">
                     <DialogHeader className="space-y-4 mb-8">
-                      <DialogTitle className="text-4xl font-black tracking-tight leading-tight">
-                        Strategic <span className="text-primary italic">Audit.</span>
+                      <DialogTitle className="text-2xl md:text-3xl font-bold tracking-tight leading-tight">
+                        Strategic <span className="text-primary">Audit.</span>
                       </DialogTitle>
                       <p className="text-muted-foreground font-medium">
                         Initiate a high-level consultation with our platform solutions team.
@@ -255,38 +255,38 @@ const UseCases = () => {
                     </DialogHeader>
                     <form onSubmit={handleSubmit} className="space-y-6">
                       <div className="space-y-2">
-                        <Label htmlFor="name" className="text-xs font-black uppercase tracking-widest text-muted-foreground">Full Identity</Label>
+                        <Label htmlFor="name" className="text-sm font-semibold text-foreground ml-1">Full Name</Label>
                         <Input 
                           id="name" 
                           name="name" 
-                          placeholder="Your name" 
+                          placeholder="Your Name" 
                           value={formData.name}
                           onChange={handleInputChange}
-                          className="rounded-xl py-6 bg-secondary/20 border-border/50 font-bold"
+                          className="h-12 md:h-14 rounded-xl px-4 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all text-sm md:text-base placeholder:text-muted-foreground/50"
                           required 
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="phone" className="text-xs font-black uppercase tracking-widest text-muted-foreground">Contact Node</Label>
+                        <Label htmlFor="phone" className="text-sm font-semibold text-foreground ml-1">Phone Number</Label>
                         <Input 
                           id="phone" 
                           name="phone" 
                           type="tel" 
-                          placeholder="Phone number" 
+                          placeholder="+91 0000000000" 
                           value={formData.phone}
                           onChange={handleInputChange}
-                          className="rounded-xl py-6 bg-secondary/20 border-border/50 font-bold"
+                          className="h-12 md:h-14 rounded-xl px-4 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all text-sm md:text-base placeholder:text-muted-foreground/50"
                           required 
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="service" className="text-xs font-black uppercase tracking-widest text-muted-foreground">Primary Sector of Interest</Label>
+                        <Label htmlFor="service" className="text-sm font-semibold text-foreground ml-1">Primary Sector of Interest</Label>
                         <select
                           id="service"
                           name="service"
                           value={formData.service}
                           onChange={(e) => setFormData(prev => ({ ...prev, service: e.target.value }))}
-                          className="flex h-14 w-full rounded-xl border border-border/50 bg-secondary/20 px-4 py-2 text-sm font-black focus:ring-2 focus:ring-primary/20 appearance-none transition-all"
+                          className="flex h-12 md:h-14 w-full rounded-xl border border-border/50 bg-background px-4 py-2 text-sm font-medium focus:ring-2 focus:ring-primary/20 appearance-none transition-all"
                           required
                         >
                           <option value="" className="bg-background">Select a sector</option>
@@ -295,8 +295,8 @@ const UseCases = () => {
                           ))}
                         </select>
                       </div>
-                      <Button type="submit" className="w-full rounded-xl py-8 font-black text-xl bg-primary text-primary-foreground hover:scale-[1.02] transition-all shadow-xl shadow-primary/20" disabled={isSubmitting}>
-                        {isSubmitting ? 'Synchronizing...' : 'Authorize Consultation'}
+                      <Button type="submit" className="w-full h-12 md:h-14 rounded-xl font-bold text-base bg-primary text-primary-foreground hover:scale-[1.02] transition-all shadow-lg" disabled={isSubmitting}>
+                        {isSubmitting ? 'Submitting...' : 'Authorize Consultation'}
                       </Button>
                     </form>
                   </DialogContent>
