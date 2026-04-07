@@ -50,10 +50,10 @@ const ProjectCard = ({ project, className }: ProjectCardProps) => {
         </div>
         
         <div className="space-y-3">
-          <CardTitle className="text-2xl font-black tracking-tight text-foreground transition-colors group-hover:text-primary leading-tight">
+          <CardTitle className="text-base font-bold tracking-tight text-foreground transition-colors group-hover:text-primary leading-tight">
             {project.title || project.name}
           </CardTitle>
-          <CardDescription className="line-clamp-2 text-sm font-medium text-muted-foreground italic leading-relaxed">
+          <CardDescription className="line-clamp-2 text-xs font-medium text-muted-foreground italic leading-relaxed">
             {project.description}
           </CardDescription>
         </div>

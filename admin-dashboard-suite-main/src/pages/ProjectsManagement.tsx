@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Plus, Edit, FolderKanban, Calendar, ExternalLink, Loader2 } from "lucide-react";
+import { Plus, Edit, Trash2, FolderKanban, Calendar, ExternalLink, Loader2 } from "lucide-react";
 
 interface Project {
   _id: string;
@@ -120,6 +120,37 @@ const ProjectsManagement = () => {
     } catch (err) {
       console.error('Error saving project:', err);
       alert('Failed to save project');
+    }
+  };
+
+  const handleDelete = async (projectId: string) => {
+    if (!confirm('Are you sure you want to delete this project?')) return;
+
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Please login first');
+        return;
+      }
+
+      const response = await fetch(
+        `https://devfolio-marketplace-1.onrender.com/api/projects/${projectId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to delete project');
+      }
+
+      setProjects(projects.filter(p => p._id !== projectId));
+    } catch (err) {
+      console.error('Error deleting project:', err);
+      alert('Failed to delete project');
     }
   };
 
@@ -431,17 +462,27 @@ const ProjectsManagement = () => {
                           {project.icon}
                         </div>
                         <div>
-                          <CardTitle className="text-lg">{project.title}</CardTitle>
+                          <CardTitle className="text-sm">{project.title}</CardTitle>
                           <Badge variant="outline" className="mt-1">{project.category}</Badge>
                         </div>
                       </div>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => openEditDialog(project)}
-                      >
-                        <Edit className="h-4 w-4" />
-                      </Button>
+                      <div className="flex gap-1">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => openEditDialog(project)}
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                          onClick={() => handleDelete(project._id)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
                     </div>
                   </CardHeader>
                   <CardContent className="space-y-4">
