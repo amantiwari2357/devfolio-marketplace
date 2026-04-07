@@ -3,7 +3,9 @@ import { Button } from "@/components/ui/button";
 import { 
   Calendar, TrendingUp, Settings, 
   Home as HomeIcon, BookOpen, MessageSquare, 
-  LogOut, Menu, X 
+  LogOut, Menu, Search, X, Bell, Star,
+  PlusCircle, User, Globe, FileText, Zap,
+  BarChart2, ShoppingBag, ChevronRight
 } from "lucide-react";
 import { 
   Sheet, 
@@ -17,11 +19,13 @@ interface navItem {
   label: string;
   icon: JSX.Element;
   href: string;
-  active?: boolean;
+  badge?: string;
 }
 
 export const AppSidebar = ({ activePath }: { activePath: string }) => {
   const [user, setUser] = useState<any>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchFocused, setSearchFocused] = useState(false);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -32,7 +36,6 @@ export const AppSidebar = ({ activePath }: { activePath: string }) => {
         console.error('Error fetching user profile:', error);
       }
     };
-
     fetchUserProfile();
   }, []);
 
@@ -41,85 +44,155 @@ export const AppSidebar = ({ activePath }: { activePath: string }) => {
     window.location.href = '/login';
   };
 
-  const navItems: navItem[] = [
-    { label: "Home", icon: <HomeIcon className="w-5 h-5" />, href: "/dashboard" },
-    { label: "Bookings", icon: <Calendar className="w-5 h-5" />, href: "/bookings" },
-    { label: "Priority DM", icon: <MessageSquare className="w-5 h-5" />, href: "/priority-dm" },
-    { label: "Services", icon: <BookOpen className="w-5 h-5" />, href: "/services" },
+  const mainNavItems: navItem[] = [
+    { label: "Dashboard", icon: <HomeIcon className="w-5 h-5" />, href: "/dashboard" },
+    { label: "Bookings", icon: <Calendar className="w-5 h-5" />, href: "/bookings", badge: "3" },
+    { label: "Priority DM", icon: <MessageSquare className="w-5 h-5" />, href: "/priority-dm", badge: "12" },
+    { label: "Services", icon: <ShoppingBag className="w-5 h-5" />, href: "/services" },
+    { label: "Blog", icon: <FileText className="w-5 h-5" />, href: "/blog" },
   ];
 
-  const analysisItems: navItem[] = [
+  const creatorItems: navItem[] = [
+    { label: "Create Course", icon: <PlusCircle className="w-5 h-5" />, href: "/createcourse" },
+    { label: "My Profile", icon: <User className="w-5 h-5" />, href: "/profile" },
+    { label: "Listing", icon: <Globe className="w-5 h-5" />, href: "/listing" },
+  ];
+
+  const analyticsItems: navItem[] = [
     { label: "Analytics", icon: <TrendingUp className="w-5 h-5" />, href: "/analytics" },
+    { label: "Reports", icon: <BarChart2 className="w-5 h-5" />, href: "/analytics" },
     { label: "Settings", icon: <Settings className="w-5 h-5" />, href: "/settings" },
   ];
 
+  const allItems = [...mainNavItems, ...creatorItems, ...analyticsItems];
+  const filteredItems = searchQuery.trim()
+    ? allItems.filter(item => item.label.toLowerCase().includes(searchQuery.toLowerCase()))
+    : null;
+
+  const NavLink = ({ item }: { item: navItem }) => {
+    const isActive = activePath === item.href;
+    return (
+      <a
+        href={item.href}
+        className={`flex items-center gap-3 px-4 py-3 rounded-2xl font-semibold transition-all duration-200 group relative ${
+          isActive
+            ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+            : "text-muted-foreground hover:bg-secondary/60 hover:text-foreground"
+        }`}
+      >
+        <div className={`flex-shrink-0 ${isActive ? "text-primary-foreground" : "group-hover:scale-110 transition-transform"}`}>
+          {item.icon}
+        </div>
+        <span className="text-sm flex-1">{item.label}</span>
+        {item.badge && (
+          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${isActive ? "bg-primary-foreground/20 text-primary-foreground" : "bg-primary/10 text-primary"}`}>
+            {item.badge}
+          </span>
+        )}
+        {isActive && <ChevronRight className="w-4 h-4 opacity-60" />}
+      </a>
+    );
+  };
+
   const SidebarContent = () => (
-    <div className="flex flex-col h-full p-6 md:p-10">
-      <div className="flex items-center gap-4 mb-14">
-        <a href="/" className="group cursor-pointer block">
-          <img src={logo} alt="Devfolio Logo" className="h-24 w-auto group-hover:scale-105 transition-transform duration-300" />
-        </a>
+    <div className="flex flex-col h-full py-6 px-4">
+      {/* Logo */}
+      <a href="/" className="flex items-center justify-center mb-6 px-2 group">
+        <img 
+          src={logo} 
+          alt="Devfolio Logo" 
+          className="h-20 w-auto group-hover:scale-105 transition-transform duration-300 drop-shadow-md" 
+        />
+      </a>
+
+      {/* Search Bar */}
+      <div className={`relative mb-6 transition-all ${searchFocused ? "ring-2 ring-primary/30 rounded-2xl" : ""}`}>
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+        <input
+          type="text"
+          placeholder="Search menu..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onFocus={() => setSearchFocused(true)}
+          onBlur={() => setSearchFocused(false)}
+          className="w-full h-11 rounded-2xl bg-secondary/40 border border-border/40 pl-10 pr-9 text-sm font-medium focus:outline-none focus:bg-secondary/60 transition-all placeholder:text-muted-foreground/60"
+        />
+        {searchQuery && (
+          <button onClick={() => setSearchQuery("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
+            <X className="w-4 h-4" />
+          </button>
+        )}
       </div>
 
-      <div className="flex-1 space-y-12 overflow-y-auto pr-2 custom-scrollbar">
-        <div className="space-y-6">
-          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground ml-4 opacity-50 italic">Directory Interface</p>
-          <nav className="space-y-3">
-            {navItems.map((item) => (
-              <a 
-                key={item.label}
-                href={item.href} 
-                className={`flex items-center gap-4 px-6 py-4 rounded-[22px] font-black transition-all group border-none ${
-                  activePath === item.href 
-                    ? "bg-foreground text-background shadow-2xl shadow-foreground/10 translate-x-2 italic" 
-                    : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground"
-                }`}
-              >
-                <div className={activePath === item.href ? "text-primary" : "group-hover:scale-110 transition-transform"}>{item.icon}</div>
-                <span className="text-xs uppercase tracking-widest">{item.label}</span>
-              </a>
-            ))}
-          </nav>
-        </div>
+      {/* Navigation */}
+      <div className="flex-1 overflow-y-auto space-y-5 pr-1 custom-scrollbar">
+        {filteredItems ? (
+          <div className="space-y-1">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 px-4 mb-2">
+              Results for "{searchQuery}"
+            </p>
+            {filteredItems.length > 0 ? (
+              filteredItems.map((item) => <NavLink key={item.label} item={item} />)
+            ) : (
+              <p className="text-sm text-muted-foreground text-center py-8">No results found</p>
+            )}
+          </div>
+        ) : (
+          <>
+            {/* Main Navigation */}
+            <div className="space-y-1">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/50 px-4 mb-3">Main</p>
+              {mainNavItems.map((item) => <NavLink key={item.label} item={item} />)}
+            </div>
 
-        <div className="space-y-6">
-          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground ml-4 opacity-50 italic">Scale Vector</p>
-          <nav className="space-y-3">
-            {analysisItems.map((item) => (
-              <a 
-                key={item.label}
-                href={item.href} 
-                className={`flex items-center gap-4 px-6 py-4 rounded-[22px] font-black transition-all group border-none ${
-                    activePath === item.href 
-                    ? "bg-foreground text-background shadow-2xl shadow-foreground/10 translate-x-2 italic" 
-                    : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground"
-                }`}
+            {/* Creator Tools */}
+            <div className="space-y-1">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/50 px-4 mb-3">Creator</p>
+              {creatorItems.map((item) => <NavLink key={item.label} item={item} />)}
+            </div>
+
+            {/* Analytics */}
+            <div className="space-y-1">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/50 px-4 mb-3">Growth</p>
+              {analyticsItems.map((item) => <NavLink key={item.label} item={item} />)}
+            </div>
+
+            {/* Quick CTA */}
+            <div className="mt-4 p-4 rounded-2xl bg-primary/5 border border-primary/15">
+              <div className="flex items-center gap-2 mb-3">
+                <Zap className="w-4 h-4 text-primary" />
+                <p className="text-xs font-bold text-foreground">Quick Launch</p>
+              </div>
+              <Button
+                onClick={() => window.location.href = '/createcourse'}
+                className="w-full h-10 rounded-xl bg-primary text-primary-foreground text-xs font-bold shadow-md hover:scale-[1.02] active:scale-95 transition-all"
               >
-                <div className={activePath === item.href ? "text-primary" : "group-hover:scale-110 transition-transform"}>{item.icon}</div>
-                <span className="text-xs uppercase tracking-widest">{item.label}</span>
-              </a>
-            ))}
-          </nav>
-        </div>
+                Create New Course
+              </Button>
+            </div>
+          </>
+        )}
       </div>
 
-      <div className="pt-10 border-t border-border/20 space-y-6">
-        <div className="flex items-center gap-4 p-4 md:p-6 rounded-[28px] bg-background/50 shadow-inner border border-border/20 group hover:border-primary/20 transition-all cursor-pointer">
-          <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-primary/10 flex items-center justify-center font-black text-primary text-xl shadow-sm group-hover:scale-105 transition-transform italic">
-            {user?.firstName?.[0] || 'U'}
+      {/* User Profile Footer */}
+      <div className="pt-4 mt-4 border-t border-border/30 space-y-2">
+        <a href="/profile" className="flex items-center gap-3 p-3 rounded-2xl bg-secondary/30 border border-border/20 hover:border-primary/30 hover:bg-secondary/50 transition-all cursor-pointer group">
+          <div className="w-10 h-10 rounded-xl bg-primary/15 flex items-center justify-center font-bold text-primary text-base shadow-sm group-hover:scale-105 transition-transform flex-shrink-0">
+            {user?.firstName?.[0]?.toUpperCase() || 'U'}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-black truncate text-foreground italic uppercase">{user?.firstName || 'Creator Node'}</p>
-            <p className="text-[10px] font-bold truncate text-muted-foreground opacity-60 uppercase tracking-widest leading-none">{user?.email?.split('@')[0]}</p>
+            <p className="text-sm font-bold truncate text-foreground">{user?.firstName || 'My Account'}</p>
+            <p className="text-[10px] font-medium truncate text-muted-foreground">{user?.email?.split('@')[0]}</p>
           </div>
-        </div>
+          <Star className="w-4 h-4 text-primary/50 flex-shrink-0" />
+        </a>
         <Button
           onClick={handleLogout}
           variant="ghost"
-          className="w-full h-14 flex items-center gap-4 px-6 rounded-[20px] font-black text-destructive/70 hover:bg-destructive/10 hover:text-destructive transition-all justify-start text-[10px] uppercase tracking-[0.3em] italic border-none"
+          className="w-full h-11 flex items-center gap-3 px-4 rounded-xl font-semibold text-destructive/70 hover:bg-destructive/10 hover:text-destructive transition-all justify-start text-sm border-none"
         >
-          <LogOut className="w-5 h-5" />
-          Disconnect
+          <LogOut className="w-4 h-4" />
+          Log Out
         </Button>
       </div>
     </div>
@@ -127,22 +200,24 @@ export const AppSidebar = ({ activePath }: { activePath: string }) => {
 
   return (
     <>
-      {/* Mobile Sidebar (Sheet) */}
-      <div className="lg:hidden fixed top-6 left-6 z-[60]">
+      {/* Mobile Sidebar (Sheet) - floating bottom button */}
+      <div className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[60]">
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="outline" size="icon" className="w-12 h-12 rounded-[18px] bg-background/50 backdrop-blur-xl border-border/40 shadow-2xl shadow-primary/10">
-              <Menu className="w-6 h-6 text-primary" />
+            <Button size="lg" className="h-14 rounded-full bg-primary/95 text-primary-foreground backdrop-blur-xl border border-primary/20 shadow-2xl shadow-primary/30 px-6 gap-3 group">
+              <Menu className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              <span className="font-bold text-sm">Dashboard</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="p-0 w-80 bg-background/95 backdrop-blur-2xl border-r border-border/40">
+          <SheetContent side="bottom" className="p-0 h-[85vh] bg-background/98 backdrop-blur-3xl border-t border-border/40 rounded-t-[32px]">
+            <div className="w-12 h-1 bg-border/60 rounded-full mx-auto mt-3 mb-1" />
             <SidebarContent />
           </SheetContent>
         </Sheet>
       </div>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex w-80 border-r border-border/40 bg-secondary/10 backdrop-blur-3xl flex-col relative z-20">
+      <aside className="hidden lg:flex w-72 border-r border-border/30 bg-secondary/5 backdrop-blur-md flex-col relative z-20 h-full min-h-[calc(100vh-80px)]">
         <SidebarContent />
       </aside>
     </>

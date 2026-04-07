@@ -9,11 +9,43 @@ import {
 } from "lucide-react";
 import api from "@/services/api";
 import SEO from "@/components/layout/SEO";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import CountUp from "react-countup";
+import { useNavigate } from "react-router-dom";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 
+const RealTimeCounter = ({ initialValue, isCurrency = false, isPercent = false, suffix = "" }: { initialValue: number, isCurrency?: boolean, isPercent?: boolean, suffix?: string }) => {
+  const [value, setValue] = useState(initialValue);
+  
+  useEffect(() => {
+    if (isPercent) return;
+    const interval = setInterval(() => {
+      if (Math.random() > 0.5) {
+        setValue(prev => prev + (isCurrency ? Math.floor(Math.random() * 1500) + 500 : Math.floor(Math.random() * 3) + 1));
+      }
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [isCurrency, isPercent]);
+
+  return (
+    <CountUp 
+      start={initialValue} 
+      end={value} 
+      duration={2} 
+      decimals={isPercent ? 1 : 0}
+      prefix={isCurrency ? "₹" : ""}
+      suffix={suffix || (isPercent ? "%" : "")}
+      separator=","
+      preserveValue={true}
+    />
+  );
+};
+
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [timeRange, setTimeRange] = useState("7D");
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -36,12 +68,12 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground">
       <SEO title="Dashboard | Overview" description="Your central hub for tracking performance, bookings, and analytics." />
+      <Header />
       
-      <div className="flex h-screen overflow-hidden relative">
+      <div className="relative pt-20 flex">
         <AppSidebar activePath="/dashboard" />
-
         {/* Main Logic Core */}
-        <main className="flex-1 overflow-y-auto p-6 md:p-16 lg:p-20 bg-background relative selection:bg-primary selection:text-primary-foreground pt-24 lg:pt-20">
+        <main className="flex-1 p-6 md:p-16 lg:p-20 min-h-[calc(100vh-80px)] bg-background relative selection:bg-primary selection:text-primary-foreground">
           {/* Background Mesh Flux */}
           <div className="absolute top-0 right-0 -z-10 w-2/3 h-2/3 bg-primary/2 opacity-30 blur-[180px] rounded-full animate-pulse" />
           <div className="absolute bottom-0 left-0 -z-10 w-1/2 h-1/2 bg-secondary/2 opacity-20 blur-[150px] rounded-full" />
@@ -59,11 +91,11 @@ const Dashboard = () => {
                 <p className="text-base md:text-lg text-muted-foreground font-medium leading-relaxed">Here's what's happening with your projects today.</p>
               </div>
               <div className="flex flex-wrap items-center gap-4">
-                <Button variant="outline" className="h-12 md:h-14 rounded-xl px-6 font-bold bg-secondary/10 border-border/40 gap-3 hover:bg-secondary/20 transition-all text-sm shadow-sm">
+                <Button onClick={() => navigate('/profile')} variant="outline" className="h-12 md:h-14 rounded-xl px-6 font-bold bg-secondary/10 border-border/40 gap-3 hover:bg-secondary/20 transition-all text-sm shadow-sm">
                   <ExternalLink className="w-4 h-4" />
                   View Public Profile
                 </Button>
-                <Button className="h-12 md:h-14 rounded-xl px-8 font-bold bg-primary text-primary-foreground shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all text-sm">
+                <Button onClick={() => navigate('/createcourse')} className="h-12 md:h-14 rounded-xl px-8 font-bold bg-primary text-primary-foreground shadow-lg hover:scale-105 active:scale-95 transition-all text-sm">
                   Create Service
                 </Button>
               </div>
@@ -98,8 +130,8 @@ const Dashboard = () => {
                       <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground italic opacity-40">Architect your expert identity</span>
                     </div>
                   </div>
-                  <Button className="w-full h-20 rounded-[28px] font-black bg-foreground text-background hover:scale-[1.02] active:scale-95 transition-all text-sm uppercase tracking-[0.3em] shadow-2xl italic border-none">
-                    Initiate Protocol
+                  <Button onClick={() => navigate('/settings')} className="w-full h-14 rounded-xl font-bold bg-foreground text-background hover:scale-[1.02] active:scale-95 transition-all text-sm shadow-xl border-none mt-4">
+                    Update Profile Details
                   </Button>
                 </div>
               </Card>
@@ -117,24 +149,23 @@ const Dashboard = () => {
                       <h2 className="text-2xl font-black tracking-tighter text-foreground italic uppercase">Global Network.</h2>
                       <p className="text-base md:text-lg font-bold italic text-muted-foreground/60 leading-relaxed tracking-tight">Observe how elite architect nodes scale their knowledge systems across the marketplace.</p>
                    </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex -space-x-6">
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex -space-x-4">
                       {[1, 2, 3, 4].map((i) => (
-                        <div key={i} className="w-16 h-16 rounded-[20px] border-4 border-background bg-secondary/50 flex items-center justify-center font-black text-xs text-primary ring-1 ring-border/20 shadow-xl transition-all hover:-translate-y-3 hover:z-10 cursor-pointer italic">
+                        <div key={i} className="w-14 h-14 rounded-2xl border-2 border-background bg-secondary/50 flex items-center justify-center font-bold text-xs text-primary shadow-sm hover:-translate-y-2 hover:z-10 cursor-pointer transition-transform">
                           {String.fromCharCode(64 + i)}
                         </div>
                       ))}
-                      <div className="w-16 h-16 rounded-[20px] border-4 border-background bg-primary text-primary-foreground flex items-center justify-center font-black text-xs shadow-xl ring-1 ring-primary/40 italic">
-                        +24
+                      <div className="w-14 h-14 rounded-2xl border-2 border-background bg-primary text-primary-foreground flex items-center justify-center font-bold text-xs shadow-sm">
+                        +99
                       </div>
                     </div>
-                    <div className="p-6 rounded-[24px] bg-background/50 border border-border/20 text-center shadow-inner group hover:border-primary/40 transition-all cursor-pointer">
-                       <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-2 italic">Global Status</p>
-                       <p className="text-xs font-black uppercase tracking-tighter italic leading-none text-foreground">Top 1% Rank</p>
-                    </div>
+                    <Button onClick={() => navigate('/search')} variant="outline" className="w-full max-w-[140px] h-14 rounded-xl border-border/40 hover:bg-secondary/20 transition-all font-bold text-xs">
+                       View Network
+                    </Button>
                   </div>
-                  <div className="pt-6">
-                     <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground text-center italic opacity-60">Join the architect's inner circle protocol</p>
+                  <div className="pt-2">
+                     <p className="text-xs font-semibold text-muted-foreground text-center opacity-80">Connect with other top creators globally.</p>
                   </div>
                 </div>
               </Card>
@@ -158,9 +189,9 @@ const Dashboard = () => {
                   <p className="text-lg md:text-xl text-background/60 font-bold italic max-w-xl leading-relaxed tracking-tight">Scale to ₹100K+ this epoch with <span className="text-primary font-black underline underline-offset-[12px] decoration-primary/30">Zero System Commissions.</span></p>
                 </div>
                 <div className="lg:col-span-2 flex flex-col xl:flex-row gap-8 items-center justify-center lg:justify-end">
-                  <Button className="h-20 px-12 rounded-[28px] font-black text-xl bg-primary text-primary-foreground shadow-2xl shadow-primary/50 hover:scale-110 active:scale-95 transition-all uppercase tracking-[0.2em] border-none italic group/btn">
-                    Start Launch
-                    <ArrowRight className="w-8 h-8 stroke-[4px] ml-4 group-hover/btn:translate-x-2 transition-transform" />
+                  <Button onClick={() => navigate('/createcourse')} className="h-16 px-10 rounded-2xl font-bold text-lg bg-primary text-primary-foreground shadow-xl shadow-primary/30 hover:scale-105 active:scale-95 transition-all border-none group/btn">
+                    Launch Course
+                    <ArrowRight className="w-6 h-6 stroke-[3px] ml-3 group-hover/btn:translate-x-2 transition-transform" />
                   </Button>
                 </div>
               </div>
@@ -195,28 +226,31 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[
-                  { label: "Network Visits", val: "2.4K", icon: <Users className="w-5 h-5" />, trend: "+12%" },
-                  { label: "Net Revenue", val: "₹1.2M", icon: <DollarSign className="w-5 h-5" />, trend: "+8.4%" },
-                  { label: "Asset Deployment", val: "154", icon: <Activity className="w-5 h-5" />, trend: "-2.1%" },
-                  { label: "Conv Efficiency", val: "6.4%", icon: <TrendingUp className="w-5 h-5" />, trend: "+0.8%" },
+                  { label: "Network Visits", initialValue: 2478, icon: <Users className="w-5 h-5" />, trend: "+12%", isCurrency: false, isPercent: false },
+                  { label: "Net Revenue", initialValue: 1250400, icon: <DollarSign className="w-5 h-5" />, trend: "+8.4%", isCurrency: true, isPercent: false },
+                  { label: "Bookings", initialValue: 154, icon: <Activity className="w-5 h-5" />, trend: "+2.1%", isCurrency: false, isPercent: false },
+                  { label: "Conv Efficiency", initialValue: 6.4, icon: <TrendingUp className="w-5 h-5" />, trend: "+0.8%", isCurrency: false, isPercent: true },
                 ].map((stat, i) => (
-                  <Card key={i} className="neural-card p-10 group relative flex flex-col justify-between h-auto min-h-[220px]">
-                    <div className="absolute top-0 right-0 p-10 opacity-0 group-hover:opacity-10 transition-all duration-700 translate-x-4 translate-y-[-4px] group-hover:translate-x-0 group-hover:translate-y-0 pointer-events-none">
+                  <Card key={i} className="p-8 rounded-3xl bg-secondary/10 border-border/40 backdrop-blur-xl group relative flex flex-col justify-between h-auto min-h-[180px] shadow-sm hover:shadow-md transition-all">
+                    <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-10 transition-all duration-500 translate-x-2 translate-y-[-2px] group-hover:translate-x-0 group-hover:translate-y-0 pointer-events-none">
                        {stat.icon}
                     </div>
-                    <div className="flex items-center justify-between">
-                      <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground italic opacity-60">{stat.label}</p>
-                      <div className="px-3 py-1 rounded-full bg-primary/10 text-[10px] font-black text-primary italic border border-primary/20">
+                    <div className="flex items-center justify-between mb-8">
+                      <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">{stat.label}</p>
+                      <div className="px-3 py-1 rounded-full bg-emerald-500/10 text-xs font-bold text-emerald-500 border border-emerald-500/20">
                          {stat.trend}
                       </div>
                     </div>
                     <div className="space-y-4">
-                       <p className="text-5xl font-black tracking-tighter text-foreground leading-none italic">{stat.val}</p>
-                       <div className="h-1.5 bg-primary/5 rounded-full overflow-hidden">
-                          <div className="h-full bg-primary/30 w-0 group-hover:w-full transition-all duration-1000 ease-out" />
-                       </div>
+                       <p className="text-4xl font-bold tracking-tight text-foreground leading-none">
+                          <RealTimeCounter 
+                            initialValue={stat.initialValue} 
+                            isCurrency={stat.isCurrency} 
+                            isPercent={stat.isPercent} 
+                          />
+                       </p>
                     </div>
                   </Card>
                 ))}
@@ -238,6 +272,7 @@ const Dashboard = () => {
           </div>
         </main>
       </div>
+      <Footer />
     </div>
   );
 };
