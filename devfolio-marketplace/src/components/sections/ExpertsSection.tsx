@@ -109,21 +109,22 @@ const ExpertsSection = () => {
             Elite Global Taskforce
           </div>
           <h2 className="heading-responsive">
-            Connect with <span className="text-primary NOT-italic">Top Experts.</span>
+            Connect with <span className="text-primary">Top Experts.</span>
           </h2>
-          <p className="text-sm md:text-base text-muted-foreground font-bold italic tracking-tight leading-relaxed opacity-70 mt-8">
+          <p className="text-sm md:text-base text-muted-foreground font-medium leading-relaxed mt-6 max-w-2xl mx-auto">
             Get personalized guidance from industry leaders. Share your vision and accelerate your digital journey.
           </p>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-3 mb-20 animate-slide-up" style={{ animationDelay: '100ms' }}>
+        {/* Horizontal scrollable categories on mobile */}
+        <div className="flex flex-nowrap md:flex-wrap overflow-x-auto hide-scrollbar md:justify-center justify-start gap-3 mb-16 md:mb-20 pb-4 animate-slide-up" style={{ animationDelay: '100ms' }}>
           {categories.map((category) => (
             <Button
               key={category}
               variant={selectedCategory === category ? "default" : "outline"}
               onClick={() => handleCategoryChange(category)}
-              className={`h-12 rounded-[18px] px-8 font-black text-[10px] uppercase tracking-widest transition-all italic border-none ${selectedCategory === category
-                  ? "bg-primary text-primary-foreground shadow-xl shadow-primary/20 scale-105"
+              className={`h-10 md:h-12 rounded-xl px-6 font-semibold text-xs md:text-sm whitespace-nowrap transition-all border-none flex-shrink-0 ${selectedCategory === category
+                  ? "bg-primary text-primary-foreground shadow-md shadow-primary/20 scale-105"
                   : "bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground"
                 }`}
             >
@@ -154,63 +155,63 @@ const ExpertsSection = () => {
                 <DialogTrigger asChild>
                   <Card
                     onClick={() => setSelectedExpert(expert)}
-                    className="neural-card p-0 overflow-hidden cursor-pointer group shadow-2xl"
+                    className="group relative overflow-hidden rounded-[32px] bg-card border-border/60 shadow-md hover:border-primary/40 hover:shadow-xl transition-all duration-300 cursor-pointer p-0 flex flex-col h-full"
                   >
                     {/* Profile Header */}
-                    <div className="h-32 bg-secondary/30 relative overflow-hidden">
-                      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-30 group-hover:opacity-100 transition-opacity"></div>
-                      <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:rotate-12 transition-transform">
-                        <Star className="w-32 h-32 text-primary" />
+                    <div className="h-28 md:h-32 bg-secondary/40 relative overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-50 group-hover:opacity-100 transition-opacity"></div>
+                      <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:rotate-12 transition-transform">
+                        <Star className="w-24 h-24 text-primary" />
                       </div>
                     </div>
 
                     {/* Profile Content */}
-                    <div className="px-8 pb-10 -mt-14 relative z-10">
-                      <div className="w-24 h-24 bg-primary text-primary-foreground rounded-[28px] flex items-center justify-center text-4xl font-black mb-6 shadow-2xl border-4 border-background ring-1 ring-border/20 group-hover:scale-110 transition-transform italic">
+                    <div className="px-6 md:px-8 pb-6 md:pb-8 -mt-12 relative z-10 flex flex-col flex-1">
+                      <div className="w-20 h-20 md:w-24 md:h-24 bg-primary text-primary-foreground rounded-2xl flex items-center justify-center text-3xl md:text-4xl font-bold mb-4 shadow-lg border-4 border-card group-hover:scale-105 transition-transform">
                         {expert.firstName[0]}{expert.lastName[0]}
                       </div>
 
-                      <h3 className="text-base font-black tracking-tight text-foreground group-hover:text-primary transition-colors italic uppercase leading-none mb-2">{expert.firstName} {expert.lastName}</h3>
-                      <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground mb-6 opacity-60">{expert.role}</p>
+                      <h3 className="text-lg md:text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors leading-tight mb-1">{expert.firstName} {expert.lastName}</h3>
+                      <p className="text-sm font-semibold text-primary mb-5">{expert.role}</p>
 
                       {/* Rating & Connections */}
-                      <div className="flex items-center gap-4 mb-6">
-                        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 text-primary rounded-xl">
-                          <Star className="w-3.5 h-3.5 fill-primary" />
-                          <span className="text-xs font-black italic">{expert.rating || "4.9"}</span>
+                      <div className="flex items-center gap-4 mb-5">
+                        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 text-primary rounded-lg border border-primary/10">
+                          <Star className="w-3.5 h-3.5 fill-primary text-primary" />
+                          <span className="text-xs font-bold">{expert.rating || "4.9"}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-muted-foreground">
-                          <MessageCircle className="w-4 h-4 text-primary" />
-                          <span className="text-[10px] font-black tracking-widest uppercase italic">{expert.connections || "500+"}</span>
+                        <div className="flex items-center gap-1.5 text-muted-foreground bg-secondary/50 px-3 py-1.5 rounded-lg border border-border/50">
+                          <MessageCircle className="w-3.5 h-3.5 text-foreground/70" />
+                          <span className="text-xs font-semibold">{expert.connections || "500+"} Connects</span>
                         </div>
                       </div>
 
                       {/* Meta Info */}
-                      <div className="grid grid-cols-2 gap-4 mb-8">
-                        <div className="p-3 rounded-2xl bg-secondary/30 border border-border/20">
-                          <p className="text-[8px] font-black uppercase tracking-widest text-muted-foreground mb-1">Region</p>
-                          <p className="text-[10px] font-bold truncate italic">{expert.location || "Remote"}</p>
+                      <div className="grid grid-cols-2 gap-3 mb-6">
+                        <div className="px-3 py-2.5 rounded-xl bg-secondary/30 border border-border/40">
+                          <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-0.5">Region</p>
+                          <p className="text-xs font-bold truncate">{expert.location || "Remote"}</p>
                         </div>
-                        <div className="p-3 rounded-2xl bg-secondary/30 border border-border/20">
-                          <p className="text-[8px] font-black uppercase tracking-widest text-muted-foreground mb-1">Tenure</p>
-                          <p className="text-[10px] font-bold truncate italic">{expert.experience || "5+ Years"}</p>
+                        <div className="px-3 py-2.5 rounded-xl bg-secondary/30 border border-border/40">
+                          <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-0.5">Tenure</p>
+                          <p className="text-xs font-bold truncate">{expert.experience || "5+ Years"}</p>
                         </div>
                       </div>
 
                       {/* Action Buttons */}
-                      <div className="flex gap-4 mt-auto">
+                      <div className="flex gap-3 mt-auto">
                         <Button
-                          className="flex-1 h-14 rounded-2xl font-black bg-foreground text-background shadow-xl group-hover:scale-[1.02] active:scale-95 transition-all text-[10px] uppercase tracking-widest italic border-none"
+                          className="flex-1 h-12 rounded-xl font-bold bg-foreground text-background shadow-md hover:shadow-lg group-hover:scale-[1.02] active:scale-95 transition-all text-xs md:text-sm border-none"
                           onClick={(e) => {
                             e.stopPropagation();
                             setSelectedExpert(expert);
                             setIsDialogOpen(true);
                           }}
                         >
-                          Initiate Node
+                          Initiate Connect
                         </Button>
-                        <Button variant="outline" size="icon" className="w-14 h-14 rounded-2xl hover:bg-red-500 hover:text-white hover:border-none transition-all border-border/40">
-                          <Heart className="w-5 h-5 transition-transform active:scale-150" />
+                        <Button variant="outline" size="icon" className="w-12 h-12 shrink-0 rounded-xl hover:bg-red-500 hover:text-white hover:border-none transition-all border-border/40 bg-secondary/20">
+                          <Heart className="w-5 h-5 transition-transform active:scale-125" />
                         </Button>
                       </div>
                     </div>
