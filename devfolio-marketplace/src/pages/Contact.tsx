@@ -19,41 +19,41 @@ const Contact = () => {
 
       <main className="section-spacing pt-32 md:pt-40 relative">
         <div className="container mx-auto px-6 relative">
-          <div className="text-center max-w-5xl mx-auto mb-16 md:mb-24 space-y-10 animate-slide-up">
-            <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-secondary/10 border border-border/40 backdrop-blur-md text-[10px] font-black uppercase tracking-[0.4em] text-primary italic">
-              <Activity className="w-4 h-4 animate-pulse" />
-              Direct Communication Stream
+          <div className="text-center max-w-4xl mx-auto mb-16 md:mb-20 space-y-6 animate-slide-up">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 border border-border/40 backdrop-blur-md text-xs font-semibold text-primary">
+              <Activity className="w-4 h-4" />
+              Contact
             </div>
-            <h1 className="heading-responsive">
-              Establish <span className="text-primary NOT-italic">Connection.</span>
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
+              Establish <span className="text-primary">Connection.</span>
             </h1>
-            <p className="text-base md:text-xl text-muted-foreground font-bold italic tracking-tight leading-relaxed max-w-3xl mx-auto opacity-70">
+            <p className="text-base md:text-lg text-muted-foreground font-medium max-w-2xl mx-auto">
               Facing a hurdle? Or just want to say hi? Our specialized success team is ready to assist you in real-time.
             </p>
           </div>
 
           {/* Quick Contact Protocol Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-24 animate-slide-up" style={{ animationDelay: '100ms' }}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20 animate-slide-up" style={{ animationDelay: '100ms' }}>
             {[
-              { icon: <Mail className="w-8 h-8" />, title: "Email Intelligence", sub: "Standard response in <12h", val: "support@devfoliomarketplace.com", href: "mailto:devfoliomarketplace@gmail.com" },
-              { icon: <MessageSquare className="w-8 h-8" />, title: "Live Operations", sub: "Priority access protocol", action: "Initialize Secure Chat" },
-              { icon: <Phone className="w-8 h-8" />, title: "Direct Hotline", sub: "Mon-Fri, 9AM to 6PM IST", val: "9031359720", href: "tel:9031359720" },
+              { icon: <Mail className="w-6 h-6" />, title: "Email Support", sub: "Standard response in <12h", val: "support@devfoliomarketplace.com", href: "mailto:devfoliomarketplace@gmail.com" },
+              { icon: <MessageSquare className="w-6 h-6" />, title: "Live Chat", sub: "Priority access", action: "Start Chat" },
+              { icon: <Phone className="w-6 h-6" />, title: "Direct Hotline", sub: "Mon-Fri, 9AM to 6PM IST", val: "9031359720", href: "tel:9031359720" },
             ].map((item, i) => (
-              <Card key={i} className="neural-card p-10 md:p-12 text-center space-y-6 shadow-xl relative overflow-hidden group">
-                <div className="mx-auto w-20 h-20 rounded-[28px] bg-secondary/50 flex items-center justify-center text-primary mb-6 shadow-inner group-hover:scale-110 group-hover:rotate-6 transition-all">
+              <Card key={i} className="neural-card p-8 md:p-10 text-center space-y-6 shadow-md relative overflow-hidden group">
+                <div className="mx-auto w-16 h-16 rounded-2xl bg-secondary/50 flex items-center justify-center text-primary mb-4 shadow-sm group-hover:scale-105 group-hover:rotate-6 transition-all">
                   {item.icon}
                 </div>
                 <div className="space-y-2">
-                  <h3 className="font-black text-xl md:text-2xl tracking-tighter text-foreground italic uppercase">{item.title}</h3>
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50 italic">{item.sub}</p>
+                  <h3 className="font-bold text-xl text-foreground">{item.title}</h3>
+                  <p className="text-sm font-medium text-muted-foreground">{item.sub}</p>
                 </div>
-                <div className="pt-4">
+                <div className="pt-2">
                   {item.action ? (
-                    <Button className="h-14 rounded-[18px] px-8 font-black bg-primary text-primary-foreground hover:scale-105 transition-all shadow-xl shadow-primary/20 uppercase tracking-[0.2em] text-[10px] border-none italic">
+                    <Button className="h-12 rounded-xl px-8 font-bold bg-primary text-primary-foreground hover:scale-[1.02] transition-all shadow-sm">
                       {item.action}
                     </Button>
                   ) : (
-                    <a href={item.href} className="text-lg md:text-xl font-black text-primary italic underline decoration-primary/20 underline-offset-8 hover:decoration-primary transition-all truncate block">
+                    <a href={item.href} className="text-base md:text-lg font-bold text-primary hover:underline transition-all block truncate">
                       {item.val}
                     </a>
                   )}
@@ -63,89 +63,89 @@ const Contact = () => {
           </div>
 
           {/* Main Inquiry Core */}
-          <div className="max-w-6xl mx-auto animate-slide-up" style={{ animationDelay: '200ms' }}>
-            <Card className="neural-card p-8 md:p-24 relative overflow-hidden group shadow-2xl">
-              <div className="absolute top-0 right-0 p-16 opacity-0 group-hover:opacity-5 transition-all duration-1000 translate-x-12 translate-y-[-12px] group-hover:translate-x-0 group-hover:translate-y-0 pointer-events-none">
-                <Send className="w-[400px] h-[400px] text-primary" />
+          <div className="max-w-5xl mx-auto animate-slide-up mb-24" style={{ animationDelay: '200ms' }}>
+            <Card className="neural-card p-8 md:p-14 relative overflow-hidden group shadow-lg">
+              <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none group-hover:scale-110 transition-transform duration-1000">
+                <Send className="w-64 h-64 text-primary" />
               </div>
 
-              <div className="relative z-10 grid lg:grid-cols-12 gap-20">
-                <div className="lg:col-span-5 space-y-10">
+              <div className="relative z-10 grid lg:grid-cols-12 gap-12">
+                <div className="lg:col-span-5 space-y-8">
                   <div className="space-y-4">
-                    <h2 className="text-3xl font-black tracking-tighter text-foreground leading-[0.9] italic uppercase">
-                      Send us a <span className="text-primary NOT-italic">message.</span>
+                    <h2 className="text-3xl font-bold tracking-tight text-foreground leading-tight">
+                      Send us a <span className="text-primary">message.</span>
                     </h2>
-                    <p className="text-lg font-bold text-muted-foreground/70 italic leading-relaxed tracking-tight max-w-xs">
-                      Our partnership team handles every inquiry with white-glove precision and total confidentiality.
+                    <p className="text-base font-medium text-muted-foreground leading-relaxed">
+                      Our partnership team handles every inquiry with total confidentiality.
                     </p>
                   </div>
 
-                  <div className="space-y-6 pt-10">
-                    <div className="flex items-center gap-5 p-6 rounded-[28px] bg-background/50 border border-border/20 shadow-inner group/info hover:border-primary/30 transition-all cursor-pointer">
-                      <div className="p-3 rounded-2xl bg-primary/10 text-primary group-hover/info:scale-110 transition-transform">
-                        <ShieldCheck className="w-6 h-6" />
+                  <div className="space-y-6 pt-6">
+                    <div className="flex items-center gap-4 p-5 rounded-2xl bg-background/50 border border-border/20 shadow-sm group/info hover:border-primary/30 transition-all cursor-pointer">
+                      <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover/info:scale-110 transition-transform">
+                        <ShieldCheck className="w-5 h-5" />
                       </div>
                       <div>
-                        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-foreground italic">Security Protocol</p>
-                        <p className="text-xs font-bold text-muted-foreground opacity-60">End-to-End Encrypted Signal</p>
+                        <p className="text-sm font-semibold text-foreground">Security Protocol</p>
+                        <p className="text-xs font-medium text-muted-foreground">End-to-End Encrypted</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-5 p-6 rounded-[28px] bg-background/50 border border-border/20 shadow-inner group/info hover:border-primary/30 transition-all cursor-pointer">
-                      <div className="p-3 rounded-2xl bg-primary/10 text-primary group-hover/info:scale-110 transition-transform">
-                        <Fingerprint className="w-6 h-6" />
+                    <div className="flex items-center gap-4 p-5 rounded-2xl bg-background/50 border border-border/20 shadow-sm group/info hover:border-primary/30 transition-all cursor-pointer">
+                      <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover/info:scale-110 transition-transform">
+                        <Fingerprint className="w-5 h-5" />
                       </div>
                       <div>
-                        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-foreground italic">Identity Verification</p>
-                        <p className="text-xs font-bold text-muted-foreground opacity-60">Verified Origin Protocol</p>
+                        <p className="text-sm font-semibold text-foreground">Verified Origin</p>
+                        <p className="text-xs font-medium text-muted-foreground">Identity Verification</p>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <form className="lg:col-span-7 space-y-10">
-                  <div className="grid md:grid-cols-2 gap-8">
-                    <div className="space-y-4">
-                      <Label htmlFor="firstName" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-4 italic px-2">First Identity</Label>
-                      <Input id="firstName" placeholder="ENTER_FIRST_NAME" className="h-16 rounded-[22px] px-8 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-xs uppercase tracking-widest placeholder:opacity-40" />
+                <form className="lg:col-span-7 space-y-6">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="firstName" className="text-sm font-semibold text-foreground ml-1">First Name</Label>
+                      <Input id="firstName" placeholder="First Name" className="h-12 md:h-14 rounded-xl px-4 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all text-sm md:text-base placeholder:text-muted-foreground/50" />
                     </div>
-                    <div className="space-y-4">
-                      <Label htmlFor="lastName" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-4 italic px-2">Last Identity</Label>
-                      <Input id="lastName" placeholder="ENTER_LAST_NAME" className="h-16 rounded-[22px] px-8 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-xs uppercase tracking-widest placeholder:opacity-40" />
+                    <div className="space-y-2">
+                      <Label htmlFor="lastName" className="text-sm font-semibold text-foreground ml-1">Last Name</Label>
+                      <Input id="lastName" placeholder="Last Name" className="h-12 md:h-14 rounded-xl px-4 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all text-sm md:text-base placeholder:text-muted-foreground/50" />
                     </div>
                   </div>
 
-                  <div className="space-y-4">
-                    <Label htmlFor="email" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-4 italic px-2">Signal Node (Email)</Label>
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-sm font-semibold text-foreground ml-1">Email Address</Label>
                     <Input
                       id="email"
                       type="email"
-                      placeholder="OPERATOR@DEVFOLIOMARKETPLACE.COM"
-                      className="h-16 rounded-[22px] px-8 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-xs uppercase tracking-widest placeholder:opacity-40"
+                      placeholder="hello@devfolio.com"
+                      className="h-12 md:h-14 rounded-xl px-4 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all text-sm md:text-base placeholder:text-muted-foreground/50"
                     />
                   </div>
 
-                  <div className="space-y-4">
-                    <Label htmlFor="subject" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-4 italic px-2">Inquiry Vector</Label>
+                  <div className="space-y-2">
+                    <Label htmlFor="subject" className="text-sm font-semibold text-foreground ml-1">Subject</Label>
                     <Input
                       id="subject"
-                      placeholder="TECHNICAL_QUERY"
-                      className="h-16 rounded-[22px] px-8 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-xs uppercase tracking-widest placeholder:opacity-40"
+                      placeholder="How can we help you?"
+                      className="h-12 md:h-14 rounded-xl px-4 bg-background border-border focus:border-primary focus:ring-primary/20 transition-all text-sm md:text-base placeholder:text-muted-foreground/50"
                     />
                   </div>
 
-                  <div className="space-y-4">
-                    <Label htmlFor="message" className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground ml-4 italic px-2">Message Payload</Label>
+                  <div className="space-y-2">
+                    <Label htmlFor="message" className="text-sm font-semibold text-foreground ml-1">Message</Label>
                     <Textarea
                       id="message"
-                      placeholder="INITIALIZE_MESSAGE_PAYLOAD..."
-                      className="rounded-[28px] bg-background border-border focus:border-primary focus:ring-primary/20 transition-all font-black text-xs uppercase tracking-widest min-h-[220px] p-10 placeholder:opacity-40 resize-none shadow-inner"
+                      placeholder="Describe your inquiry..."
+                      className="rounded-xl bg-background border-border focus:border-primary focus:ring-primary/20 transition-all text-sm md:text-base min-h-[150px] p-4 placeholder:text-muted-foreground/50 resize-y shadow-sm"
                     />
                   </div>
 
-                  <div className="pt-6">
-                    <Button type="submit" className="w-full h-20 rounded-[28px] font-black text-2xl bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl shadow-primary/30 gap-8 uppercase tracking-[0.25em] border-none italic group">
-                      Dispatch Message
-                      <ArrowRight className="w-8 h-8 stroke-[4px] group-hover:translate-x-2 transition-transform" />
+                  <div className="pt-4">
+                    <Button type="submit" className="w-full h-12 md:h-14 rounded-xl font-bold text-base bg-primary text-primary-foreground hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg gap-2 group">
+                      Send Message
+                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </div>
                 </form>
