@@ -323,10 +323,10 @@ const ProjectDetail = () => {
                 
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
                   <div className="space-y-4">
-                    <h1 className="text-6xl font-black tracking-tighter text-foreground leading-[0.9]">
+                    <h1 className="text-3xl font-black tracking-tighter text-foreground leading-[0.9]">
                        {project.title}
                     </h1>
-                    <p className="text-xl font-medium text-muted-foreground italic leading-relaxed max-w-2xl">
+                    <p className="text-sm font-medium text-muted-foreground italic leading-relaxed max-w-2xl">
                       {project.description}
                     </p>
                   </div>
@@ -343,7 +343,7 @@ const ProjectDetail = () => {
                  
                  <div className="space-y-10 relative z-10">
                    <div>
-                     <h3 className="text-2xl font-black tracking-tight text-foreground mb-6 flex items-center gap-3">
+                     <h3 className="text-lg font-black tracking-tight text-foreground mb-6 flex items-center gap-3">
                         <Activity className="w-6 h-6 text-primary" />
                         Integrated Features
                      </h3>
@@ -361,7 +361,7 @@ const ProjectDetail = () => {
 
                    <div className="grid md:grid-cols-2 gap-10">
                      <div className="space-y-6">
-                        <h3 className="text-xl font-black tracking-tight text-foreground flex items-center gap-3">
+                        <h3 className="text-base font-black tracking-tight text-foreground flex items-center gap-3">
                            <Code className="w-5 h-5 text-primary" />
                            Logic Stack
                         </h3>
@@ -375,7 +375,7 @@ const ProjectDetail = () => {
                      </div>
 
                      <div className="space-y-6">
-                        <h3 className="text-xl font-black tracking-tight text-foreground flex items-center gap-3">
+                        <h3 className="text-base font-black tracking-tight text-foreground flex items-center gap-3">
                            <MonitorSmartphone className="w-5 h-5 text-primary" />
                            Performance Vector
                         </h3>
@@ -393,7 +393,7 @@ const ProjectDetail = () => {
                    </div>
 
                    <Button
-                     className="w-full h-20 rounded-[28px] bg-foreground text-background text-lg font-black uppercase tracking-widest shadow-2xl hover:scale-[1.02] active:scale-95 transition-all gap-4 flex items-center justify-center border-none"
+                     className="w-full h-20 rounded-[28px] bg-foreground text-background text-sm font-black uppercase tracking-widest shadow-2xl hover:scale-[1.02] active:scale-95 transition-all gap-4 flex items-center justify-center border-none"
                      onClick={() => window.open(project.liveUrl, "_blank")}
                    >
                      <ExternalLink className="w-6 h-6" />
@@ -413,7 +413,7 @@ const ProjectDetail = () => {
                    <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mx-auto mb-6 transform group-hover:rotate-12 transition-transform">
                       <MessageSquare className="w-7 h-7" />
                    </div>
-                   <h2 className="text-3xl font-black tracking-tighter text-foreground mb-3">Request Node</h2>
+                   <h2 className="text-xl font-black tracking-tighter text-foreground mb-3">Request Node</h2>
                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest italic opacity-70">
                       Configure your integration
                    </p>

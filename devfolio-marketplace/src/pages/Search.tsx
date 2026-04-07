@@ -109,10 +109,10 @@ const Search = () => {
                </span>
             </div>
             
-            <h1 className="text-7xl font-black tracking-tighter text-foreground leading-[1] italic animate-slide-up">
+            <h1 className="text-4xl font-black tracking-tighter text-foreground leading-[1] italic animate-slide-up">
                SEARCH <span className="text-muted-foreground/30 font-normal">DIRECTORY.</span>
             </h1>
-            <p className="text-xl font-medium text-muted-foreground italic leading-relaxed max-w-2xl mx-auto animate-fade-in">
+            <p className="text-sm font-medium text-muted-foreground italic leading-relaxed max-w-2xl mx-auto animate-fade-in">
                Discover authorized modules, design systems, and technical architectures across the network.
             </p>
 
@@ -123,7 +123,7 @@ const Search = () => {
                   <SearchIcon className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-primary drop-shadow-sm transition-transform group-hover/input:scale-110" />
                   <Input
                     placeholder="Search by module, logic, or architect..."
-                    className="pl-16 h-16 rounded-2xl bg-background border-none focus:ring-0 shadow-inner text-lg font-bold placeholder:font-medium placeholder:italic text-foreground"
+                    className="pl-16 h-16 rounded-2xl bg-background border-none focus:ring-0 shadow-inner text-sm font-bold placeholder:font-medium placeholder:italic text-foreground"
                     value={searchQuery}
                     onChange={(e) => handleSearch(e.target.value)}
                   />
@@ -177,7 +177,7 @@ const Search = () => {
                    <Rocket className="w-12 h-12" />
                 </div>
                 <div>
-                   <h3 className="text-4xl font-black tracking-tight text-foreground/40 italic">Null Address.</h3>
+                   <h3 className="text-2xl font-black tracking-tight text-foreground/40 italic">Null Address.</h3>
                    <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest opacity-40 mt-2">Try adjusting your search criteria</p>
                 </div>
               </div>

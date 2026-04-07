@@ -92,7 +92,7 @@ All colors MUST be HSL.
   }
 
   .section-spacing {
-    @apply py-16 md:py-24 lg:py-32;
+    @apply py-10 md:py-14 lg:py-20;
   }
 
   .heading-responsive {
