@@ -121,81 +121,80 @@ const BlogDetail = () => {
           <Button 
             variant="ghost" 
             onClick={() => navigate("/blog")}
-            className="mb-10 pl-0 hover:bg-transparent text-muted-foreground hover:text-foreground group transition-all font-black text-xs uppercase tracking-widest italic"
+            className="mb-8 pl-0 hover:bg-transparent text-muted-foreground hover:text-foreground group transition-all font-semibold text-sm"
           >
-            <ArrowLeft className="w-5 h-5 mr-3 group-hover:-translate-x-2 transition-transform" />
+            <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
             Back to Directory
           </Button>
 
           <article className="animate-slide-up space-y-12">
-            <header className="space-y-8 pb-10 border-b border-border/20">
-              <div className="flex flex-wrap items-center gap-4">
-                <span className="px-5 py-2 bg-primary/10 text-primary text-[10px] font-black uppercase tracking-[0.3em] rounded-full italic shadow-sm">
+            <header className="space-y-6 pb-8 border-b border-border/20">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full shadow-sm">
                   {post.category}
                 </span>
-                <span className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground italic">
+                <span className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
                   <Calendar className="w-4 h-4" />
                   {post.date}
                 </span>
               </div>
 
-              <h1 className="text-3xl md:text-5xl lg:text-7xl font-black leading-[1.1] tracking-tighter text-foreground uppercase">
+              <h1 className="text-3xl md:text-5xl font-bold leading-tight tracking-tight text-foreground">
                 {post.title}
               </h1>
 
-              <div className="flex flex-wrap items-center justify-between gap-6 pt-4">
-                <div className="flex items-center gap-6">
-                  <span className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-primary/70 italic">
-                    <Eye className="w-5 h-5" />
+              <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
+                <div className="flex items-center gap-4">
+                  <span className="flex items-center gap-1.5 text-xs font-semibold text-primary/70">
+                    <Eye className="w-4 h-4" />
                     {post.views}
                   </span>
-                  <span className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/40 bg-secondary/30 px-4 py-2 rounded-xl italic">
-                    <BookOpen className="w-4 h-4" />
+                  <span className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground/60 bg-secondary/30 px-3 py-1.5 rounded-lg">
+                    <BookOpen className="w-3.5 h-3.5" />
                     {post.readTime}
                   </span>
                 </div>
 
-                <Button variant="outline" className="rounded-xl font-black text-[10px] uppercase tracking-widest italic border-border/40 hover:bg-secondary/20">
+                <Button variant="outline" className="rounded-xl font-semibold text-sm border-border/40 hover:bg-secondary/20 h-10">
                   <Share2 className="w-4 h-4 mr-2" />
                   Share Insight
                 </Button>
               </div>
             </header>
 
-            <div className="rounded-[44px] overflow-hidden mb-16 shadow-2xl relative h-[400px] md:h-[600px] group">
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent z-10" />
+            <div className="rounded-3xl overflow-hidden mb-12 shadow-lg relative h-[300px] md:h-[450px] group">
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent z-10" />
               <img 
                 src={heroImg} 
                 alt={`${post.title} - Main Concept`} 
                 fetchPriority="high"
                 loading="eager"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" 
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
               />
-              <div className="absolute bottom-0 left-0 p-8 md:p-14 z-20 w-full flex justify-between items-end">
-                 <div className="flex items-center gap-4 bg-background/50 backdrop-blur-xl px-6 py-3 rounded-[20px] border border-border/40">
-                    <Activity className="w-5 h-5 text-primary" />
-                    <span className="text-[10px] font-black uppercase tracking-widest italic">Intelligence Node Secured</span>
+              <div className="absolute bottom-0 left-0 p-6 md:p-10 z-20 w-full flex justify-between items-end">
+                 <div className="flex items-center gap-3 bg-background/60 backdrop-blur-md px-4 py-2 rounded-xl border border-border/40">
+                    <Activity className="w-4 h-4 text-primary" />
+                    <span className="text-xs font-semibold tracking-wide">Intelligence Secured</span>
                  </div>
               </div>
             </div>
 
-            <div className="grid lg:grid-cols-12 gap-16">
+            <div className="grid lg:grid-cols-12 gap-12">
               {/* Main Content Column */}
-              <div className="lg:col-span-8 prose prose-lg dark:prose-invert prose-headings:font-black prose-headings:tracking-tighter prose-headings:uppercase prose-p:font-medium prose-p:leading-relaxed max-w-none text-muted-foreground/90 italic">
+              <div className="lg:col-span-8 prose prose-base dark:prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-p:font-medium prose-p:leading-relaxed max-w-none text-muted-foreground">
                 
-                <p className="text-xl md:text-3xl font-bold text-foreground leading-relaxed mb-12">
+                <p className="text-lg md:text-xl font-semibold text-foreground leading-relaxed mb-8">
                   {post.excerpt}
                 </p>
                 
-                <div className="space-y-12">
+                <div className="space-y-10">
                   
                   {/* Table of Contents - SEO Friendly */}
-                  <nav className="p-8 md:p-10 rounded-[32px] bg-secondary/10 border border-border/40 my-10 shadow-inner" aria-label="Table of Contents">
-                    <h2 className="text-xl md:text-2xl font-black text-foreground uppercase tracking-tight mb-6 flex items-center gap-3">
-                      <Layers className="w-6 h-6 text-primary" />
-                      Table of Contents
+                  <nav className="p-6 md:p-8 rounded-2xl bg-secondary/10 border border-border/40 my-8 shadow-sm" aria-label="Table of Contents">
+                    <h2 className="text-lg md:text-xl font-bold text-foreground mb-4 flex items-center gap-2 m-0 p-0 !mb-4">
+                      <Layers className="w-5 h-5 text-primary inline" /> Table of Contents
                     </h2>
-                    <ul className="space-y-4 list-none m-0 p-0 text-sm md:text-base font-bold text-muted-foreground">
+                    <ul className="space-y-3 list-none m-0 p-0 text-sm font-semibold text-muted-foreground">
                       <li><a href="#architecture" className="hover:text-primary transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> 1. Overview & Architecture</a></li>
                       <li><a href="#strategic-implementation" className="hover:text-primary transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> 2. Deep Intelligence Analysis</a></li>
                       <li><a href="#optimization" className="hover:text-primary transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> 3. Advanced Optimization Protocols</a></li>
@@ -204,59 +203,59 @@ const BlogDetail = () => {
                   </nav>
 
                   {/* Advertisement Card - RESPONSIVE DYNAMIC */}
-                  <div className={`my-12 md:my-16 rounded-[24px] md:rounded-[36px] ${currentAd.bg} border border-border/40 md:border-2 md:border-primary/20 p-6 md:p-8 lg:p-10 shadow-[0_20px_60px_-20px_rgba(var(--primary),0.15)] relative overflow-hidden group/ad`}>
-                    <div className="absolute top-[-50%] right-[-10%] md:right-0 p-6 opacity-[0.03] md:opacity-5 group-hover/ad:scale-110 transition-transform duration-1000 rotate-12 pointer-events-none w-full md:w-[400px] h-full flex justify-center items-center">
+                  <div className={`my-8 md:my-12 rounded-2xl md:rounded-3xl ${currentAd.bg} border border-border/40 p-6 md:p-8 lg:p-10 shadow-sm relative overflow-hidden group/ad`}>
+                    <div className="absolute top-[-20%] right-[-10%] md:right-0 p-6 opacity-5 group-hover/ad:scale-105 transition-transform duration-700 pointer-events-none w-full md:w-[300px] h-full flex justify-center items-center">
                       {currentAd.icon}
                     </div>
                     
-                    <div className="relative z-10 space-y-4 md:space-y-5 max-w-3xl">
-                      <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] text-primary block">
+                    <div className="relative z-10 space-y-3 md:space-y-4 max-w-3xl">
+                      <span className="text-xs font-semibold uppercase tracking-widest text-primary block">
                         {currentAd.subtitle}
                       </span>
-                      <h3 className="text-2xl md:text-4xl lg:text-5xl font-black text-foreground uppercase tracking-tight leading-[0.9]">
-                        {currentAd.title1} <span className="text-primary italic">{currentAd.title2}</span>
+                      <h3 className="text-2xl md:text-3xl font-bold text-foreground leading-tight">
+                        {currentAd.title1} <span className="text-primary">{currentAd.title2}</span>
                       </h3>
-                      <p className="font-bold text-xs md:text-sm lg:text-base text-foreground/80 leading-relaxed max-w-xl pb-2">
+                      <p className="font-medium text-sm md:text-base text-foreground/80 leading-relaxed max-w-xl pb-2">
                         {currentAd.desc}
                       </p>
                       
                       <Button 
                         onClick={() => navigate('/signup')}
-                        className="w-full sm:w-min rounded-[16px] md:rounded-[20px] bg-foreground text-background font-black uppercase tracking-widest text-[10px] md:text-[11px] h-12 md:h-14 px-6 md:px-10 hover:scale-105 active:scale-95 transition-all shadow-xl overflow-hidden"
+                        className="w-full sm:w-auto rounded-xl bg-foreground text-background font-bold text-sm h-12 px-8 hover:scale-[1.02] active:scale-[0.98] transition-all"
                       >
-                        <span className="whitespace-nowrap">{currentAd.cta}</span> <Zap className="w-3 h-3 md:w-4 md:h-4 ml-2 md:ml-3 text-primary shrink-0" />
+                        {currentAd.cta} <Zap className="w-4 h-4 ml-2 text-primary" />
                       </Button>
                     </div>
                   </div>
 
                   {post.content ? (
                     // DYNAMIC MASSIVE TRENDING CONTENT
-                    <div className="space-y-12">
-                      <h2 className="text-3xl md:text-5xl text-foreground font-black tracking-tighter uppercase mb-10 flex items-center gap-4 scroll-mt-32" id="architecture">
-                         <Zap className="w-10 h-10 text-primary" />
+                    <div className="space-y-8">
+                      <h2 className="text-2xl md:text-3xl text-foreground font-bold tracking-tight mb-8 flex items-center gap-3 scroll-mt-32" id="architecture">
+                         <Zap className="w-6 h-6 text-primary" />
                          1. Overview & Architecture
                       </h2>
                       {post.content.map((paragraph: string, idx: number) => (
                         <div key={idx}>
-                          <p className="text-xl md:text-2xl font-medium leading-relaxed mb-6 text-foreground/90">
+                          <p className="text-base md:text-lg font-medium leading-relaxed mb-6 text-foreground/90">
                             {paragraph}
                           </p>
                           {idx === 0 && (
-                            <div className="bg-secondary/10 border-l-4 border-primary p-12 rounded-r-[40px] my-16 italic shadow-inner">
-                               <p className="font-black text-3xl md:text-5xl text-foreground !m-0 tracking-tighter leading-[1.1]">
+                            <div className="bg-secondary/10 border-l-4 border-primary p-8 rounded-r-2xl my-10 shadow-sm">
+                               <p className="font-semibold text-xl md:text-2xl text-foreground !m-0 leading-relaxed italic">
                                  "{paragraph.split('.')[0]}."
                                </p>
-                               <footer className="mt-6 text-base font-bold opacity-60 uppercase tracking-widest">— Industry Protocol</footer>
+                               <footer className="mt-4 text-sm font-semibold opacity-60">— Industry Protocol</footer>
                             </div>
                           )}
                           {idx === 1 && (
-                            <div className="rounded-[40px] overflow-hidden my-16 shadow-2xl relative h-[400px] md:h-[500px]">
+                            <div className="rounded-3xl overflow-hidden my-10 shadow-lg relative h-[300px] md:h-[400px]">
                                <img src={midImg} alt={post.title} loading="lazy" className="w-full h-full object-cover dark:brightness-75" />
                             </div>
                           )}
                           {idx === 2 && (
-                             <h2 className="text-3xl md:text-5xl text-foreground font-black tracking-tighter uppercase mt-20 mb-10 flex items-center gap-4 scroll-mt-32" id="strategic-implementation">
-                               <Sparkles className="w-10 h-10 text-primary" />
+                             <h2 className="text-2xl md:text-3xl text-foreground font-bold tracking-tight mt-16 mb-8 flex items-center gap-3 scroll-mt-32" id="strategic-implementation">
+                               <Sparkles className="w-6 h-6 text-primary" />
                                2. Deep Intelligence Analysis
                              </h2>
                           )}
@@ -268,8 +267,8 @@ const BlogDetail = () => {
                     <>
                       {/* Phase 1 */}
                       <div className="space-y-6 scroll-mt-32" id="architecture">
-                        <h2 className="text-2xl md:text-4xl text-foreground font-black tracking-tighter uppercase flex items-center gap-4">
-                          <Zap className="w-8 h-8 text-primary" />
+                        <h2 className="text-xl md:text-3xl text-foreground font-bold tracking-tight flex items-center gap-3">
+                          <Zap className="w-6 h-6 text-primary" />
                           1. Overview & Architecture
                         </h2>
                         <p>
@@ -281,7 +280,7 @@ const BlogDetail = () => {
                       </div>
 
                       {/* Interstitial Image - SEO Alt tags */}
-                      <div className="rounded-[32px] overflow-hidden my-16 shadow-2xl relative h-[300px] md:h-[400px]">
+                      <div className="rounded-3xl overflow-hidden my-12 shadow-lg relative h-[250px] md:h-[350px]">
                         <img 
                           src={midImg} 
                           alt={`Visualizing ${post.category} data systems and workflow scaling`} 
@@ -292,29 +291,29 @@ const BlogDetail = () => {
 
                       {/* Phase 2: Actionable Items */}
                       <div className="space-y-6 scroll-mt-32" id="strategic-implementation">
-                        <h2 className="text-2xl md:text-4xl text-foreground font-black tracking-tighter uppercase flex items-center gap-4">
-                          <Sparkles className="w-6 h-6 text-primary" />
+                        <h2 className="text-xl md:text-3xl text-foreground font-bold tracking-tight flex items-center gap-3">
+                          <Sparkles className="w-5 h-5 text-primary" />
                           2. Deep Intelligence Analysis
                         </h2>
-                        <h3 className="text-xl md:text-2xl text-foreground/80 font-black tracking-tight uppercase mt-6">
+                        <h3 className="text-lg md:text-xl text-foreground/80 font-semibold tracking-tight mt-4">
                           Deploying Frictionless Funnels
                         </h3>
                         <p>
                           To successfully implement these strategies, start by reverse-engineering your core conversion events. Map the entire journey from the initial awareness node to the final conversion protocol. Remove friction points mercilessly.
                         </p>
                         
-                        <div className="grid gap-4 mt-8">
+                        <div className="grid gap-3 mt-6">
                           {[
                             `Automate the intake process for ${post.category} leads to capture data 24/7.`,
                             "Deploy asynchronous video updates to establish immediate domain authority.",
                             "Utilize high-fidelity project boards for transparent client delivery.",
                             "Construct a seamless payment and subscription gateway to secure MRR."
                           ].map((item, i) => (
-                            <div key={i} className="flex items-center gap-4 bg-background/50 border border-border/20 p-5 rounded-[20px]">
-                              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                                <CheckCircle2 className="w-4 h-4 text-primary" />
+                            <div key={i} className="flex items-center gap-3 bg-background/50 border border-border/20 p-4 rounded-xl">
+                              <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                                <CheckCircle2 className="w-3 h-3 text-primary" />
                               </div>
-                              <span className="font-bold text-foreground text-sm uppercase tracking-wider">{item}</span>
+                              <span className="font-semibold text-foreground text-sm">{item}</span>
                             </div>
                           ))}
                         </div>
@@ -323,47 +322,47 @@ const BlogDetail = () => {
                   )}
 
                   {/* Phase 3 */}
-                  <div className="space-y-6 scroll-mt-32" id="optimization">
-                    <h2 className="text-2xl md:text-4xl text-foreground font-black tracking-tighter uppercase flex items-center gap-4">
-                      <Activity className="w-8 h-8 text-primary" />
+                  <div className="space-y-6 scroll-mt-32 mt-12" id="optimization">
+                    <h2 className="text-xl md:text-3xl text-foreground font-bold tracking-tight flex items-center gap-3">
+                      <Activity className="w-6 h-6 text-primary" />
                       3. Advanced Optimization
                     </h2>
                     <p>
                       The highest performing creators don't just sell services; they architect environments where the client naturally arrives at the conclusion that a transaction is the only logical path forward. By leveraging the advanced tools native to the Devfolio ecosystem, your storefront transforms from a mere landing page into an automated conversion engine.
                     </p>
                     
-                    <div className="bg-secondary/10 border-l-4 border-primary p-10 rounded-r-[32px] my-10 italic shadow-inner">
-                      <div className="flex gap-4 mb-6 text-primary">
-                         <TrendingUp className="w-8 h-8" />
+                    <div className="bg-secondary/10 border-l-4 border-primary p-8 rounded-r-2xl my-8 shadow-sm">
+                      <div className="flex gap-4 mb-4 text-primary">
+                         <TrendingUp className="w-6 h-6" />
                       </div>
-                      <p className="font-black text-2xl md:text-4xl text-foreground !m-0 tracking-tight leading-[1.1]">
+                      <p className="font-semibold text-lg md:text-xl text-foreground !m-0 leading-relaxed italic">
                         "Growth is not a consequence of effort, but the mathematical outcome of applying the right leverage at the perfect vector."
                       </p>
-                      <footer className="mt-4 text-sm font-bold opacity-60">— The Devfolio Protocol Architects</footer>
+                      <footer className="mt-3 text-xs font-semibold opacity-60">— The Devfolio Protocol Architects</footer>
                     </div>
                   </div>
 
                   {/* SEO FAQ Section */}
-                  <div className="space-y-8 mt-16 scroll-mt-32 border-t border-border/20 pt-16" id="faq">
-                    <h2 className="text-2xl md:text-4xl text-foreground font-black tracking-tighter uppercase mb-10">
+                  <div className="space-y-8 mt-12 scroll-mt-32 border-t border-border/20 pt-12" id="faq">
+                    <h2 className="text-xl md:text-3xl text-foreground font-bold tracking-tight mb-8">
                       Frequently Asked Questions
                     </h2>
                     
-                    <div className="space-y-8">
-                      <div className="bg-background/40 border border-border/30 p-8 rounded-[24px]">
-                        <h3 className="text-lg md:text-xl font-black text-foreground uppercase tracking-tight mb-4 flex items-center gap-3">
+                    <div className="space-y-6">
+                      <div className="bg-background/40 border border-border/30 p-6 rounded-2xl">
+                        <h3 className="text-base md:text-lg font-bold text-foreground mb-3 flex items-center gap-2">
                           <span className="text-primary">Q.</span> How quickly can I scale my {post.category} operations?
                         </h3>
-                        <p className="text-sm font-bold text-foreground/70 m-0">
+                        <p className="text-sm font-medium text-foreground/70 m-0">
                           Implementing a unified Devfolio structure typically yields a 40% reduction in admin overhead within the first 14 days, directly scaling throughput.
                         </p>
                       </div>
 
-                      <div className="bg-background/40 border border-border/30 p-8 rounded-[24px]">
-                        <h3 className="text-lg md:text-xl font-black text-foreground uppercase tracking-tight mb-4 flex items-center gap-3">
+                      <div className="bg-background/40 border border-border/30 p-6 rounded-2xl">
+                        <h3 className="text-base md:text-lg font-bold text-foreground mb-3 flex items-center gap-2">
                           <span className="text-primary">Q.</span> What metrics matter most for modern creators?
                         </h3>
-                        <p className="text-sm font-bold text-foreground/70 m-0">
+                        <p className="text-sm font-medium text-foreground/70 m-0">
                           Focus relentlessly on Client Retention Rate (CRR) and Node Conversion Velocity. Avoid vanity metrics like generic traffic; optimize for authenticated user interactions.
                         </p>
                       </div>
@@ -374,54 +373,52 @@ const BlogDetail = () => {
 
               {/* Sidebar / Sticky CTA */}
               <div className="lg:col-span-4 space-y-8">
-                <div className="sticky top-32 space-y-8">
+                <div className="sticky top-32 space-y-6">
                   {/* Author Node */}
-                  <div className="p-8 rounded-[36px] bg-secondary/10 border border-border/40 backdrop-blur-xl">
-                     <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground mb-6 italic">Transmitting Author</p>
-                     <div className="flex items-center gap-4 mb-6">
-                       <div className="w-16 h-16 rounded-[22px] bg-primary/20 flex items-center justify-center font-black text-2xl text-primary italic">D</div>
+                  <div className="p-6 rounded-2xl bg-secondary/10 border border-border/40 backdrop-blur-xl">
+                     <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-4">Author</p>
+                     <div className="flex items-center gap-3 mb-4">
+                       <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center font-bold text-xl text-primary">D</div>
                        <div>
-                         <p className="font-black text-foreground uppercase tracking-wider italic">Devfolio Architects</p>
-                         <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary/70">Core Protocol Team</p>
+                         <p className="font-bold text-foreground">Devfolio Architects</p>
+                         <p className="text-xs font-semibold text-primary/70">Core Team</p>
                        </div>
                      </div>
-                     <p className="text-xs font-medium text-muted-foreground italic leading-relaxed">
+                     <p className="text-sm font-medium text-muted-foreground leading-relaxed">
                        Building the infrastructure for the global creator economy. We analyze terabytes of data to deliver superior strategy.
                      </p>
                   </div>
 
                   {/* Primary Call To Action Feature */}
-                  <div className="p-8 md:p-10 rounded-[40px] bg-gradient-to-b from-foreground to-foreground/90 text-background border border-background/10 relative overflow-hidden group shadow-[0_30px_100px_-20px_rgba(0,0,0,0.4)] flex flex-col justify-center min-h-[360px] hover:shadow-[0_40px_120px_-20px_rgba(var(--primary),0.2)] transition-all duration-700">
-                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/15 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-                    <div className="absolute -top-10 -right-10 p-8 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-1000 rotate-12">
-                      <Zap className="w-56 h-56 text-primary" />
+                  <div className="p-6 md:p-8 rounded-3xl bg-foreground text-background border border-background/10 relative overflow-hidden group shadow-lg flex flex-col justify-center min-h-[300px]">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                    <div className="absolute -top-10 -right-10 p-4 opacity-5 group-hover:opacity-10 group-hover:scale-105 transition-all duration-700 rotate-12">
+                      <Zap className="w-48 h-48 text-primary" />
                     </div>
                     
-                    <div className="relative z-10 space-y-7">
-                      <div className="flex items-center gap-3 text-primary">
-                        <div className="relative flex h-3 w-3">
+                    <div className="relative z-10 space-y-5">
+                      <div className="flex items-center gap-2 text-primary">
+                        <div className="relative flex h-2 w-2">
                           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
                         </div>
-                        <span className="text-[10px] font-black uppercase tracking-[0.4em]">System Ready</span>
+                        <span className="text-xs font-semibold uppercase tracking-widest">System Ready</span>
                       </div>
                       
-                      <h4 className="text-3xl md:text-4xl font-black uppercase tracking-tighter leading-[1.1]">
-                        Scale Your <br /> <span className="text-primary italic">Operations.</span>
+                      <h4 className="text-2xl md:text-3xl font-bold leading-tight">
+                        Scale Your <br /> <span className="text-primary">Operations.</span>
                       </h4>
                       
-                      <p className="text-sm font-medium text-background/60 leading-relaxed max-w-[90%]">
+                      <p className="text-sm font-medium text-background/80 leading-relaxed">
                         Deploy your high-converting storefront today. Manage clients, sell services, and automate workflows effortlessly.
                       </p>
                       
                       <Button 
                         onClick={() => navigate('/signup')}
-                        className="w-full h-16 rounded-[24px] bg-primary text-primary-foreground font-black uppercase tracking-[0.2em] text-[11px] hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_30px_-5px_rgba(var(--primary),0.5)] mt-4 border-none flex items-center justify-between px-6 group/btn"
+                        className="w-full h-12 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98] transition-all mt-2 group/btn"
                       >
-                        <span className="relative z-10">Initialize Now</span>
-                        <div className="w-8 h-8 rounded-full bg-background/20 flex items-center justify-center group-hover/btn:bg-background/30 transition-colors">
-                           <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                        </div>
+                        <span className="flex-1 text-center">Initialize Now</span>
+                        <ArrowRight className="w-4 h-4 mr-2 group-hover/btn:translate-x-1 transition-transform" />
                       </Button>
                     </div>
                   </div>
