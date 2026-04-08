@@ -25,18 +25,25 @@ const Services = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [servicesRes, profileRes] = await Promise.all([
-          api.get('/services'),
-          api.get('/auth/profile')
-        ]);
-        setServices(servicesRes.data);
-        setFilteredServices(servicesRes.data);
-        setUser(profileRes.data);
+        // Fetch services — endpoint may not exist yet
+        const servicesRes = await api.get('/services').catch(() => ({ data: [] }));
+        setServices(Array.isArray(servicesRes.data) ? servicesRes.data : []);
+        setFilteredServices(Array.isArray(servicesRes.data) ? servicesRes.data : []);
       } catch (error) {
         console.error('Error fetching services:', error);
-      } finally {
-        setLoading(false);
+        setServices([]);
+        setFilteredServices([]);
       }
+
+      try {
+        // Fetch profile separately
+        const profileRes = await api.get('/auth/profile');
+        setUser(profileRes.data);
+      } catch (error) {
+        console.error('Error fetching profile:', error);
+      }
+
+      setLoading(false);
     };
 
     fetchData();

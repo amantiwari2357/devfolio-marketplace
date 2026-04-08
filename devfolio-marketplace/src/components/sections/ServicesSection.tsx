@@ -107,7 +107,9 @@ const ServicesSection = () => {
 
   const handleBookNow = async () => {
     if (!selectedDateObj || !selectedTime) {
-      toast.error("Please select both date and time");
+      toast.error("Please select a date and time", {
+        description: "Pick a date from the calendar and choose your preferred time slot."
+      });
       return;
     }
 
@@ -125,15 +127,22 @@ const ServicesSection = () => {
       const result = await api.post("/availabilities", bookingData);
 
       if (result.data.success) {
-        toast.success("Strategic connection established!");
+        toast.success("Consultation booked successfully! ✅", {
+          description: `Scheduled for ${selectedDateObj.toLocaleDateString("en-IN", { day: "numeric", month: "short" })} at ${selectedTime}. We'll confirm via email.`
+        });
         setSelectedDateObj(null);
         setSelectedTime(null);
       } else {
-        toast.error("Link failure: " + result.data.message);
+        toast.error("Booking failed", {
+          description: result.data.message || "This slot may no longer be available. Please try another time."
+        });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error booking:", error);
-      toast.error("Protocol error. Please retry synchronization.");
+      const serverMsg = error?.response?.data?.message;
+      toast.error(serverMsg || "Unable to book consultation", {
+        description: "Please check your connection and try again."
+      });
     }
   };
 

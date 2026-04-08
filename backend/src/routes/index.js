@@ -14,6 +14,7 @@ const templateRoutes = require('./template.routes');
 
 // Mount routes
 router.use('/users', userRoutes);
+router.use('/auth', userRoutes); // Alias: frontend uses /api/auth/profile
 router.use('/enquiries', enquiryRoutes);
 router.use('/projects', projectRoutes);
 router.use('/availabilities', availabilityRoutes);

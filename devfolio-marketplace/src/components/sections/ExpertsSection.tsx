@@ -74,6 +74,21 @@ const ExpertsSection = () => {
     e.preventDefault();
     if (!selectedExpert) return;
 
+    // Client-side validation
+    if (!enquiryForm.name.trim() || !enquiryForm.email.trim() || !enquiryForm.phone.trim() || !enquiryForm.message.trim()) {
+      toast.error("Please fill in all required fields", {
+        description: "Name, email, phone and message are mandatory."
+      });
+      return;
+    }
+
+    if (enquiryForm.message.trim().length < 10) {
+      toast.error("Message too short", {
+        description: "Please describe your requirements in at least 10 characters."
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -87,14 +102,23 @@ const ExpertsSection = () => {
       });
 
       if (res.status === 200 || res.status === 201) {
-        toast.success("Connection request sent successfully! 🎉");
+        toast.success(`Request sent to ${selectedExpert.firstName} ${selectedExpert.lastName}! 🎉`, {
+          description: "You'll receive a response within 24 hours on your email/phone."
+        });
         setEnquiryForm({ name: "", email: "", phone: "", message: "" });
         setIsDialogOpen(false);
       } else {
-        toast.error("Failed to send connection request");
+        toast.error("Unable to send request", {
+          description: "Please try again in a moment."
+        });
       }
-    } catch (error) {
-      toast.error("Error sending connection request");
+    } catch (error: any) {
+      const serverMsg = error?.response?.data?.message;
+      toast.error(serverMsg || "Connection error", {
+        description: serverMsg
+          ? "Please fix the issue and try again."
+          : "Check your internet connection and try again."
+      });
     } finally {
       setIsSubmitting(false);
     }
