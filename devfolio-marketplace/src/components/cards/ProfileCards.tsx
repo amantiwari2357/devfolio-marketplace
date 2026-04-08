@@ -54,7 +54,7 @@ const ProfileCards = () => {
             <div className="flex items-start gap-3">
               <div className="w-12 h-12 rounded-full bg-background/50 backdrop-blur-sm" />
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-sm text-foreground truncate">{profile.name}</h3>
+                <h2 className="font-semibold text-sm text-foreground truncate">{profile.name}</h2>
                 <p className="text-xs text-foreground/80 truncate">{profile.role}</p>
                 <span className="inline-block mt-2 px-2 py-1 bg-background/70 rounded-full text-xs font-medium">
                   {profile.badge}

@@ -343,10 +343,10 @@ const ProjectDetail = () => {
 
                 <div className="space-y-10 relative z-10">
                   <div>
-                    <h3 className="text-lg font-black tracking-tight text-foreground mb-6 flex items-center gap-3">
+                    <h2 className="text-lg font-black tracking-tight text-foreground mb-6 flex items-center gap-3">
                       <Activity className="w-6 h-6 text-primary" />
                       Integrated Features
-                    </h3>
+                    </h2>
                     <div className="grid sm:grid-cols-2 gap-4">
                       {project.features?.map((feature: string, index: number) => (
                         <div key={index} className="flex items-start gap-4 p-5 rounded-2xl bg-background/50 border border-border/20 group/item hover:border-primary/20 transition-all">
@@ -361,10 +361,10 @@ const ProjectDetail = () => {
 
                   <div className="grid md:grid-cols-2 gap-10">
                     <div className="space-y-6">
-                      <h3 className="text-base font-black tracking-tight text-foreground flex items-center gap-3">
+                      <h2 className="text-base font-black tracking-tight text-foreground flex items-center gap-3">
                         <Code className="w-5 h-5 text-primary" />
                         Logic Stack
-                      </h3>
+                      </h2>
                       <div className="flex flex-wrap gap-2">
                         {project.technologies?.map((tech: string, index: number) => (
                           <div key={index} className="px-5 py-2.5 rounded-xl bg-background shadow-inner border border-border/20 text-[10px] font-black uppercase tracking-widest hover:border-primary/30 transition-all">
@@ -375,10 +375,10 @@ const ProjectDetail = () => {
                     </div>
 
                     <div className="space-y-6">
-                      <h3 className="text-base font-black tracking-tight text-foreground flex items-center gap-3">
+                      <h2 className="text-base font-black tracking-tight text-foreground flex items-center gap-3">
                         <MonitorSmartphone className="w-5 h-5 text-primary" />
                         Performance Vector
-                      </h3>
+                      </h2>
                       <div className="grid grid-cols-2 gap-4">
                         <div className="p-4 rounded-xl bg-background/30 border border-border/20">
                           <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Timeline</p>

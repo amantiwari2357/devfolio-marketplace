@@ -92,7 +92,7 @@ const Footer = () => {
                     href={href} 
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`Visit our ${Icon.name || "social media"} profile`}
+                    aria-label={`Visit our ${label} profile`}
                     className="w-10 h-10 rounded-xl bg-secondary hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all shadow-sm group"
                   >
                     <Icon className="w-4 h-4 group-hover:scale-110 transition-transform" />
