@@ -8,9 +8,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { 
-  ExternalLink, ArrowLeft, ShieldCheck, Zap, 
-  Layers, Code, MonitorSmartphone, Activity, 
+import {
+  ExternalLink, ArrowLeft, ShieldCheck, Zap,
+  Layers, Code, MonitorSmartphone, Activity,
   Sparkles, Globe, Rocket, MessageSquare
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -276,27 +276,27 @@ const ProjectDetail = () => {
   }
 
   if (!project) {
-     return (
-       <div className="min-h-screen bg-background flex items-center justify-center">
-         <div className="text-center space-y-6">
-            <Layers className="w-16 h-16 mx-auto text-muted-foreground/30" />
-            <h3 className="text-3xl font-bold tracking-tight text-foreground/60">Project Not Found.</h3>
-            <Button onClick={() => navigate('/listing')} variant="outline" className="rounded-xl font-bold text-sm">Return to Directory</Button>
-         </div>
-       </div>
-     );
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center space-y-6">
+          <Layers className="w-16 h-16 mx-auto text-muted-foreground/30" />
+          <h3 className="text-3xl font-bold tracking-tight text-foreground/60">Project Not Found.</h3>
+          <Button onClick={() => navigate('/listing')} variant="outline" className="rounded-xl font-bold text-sm">Return to Directory</Button>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground">
       <SEO title={`${project.title} | Showcase`} description={project.description} />
       <Header />
-      
+
       <main className="pt-32 pb-32 relative overflow-hidden">
         {/* Background Accents */}
         <div className="absolute top-0 right-0 -z-10 w-1/2 h-1/2 bg-primary/2 opacity-30 blur-[150px] rounded-full" />
         <div className="absolute bottom-0 left-0 -z-10 w-1/3 h-1/3 bg-secondary/5 opacity-20 blur-[120px] rounded-full" />
-        
+
         <div className="container mx-auto px-6 max-w-[1400px]">
           <Button
             variant="ghost"
@@ -307,24 +307,24 @@ const ProjectDetail = () => {
             Back to Directory
           </Button>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 lg:gap-6 items-start">
             {/* Project Overview */}
             <div className="lg:col-span-2 space-y-12">
               <header className="space-y-6">
                 <div className="flex items-center gap-4">
-                   <div className="px-4 py-1.5 rounded-lg bg-primary/10 text-primary text-xs font-bold shadow-sm border border-primary/20">
-                      {project.category}
-                   </div>
-                   <div className="text-xs font-semibold text-muted-foreground flex items-center gap-2 shadow-sm">
-                      <ShieldCheck className="w-4 h-4 text-primary" />
-                      Verified Project
-                   </div>
+                  <div className="px-4 py-1.5 rounded-lg bg-primary/10 text-primary text-xs font-bold shadow-sm border border-primary/20">
+                    {project.category}
+                  </div>
+                  <div className="text-xs font-semibold text-muted-foreground flex items-center gap-2 shadow-sm">
+                    <ShieldCheck className="w-4 h-4 text-primary" />
+                    Verified Project
+                  </div>
                 </div>
-                
+
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
                   <div className="space-y-4">
                     <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
-                       {project.title}
+                      {project.title}
                     </h1>
                     <p className="text-base md:text-lg font-medium text-muted-foreground leading-relaxed max-w-2xl">
                       {project.description}
@@ -337,89 +337,87 @@ const ProjectDetail = () => {
               </header>
 
               <Card className="p-10 rounded-[40px] bg-secondary/10 border-border/50 relative overflow-hidden group">
-                 <div className="absolute top-0 right-0 p-10 opacity-5 pointer-events-none group-hover:scale-110 transition-transform">
-                    <Layers className="w-32 h-32 text-primary" />
-                 </div>
-                 
-                 <div className="space-y-10 relative z-10">
-                   <div>
-                     <h3 className="text-lg font-black tracking-tight text-foreground mb-6 flex items-center gap-3">
-                        <Activity className="w-6 h-6 text-primary" />
-                        Integrated Features
-                     </h3>
-                     <div className="grid sm:grid-cols-2 gap-4">
-                       {project.features?.map((feature: string, index: number) => (
-                         <div key={index} className="flex items-start gap-4 p-5 rounded-2xl bg-background/50 border border-border/20 group/item hover:border-primary/20 transition-all">
-                           <div className="w-8 h-8 rounded-lg bg-secondary/50 flex items-center justify-center text-primary shrink-0 group-item:scale-110 transition-transform">
-                              <Zap className="w-4 h-4" />
-                           </div>
-                           <span className="text-sm font-bold text-muted-foreground/80 leading-relaxed italic">{feature}</span>
-                         </div>
-                       ))}
-                     </div>
-                   </div>
+                <div className="absolute top-0 right-0 p-10 opacity-5 pointer-events-none group-hover:scale-110 transition-transform">
+                  <Layers className="w-32 h-32 text-primary" />
+                </div>
 
-                   <div className="grid md:grid-cols-2 gap-10">
-                     <div className="space-y-6">
-                        <h3 className="text-base font-black tracking-tight text-foreground flex items-center gap-3">
-                           <Code className="w-5 h-5 text-primary" />
-                           Logic Stack
-                        </h3>
-                        <div className="flex flex-wrap gap-2">
-                          {project.technologies?.map((tech: string, index: number) => (
-                            <div key={index} className="px-5 py-2.5 rounded-xl bg-background shadow-inner border border-border/20 text-[10px] font-black uppercase tracking-widest hover:border-primary/30 transition-all">
-                               {tech}
-                            </div>
-                          ))}
-                        </div>
-                     </div>
-
-                     <div className="space-y-6">
-                        <h3 className="text-base font-black tracking-tight text-foreground flex items-center gap-3">
-                           <MonitorSmartphone className="w-5 h-5 text-primary" />
-                           Performance Vector
-                        </h3>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="p-4 rounded-xl bg-background/30 border border-border/20">
-                            <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Timeline</p>
-                            <p className="text-sm font-bold">{project.timeline || 'N/A'}</p>
+                <div className="space-y-10 relative z-10">
+                  <div>
+                    <h3 className="text-lg font-black tracking-tight text-foreground mb-6 flex items-center gap-3">
+                      <Activity className="w-6 h-6 text-primary" />
+                      Integrated Features
+                    </h3>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      {project.features?.map((feature: string, index: number) => (
+                        <div key={index} className="flex items-start gap-4 p-5 rounded-2xl bg-background/50 border border-border/20 group/item hover:border-primary/20 transition-all">
+                          <div className="w-8 h-8 rounded-lg bg-secondary/50 flex items-center justify-center text-primary shrink-0 group-item:scale-110 transition-transform">
+                            <Zap className="w-4 h-4" />
                           </div>
-                          <div className="p-4 rounded-xl bg-background/30 border border-border/20">
-                            <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Bracket</p>
-                            <p className="text-sm font-bold">{project.priceRange || 'N/A'}</p>
-                          </div>
+                          <span className="text-sm font-bold text-muted-foreground/80 leading-relaxed italic">{feature}</span>
                         </div>
-                     </div>
-                   </div>
+                      ))}
+                    </div>
+                  </div>
 
-                   <Button
-                     className="w-full h-20 rounded-[28px] bg-foreground text-background text-sm font-black uppercase tracking-widest shadow-2xl hover:scale-[1.02] active:scale-95 transition-all gap-4 flex items-center justify-center border-none"
-                     onClick={() => window.open(project.liveUrl, "_blank")}
-                   >
-                     <ExternalLink className="w-6 h-6" />
-                     Initialize Live Demo
-                     <div className="h-2 w-2 rounded-full bg-primary animate-pulse ml-2" />
-                   </Button>
-                 </div>
+                  <div className="grid md:grid-cols-2 gap-10">
+                    <div className="space-y-6">
+                      <h3 className="text-base font-black tracking-tight text-foreground flex items-center gap-3">
+                        <Code className="w-5 h-5 text-primary" />
+                        Logic Stack
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        {project.technologies?.map((tech: string, index: number) => (
+                          <div key={index} className="px-5 py-2.5 rounded-xl bg-background shadow-inner border border-border/20 text-[10px] font-black uppercase tracking-widest hover:border-primary/30 transition-all">
+                            {tech}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="space-y-6">
+                      <h3 className="text-base font-black tracking-tight text-foreground flex items-center gap-3">
+                        <MonitorSmartphone className="w-5 h-5 text-primary" />
+                        Performance Vector
+                      </h3>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="p-4 rounded-xl bg-background/30 border border-border/20">
+                          <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Timeline</p>
+                          <p className="text-sm font-bold">{project.timeline || 'N/A'}</p>
+                        </div>
+                        <div className="p-4 rounded-xl bg-background/30 border border-border/20">
+                          <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Bracket</p>
+                          <p className="text-sm font-bold">{project.priceRange || 'N/A'}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <Button
+                    className="w-full h-20 rounded-[28px] bg-foreground text-background text-sm font-black uppercase tracking-widest shadow-2xl hover:scale-[1.02] active:scale-95 transition-all gap-4 flex items-center justify-center border-none"
+                    onClick={() => window.open(project.liveUrl, "_blank")}
+                  >
+                    <ExternalLink className="w-6 h-6" />
+                    Initialize Live Demo
+                    <div className="h-2 w-2 rounded-full bg-primary animate-pulse ml-2" />
+                  </Button>
+                </div>
               </Card>
             </div>
 
             {/* Enquiry Form */}
             <aside className="lg:col-span-1">
-              <Card className="sticky top-32 p-8 rounded-[40px] bg-secondary/10 border-border/50 backdrop-blur-2xl relative overflow-hidden group">
+              <Card className="sticky top-6 p-6 rounded-[40px] bg-secondary/10 border-border/50 backdrop-blur-2xl relative overflow-hidden group">
                 <div className="absolute -top-12 -right-12 w-32 h-32 bg-primary/5 blur-[40px] rounded-full" />
-                
-                <header className="mb-10 text-center">
-                   <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mx-auto mb-6 transform group-hover:rotate-12 transition-transform">
-                      <MessageSquare className="w-7 h-7" />
-                   </div>
-                   <h2 className="text-xl font-black tracking-tighter text-foreground mb-3">Request Node</h2>
-                   <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest italic opacity-70">
-                      Configure your integration
-                   </p>
+
+                <header className="mb-2 text-center">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary mx-auto mb-2 transform group-hover:rotate-12 transition-transform">
+                    <MessageSquare className="w-5 h-5" />
+                  </div>
+                  <h2 className="text-base font-bold tracking-tight text-foreground mb-0.5">Send an Enquiry</h2>
+                  <p className="text-[11px] text-muted-foreground">We'll reply within 24 hours</p>
                 </header>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-3">
                   <div className="space-y-2.5">
                     <Label htmlFor="name" className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-60">Architect Name</Label>
                     <Input
@@ -470,12 +468,12 @@ const ProjectDetail = () => {
                     />
                   </div>
 
-                   {submitError && (
+                  {submitError && (
                     <div className="p-4 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-[10px] font-black uppercase tracking-widest italic animate-shake">
                       <p className="mb-3">Transmition failed. Secure relay node unreachable.</p>
-                      <Button 
+                      <Button
                         type="button"
-                        variant="outline" 
+                        variant="outline"
                         className="w-full border-destructive/50 hover:bg-destructive hover:text-white transition-all h-12"
                         onClick={() => window.location.href = getMailtoLink()}
                       >
@@ -488,10 +486,10 @@ const ProjectDetail = () => {
                     Authorize Request
                   </Button>
                 </form>
-                
+
                 <div className="mt-8 pt-6 border-t border-border/20 flex items-center justify-center gap-3">
-                   <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                   <p className="text-[10px] font-black uppercase tracking-widest opacity-40 italic">Global Sync Active</p>
+                  <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                  <p className="text-[10px] font-black uppercase tracking-widest opacity-40 italic">Global Sync Active</p>
                 </div>
               </Card>
             </aside>
