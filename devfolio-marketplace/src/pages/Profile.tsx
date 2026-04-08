@@ -22,24 +22,13 @@ import { AppSidebar } from "@/components/layout/AppSidebar";
 import { cn } from "@/lib/utils";
 import SEO from "@/components/layout/SEO";
 
+import { OnboardingForm } from "@/components/forms/OnboardingForm";
+
 const Profile = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
-
-  const [onboardingForm, setOnboardingForm] = useState<OnboardingRequest>({
-    experience: "",
-    portfolio: "",
-    reason: "",
-    availability: "",
-    projectName: "",
-    projectDescription: "",
-    requirements: "",
-    timeline: "",
-    budget: ""
-  });
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -66,40 +55,6 @@ const Profile = () => {
 
     return () => clearInterval(intervalId);
   }, [navigate]);
-
-  const handleOnboardingSubmit = async () => {
-    if (!onboardingForm.projectName || !onboardingForm.projectDescription || !onboardingForm.requirements) {
-      toast.error("Please fill in all required fields");
-      return;
-    }
-
-    setIsSubmitting(true);
-    try {
-      const requestData = {
-        ...onboardingForm,
-        clientName: user?.username || "",
-        email: user?.email || "",
-        phone: user?.phone || ""
-      };
-      
-      const response = await userAPI.submitOnboardingRequest(requestData);
-      
-      if (response && response.data) {
-        toast.success("Project onboarding request submitted successfully!");
-        setIsOnboardingOpen(false);
-        setOnboardingForm({
-          experience: "", portfolio: "", reason: "", availability: "",
-          projectName: "", projectDescription: "", requirements: "",
-          timeline: "", budget: ""
-        });
-      }
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || error.message || "Failed to submit request";
-      toast.error(errorMessage);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   if (isLoading) {
     return (
@@ -263,70 +218,7 @@ const Profile = () => {
                       isOnboardingOpen ? "max-h-[2000px] opacity-100 pb-10 md:pb-12" : "max-h-0 opacity-0 pointer-events-none"
                     )}
                   >
-                    <div className="grid md:grid-cols-2 gap-8">
-                      <div className="space-y-2.5">
-                        <Label htmlFor="projectName" className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-60">Asset Identifier (Name)</Label>
-                        <Input
-                          id="projectName"
-                          className="h-14 rounded-2xl bg-background border-border/50 focus:border-primary/50 font-bold px-5"
-                          value={onboardingForm.projectName}
-                          onChange={(e) => setOnboardingForm({ ...onboardingForm, projectName: e.target.value })}
-                          placeholder="Ex. Quantum Architecture"
-                        />
-                      </div>
-                      <div className="space-y-2.5">
-                        <Label htmlFor="timeline" className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-60">Deployment Velocity</Label>
-                        <Input
-                          id="timeline"
-                          className="h-14 rounded-2xl bg-background border-border/50 focus:border-primary/50 font-bold px-5"
-                          value={onboardingForm.timeline}
-                          onChange={(e) => setOnboardingForm({ ...onboardingForm, timeline: e.target.value })}
-                          placeholder="e.g., Immediate Sync"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-2.5">
-                      <Label htmlFor="projectDescription" className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-60">System Summary</Label>
-                      <Textarea
-                        id="projectDescription"
-                        className="rounded-2xl bg-background border-border/50 focus:border-primary/50 font-medium p-5 min-h-[120px]"
-                        value={onboardingForm.projectDescription}
-                        onChange={(e) => setOnboardingForm({ ...onboardingForm, projectDescription: e.target.value })}
-                        placeholder="Define the structural scope..."
-                      />
-                    </div>
-
-                    <div className="space-y-2.5">
-                      <Label htmlFor="requirements" className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-60">Module Dependencies</Label>
-                      <Textarea
-                        id="requirements"
-                        className="rounded-2xl bg-background border-border/50 focus:border-primary/50 font-medium p-5 min-h-[120px]"
-                        value={onboardingForm.requirements}
-                        onChange={(e) => setOnboardingForm({ ...onboardingForm, requirements: e.target.value })}
-                        placeholder="List critical requirements..."
-                      />
-                    </div>
-
-                    <div className="flex flex-col sm:flex-row items-center gap-6 pt-4">
-                      <div className="flex-1 space-y-2.5 w-full">
-                        <Label htmlFor="budget" className="text-[10px] font-black uppercase tracking-widest ml-1 opacity-60">Value Quantifier</Label>
-                        <Input
-                          id="budget"
-                          className="h-14 rounded-2xl bg-background border-border/50 focus:border-primary/50 font-bold px-5"
-                          value={onboardingForm.budget}
-                          onChange={(e) => setOnboardingForm({ ...onboardingForm, budget: e.target.value })}
-                          placeholder="Enter value bracket"
-                        />
-                      </div>
-                      <Button
-                        onClick={handleOnboardingSubmit}
-                        disabled={isSubmitting}
-                        className="h-20 px-12 rounded-3xl bg-primary text-primary-foreground font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all w-full sm:w-auto"
-                      >
-                        {isSubmitting ? "Processing..." : "Authorize Module Deployment"}
-                      </Button>
-                    </div>
+                    <OnboardingForm user={user} onSuccess={() => setIsOnboardingOpen(false)} />
                   </CardContent>
                </Card>
             </div>

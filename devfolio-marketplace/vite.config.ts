@@ -27,11 +27,6 @@ export default defineConfig(({ mode }) => ({
             "./src/components/sections/TestimonialsSection.tsx"
           ],
           "ui-core": ["lucide-react", "sonner", "embla-carousel-react"],
-          "ui-base": [
-            "./src/components/ui/button.tsx",
-            "./src/components/ui/card.tsx",
-            "./src/components/ui/dialog.tsx"
-          ]
         },
       },
     },
