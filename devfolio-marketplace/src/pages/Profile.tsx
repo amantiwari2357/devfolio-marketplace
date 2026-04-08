@@ -17,6 +17,8 @@ import {
   ShieldCheck, Zap, Layers, Rocket
 } from "lucide-react";
 import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import { AppSidebar } from "@/components/layout/AppSidebar";
 import { cn } from "@/lib/utils";
 import SEO from "@/components/layout/SEO";
 
@@ -46,7 +48,7 @@ const Profile = () => {
         setUser(response.data.user);
       } catch (error) {
         toast.error("Failed to load profile");
-        navigate("/login");
+        navigate("/login/");
       } finally {
         setIsLoading(false);
       }
@@ -115,22 +117,25 @@ const Profile = () => {
       <SEO title="Architect Profile" description="Authorized view of the senior technical architect profile and active showcase nodes." />
       <Header />
       
-      <main className="pt-32 pb-32 relative overflow-hidden">
-        {/* Background Accents */}
-        <div className="absolute top-0 right-0 -z-10 w-1/2 h-1/2 bg-primary/2 opacity-30 blur-[150px] rounded-full" />
-        <div className="absolute bottom-0 left-0 -z-10 w-1/3 h-1/3 bg-secondary/5 opacity-20 blur-[120px] rounded-full" />
+      <div className="flex min-h-screen relative pt-20">
+        <AppSidebar activePath="/profile" />
         
-        <div className="container mx-auto px-6 max-w-5xl">
-          <div className="space-y-10">
+        <main className="flex-1 relative overflow-hidden pb-20">
+          {/* Background Accents */}
+          <div className="absolute top-0 right-0 -z-10 w-1/2 h-1/2 bg-primary/2 opacity-30 blur-[150px] rounded-full" />
+          <div className="absolute bottom-0 left-0 -z-10 w-1/3 h-1/3 bg-secondary/5 opacity-20 blur-[120px] rounded-full" />
+          
+          <div className="p-4 md:p-6 lg:p-10">
+            <div className="max-w-5xl mx-auto space-y-10">
             {/* Profile Header Engine */}
-            <Card className="rounded-[40px] bg-secondary/10 border-border/50 p-10 backdrop-blur-2xl relative overflow-hidden group">
+            <Card className="rounded-[40px] bg-secondary/10 border-border/50 p-6 md:p-10 backdrop-blur-2xl relative overflow-hidden group">
                <div className="absolute top-0 right-0 p-10 opacity-5 pointer-events-none group-hover:scale-110 transition-transform">
                   <ShieldCheck className="w-40 h-40 text-primary" />
                </div>
                
-               <div className="flex flex-col md:flex-row items-center md:items-start gap-12 relative z-10">
+               <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 relative z-10">
                   <div className="shrink-0 relative group/avatar">
-                     <div className="w-44 h-44 rounded-[40px] overflow-hidden bg-gradient-to-br from-primary/20 to-primary/5 p-1 backdrop-blur-md border border-border/20 shadow-2xl relative">
+                     <div className="w-32 h-32 md:w-44 md:h-44 rounded-[32px] md:rounded-[40px] overflow-hidden bg-gradient-to-br from-primary/20 to-primary/5 p-1 backdrop-blur-md border border-border/20 shadow-2xl relative">
                         {(user as any)?.imageUrl ? (
                           <img
                             src={(user as any).imageUrl}
@@ -139,8 +144,8 @@ const Profile = () => {
                             fetchPriority="high"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center bg-secondary/50 rounded-[36px]">
-                             <span className="text-6xl font-black text-primary/40 italic">
+                          <div className="w-full h-full flex items-center justify-center bg-secondary/50 rounded-[28px] md:rounded-[36px]">
+                             <span className="text-4xl md:text-6xl font-black text-primary/40 italic">
                                 {user?.username?.charAt(0).toUpperCase()}
                              </span>
                           </div>
@@ -160,10 +165,10 @@ const Profile = () => {
                            </span>
                            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground opacity-60">ID: {user?._id?.slice(-8).toUpperCase()}</span>
                         </div>
-                        <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
-                           {user?.username}
+                        <h1 className="text-3xl md:text-5xl font-black tracking-tighter text-foreground leading-none italic lowercase">
+                           {user?.username}<span className="text-primary not-italic">.</span>
                         </h1>
-                        <p className="text-base md:text-lg font-medium text-muted-foreground max-w-xl mx-auto md:mx-0 leading-relaxed">
+                        <p className="text-sm md:text-lg font-bold italic text-muted-foreground/60 max-w-xl mx-auto md:mx-0 leading-relaxed tracking-tight">
                            {user?.bio || "No biography provided. Community member at Devfolio."}
                         </p>
                      </div>
@@ -189,7 +194,7 @@ const Profile = () => {
 
                      <div className="flex flex-wrap justify-center md:justify-start gap-3">
                         <Button
-                           onClick={() => navigate("/settings")}
+                           onClick={() => navigate("/settings/")}
                            className="h-12 px-8 rounded-2xl bg-foreground text-background font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all gap-3"
                         >
                            <Edit className="w-4 h-4" />
@@ -206,13 +211,13 @@ const Profile = () => {
 
             <div className="grid md:grid-cols-3 gap-10">
                {/* Expertise Segment */}
-               <Card className="md:col-span-1 rounded-[40px] bg-secondary/10 border-border/50 p-8">
-                  <header className="mb-8">
-                     <h3 className="text-xl font-black tracking-tight text-foreground flex items-center gap-3">
-                        <Layers className="w-5 h-5 text-primary" />
-                        Technological Stack
-                     </h3>
-                  </header>
+                <Card className="md:col-span-1 rounded-[40px] bg-secondary/10 border-border/50 p-6 md:p-8">
+                   <header className="mb-6 md:mb-8">
+                      <h3 className="text-lg md:text-xl font-black tracking-tight text-foreground flex items-center gap-3 italic uppercase">
+                         <Layers className="w-5 h-5 text-primary" />
+                         Stack Core
+                      </h3>
+                   </header>
                   <div className="flex flex-wrap gap-2.5">
                      {user?.expertise && user.expertise.length > 0 ? (
                        user.expertise.map((item) => (
@@ -232,14 +237,14 @@ const Profile = () => {
                      <Sparkles className="w-32 h-32 text-primary" />
                   </div>
                   
-                  <CardHeader className="p-8 flex flex-col sm:flex-row items-center justify-between gap-6 relative z-10">
+                  <CardHeader className="p-6 md:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 relative z-10">
                     <div className="space-y-2 text-center sm:text-left">
-                      <CardTitle className="text-2xl font-black tracking-tight flex items-center justify-center sm:justify-start gap-3">
+                      <CardTitle className="text-xl md:text-2xl font-black tracking-tight flex items-center justify-center sm:justify-start gap-3 italic uppercase">
                         <CheckCircle2 className="h-6 w-6 text-primary" />
-                        Asset Initialization
+                        Asset Launch
                       </CardTitle>
-                      <CardDescription className="text-sm font-medium text-muted-foreground italic leading-relaxed">
-                        Configure your project parameters to authorize directory deployment.
+                      <CardDescription className="text-xs md:text-sm font-bold text-muted-foreground italic leading-relaxed opacity-60">
+                        Configure project parameters for directory deployment.
                       </CardDescription>
                     </div>
                     <Button
@@ -254,8 +259,8 @@ const Profile = () => {
 
                   <CardContent
                     className={cn(
-                      "p-8 pt-0 space-y-8 overflow-hidden transition-all duration-700 relative z-10",
-                      isOnboardingOpen ? "max-h-[1500px] opacity-100 pb-12" : "max-h-0 opacity-0 pointer-events-none"
+                      "p-6 md:p-8 pt-0 space-y-6 md:space-y-8 overflow-hidden transition-all duration-700 relative z-10",
+                      isOnboardingOpen ? "max-h-[2000px] opacity-100 pb-10 md:pb-12" : "max-h-0 opacity-0 pointer-events-none"
                     )}
                   >
                     <div className="grid md:grid-cols-2 gap-8">
@@ -327,7 +332,9 @@ const Profile = () => {
             </div>
           </div>
         </div>
-      </main>
+        <Footer />
+        </main>
+      </div>
     </div>
   );
 };

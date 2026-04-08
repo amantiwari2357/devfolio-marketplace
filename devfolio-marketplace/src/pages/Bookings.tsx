@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 import api from "@/services/api";
 import SEO from "@/components/layout/SEO";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 
 const Bookings = () => {
@@ -56,12 +58,14 @@ const Bookings = () => {
   return (
     <div className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground">
       <SEO title="Temporal Log | Bookings" description="Centralized schedule of expert session epochs and authorized consultations." />
+      <Header />
       
-      <div className="flex h-screen overflow-hidden relative">
+      <div className="flex min-h-screen relative pt-20">
         <AppSidebar activePath="/bookings" />
 
         {/* Main Schedule Core */}
-        <main className="flex-1 overflow-y-auto p-6 md:p-16 bg-background relative selection:bg-primary selection:text-primary-foreground pt-24 md:pt-16">
+        <main className="flex-1 bg-background relative selection:bg-primary selection:text-primary-foreground">
+          <div className="p-6 md:p-16">
           {/* Background blurs */}
           <div className="absolute top-0 right-0 -z-10 w-2/3 h-2/3 bg-primary/2 opacity-30 blur-[180px] rounded-full animate-pulse" />
           
@@ -110,7 +114,7 @@ const Bookings = () => {
             ) : (
               <div className="grid grid-cols-1 gap-8 md:gap-12 animate-slide-up" style={{ animationDelay: '100ms' }}>
                 {bookings.map((booking: any) => (
-                  <Card key={booking.id} className="neural-card p-8 md:p-12 hover:border-primary/40 transition-all duration-1000 hover:shadow-[0_40px_100px_-20px_rgba(var(--primary-rgb),.1)] group relative overflow-hidden shadow-2xl">
+                  <Card key={booking.id} className="neural-card p-6 md:p-12 hover:border-primary/40 transition-all duration-1000 hover:shadow-[0_40px_100px_-20px_rgba(var(--primary-rgb),.1)] group relative overflow-hidden shadow-2xl">
                     <div className="absolute top-0 right-0 p-12 opacity-0 group-hover:opacity-10 transition-all duration-700 translate-y-[-20px] group-hover:translate-y-0">
                        <Zap className="w-20 h-20 text-primary" />
                     </div>
@@ -209,6 +213,8 @@ const Bookings = () => {
               </div>
             )}
           </div>
+        </div>
+        <Footer />
         </main>
       </div>
     </div>

@@ -437,7 +437,7 @@ const Listing = () => {
                   Start Now
                 </Button>
                 <Button size="lg" variant="outline" className="h-14 px-10 rounded-xl border-border/40 bg-secondary/10 text-base font-bold hover:bg-secondary/20 transition-all shadow-sm" asChild>
-                  <Link to="/explore">
+                  <Link to="/explore/">
                     Discover Network
                   </Link>
                 </Button>

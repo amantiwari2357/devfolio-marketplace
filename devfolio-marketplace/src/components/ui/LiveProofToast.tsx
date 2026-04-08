@@ -58,6 +58,7 @@ export function LiveProofToast() {
       <div className="bg-background/80 backdrop-blur-xl border border-border/40 shadow-2xl rounded-2xl p-4 flex items-start gap-4 pr-10 relative max-w-[300px] group">
         <button 
           onClick={() => setIsDismissed(true)}
+          aria-label="Dismiss Notification"
           className="absolute top-3 right-3 text-muted-foreground/50 hover:text-foreground transition-colors opacity-0 md:opacity-100 md:group-hover:opacity-100"
         >
           <X className="w-4 h-4" />

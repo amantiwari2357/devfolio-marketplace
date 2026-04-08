@@ -50,4 +50,9 @@ const projectSchema = new mongoose.Schema({
   timestamps: true
 });
 
+// Index for better query performance
+projectSchema.index({ category: 1 });
+projectSchema.index({ pricing: 1 });
+projectSchema.index({ createdAt: -1 });
+
 module.exports = mongoose.model('Project', projectSchema);

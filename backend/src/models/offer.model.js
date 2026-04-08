@@ -34,4 +34,9 @@ const offerSchema = new mongoose.Schema({
   }
 });
 
+// Index for better query performance
+offerSchema.index({ isActive: 1 });
+offerSchema.index({ category: 1 });
+offerSchema.index({ createdAt: -1 });
+
 module.exports = mongoose.model('Offer', offerSchema);

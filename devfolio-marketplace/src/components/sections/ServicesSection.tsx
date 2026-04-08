@@ -107,7 +107,9 @@ const ServicesSection = () => {
 
   const handleBookNow = async () => {
     if (!selectedDateObj || !selectedTime) {
-      toast.error("Please select both date and time");
+      toast.error("Please select a date and time", {
+        description: "Pick a date from the calendar and choose your preferred time slot."
+      });
       return;
     }
 
@@ -125,15 +127,22 @@ const ServicesSection = () => {
       const result = await api.post("/availabilities", bookingData);
 
       if (result.data.success) {
-        toast.success("Strategic connection established!");
+        toast.success("Consultation booked successfully! ✅", {
+          description: `Scheduled for ${selectedDateObj.toLocaleDateString("en-IN", { day: "numeric", month: "short" })} at ${selectedTime}. We'll confirm via email.`
+        });
         setSelectedDateObj(null);
         setSelectedTime(null);
       } else {
-        toast.error("Link failure: " + result.data.message);
+        toast.error("Booking failed", {
+          description: result.data.message || "This slot may no longer be available. Please try another time."
+        });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error booking:", error);
-      toast.error("Protocol error. Please retry synchronization.");
+      const serverMsg = error?.response?.data?.message;
+      toast.error(serverMsg || "Unable to book consultation", {
+        description: "Please check your connection and try again."
+      });
     }
   };
 
@@ -181,7 +190,7 @@ const ServicesSection = () => {
                     <Zap className="w-6 h-6 md:w-8 md:h-8" />
                   </div>
                   <div>
-                    <h4 className="text-lg md:text-xl font-bold tracking-tight text-foreground leading-tight">Book Consultation</h4>
+                    <h3 className="text-lg md:text-xl font-bold tracking-tight text-foreground leading-tight">Book Consultation</h3>
                     <p className="text-xs md:text-sm font-medium text-muted-foreground mt-1">
                       Discuss your project roadmap
                     </p>
@@ -193,10 +202,10 @@ const ServicesSection = () => {
                     <Button variant="outline" size="sm" onClick={handlePrevMonth} className="font-semibold text-xs shrink-0 px-3 bg-background border-border/40 text-foreground hover:bg-secondary/40 active:scale-95 transition-all">
                       Prev
                     </Button>
-                    <h3 className="text-sm md:text-base font-bold text-foreground text-center truncate">
+                    <h4 className="text-sm md:text-base font-bold text-foreground text-center truncate">
                       {monthNames[currentMonth.getMonth()]}{" "}
                       {currentMonth.getFullYear()}
-                    </h3>
+                    </h4>
                     <Button variant="outline" size="sm" onClick={handleNextMonth} className="font-semibold text-xs shrink-0 px-3 bg-background border-border/40 text-foreground hover:bg-secondary/40 active:scale-95 transition-all">
                       Next
                     </Button>

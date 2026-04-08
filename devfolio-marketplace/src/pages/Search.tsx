@@ -3,7 +3,7 @@ import Footer from "@/components/layout/Footer";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Search as SearchIcon, Filter, Rocket, Sparkles, Activity, Layers, Command } from "lucide-react";
+import { Search as SearchIcon, Filter, Rocket, Sparkles, Activity, Layers, Command, ArrowLeft } from "lucide-react";
 import ProjectCard from "@/components/cards/ProjectCard";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -101,6 +101,17 @@ const Search = () => {
         <div className="absolute bottom-0 left-0 -z-10 w-1/3 h-1/3 bg-secondary/2 opacity-20 blur-[120px] rounded-full" />
         
         <div className="container mx-auto px-6 max-w-[1400px]">
+          {/* Back Button */}
+          <button
+            onClick={() => navigate(-1)}
+            className="mb-8 flex items-center gap-2 text-muted-foreground hover:text-foreground transition-all group"
+          >
+            <span className="w-10 h-10 rounded-xl bg-secondary/10 border border-border/40 flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all shadow-sm">
+              <ArrowLeft className="w-5 h-5" />
+            </span>
+            <span className="text-xs font-bold uppercase tracking-widest hidden md:inline">Back</span>
+          </button>
+
           <div className="max-w-4xl mx-auto mb-20 text-center space-y-6">
             <div className="flex items-center justify-center gap-2 mb-4 animate-fade-in">
                <span className="px-4 py-2 rounded-full bg-secondary/10 border border-border/40 text-xs font-semibold text-muted-foreground flex items-center gap-2 shadow-sm">

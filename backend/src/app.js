@@ -17,13 +17,14 @@ const allowedOrigins = [
   "http://localhost:8082",
   "http://localhost:3000",
   "https://devfolio-marketplace-seven.vercel.app",
-  "devfolio-marketplace-acy2.vercel.app",
   "https://devfolio-marketplace-acy2.vercel.app",
-  "https://devfolio-marketplace-5i6k-mbfsocci2.vercel.app",
   "https://devfolio-marketplace-5i6k.vercel.app",
   "https://devfolio-marketplace-1.onrender.com",
   process.env.CORS_ORIGIN
 ].filter(Boolean);
+
+// Regex to match all Vercel preview/production deployments for this project
+const vercelPattern = /^https:\/\/devfolio-marketplace.*\.vercel\.app$/;
 
 // CORS Setup
 app.use(
@@ -32,7 +33,7 @@ app.use(
       // Allow requests with no origin (Postman, mobile apps)
       if (!origin) return callback(null, true);
 
-      if (allowedOrigins.includes(origin)) {
+      if (allowedOrigins.includes(origin) || vercelPattern.test(origin)) {
         callback(null, true);
       } else {
         console.error("❌ Blocked by CORS:", origin);
@@ -50,7 +51,7 @@ app.options("*", (req, res) => {
   const origin = req.headers.origin;
   
   // Set origin header if it's in allowed list
-  if (allowedOrigins.includes(origin)) {
+  if (allowedOrigins.includes(origin) || vercelPattern.test(origin)) {
     res.header("Access-Control-Allow-Origin", origin);
   }
   

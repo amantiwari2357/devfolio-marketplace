@@ -158,7 +158,7 @@ const Testimonials = () => {
   const getStatusBadge = (isActive: boolean) => {
     return (
       <Badge variant={isActive ? "default" : "secondary"}>
-        {isActive ? "Active" : "Inactive"}
+        {isActive ? "Active" : "Pending"}
       </Badge>
     );
   };
@@ -281,7 +281,7 @@ const Testimonials = () => {
 
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Inactive</CardTitle>
+                  <CardTitle className="text-sm font-medium">Pending</CardTitle>
                   <EyeOff className="h-4 w-4 text-chart-2" />
                 </CardHeader>
                 <CardContent>

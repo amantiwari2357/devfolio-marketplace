@@ -21,6 +21,12 @@ export default defineConfig(({ mode }) => ({
         manualChunks: {
           vendor: ["react", "react-dom", "react-router-dom", "@tanstack/react-query"],
           ui: ["lucide-react", "sonner", "embla-carousel-react"],
+          "ui-components": [
+            "./src/components/ui/button.tsx",
+            "./src/components/ui/card.tsx",
+            "./src/components/ui/dialog.tsx",
+            "./src/components/ui/input.tsx"
+          ]
         },
       },
     },

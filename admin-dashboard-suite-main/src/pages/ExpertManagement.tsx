@@ -213,7 +213,8 @@ const ExpertManagement = () => {
       }
 
       if (!response.ok) {
-        throw new Error('Failed to save expert');
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || 'Failed to save expert');
       }
 
       const data = await response.json();
@@ -222,7 +223,7 @@ const ExpertManagement = () => {
       fetchExperts(); // Refresh the list
     } catch (error) {
       console.error('Error saving expert:', error);
-      toast.error('Failed to save expert');
+      toast.error(error instanceof Error ? error.message : 'Failed to save expert');
     } finally {
       setLoading(false);
     }

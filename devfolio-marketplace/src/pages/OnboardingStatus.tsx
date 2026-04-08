@@ -159,7 +159,7 @@ const OnboardingStatusPage = () => {
                 </div>
                 <div className="flex justify-center gap-4 pt-4">
                   <Button 
-                    onClick={() => navigate("/profile")}
+                    onClick={() => navigate("/profile/")}
                     className="rounded-xl px-8 py-6 font-black bg-primary text-primary-foreground hover:scale-105 transition-all"
                   >
                     Set Up Profile
