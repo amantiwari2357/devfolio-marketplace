@@ -16,6 +16,8 @@ import {
 import api from "@/services/api";
 import { connectSocket, getSocket } from "@/services/socket";
 import SEO from "@/components/layout/SEO";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 
 type NullableTimeout = ReturnType<typeof setTimeout> | null;
@@ -155,12 +157,14 @@ const Settings = () => {
   return (
     <div className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground">
       <SEO title="System Protocol | Config" description="Manage your architect identity, security layers, and operational parameters within the DEVFOLIO network." />
+      <Header />
       
-      <div className="flex h-screen overflow-hidden relative">
+      <div className="flex min-h-screen relative pt-20">
         <AppSidebar activePath="/settings" />
 
         {/* Main Interface Core */}
-        <main className="flex-1 overflow-y-auto p-6 md:p-16 bg-background relative selection:bg-primary selection:text-primary-foreground pt-24 md:pt-16">
+        <main className="flex-1 bg-background relative selection:bg-primary selection:text-primary-foreground">
+          <div className="p-6 md:p-16">
           {/* Background blurs */}
           <div className="absolute top-0 right-0 -z-10 w-2/3 h-2/3 bg-primary/2 opacity-30 blur-[180px] rounded-full animate-pulse" />
           
@@ -438,6 +442,8 @@ const Settings = () => {
               </TabsContent>
             </Tabs>
           </div>
+        </div>
+        <Footer />
         </main>
       </div>
     </div>
