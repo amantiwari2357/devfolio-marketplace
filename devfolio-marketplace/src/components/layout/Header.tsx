@@ -81,7 +81,7 @@ const Header = () => {
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-8">
             <a href="/" className="flex items-center gap-2">
-              <img src={logo} alt="Devfolio Logo" className="h-36 w-auto" />
+              <img src={logo} alt="Devfolio Logo" width={144} height={144} className="h-36 w-auto" />
             </a>
           </div>
           <div className="w-20 h-8 bg-muted animate-pulse rounded"></div>
@@ -95,7 +95,7 @@ const Header = () => {
       <div className="container mx-auto px-4 h-20 flex items-center justify-between gap-4">
         <div className="flex items-center gap-12">
           <a href="/" className="flex items-center gap-4 group">
-            <img src={logo} alt="Devfolio Logo" className="h-32 md:h-40 w-auto group-hover:scale-105 transition-transform duration-300" />
+            <img src={logo} alt="Devfolio Logo" width={160} height={160} className="h-32 md:h-40 w-auto group-hover:scale-105 transition-transform duration-300" />
           </a>
 
           <nav className="hidden md:flex items-center gap-10">
@@ -125,7 +125,7 @@ const Header = () => {
 
         {/* Mobile Search & Menu Actions (Visible only on mobile/tablet) */}
         <div className="flex items-center justify-end gap-2 md:hidden">
-          <Button variant="ghost" size="icon" onClick={() => setShowMobileSearch(true)} className="rounded-xl w-10 h-10 hover:bg-secondary/20">
+          <Button variant="ghost" size="icon" aria-label="Search" onClick={() => setShowMobileSearch(true)} className="rounded-xl w-10 h-10 hover:bg-secondary/20">
              <Search className="w-5 h-5 text-primary" />
           </Button>
         </div>
@@ -153,6 +153,7 @@ const Header = () => {
                 <Button
                   variant="ghost"
                   size="icon"
+                  aria-label="User Menu"
                   className="relative rounded-full w-10 h-10 from-primary/10 to-primary-glow/10 hover:from-primary/20 hover:to-primary-glow/20 border border-primary/20 transition-all duration-300 shadow-lg shadow-primary/5"
                 >
                   <Avatar>
@@ -207,14 +208,14 @@ const Header = () => {
           <div className="md:hidden ml-1">
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="outline" size="icon" className="rounded-xl border-primary/30 bg-primary/10 text-primary hover:bg-primary/20 shadow-md w-10 h-10 transition-all hover:scale-105 active:scale-95 animate-pulse-slow flex items-center justify-center p-0">
+                <Button variant="outline" size="icon" aria-label="Open Navigation Menu" className="rounded-xl border-primary/30 bg-primary/10 text-primary hover:bg-primary/20 shadow-md w-10 h-10 transition-all hover:scale-105 active:scale-95 animate-pulse-slow flex items-center justify-center p-0">
                    <Menu className="w-5 h-5 stroke-[2.5]" />
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-full sm:max-w-md bg-background/95 backdrop-blur-3xl border-l-border/40 p-8 pt-16 flex flex-col z-[100]">
                 <div className="space-y-8 flex-1">
                   <a href="/" className="flex items-center gap-2 mb-10">
-                    <img src={logo} alt="Devfolio Logo" className="h-24 w-auto drop-shadow-md" />
+                    <img src={logo} alt="Devfolio Logo" width={96} height={96} className="h-24 w-auto drop-shadow-md" />
                   </a>
 
                   <nav className="flex flex-col gap-6">

@@ -130,12 +130,12 @@ const ExpertsSection = () => {
   const renderExpertCard = (expert: Expert) => (
     <Dialog key={expert._id} open={isDialogOpen && selectedExpert?._id === expert._id} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <Card
+        <button
           onClick={() => setSelectedExpert(expert)}
-          className="group relative overflow-hidden rounded-[32px] bg-card border-border/60 shadow-md hover:border-primary/40 hover:shadow-xl transition-all duration-300 cursor-pointer p-0 flex flex-col h-full min-w-[280px] md:min-w-0"
+          className="group relative overflow-hidden rounded-[32px] bg-card border border-border/60 shadow-md hover:border-primary/40 hover:shadow-xl transition-all duration-300 cursor-pointer p-0 flex flex-col h-full min-w-[280px] md:min-w-0 text-left outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
         >
           {/* Profile Header */}
-          <div className="h-28 md:h-32 bg-secondary/40 relative overflow-hidden">
+          <div className="h-28 md:h-32 bg-secondary/40 relative w-full overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-50 group-hover:opacity-100 transition-opacity"></div>
             <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:rotate-12 transition-transform">
               <Star className="w-24 h-24 text-primary" />
@@ -143,7 +143,7 @@ const ExpertsSection = () => {
           </div>
 
           {/* Profile Content */}
-          <div className="px-6 md:px-8 pb-6 md:pb-8 -mt-12 relative z-10 flex flex-col flex-1">
+          <div className="px-6 md:px-8 pb-6 md:pb-8 -mt-12 relative z-10 flex flex-col flex-1 w-full">
             <div className="w-20 h-20 md:w-24 md:h-24 bg-primary text-primary-foreground rounded-2xl flex items-center justify-center text-3xl md:text-4xl font-bold mb-4 shadow-lg border-4 border-card group-hover:scale-105 transition-transform">
               {expert.firstName[0]}{expert.lastName[0]}
             </div>
@@ -164,7 +164,7 @@ const ExpertsSection = () => {
             </div>
 
             {/* Meta Info */}
-            <div className="grid grid-cols-2 gap-3 mb-6">
+            <div className="grid grid-cols-2 gap-3 mb-6 w-full">
               <div className="px-3 py-2.5 rounded-xl bg-secondary/30 border border-border/40">
                 <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-0.5">Region</p>
                 <p className="text-xs font-bold truncate">{expert.location || "Remote"}</p>
@@ -176,23 +176,26 @@ const ExpertsSection = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex gap-3 mt-auto">
-              <Button
-                className="flex-1 h-12 rounded-xl font-bold bg-foreground text-background shadow-md hover:shadow-lg group-hover:scale-[1.02] active:scale-95 transition-all text-xs md:text-sm border-none"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedExpert(expert);
-                  setIsDialogOpen(true);
-                }}
+            <div className="flex gap-3 mt-auto w-full">
+              <div
+                className="flex-1 h-12 rounded-xl font-bold bg-foreground text-background shadow-md hover:shadow-lg group-hover:scale-[1.02] active:scale-95 transition-all text-xs md:text-sm border-none flex items-center justify-center"
               >
                 Initiate Connect
-              </Button>
-              <Button variant="outline" size="icon" className="w-12 h-12 shrink-0 rounded-xl hover:bg-red-500 hover:text-white hover:border-none transition-all border-border/40 bg-secondary/20">
-                <Heart className="w-5 h-5 transition-transform active:scale-125" />
-              </Button>
+              </div>
+              <button 
+                type="button"
+                aria-label="Add to Favorites"
+                className="w-12 h-12 shrink-0 rounded-xl hover:bg-red-500 hover:text-white hover:border-none transition-all border border-border/40 bg-secondary/20 flex items-center justify-center group/heart"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  // Handle favorite logic
+                }}
+              >
+                <Heart className="w-5 h-5 transition-transform active:scale-125 group-active/heart:scale-125" />
+              </button>
             </div>
           </div>
-        </Card>
+        </button>
       </DialogTrigger>
 
       <DialogContent className="max-w-2xl p-0 overflow-hidden border-none rounded-3xl bg-background">

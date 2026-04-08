@@ -15,7 +15,7 @@ const Footer = () => {
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-6 group">
               <Link to="/" className="flex flex-col items-start gap-4">
-                <img src={logo} alt="Devfolio Logo" className="h-10 md:h-12 w-auto group-hover:scale-105 transition-transform duration-300" />
+                <img src={logo} alt="Devfolio Logo" width={48} height={48} className="h-10 md:h-12 w-auto group-hover:scale-105 transition-transform duration-300" />
               </Link>
             </div>
             
@@ -36,7 +36,7 @@ const Footer = () => {
           
           {/* Quick Links */}
           <div className="col-span-1">
-            <h4 className="font-semibold text-sm mb-5 text-foreground">System Node</h4>
+            <h3 className="font-semibold text-sm mb-5 text-foreground">System Node</h3>
             <nav className="space-y-3">
               {["Use Cases", "Search", "Listing", "Pricing"].map((item) => (
                 <Link 
@@ -53,7 +53,7 @@ const Footer = () => {
 
           {/* Company Links */}
           <div className="col-span-1">
-            <h4 className="font-semibold text-sm mb-5 text-foreground">Identity Flow</h4>
+            <h3 className="font-semibold text-sm mb-5 text-foreground">Identity Flow</h3>
             <nav className="space-y-3">
               {["About", "Blog", "Contact", "Terms", "Privacy"].map((item) => (
                 <Link 
@@ -73,7 +73,7 @@ const Footer = () => {
           
           {/* Contact & Socials */}
           <div className="col-span-2 md:col-span-1 pt-4 md:pt-0 border-t md:border-t-0 border-border/10 md:border-none">
-            <h4 className="font-semibold text-sm mb-5 text-foreground">Frequency Connect</h4>
+            <h3 className="font-semibold text-sm mb-5 text-foreground">Frequency Connect</h3>
             <div className="space-y-6">
               <p className="text-muted-foreground text-sm font-medium leading-relaxed">
                 GURGAON SECTOR 39, INDIA<br/>
@@ -83,15 +83,16 @@ const Footer = () => {
               
               <div className="flex gap-4">
                 {[
-                  { Icon: Linkedin, href: "https://www.linkedin.com/in/aman-tiwari-7a87323b4?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" },
-                  { Icon: Twitter, href: "https://x.com/amantiwari2357" },
-                  { Icon: Instagram, href: "https://www.instagram.com/amantiwari2357/" }
-                ].map(({ Icon, href }, idx) => (
+                  { Icon: Linkedin, href: "https://www.linkedin.com/in/aman-tiwari-7a87323b4?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app", label: "LinkedIn" },
+                  { Icon: Twitter, href: "https://x.com/amantiwari2357", label: "Twitter" },
+                  { Icon: Instagram, href: "https://www.instagram.com/amantiwari2357/", label: "Instagram" }
+                ].map(({ Icon, href, label }, idx) => (
                   <a 
                     key={idx}
                     href={href} 
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`${label} Profile`}
                     className="w-10 h-10 rounded-xl bg-secondary hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all shadow-sm group"
                   >
                     <Icon className="w-4 h-4 group-hover:scale-110 transition-transform" />

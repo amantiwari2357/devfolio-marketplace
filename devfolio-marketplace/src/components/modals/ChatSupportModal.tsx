@@ -188,7 +188,7 @@ export function ChatSupportModal() {
            <div className="flex-1 h-10 px-4 flex items-center rounded-lg bg-secondary/30 text-xs font-medium text-muted-foreground italic">
               Powered by Devfolio AI Support
            </div>
-           <Button disabled size="icon" className="h-10 w-10 rounded-lg">
+           <Button disabled size="icon" aria-label="Send Message" className="h-10 w-10 rounded-lg">
               <Send className="w-4 h-4" />
            </Button>
         </div>

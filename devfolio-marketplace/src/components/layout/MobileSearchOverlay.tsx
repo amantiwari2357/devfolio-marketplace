@@ -42,6 +42,7 @@ const MobileSearchOverlay = ({ isOpen, onClose }: MobileSearchOverlayProps) => {
           <Button 
              variant="ghost" 
              size="icon" 
+             aria-label="Close Search Overlay"
              onClick={onClose}
              className="h-12 w-12 rounded-xl bg-secondary/50 border border-border/50 shrink-0"
           >
