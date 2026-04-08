@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, MessageSquare, Phone, Send, Info, ShieldCheck, Zap, Activity, Globe, Fingerprint, ArrowRight } from "lucide-react";
 import SEO from "@/components/layout/SEO";
+import { ChatSupportModal } from "@/components/modals/ChatSupportModal";
 
 const Contact = () => {
   return (
@@ -35,9 +36,9 @@ const Contact = () => {
           {/* Quick Contact Protocol Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20 animate-slide-up" style={{ animationDelay: '100ms' }}>
             {[
-              { icon: <Mail className="w-6 h-6" />, title: "Email Support", sub: "Standard response in <12h", val: "support@devfoliomarketplace.com", href: "mailto:devfoliomarketplace@gmail.com" },
-              { icon: <MessageSquare className="w-6 h-6" />, title: "Live Chat", sub: "Priority access", action: "Start Chat" },
-              { icon: <Phone className="w-6 h-6" />, title: "Direct Hotline", sub: "Mon-Fri, 9AM to 6PM IST", val: "9031359720", href: "tel:9031359720" },
+              { id: 'email', icon: <Mail className="w-6 h-6" />, title: "Email Support", sub: "Standard response in <12h", val: "support@devfoliomarketplace.com", href: "mailto:devfoliomarketplace@gmail.com" },
+              { id: 'chat', icon: <MessageSquare className="w-6 h-6" />, title: "Live Chat", sub: "Priority access", isChat: true },
+              { id: 'phone', icon: <Phone className="w-6 h-6" />, title: "Direct Hotline", sub: "Mon-Fri, 9AM to 6PM IST", val: "9031359720", href: "tel:9031359720" },
             ].map((item, i) => (
               <Card key={i} className="neural-card p-8 md:p-10 text-center space-y-6 shadow-md relative overflow-hidden group">
                 <div className="mx-auto w-16 h-16 rounded-2xl bg-secondary/50 flex items-center justify-center text-primary mb-4 shadow-sm group-hover:scale-105 group-hover:rotate-6 transition-all">
@@ -48,10 +49,8 @@ const Contact = () => {
                   <p className="text-sm font-medium text-muted-foreground">{item.sub}</p>
                 </div>
                 <div className="pt-2">
-                  {item.action ? (
-                    <Button className="h-12 rounded-xl px-8 font-bold bg-primary text-primary-foreground hover:scale-[1.02] transition-all shadow-sm">
-                      {item.action}
-                    </Button>
+                  {item.isChat ? (
+                    <ChatSupportModal />
                   ) : (
                     <a href={item.href} className="text-base md:text-lg font-bold text-primary hover:underline transition-all block truncate">
                       {item.val}
