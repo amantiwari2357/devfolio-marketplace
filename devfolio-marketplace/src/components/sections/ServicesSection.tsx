@@ -274,11 +274,9 @@ const ServicesSection = () => {
                       <p className="text-sm font-medium text-muted-foreground leading-relaxed">
                         {service.description}
                       </p>
-                      <div className="pt-2">
-                        <Button variant="ghost" className="p-0 font-semibold text-xs md:text-sm text-primary hover:bg-transparent hover:text-primary/80 group">
-                          Explore Capability <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                        </Button>
-                      </div>
+                      <Button variant="ghost" className="p-0 mt-2 font-semibold text-xs md:text-sm text-primary hover:bg-transparent hover:text-primary/80 group">
+                        Explore Capability <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </Button>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
