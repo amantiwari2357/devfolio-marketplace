@@ -110,5 +110,8 @@ const userSchema = new mongoose.Schema({
 // Index for better query performance
 userSchema.index({ email: 1 });
 userSchema.index({ username: 1 });
+userSchema.index({ role: 1 });
+userSchema.index({ onboardingCompleted: 1 });
+userSchema.index({ createdAt: -1 });
 
 module.exports = mongoose.model('User', userSchema);

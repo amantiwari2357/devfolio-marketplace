@@ -49,4 +49,10 @@ const assignedOfferSchema = new mongoose.Schema({
   timestamps: true
 });
 
+// Index for better query performance
+assignedOfferSchema.index({ clientId: 1 });
+assignedOfferSchema.index({ offerId: 1 });
+assignedOfferSchema.index({ status: 1 });
+assignedOfferSchema.index({ createdAt: -1 });
+
 module.exports = mongoose.model('AssignedOffer', assignedOfferSchema);

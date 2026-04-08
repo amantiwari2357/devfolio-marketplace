@@ -65,4 +65,11 @@ const enquirySchema = new mongoose.Schema({
   timestamps: true
 });
 
+// Index for better query performance
+enquirySchema.index({ email: 1 });
+enquirySchema.index({ userId: 1 });
+enquirySchema.index({ expertId: 1 });
+enquirySchema.index({ status: 1 });
+enquirySchema.index({ createdAt: -1 });
+
 module.exports = mongoose.model('Enquiry', enquirySchema);

@@ -61,5 +61,8 @@ const expertSchema = new mongoose.Schema({
 // Index for better query performance
 expertSchema.index({ email: 1 });
 expertSchema.index({ firstName: 1, lastName: 1 });
+expertSchema.index({ role: 1 });
+expertSchema.index({ location: 1 });
+expertSchema.index({ rating: -1 });
 
 module.exports = mongoose.model('Expert', expertSchema);
