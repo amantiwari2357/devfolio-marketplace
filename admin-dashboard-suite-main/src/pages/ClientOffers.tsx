@@ -67,10 +67,17 @@ const ClientOffers = () => {
         </header>
         
         {/* Scrollable Content */}
-        <main className="flex-1 pt-24 pb-6 px-6 overflow-y-auto">
-          <div className="max-w-7xl mx-auto space-y-6">
-            {/* Stats */}
-            <StatsCards assignedOffers={clientOffers} />
+        <main className="flex-1 pt-24 pb-6 px-4 md:px-6 overflow-y-auto">
+          <div className="max-w-7xl mx-auto space-y-8 md:space-y-10">
+            {/* Header section with Stats */}
+            <div className="space-y-6">
+              <div className="px-1">
+                 <h1 className="text-xl md:text-3xl font-black tracking-tighter text-foreground italic uppercase">V_Node / Available Rewards</h1>
+                 <p className="text-[10px] md:text-xs font-bold text-muted-foreground/60 uppercase tracking-[0.2em] mt-1 shadow-sm">Your Personal Reward Synchronizer</p>
+              </div>
+              
+              <StatsCards assignedOffers={clientOffers} />
+            </div>
 
             {/* Filters */}
             <Filters
@@ -82,11 +89,11 @@ const ClientOffers = () => {
 
             {/* Offers Grid */}
             {filteredOffers.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground">No offers found matching your criteria.</p>
+              <div className="text-center py-12 text-muted-foreground font-bold uppercase tracking-widest text-[10px] italic">
+                Node Scan Result: Zero Matches Found
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {filteredOffers.map((assignedOffer) => (
                   <OfferCard
                     key={assignedOffer.id}
@@ -101,8 +108,8 @@ const ClientOffers = () => {
 
             {/* Activity Timeline for first active/used offer */}
             {clientOffers.length > 0 && (
-              <div className="mt-8">
-                <h2 className="text-xl font-semibold mb-4">Recent Activity</h2>
+              <div className="mt-8 md:mt-12">
+                <h2 className="text-sm md:text-lg font-black tracking-tighter text-foreground italic uppercase mb-6 px-1">Sequencer / Recent Activity</h2>
                 <ActivityTimeline assignedOffer={clientOffers[0]} />
               </div>
             )}

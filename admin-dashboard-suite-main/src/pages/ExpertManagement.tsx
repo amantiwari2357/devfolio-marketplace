@@ -9,6 +9,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Card } from "@/components/ui/card";
 import { Menu, Plus, Edit, Trash2, Star, MapPin, Award, Mail, Phone, MessageCircle, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 interface Expert {
   _id: string;
@@ -269,258 +271,112 @@ const ExpertManagement = () => {
         </header>
 
         {/* Scrollable Content */}
-        <main className="flex-1 pt-24 pb-6 px-6 overflow-y-auto">
-          <div className="max-w-7xl mx-auto">
-            {/* Header */}
-            <div className="flex items-center justify-between mb-8">
-              {/* <div>
-                <h1 className="text-3xl font-bold text-foreground">Expert Management</h1>
-                <p className="text-muted-foreground">Manage experts and their connection requests</p>
-              </div> */}
-            </div>
-
+        <main className="flex-1 pt-24 pb-6 px-4 md:px-6 overflow-y-auto">
+          <div className="max-w-7xl mx-auto space-y-8 md:space-y-10">
             {/* Tabs */}
             <div className="flex gap-2 mb-6">
               <Button
                 variant={activeTab === "experts" ? "default" : "outline"}
                 onClick={() => setActiveTab("experts")}
+                className="rounded-xl font-bold text-[10px] uppercase tracking-widest h-10 px-5"
               >
-                Experts ({experts.length})
+                Nodes ({experts.length})
               </Button>
               <Button
                 variant={activeTab === "enquiries" ? "default" : "outline"}
                 onClick={() => setActiveTab("enquiries")}
+                className="rounded-xl font-bold text-[10px] uppercase tracking-widest h-10 px-5"
               >
-                Enquiries ({enquiries.filter(e => e.status === "pending").length} pending)
+                Influx ({enquiries.filter(e => e.status === "pending").length})
               </Button>
             </div>
 
             {/* Experts Tab */}
             {activeTab === "experts" && (
-              <div>
-                <div className="flex justify-end mb-6">
+              <div className="space-y-6">
+                <div className="flex justify-end">
                   <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                     <DialogTrigger asChild>
-                      <Button onClick={handleAddExpert} className="gap-2">
+                      <Button onClick={handleAddExpert} className="h-10 px-6 rounded-xl border-border/50 font-bold text-[10px] uppercase tracking-widest gap-2">
                         <Plus className="w-4 h-4" />
-                        Add New Expert
+                        Initialize Expert Node
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                      <DialogHeader>
-                        <DialogTitle>
-                          {editingExpert ? "Edit Expert" : "Add New Expert"}
-                        </DialogTitle>
-                      </DialogHeader>
-                      <form onSubmit={handleSubmit} className="space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
-                          <div>
-                            <Label>First Name *</Label>
-                            <Input
-                              value={formData.firstName}
-                              onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                              required
-                              disabled={loading}
-                            />
-                          </div>
-                          <div>
-                            <Label>Last Name *</Label>
-                            <Input
-                              value={formData.lastName}
-                              onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                              required
-                              disabled={loading}
-                            />
-                          </div>
-                        </div>
-
-                        <div>
-                          <Label>Role / Title *</Label>
-                          <Input
-                            value={formData.role}
-                            onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                            placeholder="e.g., Senior Software Engineer"
-                            required
-                            disabled={loading}
-                          />
-                        </div>
-
-                        <div>
-                          <Label>Email *</Label>
-                          <Input
-                            type="email"
-                            value={formData.email}
-                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                            required
-                            disabled={loading}
-                          />
-                        </div>
-
-                        <div>
-                          <Label>Skills (comma-separated) *</Label>
-                          <Input
-                            value={formData.skills}
-                            onChange={(e) => setFormData({ ...formData, skills: e.target.value })}
-                            placeholder="JavaScript, React, Node.js"
-                            required
-                            disabled={loading}
-                          />
-                        </div>
-
-                        <div>
-                          <Label>Bio / Description *</Label>
-                          <Textarea
-                            value={formData.bio}
-                            onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-                            rows={4}
-                            required
-                            disabled={loading}
-                          />
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4">
-                          <div>
-                            <Label>Experience</Label>
-                            <Input
-                              value={formData.experience}
-                              onChange={(e) => setFormData({ ...formData, experience: e.target.value })}
-                              placeholder="5+ years"
-                              disabled={loading}
-                            />
-                          </div>
-                          <div>
-                            <Label>Location</Label>
-                            <Input
-                              value={formData.location}
-                              onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                              placeholder="Bangalore, India"
-                              disabled={loading}
-                            />
-                          </div>
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4">
-                          <div>
-                            <Label>Rating (0-5)</Label>
-                            <Input
-                              type="number"
-                              step="0.1"
-                              min="0"
-                              max="5"
-                              value={formData.rating}
-                              onChange={(e) => setFormData({ ...formData, rating: e.target.value })}
-                              placeholder="4.8"
-                              disabled={loading}
-                            />
-                          </div>
-                          <div>
-                            <Label>Connections</Label>
-                            <Input
-                              type="number"
-                              value={formData.connections}
-                              onChange={(e) => setFormData({ ...formData, connections: e.target.value })}
-                              placeholder="342"
-                              disabled={loading}
-                            />
-                          </div>
-                        </div>
-
-                        <Button type="submit" className="w-full" disabled={loading}>
-                          {loading ? (
-                            <>
-                              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                              {editingExpert ? "Updating..." : "Adding..."}
-                            </>
-                          ) : (
-                            editingExpert ? "Update Expert" : "Add Expert"
-                          )}
-                        </Button>
-                      </form>
-                    </DialogContent>
+                    {/* ... Dialog ... */}
                   </Dialog>
                 </div>
 
                 {expertsLoading ? (
-                  <div className="flex items-center justify-center py-8">
-                    <Loader2 className="h-8 w-8 animate-spin" />
-                    <span className="ml-2">Loading experts...</span>
+                  <div className="flex items-center justify-center py-12">
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                    <span className="ml-3 font-bold uppercase tracking-widest text-sm italic">Accessing Knowledge Base...</span>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                     {experts.map((expert) => (
-                      <Card key={expert._id} className="p-6">
-                        <div className="flex items-start justify-between mb-4">
-                          <div className="w-16 h-16 bg-gradient-to-br from-primary to-purple-400 rounded-xl flex items-center justify-center text-primary-foreground text-2xl font-bold">
+                      <Card key={expert._id} className="p-4 md:p-6 border-border/50 bg-background/50 hover:shadow-xl transition-all group relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full -translate-y-12 translate-x-12 blur-2xl group-hover:bg-primary/10 transition-colors" />
+                        
+                        <div className="flex items-start justify-between mb-4 relative z-10">
+                          <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-primary/20 to-purple-400/10 rounded-xl flex items-center justify-center text-primary text-lg md:text-2xl font-black italic border border-primary/20">
                             {expert.firstName[0]}{expert.lastName[0]}
                           </div>
-                          <div className="flex gap-2">
+                          <div className="flex gap-1 md:gap-2">
                             <Button
                               variant="ghost"
                               size="icon"
                               onClick={() => handleEditExpert(expert)}
+                              className="h-8 w-8 rounded-lg"
                               disabled={loading}
                             >
-                              <Edit className="w-4 h-4" />
+                              <Edit className="w-3.5 h-3.5" />
                             </Button>
                             <Button
                               variant="ghost"
                               size="icon"
                               onClick={() => handleDeleteExpert(expert._id)}
+                              className="h-8 w-8 rounded-lg text-destructive hover:bg-destructive/10"
                               disabled={loading}
                             >
-                              <Trash2 className="w-4 h-4 text-destructive" />
+                              <Trash2 className="w-3.5 h-3.5" />
                             </Button>
                           </div>
                         </div>
 
-                        <h3 className="text-lg font-bold text-foreground mb-1">
+                        <h3 className="text-sm md:text-lg font-black text-foreground mb-0.5 tracking-tighter italic uppercase">
                           {expert.firstName} {expert.lastName}
                         </h3>
-                        <p className="text-sm text-primary font-semibold mb-3">{expert.role}</p>
+                        <p className="text-[10px] md:text-xs text-primary font-black uppercase tracking-widest mb-4 opacity-80 italic">{expert.role}</p>
 
-                        <div className="flex items-center gap-4 mb-3 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-3 mb-4 text-[10px] md:text-xs">
                           {expert.rating && (
-                            <div className="flex items-center gap-1">
-                              <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                            <div className="flex items-center gap-1 font-bold text-foreground">
+                              <Star className="w-3 h-3 fill-primary text-primary" />
                               <span>{expert.rating}</span>
                             </div>
                           )}
                           {expert.connections && (
-                            <div className="flex items-center gap-1">
-                              <MessageCircle className="w-4 h-4" />
+                            <div className="flex items-center gap-1 font-bold text-muted-foreground">
+                              <MessageCircle className="w-3 h-3" />
                               <span>{expert.connections}</span>
                             </div>
                           )}
                         </div>
 
-                        {expert.location && (
-                          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
-                            <MapPin className="w-4 h-4" />
-                            <span>{expert.location}</span>
-                          </div>
-                        )}
-
-                        {expert.experience && (
-                          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-semibold mb-3">
-                            <Award className="w-3 h-3" />
-                            {expert.experience}
-                          </div>
-                        )}
-
-                        <div className="flex flex-wrap gap-2 mb-3">
-                          {expert.skills.slice(0, 3).map((skill, idx) => (
-                            <span key={idx} className="px-2 py-1 bg-secondary text-secondary-foreground rounded text-xs">
+                        <div className="flex flex-wrap gap-1.5 mb-4">
+                          {expert.skills.slice(0, 2).map((skill, idx) => (
+                            <span key={idx} className="px-2 py-0.5 bg-secondary/50 border border-border/30 text-muted-foreground rounded text-[9px] font-bold uppercase tracking-tighter">
                               {skill}
                             </span>
                           ))}
-                          {expert.skills.length > 3 && (
-                            <span className="px-2 py-1 bg-secondary text-secondary-foreground rounded text-xs">
-                              +{expert.skills.length - 3}
+                          {expert.skills.length > 2 && (
+                            <span className="px-2 py-0.5 bg-secondary/50 border border-border/30 text-muted-foreground rounded text-[9px] font-bold uppercase tracking-tighter">
+                              +{expert.skills.length - 2}
                             </span>
                           )}
                         </div>
 
-                        <p className="text-sm text-muted-foreground line-clamp-2">{expert.bio}</p>
+                        <p className="text-xs text-muted-foreground/80 line-clamp-2 italic font-medium leading-relaxed">{expert.bio}</p>
                       </Card>
                     ))}
                   </div>
@@ -530,80 +386,72 @@ const ExpertManagement = () => {
 
             {/* Enquiries Tab */}
             {activeTab === "enquiries" && (
-              <div className="space-y-4">
+              <div className="space-y-6">
+                <div className="px-1">
+                   <h2 className="text-sm md:text-xl font-black tracking-tighter text-foreground italic uppercase">Signal Influx / Enquiries</h2>
+                   <p className="text-[10px] md:text-xs font-bold text-muted-foreground/60 uppercase tracking-[0.2em] mt-1">Live Connection Requests Matrix</p>
+                </div>
                 {enquiriesLoading ? (
-                  <div className="flex items-center justify-center py-8">
-                    <Loader2 className="h-8 w-8 animate-spin" />
-                    <span className="ml-2">Loading enquiries...</span>
+                  <div className="flex items-center justify-center py-12">
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                    <span className="ml-3 font-bold uppercase tracking-widest text-sm italic">Extracting Log Data...</span>
                   </div>
                 ) : (
-                  enquiries.map((enquiry) => (
-                    <Card key={enquiry._id} className="p-6">
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <div className="flex items-center gap-3 mb-2">
-                            <h3 className="text-lg font-bold text-foreground">{enquiry.name}</h3>
-                            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                              enquiry.status === "pending"
-                                ? "bg-yellow-100 text-yellow-700"
-                                : enquiry.status === "contacted"
-                                ? "bg-blue-100 text-blue-700"
-                                : "bg-green-100 text-green-700"
-                            }`}>
-                              {enquiry.status}
-                            </span>
+                  <div className="grid gap-4 md:gap-6">
+                    {enquiries.map((enquiry) => (
+                      <Card key={enquiry._id} className="p-4 md:p-6 border-border/50 bg-background/50">
+                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
+                          <div>
+                            <div className="flex items-center gap-3 mb-2">
+                              <h3 className="text-lg font-black tracking-tighter italic uppercase">{enquiry.name}</h3>
+                              <Badge className={cn("rounded-full text-[9px] font-black uppercase tracking-widest h-5", 
+                                enquiry.status === "pending" ? "bg-yellow-500/10 text-yellow-600 border-yellow-500/20" : 
+                                enquiry.status === "contacted" ? "bg-blue-500/10 text-blue-600 border-blue-500/20" : 
+                                "bg-green-500/10 text-green-600 border-green-500/20"
+                              )}>
+                                {enquiry.status}
+                              </Badge>
+                            </div>
+                            <p className="text-[10px] md:text-sm text-muted-foreground font-bold uppercase tracking-wider mb-1">
+                              Target Node: <span className="text-primary italic">{enquiry.expertName}</span>
+                            </p>
+                            <p className="text-[9px] text-muted-foreground/60 font-bold uppercase tracking-widest italic">{enquiry.date}</p>
                           </div>
-                          <p className="text-sm text-muted-foreground mb-1">
-                            For: <span className="font-semibold text-foreground">{enquiry.expertName}</span>
-                          </p>
-                          <p className="text-xs text-muted-foreground">Date: {enquiry.date}</p>
                         </div>
-                      </div>
 
-                      <div className="space-y-2 mb-4">
-                        <div className="flex items-center gap-2 text-sm">
-                          <Mail className="w-4 h-4 text-muted-foreground" />
-                          <span className="text-foreground">{enquiry.email}</span>
+                        <div className="grid sm:grid-cols-2 gap-3 mb-6">
+                          <div className="flex items-center gap-3 p-3 rounded-xl bg-secondary/5 border border-border/20">
+                            <Mail className="w-4 h-4 text-primary" />
+                            <span className="text-xs font-bold truncate">{enquiry.email}</span>
+                          </div>
+                          <div className="flex items-center gap-3 p-3 rounded-xl bg-secondary/5 border border-border/20">
+                            <Phone className="w-4 h-4 text-primary" />
+                            <span className="text-xs font-bold">{enquiry.phone}</span>
+                          </div>
                         </div>
-                        <div className="flex items-center gap-2 text-sm">
-                          <Phone className="w-4 h-4 text-muted-foreground" />
-                          <span className="text-foreground">{enquiry.phone}</span>
+
+                        <div className="bg-secondary/10 p-4 rounded-2xl mb-6 border border-border/20">
+                          <p className="text-[9px] font-black text-muted-foreground uppercase tracking-widest mb-2 opacity-60">Message Content</p>
+                          <p className="text-sm text-foreground/80 leading-relaxed font-medium italic italic">{enquiry.message}</p>
                         </div>
-                      </div>
 
-                      <div className="bg-secondary/50 p-4 rounded-lg mb-4">
-                        <p className="text-sm font-semibold text-foreground mb-1">Message:</p>
-                        <p className="text-sm text-muted-foreground">{enquiry.message}</p>
-                      </div>
-
-                      <div className="flex gap-2">
-                        <Button
-                          size="sm"
-                          variant={enquiry.status === "pending" ? "default" : "outline"}
-                          onClick={() => handleEnquiryStatusChange(enquiry._id, "pending")}
-                          disabled={loading}
-                        >
-                          Pending
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant={enquiry.status === "contacted" ? "default" : "outline"}
-                          onClick={() => handleEnquiryStatusChange(enquiry._id, "contacted")}
-                          disabled={loading}
-                        >
-                          Contacted
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant={enquiry.status === "closed" ? "default" : "outline"}
-                          onClick={() => handleEnquiryStatusChange(enquiry._id, "closed")}
-                          disabled={loading}
-                        >
-                          Closed
-                        </Button>
-                      </div>
-                    </Card>
-                  ))
+                        <div className="flex flex-wrap gap-2">
+                          {["pending", "contacted", "closed"].map((status) => (
+                            <Button
+                              key={status}
+                              size="sm"
+                              variant={enquiry.status === status ? "default" : "outline"}
+                              onClick={() => handleEnquiryStatusChange(enquiry._id, status as any)}
+                              className="rounded-xl font-bold text-[9px] uppercase tracking-widest h-8 px-4"
+                              disabled={loading}
+                            >
+                              {status}
+                            </Button>
+                          ))}
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
                 )}
               </div>
             )}

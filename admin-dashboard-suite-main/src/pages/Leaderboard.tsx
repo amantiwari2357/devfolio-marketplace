@@ -105,53 +105,54 @@ const Leaderboard = () => {
           <DashboardHeader onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
         </header>
         {/* Scrollable Content */}
-        <main className="flex-1 pt-24 pb-6 px-6 overflow-y-auto">
-          <div className="max-w-6xl mx-auto space-y-6">
+        <main className="flex-1 pt-24 pb-6 px-4 md:px-6 overflow-y-auto">
+          <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
 
-            <div className="grid gap-4 md:grid-cols-3">
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Total Bookings</CardTitle>
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <Card className="border-border/50 shadow-sm">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                  <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Metric / Total</CardTitle>
                   <Calendar className="h-4 w-4 text-blue-500" />
                 </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{availabilities.length}</div>
-                  <p className="text-xs text-muted-foreground">All time</p>
+                <CardContent className="px-4 md:px-6 pb-4">
+                  <div className="text-xl md:text-3xl font-black tracking-tighter text-foreground italic">L_{availabilities.length}</div>
+                  <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter mt-1">Lifecycle Bookings</p>
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Pending</CardTitle>
+              <Card className="border-border/50 shadow-sm">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                  <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Status / Pending</CardTitle>
                   <Clock className="h-4 w-4 text-yellow-500" />
                 </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">
+                <CardContent className="px-4 md:px-6 pb-4">
+                  <div className="text-xl md:text-3xl font-black tracking-tighter text-yellow-500 italic">
                     {availabilities.filter(b => b.status === 'pending').length}
                   </div>
-                  <p className="text-xs text-muted-foreground">Awaiting confirmation</p>
+                  <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter mt-1">Awaiting Lock-in</p>
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Confirmed</CardTitle>
+              <Card className="col-span-2 lg:col-span-1 border-border/50 shadow-sm">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                  <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">System / Verified</CardTitle>
                   <User className="h-4 w-4 text-green-500" />
                 </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">
+                <CardContent className="px-4 md:px-6 pb-4">
+                  <div className="text-xl md:text-3xl font-black tracking-tighter text-green-500 italic">
                     {availabilities.filter(b => b.status === 'confirmed').length}
                   </div>
-                  <p className="text-xs text-muted-foreground">Active bookings</p>
+                  <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter mt-1">Active Core Protocols</p>
                 </CardContent>
               </Card>
             </div>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Booking Details</CardTitle>
+            <Card className="border-border/50 shadow-md overflow-hidden">
+              <CardHeader className="px-4 md:px-6 py-5 border-b border-border/30 bg-secondary/10">
+                <CardTitle className="text-lg md:text-xl font-black tracking-tighter text-foreground italic uppercase">Registry / Booking Details</CardTitle>
+                <p className="text-[10px] md:text-xs font-bold text-muted-foreground/60 uppercase tracking-[0.2em] mt-1">Global Appointment Sequencing Matrix</p>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-4 md:p-6">
                 <div className="space-y-4">
                   {leaderboardData.length === 0 ? (
                     <div className="text-center text-muted-foreground py-8">

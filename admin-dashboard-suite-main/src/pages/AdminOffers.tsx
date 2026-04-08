@@ -152,37 +152,37 @@ const AdminOffers = () => {
       
       {/* Main Content */}
       <div className="flex-1 flex flex-col h-screen overflow-hidden md:pl-64">
-        {/* Fixed Header */}
-        <header className="fixed top-0 right-0 left-0 z-20 bg-background border-b md:left-64">
-          {/* <div className="h-16 px-6 flex items-center"> */}
-            <DashboardHeader onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
-          {/* </div> */}
-          <div className="border-t bg-muted/20 py-2 px-6">
-            <div className="flex justify-end gap-2">
-              <Button onClick={() => setAssignFormOpen(true)} variant="outline" size="sm">
-                <Gift className="w-4 h-4 mr-2" />
-                Assign Offer
-              </Button>
-              <Button onClick={() => handleOpenOfferForm()} size="sm">
-                <Plus className="w-4 h-4 mr-2" />
-                Create Offer
-              </Button>
-            </div>
-          </div>
-        </header>
-
         {/* Scrollable Content */}
-        <main className="flex-1 pt-28 pb-6 px-6 overflow-y-auto">
-          <div className="max-w-7xl mx-auto space-y-6">
-          {/* Stats */}
-          <StatsCards assignedOffers={assignedOffers} />
+        <main className="flex-1 pt-24 pb-6 px-4 md:px-6 overflow-y-auto">
+          <div className="max-w-7xl mx-auto space-y-8 md:space-y-10">
+            {/* Header section with Stats */}
+            <div className="space-y-6">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                   <h1 className="text-xl md:text-3xl font-black tracking-tighter text-foreground italic uppercase">V_Node / Admin Offers</h1>
+                   <p className="text-[10px] md:text-xs font-bold text-muted-foreground/60 uppercase tracking-[0.2em] mt-1 shadow-sm">Global Loyalty & Retention Protocol</p>
+                </div>
+                <div className="flex gap-2">
+                  <Button onClick={() => setAssignFormOpen(true)} variant="outline" className="h-10 px-5 rounded-xl border-border/50 font-bold text-[10px] uppercase tracking-widest gap-2 flex-1 md:flex-none">
+                    <Gift className="w-4 h-4" />
+                    Assign Node
+                  </Button>
+                  <Button onClick={() => handleOpenOfferForm()} className="h-10 px-5 rounded-xl border-border/50 font-bold text-[10px] uppercase tracking-widest gap-2 flex-1 md:flex-none">
+                    <Plus className="w-4 h-4" />
+                    Initialize Node
+                  </Button>
+                </div>
+              </div>
+              
+              <StatsCards assignedOffers={assignedOffers} />
+            </div>
 
-          {/* Tabs */}
-          <Tabs defaultValue="offers" className="space-y-6">
-            <TabsList>
-              <TabsTrigger value="offers">All Offers</TabsTrigger>
-              <TabsTrigger value="assigned">Assigned Offers</TabsTrigger>
-            </TabsList>
+            {/* Tabs */}
+            <Tabs defaultValue="offers" className="space-y-6">
+              <TabsList className="bg-secondary/20 p-1 rounded-xl glass-morphism h-12">
+                <TabsTrigger value="offers" className="rounded-lg font-black text-[10px] uppercase tracking-widest px-6 data-[state=active]:bg-background data-[state=active]:italic">All Nodes</TabsTrigger>
+                <TabsTrigger value="assigned" className="rounded-lg font-black text-[10px] uppercase tracking-widest px-6 data-[state=active]:bg-background data-[state=active]:italic">Assigned Stream</TabsTrigger>
+              </TabsList>
 
             <TabsContent value="offers" className="space-y-4">
               {/* Filters */}

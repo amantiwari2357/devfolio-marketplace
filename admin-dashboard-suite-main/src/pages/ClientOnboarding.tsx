@@ -431,78 +431,88 @@ const ClientOnboarding = () => {
           </div>
 
           {selectedProject ? (
-            <div className="space-y-6">
-              <Button variant="outline" onClick={() => setSelectedProject(null)}>
-                ← Back to Projects
+            <div className="space-y-8 md:space-y-10">
+              <Button variant="outline" onClick={() => setSelectedProject(null)} className="h-10 px-6 rounded-xl border-border/50 font-bold text-[10px] uppercase tracking-widest gap-2">
+                ← Return to Registry
               </Button>
 
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between">
+              <Card className="border-border/50 shadow-md overflow-hidden bg-background/50">
+                <CardHeader className="px-4 md:px-8 py-6 border-b border-border/30 bg-secondary/5 flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div>
-                    <CardTitle className="text-2xl">{selectedProject.projectName}</CardTitle>
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <CardTitle className="text-xl md:text-3xl font-black tracking-tighter text-foreground italic uppercase">V_Node / {selectedProject.projectName}</CardTitle>
+                    <p className="text-[10px] md:text-xs font-bold text-muted-foreground/60 uppercase tracking-[0.2em] mt-1 shadow-sm">
                       {selectedProject.companyName} • {selectedProject.clientName}
                     </p>
                   </div>
-                  <Button variant="outline" size="sm" onClick={() => openEditDialog(selectedProject)}>
+                  <Button variant="outline" size="sm" onClick={() => openEditDialog(selectedProject)} className="w-full md:w-auto rounded-xl border-border/50 font-bold text-[10px] uppercase tracking-widest gap-2 h-10">
                     <Edit className="w-4 h-4" />
+                    Modify Node
                   </Button>
                 </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="grid grid-cols-4 gap-4">
+                <CardContent className="p-4 md:p-8 space-y-8 md:space-y-10">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
                     <div>
-                      <p className="text-sm text-muted-foreground">Tech Stack</p>
-                      <p className="font-medium">{selectedProject.techStack}</p>
+                      <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1.5 opacity-60 italic">Tech Stack</p>
+                      <p className="text-sm font-bold text-foreground">{selectedProject.techStack}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Type</p>
-                      <p className="font-medium">{selectedProject.projectType}</p>
+                      <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1.5 opacity-60 italic">Core Type</p>
+                      <p className="text-sm font-bold text-foreground">{selectedProject.projectType}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Start Date</p>
-                      <p className="font-medium">{selectedProject.startDate}</p>
+                      <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1.5 opacity-60 italic">Initiation</p>
+                      <p className="text-sm font-bold text-foreground">{selectedProject.startDate}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Deadline</p>
-                      <p className="font-medium">{selectedProject.deadline}</p>
+                      <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1.5 opacity-60 italic">Deadline</p>
+                      <p className="text-sm font-bold text-foreground">{selectedProject.deadline}</p>
                     </div>
                   </div>
 
-                  <Separator />
-
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="text-sm font-medium">Overall Progress</span>
-                      <span className="text-sm text-muted-foreground">{Math.round(calculateProgress(selectedProject.stages))}%</span>
-                    </div>
-                    <Progress value={calculateProgress(selectedProject.stages)} />
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-4">
-                    <Card>
-                      <CardContent className="pt-6">
-                        <div className="text-2xl font-bold">₹{selectedProject.totalAmount.toLocaleString()}</div>
-                        <p className="text-sm text-muted-foreground">Total Amount</p>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardContent className="pt-6">
-                        <div className="text-2xl font-bold text-green-500">₹{selectedProject.paidAmount.toLocaleString()}</div>
-                        <p className="text-sm text-muted-foreground">Paid</p>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardContent className="pt-6">
-                        <div className="text-2xl font-bold text-red-500">₹{(selectedProject.totalAmount - selectedProject.paidAmount).toLocaleString()}</div>
-                        <p className="text-sm text-muted-foreground">Pending</p>
-                      </CardContent>
-                    </Card>
-                  </div>
-
-                  <Separator />
+                  <Separator className="bg-border/30" />
 
                   <div className="space-y-4">
-                    <h3 className="text-lg font-semibold">Project Stages</h3>
+                    <div className="flex justify-between items-end px-1">
+                      <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest italic">Sequence Progress</span>
+                      <span className="text-xs font-black text-primary italic">{Math.round(calculateProgress(selectedProject.stages))}%</span>
+                    </div>
+                    <Progress value={calculateProgress(selectedProject.stages)} className="h-2 rounded-full bg-secondary/20" />
+                  </div>
+
+                  <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                    <Card className="bg-background/20 border-border/30 shadow-sm transition-all hover:border-primary/20">
+                      <CardContent className="p-4 md:p-6">
+                        <div className="flex items-center gap-2 mb-2">
+                           <DollarSign className="w-4 h-4 text-muted-foreground" />
+                           <p className="text-[9px] font-black text-muted-foreground uppercase tracking-widest opacity-60">Contract Total</p>
+                        </div>
+                        <div className="text-lg md:text-2xl font-black text-foreground tracking-tighter italic">₹{selectedProject.totalAmount.toLocaleString()}</div>
+                      </CardContent>
+                    </Card>
+                    <Card className="bg-background/20 border-border/30 shadow-sm transition-all hover:border-primary/20">
+                      <CardContent className="p-4 md:p-6">
+                        <div className="flex items-center gap-2 mb-2">
+                           <CheckCircle2 className="w-4 h-4 text-green-500" />
+                           <p className="text-[9px] font-black text-muted-foreground uppercase tracking-widest opacity-60">Verified Liquidity</p>
+                        </div>
+                        <div className="text-lg md:text-2xl font-black text-green-500 tracking-tighter italic">₹{selectedProject.paidAmount.toLocaleString()}</div>
+                      </CardContent>
+                    </Card>
+                    <Card className="col-span-2 lg:col-span-1 bg-background/20 border-border/30 shadow-sm transition-all hover:border-primary/20">
+                      <CardContent className="p-4 md:p-6">
+                        <div className="flex items-center gap-2 mb-2">
+                           <Clock className="w-4 h-4 text-chart-5" />
+                           <p className="text-[9px] font-black text-muted-foreground uppercase tracking-widest opacity-60">Pending Settlement</p>
+                        </div>
+                        <div className="text-lg md:text-2xl font-black text-chart-5 tracking-tighter italic">₹{(selectedProject.totalAmount - selectedProject.paidAmount).toLocaleString()}</div>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  <Separator className="bg-border/30" />
+
+                  <div className="space-y-6">
+                    <h3 className="text-sm md:text-lg font-black tracking-tighter text-foreground italic uppercase px-1">Lifecycle / Project Stages</h3>
                     {selectedProject.stages.map((stage) => (
                       <Card key={stage.id}>
                         <CardHeader

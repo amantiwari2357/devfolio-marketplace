@@ -50,25 +50,25 @@ export const StatsCards = ({ assignedOffers }: StatsCardsProps) => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       {cards.map((card) => {
         const Icon = card.icon;
         return (
           <Card
             key={card.title}
-            className="relative overflow-hidden bg-card/50 backdrop-blur-sm border border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-lg group"
+            className="relative overflow-hidden bg-background/50 backdrop-blur-sm border border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-lg group"
           >
-            <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} opacity-50 group-hover:opacity-70 transition-opacity`} />
-            <div className="relative p-6 space-y-3">
+            <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} opacity-30 group-hover:opacity-50 transition-opacity`} />
+            <div className="relative p-4 md:p-6 space-y-3">
               <div className="flex items-center justify-between">
-                <div className={`w-12 h-12 rounded-xl ${card.bgColor} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                  <Icon className={`w-6 h-6 ${card.iconColor}`} />
+                <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl ${card.bgColor} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                  <Icon className={`w-5 h-5 md:w-6 md:h-6 ${card.iconColor}`} />
                 </div>
-                <div className="text-3xl font-bold text-foreground">
+                <div className="text-xl md:text-3xl font-black tracking-tighter text-foreground italic">
                   {card.value}
                 </div>
               </div>
-              <p className="text-sm font-medium text-muted-foreground">
+              <p className="text-[10px] md:text-sm font-black uppercase tracking-widest text-muted-foreground opacity-60">
                 {card.title}
               </p>
             </div>

@@ -90,61 +90,65 @@ const Enquiry = () => {
         </header>
         
         {/* Scrollable Content */}
-        <main className="flex-1 pt-24 pb-6 px-6 overflow-y-auto">
-          <div className="max-w-7xl mx-auto space-y-6">
+        <main className="flex-1 pt-24 pb-6 px-4 md:px-6 overflow-y-auto">
+          <div className="max-w-7xl mx-auto space-y-8 md:space-y-10">
 
             {loading ? (
-              <div className="flex items-center justify-center py-8">
-                <Loader2 className="h-8 w-8 animate-spin" />
-                <span className="ml-2">Loading enquiries...</span>
+              <div className="flex items-center justify-center py-12">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                <span className="ml-3 font-bold uppercase tracking-widest text-sm italic">Synchronizing Enquiries...</span>
               </div>
             ) : error ? (
-              <div className="text-center py-8 text-red-500">
-                Error: {error}
+              <div className="text-center py-12 text-destructive font-bold uppercase tracking-widest text-sm">
+                Node Connection Error: {error}
               </div>
             ) : (
               <>
-                <div className="grid gap-4 md:grid-cols-3">
-                  <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium">Total Enquiries</CardTitle>
-                      <Mail className="h-4 w-4 text-muted-foreground" />
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <Card className="border-border/50 shadow-sm">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                      <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Metric / Total</CardTitle>
+                      <Mail className="h-4 w-4 text-primary" />
                     </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold">{enquiries.length}</div>
+                    <CardContent className="px-4 md:px-6 pb-4">
+                      <div className="text-xl md:text-3xl font-black tracking-tighter text-foreground italic">Q_{enquiries.length}</div>
+                      <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter mt-1">Inbound Signals</p>
                     </CardContent>
                   </Card>
 
-                  <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium">Pending</CardTitle>
+                  <Card className="border-border/50 shadow-sm">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                      <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Status / Pending</CardTitle>
                       <Clock className="h-4 w-4 text-chart-3" />
                     </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold">
+                    <CardContent className="px-4 md:px-6 pb-4">
+                      <div className="text-xl md:text-3xl font-black tracking-tighter text-chart-3 italic">
                         {enquiries.filter(e => e.status === "pending").length}
                       </div>
+                      <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter mt-1">Awaiting Response</p>
                     </CardContent>
                   </Card>
 
-                  <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium">Replied</CardTitle>
+                  <Card className="col-span-2 lg:col-span-1 border-border/50 shadow-sm">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                      <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Action / Resolved</CardTitle>
                       <Phone className="h-4 w-4 text-chart-2" />
                     </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold">
+                    <CardContent className="px-4 md:px-6 pb-4">
+                      <div className="text-xl md:text-3xl font-black tracking-tighter text-chart-2 italic">
                         {enquiries.filter(e => e.status === "in-progress").length + enquiries.filter(e => e.status === "completed").length}
                       </div>
+                      <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter mt-1">Processing Stream</p>
                     </CardContent>
                   </Card>
                 </div>
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Recent Enquiries</CardTitle>
+                <Card className="border-border/50 shadow-md overflow-hidden">
+                  <CardHeader className="px-4 md:px-6 py-5 border-b border-border/30 bg-secondary/10">
+                    <CardTitle className="text-lg md:text-xl font-black tracking-tighter text-foreground italic uppercase">Signal Grid / Recent Enquiries</CardTitle>
+                    <p className="text-[10px] md:text-xs font-bold text-muted-foreground/60 uppercase tracking-[0.2em] mt-1">Live Inbound Communication Matrix</p>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="p-0">
                     <Table>
                       <TableHeader>
                         <TableRow>
