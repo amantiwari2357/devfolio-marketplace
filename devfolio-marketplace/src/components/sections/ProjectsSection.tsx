@@ -8,6 +8,15 @@ const ProjectsSection = () => {
   const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile vs desktop
+  useEffect(() => {
+    const checkScreen = () => setIsMobile(window.innerWidth < 768);
+    checkScreen();
+    window.addEventListener("resize", checkScreen);
+    return () => window.removeEventListener("resize", checkScreen);
+  }, []);
 
   const staticProjects = [
     {
@@ -83,7 +92,6 @@ const ProjectsSection = () => {
         setProjects(response.data.projects);
       } catch (error) {
         console.error('Error fetching projects:', error);
-        // Fall back to static projects if API fails
         setProjects(staticProjects);
       } finally {
         setLoading(false);
@@ -92,6 +100,11 @@ const ProjectsSection = () => {
 
     fetchProjects();
   }, []);
+
+  // Desktop: 12 projects, Mobile: 6 projects
+  const displayLimit = isMobile ? 6 : 12;
+  const allProjects = projects.length > 0 ? projects : staticProjects;
+  const displayedProjects = allProjects.slice(0, displayLimit);
 
   return (
     <section className="section-spacing bg-background relative overflow-hidden">
@@ -123,10 +136,24 @@ const ProjectsSection = () => {
               </div>
               <p className="text-xs font-black uppercase tracking-[0.3em] text-muted-foreground italic">Syncing Prototypes...</p>
             </div>
-          ) : (projects.length > 0 ? projects : staticProjects).map((project) => (
+          ) : displayedProjects.map((project) => (
             <ProjectCard key={project._id} project={project} />
           ))}
         </div>
+
+        {/* View All button at bottom when there are more projects */}
+        {!loading && allProjects.length > displayLimit && (
+          <div className="flex justify-center mt-12 md:mt-16 animate-slide-up" style={{ animationDelay: '200ms' }}>
+            <Button
+              variant="outline"
+              size="lg"
+              className="h-14 md:h-16 rounded-2xl md:rounded-[22px] px-10 border-primary/20 bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground font-black transition-all shadow-xl shadow-primary/5 uppercase tracking-widest text-[10px] italic border-none"
+              onClick={() => navigate("/search")}
+            >
+              View All {allProjects.length} Projects →
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );

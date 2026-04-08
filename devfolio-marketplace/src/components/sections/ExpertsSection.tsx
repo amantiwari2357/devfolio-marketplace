@@ -124,8 +124,8 @@ const ExpertsSection = () => {
               variant={selectedCategory === category ? "default" : "outline"}
               onClick={() => handleCategoryChange(category)}
               className={`h-10 md:h-12 rounded-xl px-6 font-semibold text-xs md:text-sm whitespace-nowrap transition-all border-none flex-shrink-0 ${selectedCategory === category
-                  ? "bg-primary text-primary-foreground shadow-md shadow-primary/20 scale-105"
-                  : "bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground"
+                ? "bg-primary text-primary-foreground shadow-md shadow-primary/20 scale-105"
+                : "bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground"
                 }`}
             >
               {category}
