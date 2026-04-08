@@ -204,7 +204,7 @@ const Settings = () => {
 
               {/* Identity Matrix Content */}
               <TabsContent value="profile" className="space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
-                <Card className="neural-card p-8 md:p-12 relative overflow-hidden group">
+                <Card className="neural-card p-6 md:p-12 relative overflow-hidden group">
                   <div className="absolute top-0 right-0 p-10 opacity-5 pointer-events-none group-hover:scale-110 transition-transform duration-700">
                     <Fingerprint className="w-48 h-48 text-primary" />
                   </div>
@@ -277,7 +277,7 @@ const Settings = () => {
 
               {/* Other Tabs simplified but consistent */}
               <TabsContent value="notifications" className="space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
-                <Card className="neural-card p-8 md:p-12 relative overflow-hidden group">
+                <Card className="neural-card p-6 md:p-12 relative overflow-hidden group">
                   <div className="absolute top-0 right-0 p-10 opacity-5 pointer-events-none">
                     <Activity className="w-48 h-48 text-primary" />
                   </div>
@@ -318,7 +318,7 @@ const Settings = () => {
               </TabsContent>
 
               <TabsContent value="privacy" className="space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
-                <Card className="neural-card p-8 md:p-12 relative overflow-hidden group">
+                <Card className="neural-card p-6 md:p-12 relative overflow-hidden group">
                   <div className="absolute top-0 right-0 p-10 opacity-5 pointer-events-none">
                     <ShieldCheck className="w-48 h-48 text-primary" />
                   </div>

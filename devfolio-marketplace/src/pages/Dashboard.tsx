@@ -66,18 +66,18 @@ const Dashboard = () => {
           <div className="absolute top-0 right-0 -z-10 w-2/3 h-1/2 bg-primary/2 opacity-30 blur-[150px] rounded-full" />
           <div className="absolute bottom-0 left-0 -z-10 w-1/2 h-1/2 bg-secondary/2 opacity-20 blur-[150px] rounded-full" />
           
-          <div className="p-4 md:p-8 lg:p-12 xl:p-16">
-            <div className="max-w-[1300px] mx-auto space-y-12 md:space-y-16">
+          <div className="p-4 md:p-6 lg:p-10 xl:p-16">
+            <div className="max-w-[1300px] mx-auto space-y-8 md:space-y-16">
               <header className="flex flex-col xl:flex-row xl:items-end justify-between gap-10 animate-slide-up">
                 <div className="space-y-4">
                   <div className="flex items-center gap-2 text-primary animate-fade-in">
                     <Activity className="w-4 h-4 md:w-5 md:h-5 text-primary/80" />
                     <span className="text-xs font-semibold uppercase tracking-wider">Dashboard Overview</span>
                   </div>
-                  <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
-                    Welcome back, <br className="hidden md:block" /><span className="text-primary">{user?.firstName || 'Creator'}.</span>
+                  <h1 className="text-3xl md:text-5xl lg:text-6xl font-black tracking-tight text-foreground leading-none lowercase italic">
+                    Welcome back, <br className="hidden md:block" /><span className="text-primary not-italic">{user?.firstName || 'Creator'}.</span>
                   </h1>
-                  <p className="text-base md:text-lg text-muted-foreground font-medium leading-relaxed">Here's what's happening with your projects today.</p>
+                  <p className="text-sm md:text-lg text-muted-foreground font-bold italic leading-relaxed tracking-tight">Accessing core modules and performance telemetry.</p>
                 </div>
                 <div className="flex flex-wrap items-center gap-4">
                   <Button onClick={() => navigate('/profile')} variant="outline" className="h-12 md:h-14 rounded-xl px-6 font-bold bg-secondary/10 border-border/40 gap-3 hover:bg-secondary/20 transition-all text-sm shadow-sm">
@@ -91,8 +91,8 @@ const Dashboard = () => {
               </header>
 
               {/* Grid Widgets */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-10 animate-slide-up" style={{ animationDelay: '100ms' }}>
-                <Card className="p-10 md:p-14 relative overflow-hidden group shadow-2xl border-border/40 bg-secondary/5 backdrop-blur-xl rounded-[32px]">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 animate-slide-up" style={{ animationDelay: '100ms' }}>
+                <Card className="p-6 sm:p-10 md:p-14 relative overflow-hidden group shadow-2xl border-border/40 bg-secondary/5 backdrop-blur-xl rounded-[32px]">
                   <div className="absolute top-0 right-0 p-12 opacity-0 group-hover:opacity-10 transition-all duration-1000 translate-x-8 translate-y-[-8px] group-hover:translate-x-0 group-hover:translate-y-0 pointer-events-none">
                     <Rocket className="w-56 h-56 text-primary" />
                   </div>
@@ -125,7 +125,7 @@ const Dashboard = () => {
                   </div>
                 </Card>
 
-                <Card className="p-10 md:p-14 bg-primary/5 border-primary/20 relative overflow-hidden group shadow-2xl rounded-[32px]">
+                <Card className="p-6 sm:p-10 md:p-14 bg-primary/5 border-primary/20 relative overflow-hidden group shadow-2xl rounded-[32px]">
                   <div className="absolute top-0 right-0 p-12 opacity-0 group-hover:opacity-10 transition-all duration-1000 translate-x-8 translate-y-[-8px] group-hover:translate-x-0 group-hover:translate-y-0 pointer-events-none">
                     <Layers className="w-56 h-56 text-primary" />
                   </div>
@@ -176,10 +176,10 @@ const Dashboard = () => {
                     <Zap className="w-4 h-4 fill-primary" />
                     NEW CREATOR PROGRAM
                   </div>
-                  <h2 className="text-3xl md:text-6xl font-black tracking-tighter leading-[0.8] italic uppercase">
-                    LAUNCH YOUR <span className="text-primary NOT-italic group-hover:rotate-3 transition-transform block lg:inline-block">COURSE.</span>
+                  <h2 className="text-3xl sm:text-4xl md:text-6xl font-black tracking-tighter leading-[0.8] italic uppercase">
+                    LAUNCH YOUR <span className="text-primary italic-none group-hover:rotate-3 transition-transform block lg:inline-block">COURSE.</span>
                   </h2>
-                  <p className="text-lg md:text-xl text-foreground font-bold italic max-w-xl leading-relaxed tracking-tight">Scale your earnings to ₹10K+ monthly with <span className="text-primary font-black underline underline-offset-[12px] decoration-primary/30">Zero Commission Fees.</span></p>
+                  <p className="text-base sm:text-lg md:text-xl text-foreground font-bold italic max-w-xl leading-relaxed tracking-tight">Scale your earnings to ₹10K+ monthly with <span className="text-primary font-black underline underline-offset-[12px] decoration-primary/30">Zero Commission Fees.</span></p>
                 </div>
                 <div className="lg:col-span-2 flex flex-col xl:flex-row gap-8 items-center justify-center lg:justify-end">
                   <Button onClick={() => navigate('/createcourse')} className="h-16 px-10 rounded-2xl font-bold text-lg bg-primary text-primary-foreground shadow-xl shadow-primary/30 hover:scale-105 active:scale-95 transition-all border-none group/btn">
@@ -205,7 +205,7 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                <Card className="p-8 md:p-16 rounded-[48px] bg-secondary/5 border-border/40 shadow-2xl overflow-hidden relative group">
+                <Card className="p-6 sm:p-10 md:p-16 rounded-[48px] bg-secondary/5 border-border/40 shadow-2xl overflow-hidden relative group">
                   <div className="absolute top-0 right-0 p-12 opacity-[0.02] pointer-events-none group-hover:scale-110 transition-transform duration-[2000ms]">
                     <Activity className="w-[500px] h-[500px]" />
                   </div>
@@ -220,8 +220,8 @@ const Dashboard = () => {
                              {metric.icon}
                              <span className="text-[10px] font-bold uppercase tracking-widest">{metric.label}</span>
                           </div>
-                          <div className="flex items-end gap-2">
-                             <span className="text-5xl md:text-7xl font-black tracking-tighter text-foreground italic leading-none">
+                           <div className="flex flex-col sm:flex-row sm:items-end gap-2">
+                             <span className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter text-foreground italic leading-none">
                                {metric.prefix}<CountUp end={metric.value} duration={2.5} separator="," />
                              </span>
                              <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 mb-2">

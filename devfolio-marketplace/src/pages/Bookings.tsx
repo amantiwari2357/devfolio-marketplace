@@ -110,7 +110,7 @@ const Bookings = () => {
             ) : (
               <div className="grid grid-cols-1 gap-8 md:gap-12 animate-slide-up" style={{ animationDelay: '100ms' }}>
                 {bookings.map((booking: any) => (
-                  <Card key={booking.id} className="neural-card p-8 md:p-12 hover:border-primary/40 transition-all duration-1000 hover:shadow-[0_40px_100px_-20px_rgba(var(--primary-rgb),.1)] group relative overflow-hidden shadow-2xl">
+                  <Card key={booking.id} className="neural-card p-6 md:p-12 hover:border-primary/40 transition-all duration-1000 hover:shadow-[0_40px_100px_-20px_rgba(var(--primary-rgb),.1)] group relative overflow-hidden shadow-2xl">
                     <div className="absolute top-0 right-0 p-12 opacity-0 group-hover:opacity-10 transition-all duration-700 translate-y-[-20px] group-hover:translate-y-0">
                        <Zap className="w-20 h-20 text-primary" />
                     </div>
