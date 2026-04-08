@@ -115,51 +115,55 @@ const RegisterUser = () => {
       
       <div className="flex-1 flex flex-col lg:ml-64">
         <DashboardHeader onMenuClick={() => setSidebarOpen(true)} />
-        <main className="flex-1 p-4 lg:p-8 space-y-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Total Users</CardTitle>
-                <Users className="h-4 w-4 text-muted-foreground" />
+        <main className="flex-1 p-4 lg:p-8 space-y-6 md:space-y-10">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <Card className="border-border/50 shadow-sm">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Metric 01 / Total</CardTitle>
+                <Users className="h-4 w-4 text-primary" />
               </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{users.length}</div>
+              <CardContent className="px-4 md:px-6 pb-4">
+                <div className="text-xl md:text-3xl font-black tracking-tighter text-foreground italic">U_{users.length}</div>
+                <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter mt-1">Global User Nodes</p>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Active Users</CardTitle>
+            <Card className="border-border/50 shadow-sm">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Metric 02 / Active</CardTitle>
                 <UserCheck className="h-4 w-4 text-chart-2" />
               </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {users.filter(u => getUserStatus(u) === "active").length}
+              <CardContent className="px-4 md:px-6 pb-4">
+                <div className="text-xl md:text-3xl font-black tracking-tighter text-chart-2 italic">
+                  A_{users.filter(u => getUserStatus(u) === "active").length}
                 </div>
+                <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter mt-1">Verified Heartbeat</p>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">New This Week</CardTitle>
+            <Card className="col-span-2 lg:col-span-1 border-border/50 shadow-sm">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Metric 03 / New</CardTitle>
                 <UserPlus className="h-4 w-4 text-chart-1" />
               </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {users.filter(u => {
+              <CardContent className="px-4 md:px-6 pb-4">
+                <div className="text-xl md:text-3xl font-black tracking-tighter text-chart-1 italic">
+                  +{users.filter(u => {
                     const userDate = new Date(u.createdAt);
                     const weekAgo = new Date();
                     weekAgo.setDate(weekAgo.getDate() - 7);
                     return userDate > weekAgo;
                   }).length}
                 </div>
+                <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter mt-1">Signal Intake (7d)</p>
               </CardContent>
             </Card>
           </div>
 
-          <Card className="overflow-hidden">
-            <CardHeader className="px-4 sm:px-6">
-              <CardTitle className="text-lg sm:text-xl">User List</CardTitle>
+          <Card className="overflow-hidden border-border/50 shadow-md">
+            <CardHeader className="px-4 sm:px-6 py-5 border-b border-border/30 bg-secondary/10">
+              <CardTitle className="text-lg md:text-xl font-black tracking-tighter text-foreground italic uppercase">Directory / Node Explorer</CardTitle>
+              <p className="text-[10px] md:text-xs font-bold text-muted-foreground/60 uppercase tracking-[0.2em] mt-1">Live Database Interaction Matrix</p>
             </CardHeader>
             <CardContent className="p-0">
               <div className="overflow-x-auto">
