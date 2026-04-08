@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Menu } from "lucide-react";
 import Sidebar from "@/components/dashboard/Sidebar";
+import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import { Button } from "@/components/ui/button";
 import {
   Calendar,
@@ -243,508 +244,351 @@ const ScheduleMeeting = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-
-      <div className="lg:pl-64">
-        <header className="sticky top-0 z-30 flex items-center gap-4 border-b bg-card px-6 py-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="lg:hidden"
-            onClick={() => setSidebarOpen(true)}
-          >
-            <Menu className="w-5 h-5" />
-          </Button>
-          <h1 className="text-2xl font-bold text-foreground">Schedule Meeting</h1>
+    <div className="min-h-screen bg-background flex overflow-hidden">
+      {/* Fixed Sidebar */}
+      <div className={`fixed inset-y-0 left-0 z-30 w-64 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-200 ease-in-out md:translate-x-0`}>
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      </div>
+      
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col h-screen overflow-hidden md:pl-64">
+        {/* Fixed Header */}
+        <header className="fixed top-0 right-0 left-0 z-20 bg-background border-b md:left-64">
+          <DashboardHeader onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
         </header>
 
-        <main className="p-6">
-          {/* Stats Cards */}
-          <div className="grid gap-4 md:grid-cols-4 mb-6">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">Total Meetings</CardTitle>
-                <Calendar className="w-4 h-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{meetings.length}</div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">Scheduled</CardTitle>
-                <Clock className="w-4 h-4 text-yellow-500" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {meetings.filter((m) => m.status === "Scheduled").length}
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">Completed</CardTitle>
-                <CheckCircle2 className="w-4 h-4 text-green-500" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {meetings.filter((m) => m.status === "Completed").length}
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">No-Show</CardTitle>
-                <AlertCircle className="w-4 h-4 text-orange-500" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {meetings.filter((m) => m.status === "No-Show").length}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+        {/* Scrollable Content */}
+        <main className="flex-1 pt-24 pb-6 px-4 md:px-6 overflow-y-auto">
+          <div className="max-w-7xl mx-auto space-y-8 md:space-y-10">
+            
+            {/* Page Header */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+              <div>
+                <h1 className="text-xl md:text-3xl font-black tracking-tighter text-foreground italic uppercase">V_Node / Chronos Interface</h1>
+                <p className="text-[10px] md:text-xs font-bold text-muted-foreground/60 uppercase tracking-[0.2em] mt-1 shadow-sm">Global Temporal Sync & Engagement Protocol</p>
+              </div>
+              <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button onClick={() => setEditingMeeting(null)} className="gap-2 font-black uppercase italic tracking-widest text-[10px] px-6 h-10 shadow-lg shadow-primary/20">
+                    <Plus className="w-4 h-4" />
+                    Initialize_Session
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle className="font-black uppercase tracking-tighter italic text-xl">
+                      {editingMeeting ? 'Update_Interval' : 'Schedule_New_Nexus'}
+                    </DialogTitle>
+                  </DialogHeader>
+                  <form onSubmit={handleSubmit} className="space-y-6 pt-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="md:col-span-2 space-y-2">
+                        <Label htmlFor="client" className="font-bold uppercase tracking-widest text-[10px] italic">Entity_ID *</Label>
+                        <Select
+                          value={formData.clientId}
+                          onValueChange={handleClientSelect}
+                          required
+                        >
+                          <SelectTrigger className="bg-muted/10 border-border/30 h-10">
+                            <SelectValue placeholder="Select client entry" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {mockClients.map((client) => (
+                              <SelectItem key={client.id} value={client.id}>
+                                {client.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
 
-          {/* Filters and Actions */}
-          <div className="flex flex-col md:flex-row gap-4 mb-6">
-            <div className="flex-1">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                      <div className="space-y-2">
+                        <Label className="font-bold uppercase tracking-widest text-[10px] italic opacity-50">Transmission_Protocol *</Label>
+                        <Select
+                          value={formData.type}
+                          onValueChange={(value: Meeting["type"]) =>
+                            setFormData({ ...formData, type: value })
+                          }
+                        >
+                          <SelectTrigger className="bg-muted/10 border-border/30 h-10">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Zoom">Zoom_Interface</SelectItem>
+                            <SelectItem value="Google Meet">G_Meet_Proxy</SelectItem>
+                            <SelectItem value="Phone">Audio_Link</SelectItem>
+                            <SelectItem value="In-Person">Physical_Nexus</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label className="font-bold uppercase tracking-widest text-[10px] italic opacity-50">Temporal_Duration *</Label>
+                        <Select
+                          value={formData.duration}
+                          onValueChange={(value) =>
+                            setFormData({ ...formData, duration: value })
+                          }
+                        >
+                          <SelectTrigger className="bg-muted/10 border-border/30 h-10">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="15">0.25 Units (15m)</SelectItem>
+                            <SelectItem value="30">0.50 Units (30m)</SelectItem>
+                            <SelectItem value="60">1.00 Unit (1h)</SelectItem>
+                            <SelectItem value="90">1.50 Units (1.5h)</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="date" className="font-bold uppercase tracking-widest text-[10px] italic">Nexus_Date *</Label>
+                        <Input
+                          id="date"
+                          type="date"
+                          value={formData.date}
+                          onChange={(e) =>
+                            setFormData({ ...formData, date: e.target.value })
+                          }
+                          required
+                          className="bg-muted/10 border-border/30 h-10"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="time" className="font-bold uppercase tracking-widest text-[10px] italic">Nexus_Time *</Label>
+                        <Input
+                          id="time"
+                          type="time"
+                          value={formData.time}
+                          onChange={(e) =>
+                            setFormData({ ...formData, time: e.target.value })
+                          }
+                          required
+                          className="bg-muted/10 border-border/30 h-10"
+                        />
+                      </div>
+
+                      <div className="md:col-span-2 space-y-2">
+                        <Label htmlFor="title" className="font-bold uppercase tracking-widest text-[10px] italic">nexus_Designation *</Label>
+                        <Input
+                          id="title"
+                          placeholder="Project_Deep_Dive_Alpha"
+                          value={formData.title}
+                          onChange={(e) =>
+                            setFormData({ ...formData, title: e.target.value })
+                          }
+                          required
+                          className="bg-muted/10 border-border/30 h-10"
+                        />
+                      </div>
+
+                      <div className="md:col-span-2 space-y-2">
+                        <Label htmlFor="link" className="font-bold uppercase tracking-widest text-[10px] italic">Access_Bridge</Label>
+                        <Input
+                          id="link"
+                          value={formData.link}
+                          onChange={(e) =>
+                            setFormData({ ...formData, link: e.target.value })
+                          }
+                          placeholder="https://zoom.us/nexus/..."
+                          className="bg-muted/10 border-border/30 h-10"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex gap-3 pt-6 border-t border-border/10">
+                      <Button
+                        type="submit"
+                        className="flex-1 font-black uppercase tracking-widest text-[10px] italic h-11"
+                      >
+                        {editingMeeting ? "Sync_Interval" : "Commit_Nexus"}
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        onClick={() => setDialogOpen(false)}
+                        className="font-bold uppercase tracking-widest text-[10px] italic"
+                      >
+                        Abort
+                      </Button>
+                    </div>
+                  </form>
+                </DialogContent>
+              </Dialog>
+            </div>
+
+            {/* Stats Matrix */}
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <Card className="border-border/50 shadow-sm relative overflow-hidden group">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                  <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Nexus / Total</CardTitle>
+                  <Calendar className="h-4 w-4 text-primary" />
+                </CardHeader>
+                <CardContent className="px-4 md:px-6 pb-4">
+                  <div className="text-xl md:text-3xl font-black tracking-tighter text-foreground italic">N_{meetings.length}</div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-border/50 shadow-sm relative overflow-hidden group">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                  <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Sync / Active</CardTitle>
+                  <Clock className="h-4 w-4 text-yellow-500" />
+                </CardHeader>
+                <CardContent className="px-4 md:px-6 pb-4">
+                  <div className="text-xl md:text-3xl font-black tracking-tighter text-yellow-500 italic">S_{meetings.filter((m) => m.status === "Scheduled").length}</div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-border/50 shadow-sm relative overflow-hidden group">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                  <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Sync / Confirmed</CardTitle>
+                  <CheckCircle2 className="h-4 w-4 text-green-500" />
+                </CardHeader>
+                <CardContent className="px-4 md:px-6 pb-4">
+                  <div className="text-xl md:text-3xl font-black tracking-tighter text-green-500 italic">V_{meetings.filter((m) => m.status === "Confirmed").length}</div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-border/50 shadow-sm relative overflow-hidden group">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                  <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Sync / Failed</CardTitle>
+                  <AlertCircle className="h-4 w-4 text-red-500" />
+                </CardHeader>
+                <CardContent className="px-4 md:px-6 pb-4">
+                  <div className="text-xl md:text-3xl font-black tracking-tighter text-red-500 italic">F_{meetings.filter((m) => m.status === "No-Show" || m.status === "Cancelled").length}</div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Filters */}
+            <div className="flex flex-col md:flex-row gap-4 items-center">
+              <div className="relative flex-1 w-full">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40" />
                 <Input
-                  placeholder="Search meetings..."
+                  placeholder="Scan Temporal Registry..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 bg-muted/10 border-border/30 h-11 text-xs font-bold uppercase italic tracking-widest"
                 />
               </div>
+              <div className="flex gap-2 w-full md:w-auto overflow-x-auto pb-1 no-scrollbar">
+                <Select value={filterStatus} onValueChange={setFilterStatus}>
+                  <SelectTrigger className="w-[140px] h-11 bg-card border-border/30 text-[10px] font-black uppercase tracking-tighter italic">
+                    <SelectValue placeholder="Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Protocol_All</SelectItem>
+                    <SelectItem value="Scheduled">Scheduled</SelectItem>
+                    <SelectItem value="Confirmed">Confirmed</SelectItem>
+                    <SelectItem value="Completed">Completed</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
-            <Select value={filterStatus} onValueChange={setFilterStatus}>
-              <SelectTrigger className="w-[180px]">
-                <Filter className="w-4 h-4 mr-2" />
-                <SelectValue placeholder="Filter by status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="Scheduled">Scheduled</SelectItem>
-                <SelectItem value="Confirmed">Confirmed</SelectItem>
-                <SelectItem value="Completed">Completed</SelectItem>
-                <SelectItem value="Cancelled">Cancelled</SelectItem>
-                <SelectItem value="No-Show">No-Show</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={filterClient} onValueChange={setFilterClient}>
-              <SelectTrigger className="w-[180px]">
-                <Users className="w-4 h-4 mr-2" />
-                <SelectValue placeholder="Filter by client" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Clients</SelectItem>
-                {mockClients.map((client) => (
-                  <SelectItem key={client.id} value={client.name}>
-                    {client.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-              <DialogTrigger asChild>
-                <Button onClick={() => setEditingMeeting(null)}>
-                  <Plus className="w-4 h-4 mr-2" />
-                  Schedule Meeting
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                <DialogHeader>
-                  <DialogTitle>
-                    {editingMeeting ? "Edit Meeting" : "Schedule New Meeting"}
-                  </DialogTitle>
-                </DialogHeader>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="col-span-2">
-                      <Label htmlFor="client">Client *</Label>
-                      <Select
-                        value={formData.clientId}
-                        onValueChange={handleClientSelect}
-                        required
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select client" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {mockClients.map((client) => (
-                            <SelectItem key={client.id} value={client.id}>
-                              {client.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
 
-                    {selectedClient && (
-                      <>
-                        <div>
-                          <Label>Email</Label>
-                          <Input value={selectedClient.email} disabled />
+            {/* View Architecture */}
+            <Tabs defaultValue="list" className="w-full">
+              <div className="flex justify-between items-center mb-6 border-b border-border/10 pb-2">
+                <TabsList className="bg-muted/10 p-1">
+                  <TabsTrigger value="list" className="text-[10px] font-black uppercase italic tracking-widest data-[state=active]:bg-background data-[state=active]:text-primary h-8">Registry_View</TabsTrigger>
+                  <TabsTrigger value="calendar" className="text-[10px] font-black uppercase italic tracking-widest data-[state=active]:bg-background data-[state=active]:text-primary h-8">Chronos_View</TabsTrigger>
+                </TabsList>
+              </div>
+
+              <TabsContent value="list" className="mt-0 outline-none">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filteredMeetings.map((meeting) => (
+                    <Card key={meeting.id} className="relative overflow-hidden border-border/40 hover:border-primary/30 transition-all duration-300 group shadow-lg hover:shadow-primary/5">
+                      <div className="absolute top-0 right-0 p-3">
+                         {getStatusIcon(meeting.status)}
+                      </div>
+                      <CardHeader className="pb-3 border-b border-border/5 bg-secondary/5">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-black italic text-xs border border-primary/20">
+                            {meeting.clientName.charAt(0)}
+                          </div>
+                          <div>
+                            <CardTitle className="text-sm font-black uppercase tracking-tight italic text-foreground group-hover:text-primary transition-colors">{meeting.clientName}</CardTitle>
+                            <p className="text-[9px] font-bold text-muted-foreground/60 uppercase tracking-widest mt-0.5">{meeting.leadProject || 'NO_PROJECT_LINK'}</p>
+                          </div>
                         </div>
-                        <div>
-                          <Label>Phone</Label>
-                          <Input value={selectedClient.phone} disabled />
-                        </div>
-                      </>
-                    )}
-
-                    <div className="col-span-2">
-                      <Label htmlFor="title">Meeting Title *</Label>
-                      <Input
-                        id="title"
-                        value={formData.title}
-                        onChange={(e) =>
-                          setFormData({ ...formData, title: e.target.value })
-                        }
-                        required
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="type">Meeting Type *</Label>
-                      <Select
-                        value={formData.type}
-                        onValueChange={(value: Meeting["type"]) =>
-                          setFormData({ ...formData, type: value })
-                        }
-                      >
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Zoom">Zoom</SelectItem>
-                          <SelectItem value="Google Meet">Google Meet</SelectItem>
-                          <SelectItem value="Phone">Phone</SelectItem>
-                          <SelectItem value="In-Person">In-Person</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="duration">Duration (minutes) *</Label>
-                      <Select
-                        value={formData.duration}
-                        onValueChange={(value) =>
-                          setFormData({ ...formData, duration: value })
-                        }
-                      >
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="15">15 minutes</SelectItem>
-                          <SelectItem value="30">30 minutes</SelectItem>
-                          <SelectItem value="60">1 hour</SelectItem>
-                          <SelectItem value="90">1.5 hours</SelectItem>
-                          <SelectItem value="120">2 hours</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="date">Meeting Date *</Label>
-                      <Input
-                        id="date"
-                        type="date"
-                        value={formData.date}
-                        onChange={(e) =>
-                          setFormData({ ...formData, date: e.target.value })
-                        }
-                        required
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="time">Meeting Time *</Label>
-                      <Input
-                        id="time"
-                        type="time"
-                        value={formData.time}
-                        onChange={(e) =>
-                          setFormData({ ...formData, time: e.target.value })
-                        }
-                        required
-                      />
-                    </div>
-
-                    <div className="col-span-2">
-                      <Label htmlFor="link">Meeting Link / Location</Label>
-                      <Input
-                        id="link"
-                        value={formData.link}
-                        onChange={(e) =>
-                          setFormData({ ...formData, link: e.target.value })
-                        }
-                        placeholder="https://zoom.us/j/123456789 or Office Address"
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="reminder">Reminder</Label>
-                      <Select
-                        value={formData.reminder}
-                        onValueChange={(value) =>
-                          setFormData({ ...formData, reminder: value })
-                        }
-                      >
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="10min">10 minutes before</SelectItem>
-                          <SelectItem value="1hr">1 hour before</SelectItem>
-                          <SelectItem value="24hr">24 hours before</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="leadProject">Attach Lead/Project</Label>
-                      <Select
-                        value={formData.leadProject}
-                        onValueChange={(value) =>
-                          setFormData({ ...formData, leadProject: value })
-                        }
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select lead" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {mockLeads.map((lead) => (
-                            <SelectItem key={lead.id} value={lead.name}>
-                              {lead.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div className="col-span-2">
-                      <Label htmlFor="assignedTo">Assign to Employee</Label>
-                      <Select
-                        value={formData.assignedTo}
-                        onValueChange={(value) =>
-                          setFormData({ ...formData, assignedTo: value })
-                        }
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select employee" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {mockEmployees.map((emp) => (
-                            <SelectItem key={emp.id} value={emp.name}>
-                              {emp.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div className="col-span-2">
-                      <Label htmlFor="notes">Internal Notes</Label>
-                      <Textarea
-                        id="notes"
-                        value={formData.notes}
-                        onChange={(e) =>
-                          setFormData({ ...formData, notes: e.target.value })
-                        }
-                        placeholder="Add internal notes (team only)"
-                        rows={3}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex justify-end gap-2">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => setDialogOpen(false)}
-                    >
-                      Cancel
-                    </Button>
-                    <Button type="submit">
-                      {editingMeeting ? "Update Meeting" : "Schedule Meeting"}
-                    </Button>
-                  </div>
-                </form>
-              </DialogContent>
-            </Dialog>
-          </div>
-
-          {/* Tabs for List and Calendar View */}
-          <Tabs defaultValue="list" className="w-full">
-            <TabsList>
-              <TabsTrigger value="list">
-                <FileText className="w-4 h-4 mr-2" />
-                List View
-              </TabsTrigger>
-              <TabsTrigger value="calendar">
-                <Calendar className="w-4 h-4 mr-2" />
-                Calendar View
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="list" className="mt-4">
-              <Card>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Client</TableHead>
-                      <TableHead>Title</TableHead>
-                      <TableHead>Type</TableHead>
-                      <TableHead>Date & Time</TableHead>
-                      <TableHead>Duration</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Assigned To</TableHead>
-                      <TableHead>Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredMeetings.length === 0 ? (
-                      <TableRow>
-                        <TableCell colSpan={8} className="text-center text-muted-foreground">
-                          No meetings found
-                        </TableCell>
-                      </TableRow>
-                    ) : (
-                      filteredMeetings.map((meeting) => (
-                        <TableRow key={meeting.id}>
-                          <TableCell>
-                            <div>
-                              <div className="font-medium">{meeting.clientName}</div>
-                              <div className="text-sm text-muted-foreground">
-                                {meeting.clientPhone}
-                              </div>
-                            </div>
-                          </TableCell>
-                          <TableCell>{meeting.title}</TableCell>
-                          <TableCell>
-                            <div className="flex items-center gap-2">
+                      </CardHeader>
+                      <CardContent className="pt-6 space-y-4">
+                        <div className="flex flex-col gap-2">
+                          <div className="flex items-center justify-between border-b border-border/5 pb-2">
+                            <span className="text-[9px] font-black text-muted-foreground/40 uppercase tracking-widest italic">Temporal_Nexus</span>
+                            <span className="text-[11px] font-black text-foreground italic uppercase tracking-tighter">{meeting.date} // {meeting.time}</span>
+                          </div>
+                          <div className="flex items-center justify-between border-b border-border/5 pb-2">
+                            <span className="text-[9px] font-black text-muted-foreground/40 uppercase tracking-widest italic">Protocol</span>
+                            <div className="flex items-center gap-1.5 text-[10px] font-bold text-foreground italic uppercase">
                               {getTypeIcon(meeting.type)}
                               <span>{meeting.type}</span>
                             </div>
-                          </TableCell>
-                          <TableCell>
-                            <div>
-                              <div>{meeting.date}</div>
-                              <div className="text-sm text-muted-foreground">
-                                {meeting.time}
-                              </div>
-                            </div>
-                          </TableCell>
-                          <TableCell>{meeting.duration} min</TableCell>
-                          <TableCell>
-                            <Select
-                              value={meeting.status}
-                              onValueChange={(value: Meeting["status"]) =>
-                                handleStatusChange(meeting.id, value)
-                              }
-                            >
-                              <SelectTrigger className="w-[140px]">
-                                <div className="flex items-center gap-2">
-                                  {getStatusIcon(meeting.status)}
-                                  <SelectValue />
-                                </div>
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="Scheduled">Scheduled</SelectItem>
-                                <SelectItem value="Confirmed">Confirmed</SelectItem>
-                                <SelectItem value="Completed">Completed</SelectItem>
-                                <SelectItem value="Cancelled">Cancelled</SelectItem>
-                                <SelectItem value="No-Show">No-Show</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </TableCell>
-                          <TableCell>{meeting.assignedTo || "-"}</TableCell>
-                          <TableCell>
-                            <div className="flex gap-2">
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={() => handleEdit(meeting)}
-                              >
-                                Edit
-                              </Button>
-                              <Button
-                                size="sm"
-                                variant="destructive"
-                                onClick={() => handleDelete(meeting.id)}
-                              >
-                                Delete
-                              </Button>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    )}
-                  </TableBody>
-                </Table>
-              </Card>
-            </TabsContent>
+                          </div>
+                        </div>
 
-            <TabsContent value="calendar" className="mt-4">
-              <Card className="p-6">
-                <div className="grid gap-4">
-                  {filteredMeetings.map((meeting) => (
-                    <div
-                      key={meeting.id}
-                      className="flex items-start gap-4 p-4 border rounded-lg hover:bg-accent/50 transition-colors"
-                    >
-                      <div className="flex flex-col items-center justify-center bg-primary text-primary-foreground rounded-lg p-3 min-w-[60px]">
-                        <div className="text-2xl font-bold">
-                          {new Date(meeting.date).getDate()}
+                        <div className="space-y-1">
+                          <h4 className="text-[10px] font-black uppercase tracking-widest italic text-primary/80">nexus_parameters</h4>
+                          <p className="text-xs font-medium text-muted-foreground leading-relaxed line-clamp-1">{meeting.title}</p>
                         </div>
-                        <div className="text-xs">
-                          {new Date(meeting.date).toLocaleString("default", {
-                            month: "short",
-                          })}
+
+                        <div className="flex gap-2 pt-2">
+                          <Button variant="outline" size="sm" className="flex-1 h-9 text-[9px] font-black uppercase italic tracking-widest border-border/30 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all" onClick={() => handleEdit(meeting)}>
+                            Configure
+                          </Button>
+                          <Button variant="outline" size="sm" className="flex-1 h-9 text-[9px] font-black uppercase italic tracking-widest text-destructive border-border/30 hover:border-destructive/50 transition-all" onClick={() => handleDelete(meeting.id)}>
+                            Sever
+                          </Button>
                         </div>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-start justify-between">
-                          <div>
-                            <h3 className="font-semibold">{meeting.title}</h3>
-                            <p className="text-sm text-muted-foreground">
-                              {meeting.clientName} • {meeting.time} • {meeting.duration} min
-                            </p>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            {getStatusIcon(meeting.status)}
-                            <Badge variant="outline">{meeting.status}</Badge>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-4 mt-2 text-sm">
-                          <div className="flex items-center gap-1 text-muted-foreground">
-                            {getTypeIcon(meeting.type)}
-                            <span>{meeting.type}</span>
-                          </div>
-                          {meeting.leadProject && (
-                            <Badge variant="secondary">{meeting.leadProject}</Badge>
-                          )}
-                        </div>
-                      </div>
-                      <div className="flex gap-2">
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => handleEdit(meeting)}
-                        >
-                          Edit
-                        </Button>
-                      </div>
-                    </div>
+                      </CardContent>
+                    </Card>
                   ))}
+                  {filteredMeetings.length === 0 && (
+                     <div className="col-span-full py-20 text-center bg-card/10 rounded-2xl border border-dashed border-border/30">
+                        <Calendar className="w-16 h-16 text-muted-foreground/10 mx-auto mb-4" />
+                        <p className="text-[10px] font-black uppercase tracking-widest italic text-muted-foreground/60">No Temporal Entries Detected In Current Sequence.</p>
+                     </div>
+                  )}
                 </div>
-              </Card>
-            </TabsContent>
-          </Tabs>
+              </TabsContent>
+
+              <TabsContent value="calendar" className="mt-0 outline-none">
+                <Card className="border-border/30 shadow-2xl bg-card/40 backdrop-blur-xl overflow-hidden">
+                   <div className="p-6 md:p-10 space-y-8">
+                      {filteredMeetings.map((meeting) => (
+                         <div key={meeting.id} className="relative pl-12 md:pl-20 py-2 border-l border-border/20 group hover:border-primary/50 transition-colors">
+                            <div className="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-border group-hover:bg-primary transition-all shadow-[0_0_10px_rgba(0,0,0,0.1)]"></div>
+                            <div className="absolute left-4 md:left-6 top-0 text-[10px] font-black italic uppercase text-muted-foreground/40 tracking-tighter">
+                               {new Date(meeting.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }).toUpperCase()}
+                            </div>
+                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                               <div className="space-y-1">
+                                  <h3 className="text-sm md:text-lg font-black italic uppercase tracking-tighter text-foreground group-hover:text-primary transition-colors">{meeting.title}</h3>
+                                  <div className="flex items-center gap-3 text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest">
+                                     <span>{meeting.time} // {meeting.duration}m</span>
+                                     <span className="w-1 h-1 rounded-full bg-border/50"></span>
+                                     <span className="text-primary/60">{meeting.clientName}</span>
+                                  </div>
+                               </div>
+                               <div className="flex items-center gap-3">
+                                  <div className="px-3 py-1 rounded-full bg-muted/20 border border-border/30 text-[9px] font-black uppercase italic tracking-widest text-muted-foreground/60">
+                                     {meeting.status}
+                                  </div>
+                                  <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-primary/10 hover:text-primary transition-all" onClick={() => handleEdit(meeting)}>
+                                     <Plus className="w-4 h-4 rotate-45" />
+                                  </Button>
+                               </div>
+                            </div>
+                         </div>
+                      ))}
+                   </div>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          </div>
         </main>
       </div>
     </div>

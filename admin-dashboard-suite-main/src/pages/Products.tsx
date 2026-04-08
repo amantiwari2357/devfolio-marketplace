@@ -202,59 +202,70 @@ const Products = () => {
         </header>
         
         {/* Scrollable Content */}
-        <main className="flex-1 pt-24 pb-6 px-6 overflow-y-auto">
-          <div className="max-w-7xl mx-auto space-y-6">
-            <div className="flex justify-end">
+        <main className="flex-1 pt-24 pb-6 px-4 md:px-6 overflow-y-auto">
+          <div className="max-w-7xl mx-auto space-y-8 md:space-y-10">
+            
+            {/* Page Header */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+              <div>
+                <h1 className="text-xl md:text-3xl font-black tracking-tighter text-foreground italic uppercase">V_Node / Service Catalog</h1>
+                <p className="text-[10px] md:text-xs font-bold text-muted-foreground/60 uppercase tracking-[0.2em] mt-1 shadow-sm">Global Offerings & Service Recognition Matrix</p>
+              </div>
               <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button onClick={openCreateDialog}>
-                    <Plus className="w-4 h-4 mr-2" />
-                    Add Testimonial
+                  <Button onClick={openCreateDialog} className="gap-2 font-black uppercase italic tracking-widest text-[10px] px-6 h-10 shadow-lg shadow-primary/20">
+                    <Plus className="w-4 h-4" />
+                    Initialize_Service
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[500px]">
                   <DialogHeader>
-                    <DialogTitle>
-                      {editingTestimonial ? 'Edit Testimonial' : 'Add New Testimonial'}
+                    <DialogTitle className="font-black uppercase tracking-tighter italic text-xl">
+                      {editingTestimonial ? 'Update_Service' : 'Add_New_Service'}
                     </DialogTitle>
                   </DialogHeader>
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                      <Label htmlFor="quote">Quote</Label>
+                  <form onSubmit={handleSubmit} className="space-y-4 pt-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="quote" className="font-bold uppercase tracking-widest text-[10px] italic">Description_Matrix</Label>
                       <Textarea
                         id="quote"
                         value={formData.quote}
                         onChange={(e) => setFormData({ ...formData, quote: e.target.value })}
-                        placeholder="Enter the testimonial quote"
+                        placeholder="Enter the detailed service metric"
                         required
+                        className="bg-muted/10 border-border/30 h-32"
                       />
                     </div>
-                    <div>
-                      <Label htmlFor="author">Author</Label>
-                      <Input
-                        id="author"
-                        value={formData.author}
-                        onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-                        placeholder="Enter author name"
-                        required
-                      />
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="author" className="font-bold uppercase tracking-widest text-[10px] italic">Designation_ID</Label>
+                        <Input
+                          id="author"
+                          value={formData.author}
+                          onChange={(e) => setFormData({ ...formData, author: e.target.value })}
+                          placeholder="Author_Name"
+                          required
+                          className="bg-muted/10 border-border/30 h-10"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="role" className="font-bold uppercase tracking-widest text-[10px] italic">Protocol_Role</Label>
+                        <Input
+                          id="role"
+                          value={formData.role}
+                          onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                          placeholder="Role_Title"
+                          required
+                          className="bg-muted/10 border-border/30 h-10"
+                        />
+                      </div>
                     </div>
-                    <div>
-                      <Label htmlFor="role">Role</Label>
-                      <Input
-                        id="role"
-                        value={formData.role}
-                        onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                        placeholder="Enter author role"
-                        required
-                      />
-                    </div>
-                    <div className="flex justify-end gap-2">
-                      <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>
-                        Cancel
+                    <div className="flex justify-end gap-3 pt-4 border-t border-border/20">
+                      <Button type="button" variant="ghost" onClick={() => setDialogOpen(false)} className="font-bold uppercase tracking-widest text-[10px] italic">
+                        Abort
                       </Button>
-                      <Button type="submit">
-                        {editingTestimonial ? 'Update' : 'Create'}
+                      <Button type="submit" className="font-black uppercase tracking-widest text-[10px] italic px-6">
+                        {editingTestimonial ? 'Sync_Update' : 'Commit_Service'}
                       </Button>
                     </div>
                   </form>
@@ -262,91 +273,103 @@ const Products = () => {
               </Dialog>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-4">
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Total Testimonials</CardTitle>
-                  <MessageSquare className="h-4 w-4 text-muted-foreground" />
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <Card className="border-border/50 shadow-sm relative overflow-hidden group">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                  <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Metric / Total</CardTitle>
+                  <MessageSquare className="h-4 w-4 text-primary" />
                 </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{testimonials.length}</div>
+                <CardContent className="px-4 md:px-6 pb-4">
+                  <div className="text-xl md:text-3xl font-black tracking-tighter text-foreground italic">S_{testimonials.length}</div>
+                  <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter mt-1">Lifecycle Units</p>
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Active</CardTitle>
-                  <Eye className="h-4 w-4 text-chart-1" />
+              <Card className="border-border/50 shadow-sm relative overflow-hidden group">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                  <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Status / Online</CardTitle>
+                  <Eye className="h-4 w-4 text-green-500" />
                 </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">
-                    {testimonials.filter(t => t.isActive).length}
-                  </div>
+                <CardContent className="px-4 md:px-6 pb-4">
+                  <div className="text-xl md:text-3xl font-black tracking-tighter text-green-500 italic">A_{testimonials.filter(t => t.isActive).length}</div>
+                  <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter mt-1">Active Protocols</p>
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Inactive</CardTitle>
-                  <EyeOff className="h-4 w-4 text-chart-2" />
+              <Card className="col-span-2 lg:col-span-1 border-border/50 shadow-sm relative overflow-hidden group">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                  <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Status / Standby</CardTitle>
+                  <EyeOff className="h-4 w-4 text-muted-foreground/40" />
                 </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">
-                    {testimonials.filter(t => !t.isActive).length}
-                  </div>
+                <CardContent className="px-4 md:px-6 pb-4">
+                  <div className="text-xl md:text-3xl font-black tracking-tighter text-muted-foreground/40 italic">I_{testimonials.filter(t => !t.isActive).length}</div>
+                  <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter mt-1">Inactive Matrix</p>
                 </CardContent>
               </Card>
             </div>
 
-            <Card>
-              <CardHeader>
-                {/* <CardTitle></CardTitle> */}
+            <Card className="border-border/50 shadow-md overflow-hidden">
+              <CardHeader className="px-4 md:px-6 py-5 border-b border-border/30 bg-secondary/10">
+                <CardTitle className="text-lg md:text-xl font-black tracking-tighter text-foreground italic uppercase">Registry / Details View</CardTitle>
+                <p className="text-[10px] md:text-xs font-bold text-muted-foreground/60 uppercase tracking-[0.2em] mt-1">Sequential Offerings Grid</p>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
+              <CardContent className="p-4 md:p-6 pb-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {testimonials.map((testimonial) => (
                     <div
                       key={testimonial._id}
-                      className="flex items-center justify-between p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
+                      className="p-5 rounded-xl bg-muted/20 border border-border/10 hover:border-border/30 transition-all group flex flex-col justify-between"
                     >
-                      <div className="flex-1">
-                        <div className="font-semibold mb-1">{testimonial.author}</div>
-                        <div className="text-sm text-muted-foreground mb-2">{testimonial.role}</div>
-                        <div className="text-sm line-clamp-2">{testimonial.quote}</div>
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <div className="font-black text-sm uppercase tracking-tight italic text-foreground group-hover:text-primary transition-colors">{testimonial.author}</div>
+                            <div className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest mt-0.5">{testimonial.role}</div>
+                          </div>
+                          <div className="-mt-1">
+                            {getStatusBadge(testimonial.isActive)}
+                          </div>
+                        </div>
+                        <div className="text-xs font-medium leading-relaxed text-muted-foreground/80 relative">
+                          <span className="text-2xl font-serif text-primary/10 absolute -top-2 -left-2 leading-none">"</span>
+                          <span className="relative z-10 line-clamp-3">{testimonial.quote}</span>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-4">
-                        <div className="w-20">
-                          {getStatusBadge(testimonial.isActive)}
-                        </div>
-                        <div className="flex gap-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleToggleStatus(testimonial._id)}
-                          >
-                            {testimonial.isActive ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleEdit(testimonial)}
-                          >
-                            <Edit className="w-4 h-4" />
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleDelete(testimonial._id)}
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </div>
+                      
+                      <div className="flex items-center gap-2 mt-6 pt-4 border-t border-border/10">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0 hover:bg-primary/10 hover:text-primary transition-all rounded-lg"
+                          onClick={() => handleToggleStatus(testimonial._id)}
+                        >
+                          {testimonial.isActive ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0 hover:bg-blue-500/10 hover:text-blue-500 transition-all rounded-lg"
+                          onClick={() => handleEdit(testimonial)}
+                        >
+                          <Edit className="w-4 h-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0 hover:bg-destructive/10 hover:text-destructive transition-all rounded-lg"
+                          onClick={() => handleDelete(testimonial._id)}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
                       </div>
                     </div>
                   ))}
                   {testimonials.length === 0 && (
-                    <div className="text-center py-8 text-muted-foreground">
-                      No testimonials found. Add your first testimonial to get started.
+                    <div className="col-span-full text-center py-16">
+                      <MessageSquare className="w-12 h-12 text-muted-foreground/20 mx-auto mb-4" />
+                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest italic">
+                        Protocol Null: No services detected in registry.
+                      </p>
                     </div>
                   )}
                 </div>

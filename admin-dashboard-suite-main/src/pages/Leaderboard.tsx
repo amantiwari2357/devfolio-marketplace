@@ -107,6 +107,12 @@ const Leaderboard = () => {
         {/* Scrollable Content */}
         <main className="flex-1 pt-24 pb-6 px-4 md:px-6 overflow-y-auto">
           <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
+            
+            {/* Page Header */}
+            <div>
+              <h1 className="text-xl md:text-3xl font-black tracking-tighter text-foreground italic uppercase">V_Node / Booking Registry</h1>
+              <p className="text-[10px] md:text-xs font-bold text-muted-foreground/60 uppercase tracking-[0.2em] mt-1 shadow-sm">Global Appointment Sequencing Matrix</p>
+            </div>
 
             <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <Card className="border-border/50 shadow-sm">
@@ -149,8 +155,8 @@ const Leaderboard = () => {
 
             <Card className="border-border/50 shadow-md overflow-hidden">
               <CardHeader className="px-4 md:px-6 py-5 border-b border-border/30 bg-secondary/10">
-                <CardTitle className="text-lg md:text-xl font-black tracking-tighter text-foreground italic uppercase">Registry / Booking Details</CardTitle>
-                <p className="text-[10px] md:text-xs font-bold text-muted-foreground/60 uppercase tracking-[0.2em] mt-1">Global Appointment Sequencing Matrix</p>
+                <CardTitle className="text-lg md:text-xl font-black tracking-tighter text-foreground italic uppercase">Registry / Details View</CardTitle>
+                <p className="text-[10px] md:text-xs font-bold text-muted-foreground/60 uppercase tracking-[0.2em] mt-1">Sequential Booking Logs</p>
               </CardHeader>
               <CardContent className="p-4 md:p-6">
                 <div className="space-y-4">
@@ -165,24 +171,26 @@ const Leaderboard = () => {
                         className="flex items-center justify-between p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
                       >
                         <div className="flex items-center gap-4">
-                          <div className="text-2xl font-bold text-muted-foreground w-8">
-                            #{booking.rank}
+                          <div className="text-2xl font-bold text-muted-foreground/40 w-8 italic">
+                            #{booking.rank.toString().padStart(2, '0')}
                           </div>
-                          <Avatar>
+                          <Avatar className="h-10 w-10 border-2 border-background shadow-sm">
                             <AvatarImage src="" />
-                            <AvatarFallback>{booking.avatar}</AvatarFallback>
+                            <AvatarFallback className="font-bold text-xs">{booking.avatar}</AvatarFallback>
                           </Avatar>
                           <div>
-                            <div className="font-semibold">{booking.name}</div>
-                            <div className="text-sm text-muted-foreground">
-                              {booking.date} at {booking.time}
+                            <div className="font-black text-sm uppercase tracking-tight italic">{booking.name}</div>
+                            <div className="text-xs text-muted-foreground font-medium uppercase tracking-tighter flex items-center gap-2">
+                              <span>{booking.date}</span>
+                              <span className="h-1 w-1 rounded-full bg-muted-foreground/30"></span>
+                              <span>{booking.time}</span>
                             </div>
-                            <div className="text-xs text-muted-foreground">
+                            <div className="text-[10px] text-primary/60 font-bold uppercase tracking-[0.1em] mt-0.5">
                               {booking.serviceType}
                             </div>
                           </div>
                         </div>
-                        <Badge variant={getStatusColor(booking.status)}>
+                        <Badge variant={getStatusColor(booking.status)} className="font-black uppercase italic tracking-widest text-[10px] px-2 py-0.5">
                           {booking.status}
                         </Badge>
                       </div>

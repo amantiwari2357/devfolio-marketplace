@@ -52,80 +52,93 @@ const Order = () => {
         </header>
         
         {/* Scrollable Content */}
-        <main className="flex-1 pt-24 pb-6 px-6 overflow-y-auto">
-          <div className="max-w-7xl mx-auto space-y-6">
+        <main className="flex-1 pt-24 pb-6 px-4 md:px-6 overflow-y-auto">
+          <div className="max-w-7xl mx-auto space-y-8 md:space-y-10">
 
-            <div className="grid gap-4 md:grid-cols-4">
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Total Orders</CardTitle>
-                  <Package className="h-4 w-4 text-muted-foreground" />
+            {/* Page Header */}
+            <div>
+              <h1 className="text-xl md:text-3xl font-black tracking-tighter text-foreground italic uppercase">V_Node / Fulfillment Stream</h1>
+              <p className="text-[10px] md:text-xs font-bold text-muted-foreground/60 uppercase tracking-[0.2em] mt-1 shadow-sm">Real-time Order Processing & Logistics Matrix</p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <Card className="border-border/50 shadow-sm">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                  <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Metric / Total</CardTitle>
+                  <Package className="h-4 w-4 text-primary" />
                 </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">6</div>
+                <CardContent className="px-4 md:px-6 pb-4">
+                  <div className="text-xl md:text-3xl font-black tracking-tighter text-foreground italic">O_6</div>
+                  <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter mt-1">Lifecycle Units</p>
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Delivered</CardTitle>
+              <Card className="border-border/50 shadow-sm">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                  <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Status / Finalized</CardTitle>
                   <CheckCircle className="h-4 w-4 text-chart-2" />
                 </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">2</div>
+                <CardContent className="px-4 md:px-6 pb-4">
+                  <div className="text-xl md:text-3xl font-black tracking-tighter text-chart-2 italic">D_2</div>
+                  <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter mt-1">Confirmed Delivery</p>
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Processing</CardTitle>
+              <Card className="border-border/50 shadow-sm">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                  <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Queue / Processing</CardTitle>
                   <Clock className="h-4 w-4 text-chart-3" />
                 </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">3</div>
+                <CardContent className="px-4 md:px-6 pb-4">
+                  <div className="text-xl md:text-3xl font-black tracking-tighter text-chart-3 italic">P_3</div>
+                  <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter mt-1">In-Stream Ops</p>
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Cancelled</CardTitle>
+              <Card className="border-border/50 shadow-sm">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                  <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Alert / Cancelled</CardTitle>
                   <XCircle className="h-4 w-4 text-destructive" />
                 </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">1</div>
+                <CardContent className="px-4 md:px-6 pb-4">
+                  <div className="text-xl md:text-3xl font-black tracking-tighter text-destructive italic">C_1</div>
+                  <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter mt-1">Terminal State</p>
                 </CardContent>
               </Card>
             </div>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Recent Orders</CardTitle>
+            <Card className="border-border/50 shadow-md overflow-hidden">
+              <CardHeader className="px-4 md:px-6 py-5 border-b border-border/30 bg-secondary/10">
+                <CardTitle className="text-lg md:text-xl font-black tracking-tighter text-foreground italic uppercase">Data Grid / Recent Fulfillment</CardTitle>
+                <p className="text-[10px] md:text-xs font-bold text-muted-foreground/60 uppercase tracking-[0.2em] mt-1">Dynamic Order Tracking Table</p>
               </CardHeader>
-              <CardContent>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Order ID</TableHead>
-                      <TableHead>Customer</TableHead>
-                      <TableHead>Product</TableHead>
-                      <TableHead>Amount</TableHead>
-                      <TableHead>Date</TableHead>
-                      <TableHead>Status</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {orders.map((order) => (
-                      <TableRow key={order.id}>
-                        <TableCell className="font-medium">{order.id}</TableCell>
-                        <TableCell>{order.customer}</TableCell>
-                        <TableCell>{order.product}</TableCell>
-                        <TableCell>₹{order.amount.toLocaleString()}</TableCell>
-                        <TableCell>{order.date}</TableCell>
-                        <TableCell>{getStatusBadge(order.status)}</TableCell>
+              <CardContent className="p-0">
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader className="bg-muted/30">
+                      <TableRow className="border-b border-border/50 hover:bg-transparent">
+                        <TableHead className="font-black uppercase tracking-widest text-[10px] italic py-4">Protocol_ID</TableHead>
+                        <TableHead className="font-black uppercase tracking-widest text-[10px] italic py-4">Stakeholder</TableHead>
+                        <TableHead className="font-black uppercase tracking-widest text-[10px] italic py-4">Product_Node</TableHead>
+                        <TableHead className="font-black uppercase tracking-widest text-[10px] italic py-4">Value_Matrix</TableHead>
+                        <TableHead className="font-black uppercase tracking-widest text-[10px] italic py-4">Timestamp</TableHead>
+                        <TableHead className="font-black uppercase tracking-widest text-[10px] italic py-4">Condition</TableHead>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                    </TableHeader>
+                    <TableBody>
+                      {orders.map((order) => (
+                        <TableRow key={order.id} className="border-b border-border/30 hover:bg-muted/20 transition-colors group">
+                          <TableCell className="font-mono text-xs font-bold text-primary/70">{order.id}</TableCell>
+                          <TableCell className="font-black text-xs uppercase tracking-tight italic">{order.customer}</TableCell>
+                          <TableCell className="text-xs font-medium text-foreground">{order.product}</TableCell>
+                          <TableCell className="font-black text-xs italic tracking-tighter">₹{order.amount.toLocaleString()}</TableCell>
+                          <TableCell className="text-[10px] font-bold text-muted-foreground uppercase">{order.date}</TableCell>
+                          <TableCell>{getStatusBadge(order.status)}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
               </CardContent>
             </Card>
           </div>

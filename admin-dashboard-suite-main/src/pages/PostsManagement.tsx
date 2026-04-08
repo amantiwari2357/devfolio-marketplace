@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { Card } from "@/components/ui/card";
+import Sidebar from "@/components/dashboard/Sidebar";
+import DashboardHeader from "@/components/dashboard/DashboardHeader";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -106,6 +108,7 @@ const PostsManagement = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("list");
 
   // Editor state
@@ -310,182 +313,207 @@ const PostsManagement = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-3xl font-bold text-foreground">Blog Posts Management</h1>
-            <p className="text-muted-foreground mt-1">Create, edit, and manage your blog posts</p>
-          </div>
-          <Button onClick={handleCreateNew} className="gap-2">
-            <Plus className="w-4 h-4" />
-            New Post
-          </Button>
-        </div>
+    <div className="min-h-screen bg-background flex overflow-hidden font-sans">
+      {/* Fixed Sidebar */}
+      <div className={`fixed inset-y-0 left-0 z-30 w-64 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-200 ease-in-out md:translate-x-0`}>
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      </div>
+      
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col h-screen overflow-hidden md:pl-64">
+        {/* Fixed Header */}
+        <header className="fixed top-0 right-0 left-0 z-20 bg-background border-b md:left-64">
+          <DashboardHeader onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
+        </header>
 
-        {/* Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="mb-6">
-            <TabsTrigger value="list" className="gap-2">
-              <Eye className="w-4 h-4" />
-              All Posts
-            </TabsTrigger>
-            <TabsTrigger value="editor" className="gap-2">
-              <Edit2 className="w-4 h-4" />
-              Editor
-            </TabsTrigger>
-            <TabsTrigger value="analytics" className="gap-2">
-              <BarChart3 className="w-4 h-4" />
-              Analytics
-            </TabsTrigger>
-            <TabsTrigger value="activity" className="gap-2">
-              <Activity className="w-4 h-4" />
-              Activity Log
-            </TabsTrigger>
-          </TabsList>
-
-          {/* Posts List Tab */}
-          <TabsContent value="list" className="space-y-4">
-            <Card className="p-6">
-              {/* Filters and Search */}
-              <div className="flex flex-col md:flex-row gap-4 mb-6">
-                <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    placeholder="Search posts..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10"
-                  />
-                </div>
-                <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="w-full md:w-48">
-                    <SelectValue placeholder="Filter by status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Status</SelectItem>
-                    <SelectItem value="published">Published</SelectItem>
-                    <SelectItem value="draft">Draft</SelectItem>
-                    <SelectItem value="scheduled">Scheduled</SelectItem>
-                  </SelectContent>
-                </Select>
+        {/* Scrollable Content */}
+        <main className="flex-1 pt-24 pb-6 px-4 md:px-6 overflow-y-auto">
+          <div className="max-w-7xl mx-auto space-y-8 md:space-y-10">
+            {/* Page Header */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+              <div>
+                <h1 className="text-xl md:text-3xl font-black tracking-tighter text-foreground italic uppercase">V_Node / Content Sequencer</h1>
+                <p className="text-[10px] md:text-xs font-bold text-muted-foreground/60 uppercase tracking-[0.2em] mt-1 shadow-sm">Global Post Deployment & Registry Matrix</p>
               </div>
+              <Button onClick={handleCreateNew} className="gap-2 font-black uppercase italic tracking-widest text-[10px] px-6 h-10 shadow-lg shadow-primary/20">
+                <Plus className="w-4 h-4" />
+                Initialize_Post
+              </Button>
+            </div>
 
-              {/* Bulk Actions */}
-              {selectedPosts.length > 0 && (
-                <div className="flex items-center gap-3 mb-4 p-3 bg-muted rounded-lg">
-                  <span className="text-sm font-medium">{selectedPosts.length} selected</span>
-                  <Button size="sm" variant="outline" onClick={handleBulkPublish} className="gap-2">
-                    <Send className="w-4 h-4" />
-                    Publish
-                  </Button>
-                  <Button size="sm" variant="outline" onClick={handleBulkDelete} className="gap-2 text-destructive">
-                    <Trash2 className="w-4 h-4" />
-                    Delete
-                  </Button>
-                </div>
-              )}
+            {/* Tabs */}
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+              <TabsList className="bg-muted/50 p-1 border border-border/50 overflow-x-auto inline-flex whitespace-nowrap scrollbar-hide max-w-full">
+                <TabsTrigger value="list" className="gap-2 font-bold uppercase tracking-widest text-[10px] italic">
+                  <Eye className="w-4 h-4" />
+                  Registry
+                </TabsTrigger>
+                <TabsTrigger value="editor" className="gap-2 font-bold uppercase tracking-widest text-[10px] italic">
+                  <Edit2 className="w-4 h-4" />
+                  Sequencer
+                </TabsTrigger>
+                <TabsTrigger value="analytics" className="gap-2 font-bold uppercase tracking-widest text-[10px] italic">
+                  <BarChart3 className="w-4 h-4" />
+                  Intelligence
+                </TabsTrigger>
+                <TabsTrigger value="activity" className="gap-2 font-bold uppercase tracking-widest text-[10px] italic">
+                  <Activity className="w-4 h-4" />
+                  Audit_Log
+                </TabsTrigger>
+              </TabsList>
 
-              {/* Posts Table */}
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b">
-                      <th className="text-left p-3">
-                        <Checkbox
-                          checked={selectedPosts.length === paginatedPosts.length && paginatedPosts.length > 0}
-                          onCheckedChange={handleSelectAll}
+              {/* Posts List Tab */}
+              <TabsContent value="list" className="space-y-6 m-0">
+                <Card className="border-border/50 shadow-md">
+                  <CardContent className="p-4 md:p-6">
+                    {/* Filters and Search */}
+                    <div className="flex flex-col md:flex-row gap-4 mb-6">
+                      <div className="flex-1 relative">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/50" />
+                        <Input
+                          placeholder="Search database..."
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          className="pl-10 h-11 bg-muted/20 border-border/30 focus:bg-background transition-all font-medium italic placeholder:not-italic"
                         />
-                      </th>
-                      <th className="text-left p-3 font-semibold">Title</th>
-                      <th className="text-left p-3 font-semibold">Author</th>
-                      <th className="text-left p-3 font-semibold">Status</th>
-                      <th className="text-left p-3 font-semibold">Views</th>
-                      <th className="text-left p-3 font-semibold">Date</th>
-                      <th className="text-left p-3 font-semibold">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {paginatedPosts.map((post) => (
-                      <tr key={post.id} className="border-b hover:bg-muted/50 transition-colors">
-                        <td className="p-3">
-                          <Checkbox
-                            checked={selectedPosts.includes(post.id)}
-                            onCheckedChange={(checked) => handleSelectPost(post.id, checked as boolean)}
-                          />
-                        </td>
-                        <td className="p-3">
-                          <div>
-                            <p className="font-medium text-foreground">{post.title}</p>
-                            <p className="text-sm text-muted-foreground">{post.slug}</p>
-                          </div>
-                        </td>
-                        <td className="p-3">
-                          <div className="flex items-center gap-2">
-                            <Avatar className="w-8 h-8">
-                              <AvatarImage src={post.author.avatar} />
-                              <AvatarFallback>{post.author.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                            </Avatar>
-                            <span className="text-sm">{post.author.name}</span>
-                          </div>
-                        </td>
-                        <td className="p-3">
-                          <Badge className={`gap-1 ${getStatusColor(post.status)}`}>
-                            {getStatusIcon(post.status)}
-                            {post.status}
-                          </Badge>
-                        </td>
-                        <td className="p-3">
-                          <div className="flex items-center gap-1 text-sm">
-                            <Eye className="w-4 h-4" />
-                            {post.views}
-                          </div>
-                        </td>
-                        <td className="p-3 text-sm text-muted-foreground">{post.createdAt}</td>
-                        <td className="p-3">
-                          <div className="flex items-center gap-2">
-                            <Button size="sm" variant="ghost" onClick={() => handleEditPost(post)}>
-                              <Edit2 className="w-4 h-4" />
-                            </Button>
-                            <Button size="sm" variant="ghost" onClick={() => handleDeletePost(post.id)} className="text-destructive">
-                              <Trash2 className="w-4 h-4" />
-                            </Button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                      </div>
+                      <Select value={statusFilter} onValueChange={setStatusFilter}>
+                        <SelectTrigger className="w-full md:w-56 h-11 bg-muted/20 border-border/30 font-bold uppercase tracking-widest text-[10px] italic">
+                          <SelectValue placeholder="FILTER / STATUS" />
+                        </SelectTrigger>
+                        <SelectContent className="border-border/50">
+                          <SelectItem value="all" className="font-bold uppercase text-[10px]">All Status</SelectItem>
+                          <SelectItem value="published" className="font-bold uppercase text-[10px]">Published</SelectItem>
+                          <SelectItem value="draft" className="font-bold uppercase text-[10px]">Draft</SelectItem>
+                          <SelectItem value="scheduled" className="font-bold uppercase text-[10px]">Scheduled</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
 
-              {/* Pagination */}
-              <div className="flex items-center justify-between mt-6">
-                <p className="text-sm text-muted-foreground">
-                  Showing {((currentPage - 1) * postsPerPage) + 1} to {Math.min(currentPage * postsPerPage, filteredPosts.length)} of {filteredPosts.length} posts
-                </p>
-                <div className="flex items-center gap-2">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                    disabled={currentPage === 1}
-                  >
-                    Previous
-                  </Button>
-                  <span className="text-sm px-3">Page {currentPage} of {totalPages}</span>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                    disabled={currentPage === totalPages}
-                  >
-                    Next
-                  </Button>
-                </div>
-              </div>
-            </Card>
-          </TabsContent>
+                    {/* Bulk Actions */}
+                    {selectedPosts.length > 0 && (
+                      <div className="flex items-center gap-3 mb-6 p-3 bg-primary/5 border border-primary/20 rounded-xl animate-in fade-in slide-in-from-top-2">
+                        <span className="text-[10px] font-black uppercase tracking-widest text-primary italic pl-2">{selectedPosts.length} Node(s) Selected</span>
+                        <div className="h-4 w-px bg-primary/20 mx-2" />
+                        <Button size="sm" variant="ghost" onClick={handleBulkPublish} className="gap-2 font-bold uppercase tracking-widest text-[10px] h-8 hover:bg-primary/10 text-primary">
+                          <Send className="w-3.5 h-3.5" />
+                          Batch_Push
+                        </Button>
+                        <Button size="sm" variant="ghost" onClick={handleBulkDelete} className="gap-2 font-bold uppercase tracking-widest text-[10px] h-8 text-destructive hover:bg-destructive/10">
+                          <Trash2 className="w-3.5 h-3.5" />
+                          Purge
+                        </Button>
+                      </div>
+                    )}
+
+                    {/* Posts Table */}
+                    <div className="overflow-x-auto -mx-4 md:mx-0">
+                      <div className="inline-block min-w-full align-middle">
+                        <table className="min-w-full divide-y divide-border/30 translate-gpu">
+                          <thead>
+                            <tr className="bg-muted/30">
+                              <th className="p-4 text-left w-10">
+                                <Checkbox
+                                  checked={selectedPosts.length === paginatedPosts.length && paginatedPosts.length > 0}
+                                  onCheckedChange={handleSelectAll}
+                                  className="border-muted-foreground/30 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                                />
+                              </th>
+                              <th className="p-4 text-left font-black uppercase tracking-widest text-[10px] italic">Post / Title</th>
+                              <th className="p-4 text-left font-black uppercase tracking-widest text-[10px] italic">Creator</th>
+                              <th className="p-4 text-left font-black uppercase tracking-widest text-[10px] italic">Status</th>
+                              <th className="p-4 text-left font-black uppercase tracking-widest text-[10px] italic">Reach</th>
+                              <th className="p-4 text-left font-black uppercase tracking-widest text-[10px] italic">Timestamp</th>
+                              <th className="p-4 text-left font-black uppercase tracking-widest text-[10px] italic">Ops</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-border/20">
+                            {paginatedPosts.map((post) => (
+                              <tr key={post.id} className="hover:bg-muted/20 transition-colors group">
+                                <td className="p-4">
+                                  <Checkbox
+                                    checked={selectedPosts.includes(post.id)}
+                                    onCheckedChange={(checked) => handleSelectPost(post.id, checked as boolean)}
+                                    className="border-muted-foreground/20 data-[state=checked]:bg-primary"
+                                  />
+                                </td>
+                                <td className="p-4">
+                                  <div className="max-w-xs md:max-w-md">
+                                    <p className="font-black text-sm uppercase tracking-tight italic text-foreground group-hover:text-primary transition-colors truncate">{post.title}</p>
+                                    <p className="text-[10px] font-mono text-muted-foreground/60 truncate mt-0.5">{post.slug}</p>
+                                  </div>
+                                </td>
+                                <td className="p-4">
+                                  <div className="flex items-center gap-2.5">
+                                    <Avatar className="w-8 h-8 border-2 border-background shadow-sm ring-1 ring-border/20">
+                                      <AvatarImage src={post.author.avatar} />
+                                      <AvatarFallback className="font-bold text-[10px] uppercase">{post.author.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                                    </Avatar>
+                                    <span className="text-[10px] font-bold uppercase tracking-wider italic text-muted-foreground">{post.author.name}</span>
+                                  </div>
+                                </td>
+                                <td className="p-4">
+                                  <Badge className={`font-black uppercase italic tracking-widest text-[9px] px-2 py-0.5 shadow-sm border-none ${getStatusColor(post.status)}`}>
+                                    <span className="mr-1">{getStatusIcon(post.status)}</span>
+                                    {post.status}
+                                  </Badge>
+                                </td>
+                                <td className="p-4">
+                                  <div className="flex items-center gap-1.5 text-[10px] font-black italic tracking-tighter text-muted-foreground">
+                                    <Eye className="w-3.5 h-3.5 text-primary/60" />
+                                    {post.views.toLocaleString()}_V
+                                  </div>
+                                </td>
+                                <td className="p-4 text-[10px] font-bold text-muted-foreground/60 uppercase tracking-tighter">{post.createdAt}</td>
+                                <td className="p-4">
+                                  <div className="flex items-center gap-1">
+                                    <Button size="icon" variant="ghost" className="h-8 w-8 hover:bg-primary/10 hover:text-primary transition-all" onClick={() => handleEditPost(post)}>
+                                      <Edit2 className="w-3.5 h-3.5" />
+                                    </Button>
+                                    <Button size="icon" variant="ghost" className="h-8 w-8 hover:bg-destructive/10 hover:text-destructive transition-all" onClick={() => handleDeletePost(post.id)}>
+                                      <Trash2 className="w-3.5 h-3.5" />
+                                    </Button>
+                                  </div>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    {/* Pagination */}
+                    <div className="flex flex-col md:flex-row items-center justify-between mt-8 gap-4 border-t border-border/30 pt-6">
+                      <p className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-[0.1em]">
+                        Displaying {((currentPage - 1) * postsPerPage) + 1} - {Math.min(currentPage * postsPerPage, filteredPosts.length)} / {filteredPosts.length} Units
+                      </p>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                          disabled={currentPage === 1}
+                          className="font-bold uppercase tracking-widest text-[9px] h-8 px-4"
+                        >
+                          Prev_Sequence
+                        </Button>
+                        <div className="bg-muted/50 px-3 py-1 rounded text-[10px] font-bold italic border border-border/30">
+                          {currentPage} / {totalPages}
+                        </div>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                          disabled={currentPage === totalPages}
+                          className="font-bold uppercase tracking-widest text-[9px] h-8 px-4"
+                        >
+                          Next_Sequence
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
 
           {/* Editor Tab */}
           <TabsContent value="editor">
@@ -702,106 +730,122 @@ const PostsManagement = () => {
           </TabsContent>
 
           {/* Analytics Tab */}
-          <TabsContent value="analytics">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-              <Card className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-muted-foreground">Total Views</p>
-                    <p className="text-2xl font-bold mt-1">12,450</p>
-                  </div>
-                  <Eye className="w-8 h-8 text-blue-500" />
-                </div>
-                <p className="text-xs text-green-600 mt-2">+12% from last month</p>
+          <TabsContent value="analytics" className="space-y-6 m-0 animate-in fade-in duration-300">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+              <Card className="border-border/50 shadow-sm">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                  <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Metric / Attention</CardTitle>
+                  <Eye className="w-4 h-4 text-primary" />
+                </CardHeader>
+                <CardContent className="px-4 md:px-6 pb-4">
+                  <div className="text-xl md:text-3xl font-black tracking-tighter text-foreground italic">12.4K_V</div>
+                  <p className="text-[9px] font-bold text-green-600 uppercase tracking-tighter mt-1">+12% / GROWTH_SIG</p>
+                </CardContent>
               </Card>
-              <Card className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-muted-foreground">Total Posts</p>
-                    <p className="text-2xl font-bold mt-1">{posts.length}</p>
-                  </div>
-                  <Edit2 className="w-8 h-8 text-purple-500" />
-                </div>
-                <p className="text-xs text-green-600 mt-2">+3 this week</p>
+
+              <Card className="border-border/50 shadow-sm">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                  <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Node / Count</CardTitle>
+                  <Edit2 className="w-4 h-4 text-purple-500" />
+                </CardHeader>
+                <CardContent className="px-4 md:px-6 pb-4">
+                  <div className="text-xl md:text-3xl font-black tracking-tighter text-purple-500 italic">{posts.length}_P</div>
+                  <p className="text-[9px] font-bold text-green-600 uppercase tracking-tighter mt-1">+3 / WEEKLY_SYNC</p>
+                </CardContent>
               </Card>
-              <Card className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-muted-foreground">Avg. Read Time</p>
-                    <p className="text-2xl font-bold mt-1">4.2 min</p>
-                  </div>
-                  <Clock className="w-8 h-8 text-orange-500" />
-                </div>
-                <p className="text-xs text-muted-foreground mt-2">Across all posts</p>
+
+              <Card className="border-border/50 shadow-sm">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                  <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Retention / Time</CardTitle>
+                  <Clock className="w-4 h-4 text-orange-500" />
+                </CardHeader>
+                <CardContent className="px-4 md:px-6 pb-4">
+                  <div className="text-xl md:text-3xl font-black tracking-tighter text-orange-500 italic">4.2M</div>
+                  <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter mt-1">CROSS_NODE_AVG</p>
+                </CardContent>
               </Card>
-              <Card className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-muted-foreground">Engagement</p>
-                    <p className="text-2xl font-bold mt-1">68%</p>
-                  </div>
-                  <TrendingUp className="w-8 h-8 text-green-500" />
-                </div>
-                <p className="text-xs text-green-600 mt-2">+5% from last week</p>
+
+              <Card className="border-border/50 shadow-sm">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 md:px-6">
+                  <CardTitle className="text-[10px] md:text-xs font-black uppercase tracking-widest text-muted-foreground italic">Efficiency / ENG</CardTitle>
+                  <TrendingUp className="w-4 h-4 text-green-500" />
+                </CardHeader>
+                <CardContent className="px-4 md:px-6 pb-4">
+                  <div className="text-xl md:text-3xl font-black tracking-tighter text-green-500 italic">68%_E</div>
+                  <p className="text-[9px] font-bold text-green-600 uppercase tracking-tighter mt-1">+5% / NETWORK_DELTA</p>
+                </CardContent>
               </Card>
             </div>
 
-            <Card className="p-6">
-              <h3 className="font-semibold text-lg mb-4">Top Performing Posts</h3>
-              <div className="space-y-4">
-                {posts
-                  .sort((a, b) => b.views - a.views)
-                  .slice(0, 5)
-                  .map((post) => (
-                    <div key={post.id} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                      <div className="flex-1">
-                        <p className="font-medium">{post.title}</p>
-                        <p className="text-sm text-muted-foreground">{post.author.name}</p>
-                      </div>
-                      <div className="flex items-center gap-4 text-sm">
-                        <div className="flex items-center gap-1">
-                          <Eye className="w-4 h-4" />
-                          {post.views}
+            <Card className="border-border/50 shadow-md overflow-hidden">
+              <CardHeader className="px-4 md:px-6 py-5 border-b border-border/30 bg-secondary/10">
+                <CardTitle className="text-lg md:text-xl font-black tracking-tighter text-foreground italic uppercase">Performance / Alpha Nodes</CardTitle>
+                <p className="text-[10px] md:text-xs font-bold text-muted-foreground/60 uppercase tracking-[0.2em] mt-1">High-Entropy Content Performance Matrix</p>
+              </CardHeader>
+              <CardContent className="p-4 md:p-6">
+                <div className="space-y-4">
+                  {posts
+                    .sort((a, b) => b.views - a.views)
+                    .slice(0, 5)
+                    .map((post) => (
+                      <div key={post.id} className="flex items-center justify-between p-4 rounded-xl bg-muted/30 border border-border/20 hover:bg-muted/50 transition-all group">
+                        <div className="flex-1 min-w-0 pr-4">
+                          <p className="font-black text-sm uppercase tracking-tight italic text-foreground group-hover:text-primary transition-colors truncate">{post.title}</p>
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 mt-0.5">{post.author.name}</p>
                         </div>
-                        <div className="flex items-center gap-1">
-                          <Share2 className="w-4 h-4" />
-                          {Math.floor(post.views * 0.15)}
+                        <div className="flex items-center gap-6 text-[10px] font-black italic tracking-tighter shrink-0">
+                          <div className="flex items-center gap-1.5 text-primary/70">
+                            <Eye className="w-3.5 h-3.5" />
+                            {post.views}_V
+                          </div>
+                          <div className="flex items-center gap-1.5 text-chart-2/70">
+                            <Share2 className="w-3.5 h-3.5" />
+                            {Math.floor(post.views * 0.15)}_S
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-              </div>
+                    ))}
+                </div>
+              </CardContent>
             </Card>
           </TabsContent>
 
           {/* Activity Log Tab */}
-          <TabsContent value="activity">
-            <Card className="p-6">
-              <h3 className="font-semibold text-lg mb-4">Recent Activity</h3>
-              <div className="space-y-4">
-                {dummyActivities.map((activity) => (
-                  <div key={activity.id} className="flex items-start gap-4 p-4 bg-muted/50 rounded-lg">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      {activity.action === "created" && <Plus className="w-5 h-5 text-primary" />}
-                      {activity.action === "edited" && <Edit2 className="w-5 h-5 text-primary" />}
-                      {activity.action === "published" && <Send className="w-5 h-5 text-primary" />}
-                      {activity.action === "deleted" && <Trash2 className="w-5 h-5 text-destructive" />}
+          <TabsContent value="activity" className="space-y-6 m-0 animate-in fade-in duration-300">
+            <Card className="border-border/50 shadow-md overflow-hidden">
+              <CardHeader className="px-4 md:px-6 py-5 border-b border-border/30 bg-secondary/10">
+                <CardTitle className="text-lg md:text-xl font-black tracking-tighter text-foreground italic uppercase">Audit / Sequence Log</CardTitle>
+                <p className="text-[10px] md:text-xs font-bold text-muted-foreground/60 uppercase tracking-[0.2em] mt-1">Live Deployment & Alteration Stream</p>
+              </CardHeader>
+              <CardContent className="p-4 md:p-6">
+                <div className="space-y-4">
+                  {dummyActivities.map((activity) => (
+                    <div key={activity.id} className="flex items-start gap-4 p-4 rounded-xl bg-muted/20 border border-border/10 hover:border-border/30 transition-all">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0 border border-primary/20 shadow-inner">
+                        {activity.action === "created" && <Plus className="w-5 h-5 text-primary" />}
+                        {activity.action === "edited" && <Edit2 className="w-5 h-5 text-primary" />}
+                        {activity.action === "published" && <Send className="w-5 h-5 text-primary" />}
+                        {activity.action === "deleted" && <Trash2 className="w-5 h-5 text-destructive" />}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-bold text-sm text-foreground">
+                          <span className="font-black italic uppercase tracking-widest text-primary text-[11px] mr-1">{activity.user}</span> 
+                          <span className="uppercase tracking-tighter text-[11px] text-muted-foreground/80">{activity.action} post</span>
+                        </p>
+                        <p className="text-xs font-black uppercase tracking-tight italic text-foreground mt-1 truncate">{activity.post}</p>
+                        <p className="text-[10px] font-bold text-muted-foreground/40 mt-1 uppercase tracking-tighter">{activity.timestamp}</p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <p className="font-medium">
-                        <span className="text-primary">{activity.user}</span> {activity.action} post
-                      </p>
-                      <p className="text-sm text-muted-foreground">{activity.post}</p>
-                      <p className="text-xs text-muted-foreground mt-1">{activity.timestamp}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              </CardContent>
             </Card>
           </TabsContent>
         </Tabs>
       </div>
-    </div>
+    </main>
+  </div>
+</div>
   );
 };
 
