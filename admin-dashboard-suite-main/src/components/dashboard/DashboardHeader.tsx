@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Menu, Search, Bell, ChevronDown } from "lucide-react";
+import { Menu, Search, Bell, ChevronDown, X } from "lucide-react";
 
 interface DashboardHeaderProps {
   onMenuClick: () => void;
@@ -24,6 +24,7 @@ const languages = [
 const DashboardHeader = ({ onMenuClick }: DashboardHeaderProps) => {
   const [selectedLanguage, setSelectedLanguage] = useState("English (US)");
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
@@ -71,6 +72,16 @@ const DashboardHeader = ({ onMenuClick }: DashboardHeaderProps) => {
 
         {/* Right section */}
         <div className="flex items-center gap-4">
+          {/* Mobile Search Toggle */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            onClick={() => setIsMobileSearchOpen(!isMobileSearchOpen)}
+          >
+            {isMobileSearchOpen ? <X className="w-5 h-5 text-primary" /> : <Search className="w-5 h-5" />}
+          </Button>
+
           {/* Language selector */}
           <div className="hidden md:relative">
             <button
@@ -104,29 +115,44 @@ const DashboardHeader = ({ onMenuClick }: DashboardHeaderProps) => {
           </div>
 
           {/* Notifications */}
-          <Button variant="ghost" size="icon" className="relative">
-            <Bell className="w-5 h-5" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-chart-orange rounded-full" />
+          <Button variant="ghost" size="icon" className="relative group">
+            <Bell className="w-5 h-5 group-hover:text-primary transition-colors" />
+            <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_8px_rgba(var(--primary),0.5)]" />
           </Button>
 
           {/* User profile */}
-          <div className="flex items-center gap-3 cursor-pointer">
-            <Avatar>
+          <div className="flex items-center gap-3 cursor-pointer group">
+            <Avatar className="ring-2 ring-transparent group-hover:ring-primary/20 transition-all">
               <AvatarImage src={user ? getAvatarUrl(user.email) : "https://api.dicebear.com/7.x/avataaars/svg?seed=Admin"} />
               <AvatarFallback>{user ? getInitials(user.email) : "MA"}</AvatarFallback>
             </Avatar>
             <div className="hidden md:block">
-              <p className="text-sm font-medium text-foreground">
+              <p className="text-sm font-black italic uppercase tracking-tighter text-foreground group-hover:text-primary transition-colors">
                 {user ? user.email.split('@')[0] : "Aman"}
               </p>
-              <p className="text-xs text-muted-foreground capitalize">
-                {user ? user.role : "Admin"}
+              <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest leading-none mt-0.5">
+                {user ? user.role : "Admin_Node"}
               </p>
             </div>
-            <ChevronDown className="w-4 h-4 text-muted-foreground hidden md:block" />
+            <ChevronDown className="w-4 h-4 text-muted-foreground hidden md:block group-hover:translate-y-0.5 transition-transform" />
           </div>
         </div>
       </div>
+
+      {/* Mobile Search Bar Expansion */}
+      {isMobileSearchOpen && (
+        <div className="md:hidden p-4 bg-background border-t border-border animate-in slide-in-from-top-2 duration-300">
+          <div className="relative w-full">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
+            <Input
+              type="search"
+              placeholder="QUERYS_SEARCH_NODES..."
+              className="pl-10 bg-secondary/30 h-11 rounded-xl border-border/40 font-bold text-[10px] uppercase tracking-[0.2em] italic placeholder:text-muted-foreground/30 focus:ring-primary/20"
+              autoFocus
+            />
+          </div>
+        </div>
+      )}
     </header>
   );
 };
