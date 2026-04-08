@@ -39,14 +39,23 @@ const ProfileCards = () => {
         {profiles.map((profile, idx) => (
           <Card
             key={idx}
-            className={`${profile.color} border-none p-4 hover:scale-105 transition-transform duration-300 shadow-sm cursor-pointer`}
+            role="button"
+            tabIndex={0}
+            aria-label={`Visit ${profile.name}'s LinkedIn profile`}
+            className={`${profile.color} border-none p-4 hover:scale-105 transition-transform duration-300 shadow-sm cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2`}
             onClick={() => window.open(profile.linkedin, '_blank', 'noopener,noreferrer')}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                window.open(profile.linkedin, '_blank', 'noopener,noreferrer');
+              }
+            }}
           >
             <div className="flex items-start gap-3">
               <div className="w-12 h-12 rounded-full bg-background/50 backdrop-blur-sm" />
               <div className="flex-1 min-w-0">
                 <h3 className="font-semibold text-sm text-foreground truncate">{profile.name}</h3>
-                <p className="text-xs text-muted-foreground truncate">{profile.role}</p>
+                <p className="text-xs text-foreground/80 truncate">{profile.role}</p>
                 <span className="inline-block mt-2 px-2 py-1 bg-background/70 rounded-full text-xs font-medium">
                   {profile.badge}
                 </span>

@@ -83,7 +83,7 @@ const CTASection = () => {
               <div className="bg-primary rounded-2xl md:rounded-[24px] p-6 md:p-8 flex flex-col items-center justify-center mb-6 shadow-lg relative z-10 transition-transform hover:-translate-y-1 duration-300">
                 <Zap className="w-12 h-12 md:w-16 md:h-16 text-primary-foreground mb-4 drop-shadow-md fill-primary-foreground/20" />
                 <p className="text-primary-foreground font-bold text-xl md:text-2xl text-center">Active Profile</p>
-                <p className="text-primary-foreground/90 font-semibold uppercase tracking-wider text-[10px] md:text-xs mt-2 text-center">Optimized Performance</p>
+                <p className="text-primary-foreground font-semibold uppercase tracking-wider text-[10px] md:text-xs mt-2 text-center">Optimized Performance</p>
               </div>
 
               {/* Activity Feed */}

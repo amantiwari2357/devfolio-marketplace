@@ -261,7 +261,7 @@ const ServicesSection = () => {
                 >
                   <AccordionTrigger className="hover:no-underline py-5 md:py-6">
                     <div className="flex items-center gap-4 text-left">
-                      <span className="text-lg md:text-xl font-bold text-primary/40 select-none">
+                      <span className="text-lg md:text-xl font-bold text-primary/70 select-none">
                         {service.number}
                       </span>
                       <span className="text-sm md:text-base font-bold text-foreground">

@@ -25,14 +25,30 @@ const Index = () => {
         <div className="absolute top-0 right-0 -z-10 w-full h-[1000px] bg-gradient-to-b from-primary/5 to-transparent blur-[120px] pointer-events-none" />
         
         <HeroSection />
-        <ProjectsSection />
-        <ExpertsSection />
-        <ServicesSection />
-        <FeaturesSection />
-        <CourseSection />
-        <TestimonialsSection />
-        <FAQSection />
-        <CTASection />
+        <section aria-label="Featured Projects Portfolio">
+          <ProjectsSection />
+        </section>
+        <section aria-label="Connect with Experts">
+          <ExpertsSection />
+        </section>
+        <section aria-label="Our Digital Services">
+          <ServicesSection />
+        </section>
+        <section aria-label="Key Platform Features">
+          <FeaturesSection />
+        </section>
+        <section aria-label="Educational Resources">
+          <CourseSection />
+        </section>
+        <section aria-label="Client Testimonials">
+          <TestimonialsSection />
+        </section>
+        <section aria-label="Frequently Asked Questions">
+          <FAQSection />
+        </section>
+        <section aria-label="Get Started Now">
+          <CTASection />
+        </section>
       </main>
       <Footer />
       <LiveProofToast />

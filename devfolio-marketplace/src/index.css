@@ -17,14 +17,14 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 10%;
 
-    --primary: 14 100% 57%;
+    --primary: 14 100% 45%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 15 20% 94%;
     --secondary-foreground: 240 10% 10%;
 
     --muted: 15 20% 94%;
-    --muted-foreground: 240 5% 45%;
+    --muted-foreground: 240 5% 35%;
 
     --accent: 14 100% 57%;
     --accent-foreground: 0 0% 100%;
@@ -66,6 +66,11 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground font-sans;
+  }
+
+  /* Global Keyboard Focus Styles */
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 transition-shadow;
   }
 
   h1, h2, h3, h4, h5, h6 {

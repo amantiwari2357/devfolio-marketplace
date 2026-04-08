@@ -1,19 +1,19 @@
 import { Linkedin, Twitter, Instagram, Star, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logo from "../../../public/Images/logo.png";
+import logo from "../../../public/Images/logo_optimized.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-background border-t border-border/50 pt-12 md:pt-20 pb-8 md:pb-10">
+    <footer className="bg-background border-t border-border/50 pt-12 md:pt-20 pb-8 md:pb-10" aria-label="Site Footer">
       <div className="container mx-auto px-6 md:px-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10 md:gap-16 mb-12 md:mb-20">
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-6 group">
               <a href="/" className="flex flex-col items-start gap-4">
-                <img src={logo} alt="Devfolio Logo" className="h-10 md:h-12 w-auto group-hover:scale-105 transition-transform duration-300" />
+                <img src={logo} alt="Devfolio Logo" width={48} height={12} loading="lazy" className="h-10 md:h-12 w-auto group-hover:scale-105 transition-transform duration-300" />
               </a>
             </div>
             
@@ -87,6 +87,7 @@ const Footer = () => {
                     href={href} 
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`Visit our ${Icon.name || "social media"} profile`}
                     className="w-10 h-10 rounded-xl bg-secondary hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all shadow-sm group"
                   >
                     <Icon className="w-4 h-4 group-hover:scale-110 transition-transform" />

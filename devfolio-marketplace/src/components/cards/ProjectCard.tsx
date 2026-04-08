@@ -26,13 +26,26 @@ const ProjectCard = ({ project, className }: ProjectCardProps) => {
     navigate(`/project/${project._id || project.id}`);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleClick();
+    }
+  };
+
+  const projectTitle = project.title || project.name || "Project";
+
   return (
     <Card 
+      role="button"
+      tabIndex={0}
+      aria-label={`View details for ${projectTitle}`}
       className={cn(
-        "group relative overflow-hidden rounded-[32px] bg-card border-border/60 shadow-md hover:border-primary/40 hover:shadow-xl transition-all duration-300 cursor-pointer hover:-translate-y-1 active:scale-[0.98]",
+        "group relative overflow-hidden rounded-[32px] bg-card border-border/60 shadow-md hover:border-primary/40 hover:shadow-xl transition-all duration-300 cursor-pointer hover:-translate-y-1 active:scale-[0.98] outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
         className
       )}
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
     >
       <div className="absolute top-0 right-0 p-4 md:p-6 opacity-0 md:group-hover:opacity-100 transition-all transform translate-x-4 md:group-hover:translate-x-0">
          <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary backdrop-blur-md border border-primary/20 shadow-sm">
