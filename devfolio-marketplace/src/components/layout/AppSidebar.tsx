@@ -45,21 +45,22 @@ export const AppSidebar = ({ activePath }: { activePath: string }) => {
   };
 
   const mainNavItems: navItem[] = [
+    { label: "Back to Site", icon: <Globe className="w-5 h-5" />, href: "/" },
     { label: "Dashboard", icon: <HomeIcon className="w-5 h-5" />, href: "/dashboard" },
     { label: "Bookings", icon: <Calendar className="w-5 h-5" />, href: "/bookings", badge: "3" },
     { label: "Priority DM", icon: <MessageSquare className="w-5 h-5" />, href: "/priority-dm", badge: "12" },
     { label: "Services", icon: <ShoppingBag className="w-5 h-5" />, href: "/services" },
-    { label: "Blog", icon: <FileText className="w-5 h-5" />, href: "/blog" },
   ];
 
   const creatorItems: navItem[] = [
-    { label: "Create Course", icon: <PlusCircle className="w-5 h-5" />, href: "/createcourse" },
+    { label: "Create Service", icon: <PlusCircle className="w-5 h-5" />, href: "/createcourse" },
     { label: "My Profile", icon: <User className="w-5 h-5" />, href: "/profile" },
-    { label: "Listing", icon: <Globe className="w-5 h-5" />, href: "/listing" },
+    { label: "Current Listing", icon: <Globe className="w-5 h-5" />, href: "/listing" },
+    { label: "Blog Posts", icon: <FileText className="w-5 h-5" />, href: "/blog" },
   ];
 
   const analyticsItems: navItem[] = [
-    { label: "Analytics", icon: <TrendingUp className="w-5 h-5" />, href: "/analytics" },
+    { label: "Insights", icon: <TrendingUp className="w-5 h-5" />, href: "/analytics" },
     { label: "Reports", icon: <BarChart2 className="w-5 h-5" />, href: "/analytics" },
     { label: "Settings", icon: <Settings className="w-5 h-5" />, href: "/settings" },
   ];
