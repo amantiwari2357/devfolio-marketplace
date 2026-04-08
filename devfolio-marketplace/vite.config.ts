@@ -20,12 +20,17 @@ export default defineConfig(({ mode }) => ({
       output: {
         manualChunks: {
           vendor: ["react", "react-dom", "react-router-dom", "@tanstack/react-query"],
-          ui: ["lucide-react", "sonner", "embla-carousel-react"],
-          "ui-components": [
+          sections: [
+            "./src/components/sections/ProjectsSection.tsx",
+            "./src/components/sections/ExpertsSection.tsx",
+            "./src/components/sections/ServicesSection.tsx",
+            "./src/components/sections/TestimonialsSection.tsx"
+          ],
+          "ui-core": ["lucide-react", "sonner", "embla-carousel-react"],
+          "ui-base": [
             "./src/components/ui/button.tsx",
             "./src/components/ui/card.tsx",
-            "./src/components/ui/dialog.tsx",
-            "./src/components/ui/input.tsx"
+            "./src/components/ui/dialog.tsx"
           ]
         },
       },
