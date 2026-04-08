@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import TestimonialCard from "@/components/cards/TestimonialCard";
 import api from "@/services/api";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface Testimonial {
   _id: string;
@@ -10,6 +13,7 @@ interface Testimonial {
 }
 
 const TestimonialsSection = () => {
+  const navigate = useNavigate();
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -75,10 +79,25 @@ const TestimonialsSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 animate-slide-up" style={{ animationDelay: '100ms' }}>
-          {testimonials.map((testimonial) => (
-            <TestimonialCard key={testimonial._id} {...testimonial} />
-          ))}
+        <div className="relative group animate-slide-up" style={{ animationDelay: '100ms' }}>
+          <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 overflow-x-auto md:overflow-x-visible pb-8 md:pb-0 snap-x snap-mandatory scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
+            {testimonials.slice(0, 6).map((testimonial) => (
+              <div key={testimonial._id} className="min-w-[85vw] md:min-w-0 snap-center">
+                <TestimonialCard {...testimonial} />
+              </div>
+            ))}
+          </div>
+          
+          <div className="mt-16 text-center">
+            <Button 
+              onClick={() => navigate('/testimonials')}
+              variant="outline" 
+              className="h-14 px-10 rounded-2xl font-bold border-primary/20 bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground shadow-lg shadow-primary/5 hover:shadow-primary/20 transition-all gap-2 group/btn"
+            >
+              View All Stories
+              <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+            </Button>
+          </div>
         </div>
       </div>
     </section>

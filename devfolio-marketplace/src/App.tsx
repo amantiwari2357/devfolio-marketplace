@@ -30,6 +30,7 @@ const BlogDetail = lazy(() => import("./pages/BlogDetail"));
 const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));
 const Profile = lazy(() => import("./pages/Profile"));
 const OnboardingStatus = lazy(() => import("./pages/OnboardingStatus"));
+const Testimonials = lazy(() => import("./pages/Testimonials"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -77,6 +78,7 @@ const App = () => (
             <Route path="/project/:id" element={<ProjectDetail />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/onboarding-status" element={<OnboardingStatus />} />
+            <Route path="/testimonials" element={<Testimonials />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
