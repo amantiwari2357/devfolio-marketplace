@@ -27,7 +27,7 @@ const Blog = () => {
       />
       <Header />
       
-      <main className="section-spacing pt-32 md:pt-40 relative overflow-hidden">
+      <main id="root-main-content" className="section-spacing pt-32 md:pt-40 relative overflow-hidden">
         {/* Background Mesh Flux */}
         <div className="absolute top-0 right-0 -z-10 w-2/3 h-2/3 bg-primary/2 opacity-30 blur-[180px] rounded-full animate-pulse" />
         <div className="absolute bottom-0 left-0 -z-10 w-1/2 h-1/2 bg-primary/2 opacity-20 blur-[150px] rounded-full animate-pulse" style={{ animationDelay: '1s' }} />

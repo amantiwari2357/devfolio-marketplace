@@ -120,7 +120,7 @@ const Profile = () => {
       <div className="flex min-h-screen relative pt-20">
         <AppSidebar activePath="/profile" />
         
-        <main className="flex-1 relative overflow-hidden pb-20">
+        <main id="root-main-content" className="flex-1 relative overflow-hidden pb-20">
           {/* Background Accents */}
           <div className="absolute top-0 right-0 -z-10 w-1/2 h-1/2 bg-primary/2 opacity-30 blur-[150px] rounded-full" />
           <div className="absolute bottom-0 left-0 -z-10 w-1/3 h-1/3 bg-secondary/5 opacity-20 blur-[120px] rounded-full" />

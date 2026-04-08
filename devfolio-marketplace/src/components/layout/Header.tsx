@@ -4,7 +4,7 @@ import { ChevronDown, LogOut, Edit, CheckCircle2, User, Search, X, Filter, Trend
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuLabel } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import logo from "../../../public/Images/logo_optimized.png";
+import logo from "../../../public/Images/logo.svg";
 import { useNavigate } from "react-router-dom";
 import { userAPI } from "@/services/auth";
 
@@ -81,7 +81,7 @@ const Header = () => {
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-8">
             <a href="/" className="flex items-center gap-2">
-              <img src={logo} alt="Devfolio Logo" width={144} height={40} className="h-36 w-auto" />
+              <img src={logo} alt="Devfolio Logo" width={160} height={44} className="h-10 w-auto" />
             </a>
           </div>
           <div className="w-20 h-8 bg-muted animate-pulse rounded"></div>
@@ -95,7 +95,7 @@ const Header = () => {
       <div className="container mx-auto px-4 h-20 flex items-center justify-between gap-4">
         <div className="flex items-center gap-12">
           <a href="/" className="flex items-center gap-4 group">
-            <img src={logo} alt="Devfolio Logo" width={160} height={44} className="h-32 md:h-40 w-auto group-hover:scale-105 transition-transform duration-300" />
+            <img src={logo} alt="Devfolio Logo" width={160} height={44} className="h-10 md:h-12 w-auto group-hover:scale-105 transition-transform duration-300" />
           </a>
 
           <nav className="hidden md:flex items-center gap-10" aria-label="Main navigation">
@@ -215,7 +215,7 @@ const Header = () => {
               <SheetContent side="right" className="w-full sm:max-w-md bg-background/95 backdrop-blur-3xl border-l-border/40 p-8 pt-16 flex flex-col z-[100]">
                 <div className="space-y-8 flex-1">
                   <a href="/" className="flex items-center gap-2 mb-10">
-                    <img src={logo} alt="Devfolio Logo" width={96} height={26} className="h-24 w-auto drop-shadow-md" />
+                    <img src={logo} alt="Devfolio Logo" width={160} height={44} className="h-10 w-auto drop-shadow-md" />
                   </a>
 
                   <nav className="flex flex-col gap-6">

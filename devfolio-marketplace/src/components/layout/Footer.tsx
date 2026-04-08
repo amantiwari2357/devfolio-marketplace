@@ -1,6 +1,6 @@
 import { Linkedin, Twitter, Instagram, Star, ArrowUpRight, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logo from "../../../public/Images/logo_optimized.png";
+import logo from "../../../public/Images/logo.svg";
 import { ReviewModal } from "@/components/modals/ReviewModal";
 import { Link } from "react-router-dom";
 
@@ -15,7 +15,7 @@ const Footer = () => {
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-6 group">
               <Link to="/" className="flex flex-col items-start gap-4">
-                <img src={logo} alt="Devfolio Logo" width={48} height={12} loading="lazy" className="h-10 md:h-12 w-auto group-hover:scale-105 transition-transform duration-300" />
+                <img src={logo} alt="Devfolio Logo" width={160} height={44} className="h-10 md:h-12 w-auto group-hover:scale-105 transition-transform duration-300" />
               </Link>
             </div>
             
@@ -37,7 +37,7 @@ const Footer = () => {
           {/* Quick Links */}
           <div className="col-span-1">
             <h3 className="font-semibold text-sm mb-5 text-foreground">System Node</h3>
-            <nav className="space-y-3">
+            <nav className="space-y-3" aria-label="System Node Navigation">
               {["Use Cases", "Search", "Listing", "Pricing"].map((item) => (
                 <Link 
                   key={item}
@@ -54,7 +54,7 @@ const Footer = () => {
           {/* Company Links */}
           <div className="col-span-1">
             <h3 className="font-semibold text-sm mb-5 text-foreground">Identity Flow</h3>
-            <nav className="space-y-3">
+            <nav className="space-y-3" aria-label="Identity Flow Navigation">
               {["About", "Blog", "Contact", "Terms", "Privacy"].map((item) => (
                 <Link 
                   key={item}

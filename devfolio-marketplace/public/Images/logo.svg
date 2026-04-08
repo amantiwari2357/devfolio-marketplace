@@ -1,0 +1,12 @@
+<svg width="240" height="80" viewBox="0 0 240 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>Devfolio Marketplace Logo</title>
+  <!-- Icon Block -->
+  <rect x="5" y="10" width="60" height="60" rx="16" fill="#4F46E5" />
+  <path d="M22 40L32 50L48 30" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+  
+  <!-- Text Block -->
+  <g font-family="Inter, system-ui, -apple-system, sans-serif">
+    <text x="80" y="42" font-weight="900" font-size="32" fill="#0F172A" letter-spacing="-0.04em">Devfolio</text>
+    <text x="80" y="65" font-weight="700" font-size="18" fill="#64748B" letter-spacing="0.02em" text-transform="uppercase">Marketplace</text>
+  </g>
+</svg>

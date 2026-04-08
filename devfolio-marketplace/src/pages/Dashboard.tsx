@@ -61,7 +61,7 @@ const Dashboard = () => {
         <AppSidebar activePath="/dashboard" />
         
         {/* Main Dashboard Area */}
-        <main className="flex-1 bg-background relative selection:bg-primary selection:text-primary-foreground">
+        <main id="root-main-content" className="flex-1 bg-background relative selection:bg-primary selection:text-primary-foreground">
           {/* Background effects */}
           <div className="absolute top-0 right-0 -z-10 w-2/3 h-1/2 bg-primary/2 opacity-30 blur-[150px] rounded-full" />
           <div className="absolute bottom-0 left-0 -z-10 w-1/2 h-1/2 bg-secondary/2 opacity-20 blur-[150px] rounded-full" />

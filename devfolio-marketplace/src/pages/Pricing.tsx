@@ -91,7 +91,7 @@ const Pricing = () => {
       />
       <Header />
       
-      <main className="pt-32 md:pt-40 pb-24 relative">
+      <main id="root-main-content" className="pt-32 md:pt-40 pb-24 relative">
         {/* Background Accents */}
         <div className="absolute top-0 right-0 -z-10 w-1/3 h-1/4 bg-primary/5 blur-[150px] rounded-full animate-pulse" />
         <div className="absolute bottom-0 left-0 -z-10 w-1/2 h-1/4 bg-secondary/10 blur-[150px] rounded-full" />

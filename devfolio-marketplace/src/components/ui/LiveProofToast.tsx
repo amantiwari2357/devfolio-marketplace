@@ -3,11 +3,12 @@ import { CheckCircle2, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const TOASTS = [
-  { name: "Sarah J.", action: "purchased Node Core Strategy", time: "Just now" },
-  { name: "Michael T.", action: "deployed a new Storefront", time: "1 min ago" },
-  { name: "Elena R.", action: "booked a high-ticket retainer", time: "2 mins ago" },
-  { name: "David K.", action: "upgraded to Enterprise", time: "5 mins ago" },
-  { name: "Sophia L.", action: "secured a new client node", time: "12 mins ago" }
+  { name: "Aryan K.", location: "Mumbai", action: "launched a new Storefront", time: "Just now", seed: "Aryan" },
+  { name: "Neha S.", location: "Delhi", action: "booked a Strategy Epoch", time: "2 mins ago", seed: "Neha" },
+  { name: "Rohan M.", location: "Bangalore", action: "purchased Portfolio Dev Kit", time: "5 mins ago", seed: "Rohan" },
+  { name: "Priya V.", location: "Hyderabad", action: "upgraded to Enterprise Node", time: "12 mins ago", seed: "Priya" },
+  { name: "Amit R.", location: "Pune", action: "unlocked UI/UX Optimization", time: "15 mins ago", seed: "Amit" },
+  { name: "Siddharth B.", location: "Chennai", action: "secured a Client Retainer", time: "22 mins ago", seed: "Sid" }
 ];
 
 export function LiveProofToast() {
@@ -18,10 +19,10 @@ export function LiveProofToast() {
   useEffect(() => {
     if (isDismissed) return;
 
-    // Initial delay before first toast
+    // Longer initial delay for premium feel (45s)
     const initialTimer = setTimeout(() => {
       setIsVisible(true);
-    }, 5000);
+    }, 45000);
 
     return () => clearTimeout(initialTimer);
   }, [isDismissed]);
@@ -29,17 +30,19 @@ export function LiveProofToast() {
   useEffect(() => {
     if (isDismissed || !isVisible) return;
 
-    // Auto-hide after 5 seconds
+    // Show for 6 seconds
     const hideTimer = setTimeout(() => {
       setIsVisible(false);
       
-      // Schedule next toast
+      // Much longer delay between toasts (2-4 minutes)
+      const nextDelay = (120 + Math.random() * 120) * 1000;
+      
       setTimeout(() => {
         setToastIndex((current) => (current + 1) % TOASTS.length);
         setIsVisible(true);
-      }, 15000 + Math.random() * 10000); // Random delay 15-25s
+      }, nextDelay);
 
-    }, 5000);
+    }, 6000);
 
     return () => clearTimeout(hideTimer);
   }, [isVisible, isDismissed]);
@@ -51,34 +54,55 @@ export function LiveProofToast() {
   return (
     <div 
       className={cn(
-        "fixed bottom-6 left-6 z-50 transition-all duration-700 ease-out transform",
-        isVisible ? "translate-y-0 opacity-100 scale-100" : "translate-y-8 opacity-0 scale-95 pointer-events-none"
+        "fixed bottom-6 left-6 z-50 transition-all duration-1000 ease-in-out transform",
+        isVisible ? "translate-y-0 opacity-100 scale-100" : "translate-y-12 opacity-0 scale-90 pointer-events-none"
       )}
     >
-      <div className="bg-background/80 backdrop-blur-xl border border-border/40 shadow-2xl rounded-2xl p-4 flex items-start gap-4 pr-10 relative max-w-[300px] group">
+      <div className="bg-background/40 backdrop-blur-2xl border border-white/20 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.3)] rounded-[24px] p-4 flex items-center gap-4 pr-12 relative max-w-[340px] group overflow-hidden">
+        {/* Animated Glow Backer */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 to-transparent opacity-50 pointer-events-none" />
+        
         <button 
           onClick={() => setIsDismissed(true)}
           aria-label="Dismiss Notification"
-          className="absolute top-3 right-3 text-muted-foreground/50 hover:text-foreground transition-colors opacity-0 md:opacity-100 md:group-hover:opacity-100"
+          className="absolute top-4 right-4 text-muted-foreground/30 hover:text-primary transition-colors z-10"
         >
           <X className="w-4 h-4" />
         </button>
-        
-        <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0 mt-0.5">
-          <CheckCircle2 className="w-4 h-4 text-primary" />
+
+        {/* Avatar with Status */}
+        <div className="relative shrink-0">
+          <div className="w-12 h-12 rounded-2xl bg-secondary/50 border border-white/20 overflow-hidden shadow-inner transform group-hover:scale-110 transition-transform duration-500">
+            <img 
+              src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${currentToast.seed}&backgroundColor=transparent`} 
+              alt={currentToast.name} 
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-background border-2 border-background flex items-center justify-center">
+            <div className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(var(--primary-rgb),0.8)]" />
+          </div>
         </div>
         
-        <div className="pt-0.5">
-          <p className="text-xs text-foreground/90 leading-tight mb-1">
-            <span className="font-black text-foreground relative inline-block">
-               {currentToast.name}
-               <span className="absolute bottom-0 left-0 w-full h-[3px] bg-primary/30 -z-10 translate-y-[-2px]"></span>
-            </span> {currentToast.action}
-          </p>
-          <p className="text-[9px] uppercase tracking-widest font-black text-primary/70 flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
-            {currentToast.time}
-          </p>
+        <div className="flex-1 min-w-0 py-0.5">
+          <div className="flex flex-col">
+            <p className="text-[14px] leading-[1.3] text-foreground font-medium mb-1">
+              <span className="font-black text-foreground">{currentToast.name}</span>
+              <span className="text-muted-foreground/80"> from </span>
+              <span className="font-bold text-foreground/90">{currentToast.location}</span>
+            </p>
+            <p className="text-[12px] font-bold text-muted-foreground line-clamp-1 italic">
+              {currentToast.action}
+            </p>
+          </div>
+          <div className="mt-2 flex items-center gap-2">
+            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-primary/80 px-2 py-0.5 rounded-full bg-primary/10 border border-primary/10">
+              {currentToast.time}
+            </span>
+            <div className="h-1 flex-1 bg-secondary/30 rounded-full overflow-hidden">
+               <div className="h-full bg-primary/40 animate-progress-glow" style={{ width: '40%' }} />
+            </div>
+          </div>
         </div>
       </div>
     </div>
