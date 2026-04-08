@@ -154,6 +154,74 @@ const ProjectsManagement = () => {
     }
   };
 
+  const handleSeedProjects = async () => {
+    const initialProjects = [
+      {
+        title: "Nexus Commerce",
+        description: "Enterprise-grade e-commerce platform with real-time inventory management and advanced analytics. Built for scale and high performance.",
+        category: "Web App",
+        icon: "🛍️",
+        pricing: "Paid",
+        features: ["Real-time Inventory", "AI Recommendations", "Multi-currency Support"],
+        technologies: ["Next.js", "TypeScript", "Prisma"],
+        timeline: "4-6 Months",
+        priceRange: "$15k - $45k",
+        liveUrl: "https://nexus-commerce.vercel.app"
+      },
+      {
+        title: "Titan CRM",
+        description: "Comprehensive customer relationship management system featuring sales pipeline automation and deep communication integration.",
+        category: "SaaS",
+        icon: "🤝",
+        pricing: "Paid",
+        features: ["Automated Pipeline", "Lead Scoring", "Email Sync"],
+        technologies: ["React", "Node.js", "MongoDB"],
+        timeline: "3-5 Months",
+        priceRange: "$20k - $60k",
+        liveUrl: "https://titan-crm.onrender.com"
+      },
+      {
+        title: "Aether Analytics",
+        description: "Privacy-focused web analytics platform providing deep insights without compromising personal data. Real-time visitor tracking.",
+        category: "Web Platform",
+        icon: "📊",
+        pricing: "Free",
+        features: ["Privacy-First", "Custom Reports", "Real-time Tracking"],
+        technologies: ["Vue.js", "Tailwind", "Docker"],
+        timeline: "2-4 Months",
+        priceRange: "Free / OSS",
+        liveUrl: "https://aether-analytics.io"
+      }
+    ];
+
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('token');
+      if (!token) throw new Error('Please login first');
+
+      const promises = initialProjects.map(project => 
+        fetch('https://devfolio-marketplace-1.onrender.com/api/projects', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify(project),
+        }).then(res => res.json())
+      );
+
+      const results = await Promise.all(promises);
+      const newProjects = results.map(r => r.project);
+      setProjects([...projects, ...newProjects]);
+      alert('Seeding successful! Initial projects integrated.');
+    } catch (err) {
+      console.error('Error seeding projects:', err);
+      alert('Failed to seed projects');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const openEditDialog = (project: Project) => {
     setEditingProject(project);
     setFormData(project);
@@ -259,7 +327,16 @@ const ProjectsManagement = () => {
         {/* Scrollable Content */}
         <main className="flex-1 pt-24 pb-6 px-4 md:px-6 overflow-y-auto">
           <div className="max-w-7xl mx-auto space-y-8 md:space-y-10">
-            <div className="flex justify-end">
+            <div className="flex justify-end gap-3">
+              <Button 
+                variant="outline" 
+                onClick={handleSeedProjects} 
+                className="h-10 px-6 rounded-xl border-border/50 font-bold text-[10px] uppercase tracking-widest gap-2 bg-primary/5 hover:bg-primary/10 transition-colors"
+                disabled={loading}
+              >
+                <FolderKanban className="h-4 w-4" />
+                Seed Initial Registry
+              </Button>
               <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogTrigger asChild>
                   <Button onClick={openAddDialog} className="h-10 px-6 rounded-xl border-border/50 font-bold text-[10px] uppercase tracking-widest gap-2">
@@ -267,7 +344,153 @@ const ProjectsManagement = () => {
                     Initialize Project
                   </Button>
                 </DialogTrigger>
-                {/* ... Dialog implementation ... */}
+                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                        <DialogTitle className="text-xl font-black uppercase tracking-tighter italic">
+                            {editingProject ? 'Modify Sequence' : 'Initialize New Project'}
+                        </DialogTitle>
+                    </DialogHeader>
+
+                    <form onSubmit={handleSubmit} className="space-y-6 pt-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest italic">Project Title *</Label>
+                                <Input 
+                                    value={formData.title} 
+                                    onChange={e => setFormData({...formData, title: e.target.value})}
+                                    placeholder="e.g. Nexus E-Commerce"
+                                    required
+                                    className="h-11 rounded-lg"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest italic">Category *</Label>
+                                <Input 
+                                    value={formData.category} 
+                                    onChange={e => setFormData({...formData, category: e.target.value})}
+                                    placeholder="e.g. Web App"
+                                    required
+                                    className="h-11 rounded-lg"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <Label className="text-[10px] font-black uppercase tracking-widest italic">Description *</Label>
+                            <Textarea 
+                                value={formData.description} 
+                                onChange={e => setFormData({...formData, description: e.target.value})}
+                                placeholder="Describe the technical scope and impact..."
+                                className="min-h-[100px] rounded-lg"
+                                required
+                            />
+                        </div>
+
+                        <div className="grid grid-cols-3 gap-4">
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest italic">Icon (Emoji)</Label>
+                                <Input 
+                                    value={formData.icon} 
+                                    onChange={e => setFormData({...formData, icon: e.target.value})}
+                                    placeholder="🛍️"
+                                    className="h-11 rounded-lg"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest italic">Pricing Model</Label>
+                                <Input 
+                                    value={formData.pricing} 
+                                    onChange={e => setFormData({...formData, pricing: e.target.value})}
+                                    placeholder="Paid / Free"
+                                    className="h-11 rounded-lg"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest italic">Timeline</Label>
+                                <Input 
+                                    value={formData.timeline} 
+                                    onChange={e => setFormData({...formData, timeline: e.target.value})}
+                                    placeholder="3-5 Months"
+                                    className="h-11 rounded-lg"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest italic">Price Range</Label>
+                                <Input 
+                                    value={formData.priceRange} 
+                                    onChange={e => setFormData({...formData, priceRange: e.target.value})}
+                                    placeholder="$5k - $10k"
+                                    className="h-11 rounded-lg"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest italic">Live URL</Label>
+                                <Input 
+                                    value={formData.liveUrl} 
+                                    onChange={e => setFormData({...formData, liveUrl: e.target.value})}
+                                    placeholder="https://example.com"
+                                    className="h-11 rounded-lg"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="space-y-4">
+                            <div className="flex items-center justify-between">
+                                <Label className="text-[10px] font-black uppercase tracking-widest italic">Core Features</Label>
+                                <Button type="button" variant="outline" size="sm" onClick={addFeature} className="h-8 text-[9px] uppercase font-black">Add Feature</Button>
+                            </div>
+                            <div className="grid gap-2">
+                                {formData.features.map((feature, index) => (
+                                    <div key={index} className="flex gap-2">
+                                        <Input 
+                                            value={feature} 
+                                            onChange={e => updateFeature(index, e.target.value)}
+                                            placeholder={`Feature ${index + 1}`}
+                                            className="h-10 text-xs"
+                                        />
+                                        <Button type="button" variant="ghost" size="icon" onClick={() => removeFeature(index)} className="text-destructive h-10 w-10 shrink-0">
+                                            <Trash2 className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="space-y-4">
+                            <div className="flex items-center justify-between">
+                                <Label className="text-[10px] font-black uppercase tracking-widest italic">Tech Stack</Label>
+                                <Button type="button" variant="outline" size="sm" onClick={addTechnology} className="h-8 text-[9px] uppercase font-black">Add Tech</Button>
+                            </div>
+                            <div className="grid gap-2">
+                                {formData.technologies.map((tech, index) => (
+                                    <div key={index} className="flex gap-2">
+                                        <Input 
+                                            value={tech} 
+                                            onChange={e => updateTechnology(index, e.target.value)}
+                                            placeholder={`Tech ${index + 1}`}
+                                            className="h-10 text-xs"
+                                        />
+                                        <Button type="button" variant="ghost" size="icon" onClick={() => removeTechnology(index)} className="text-destructive h-10 w-10 shrink-0">
+                                            <Trash2 className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="flex gap-3 pt-6">
+                            <Button type="submit" className="flex-1 h-12 rounded-xl font-black uppercase italic tracking-widest text-xs">
+                                {editingProject ? 'Commit Changes' : 'Initialize Project'}
+                            </Button>
+                            <Button type="button" variant="ghost" onClick={() => setIsOpen(false)} className="px-8 h-12 font-black uppercase italic tracking-widest text-xs">
+                                Abort
+                            </Button>
+                        </div>
+                    </form>
+                </DialogContent>
               </Dialog>
             </div>
 
