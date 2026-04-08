@@ -196,7 +196,7 @@ const Header = () => {
             </DropdownMenu>
           ) : (
             <Button
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/login/")}
               className="hidden sm:inline-flex rounded-xl px-8 py-6 font-bold shadow-lg shadow-primary/10 hover:shadow-primary/20 transition-all border border-primary/20 bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground"
             >
               Login
@@ -230,7 +230,7 @@ const Header = () => {
                     ))}
                     {!isLoggedIn && (
                       <a
-                        onClick={() => navigate("/login")}
+                        onClick={() => navigate("/login/")}
                         className="text-2xl font-bold text-primary hover:text-primary/80 transition-all flex items-center justify-between group cursor-pointer"
                       >
                         Login

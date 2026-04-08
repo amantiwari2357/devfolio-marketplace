@@ -48,7 +48,7 @@ const HeroSection = () => {
       document.getElementById('enquiry-dialog-trigger')?.click();
     } else {
       // Navigate to signup for non-logged-in users
-      navigate("/signup");
+      navigate("/signup/");
     }
   };
 

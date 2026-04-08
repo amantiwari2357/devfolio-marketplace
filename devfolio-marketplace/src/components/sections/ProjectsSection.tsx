@@ -122,7 +122,7 @@ const ProjectsSection = () => {
             variant="outline"
             size="lg"
             className="h-14 md:h-16 rounded-2xl md:rounded-[22px] px-8 border-primary/20 bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground font-black transition-all shadow-xl shadow-primary/5 uppercase tracking-widest text-[10px] italic border-none"
-            onClick={() => navigate("/search")}
+            onClick={() => navigate("/search/")}
           >
             View All Projects
           </Button>
@@ -148,7 +148,7 @@ const ProjectsSection = () => {
               variant="outline"
               size="lg"
               className="h-14 md:h-16 rounded-2xl md:rounded-[22px] px-10 border-primary/20 bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground font-black transition-all shadow-xl shadow-primary/5 uppercase tracking-widest text-[10px] italic border-none"
-              onClick={() => navigate("/search")}
+              onClick={() => navigate("/search/")}
             >
               View All {allProjects.length} Projects →
             </Button>

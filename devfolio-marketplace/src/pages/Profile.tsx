@@ -46,7 +46,7 @@ const Profile = () => {
         setUser(response.data.user);
       } catch (error) {
         toast.error("Failed to load profile");
-        navigate("/login");
+        navigate("/login/");
       } finally {
         setIsLoading(false);
       }
@@ -189,7 +189,7 @@ const Profile = () => {
 
                      <div className="flex flex-wrap justify-center md:justify-start gap-3">
                         <Button
-                           onClick={() => navigate("/settings")}
+                           onClick={() => navigate("/settings/")}
                            className="h-12 px-8 rounded-2xl bg-foreground text-background font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all gap-3"
                         >
                            <Edit className="w-4 h-4" />

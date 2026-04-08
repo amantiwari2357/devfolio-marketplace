@@ -79,7 +79,7 @@ const Login = () => {
       if (response.data.user.onboardingCompleted) {
         navigate("/");
       } else {
-        navigate("/onboarding");
+        navigate("/onboarding/");
       }
     } catch (error: any) {
       setError(error.response?.data?.message || "Login failed");
@@ -202,7 +202,7 @@ const Login = () => {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between px-1">
                     <Label htmlFor="password" title="password" className="text-sm font-semibold text-foreground">Password</Label>
-                    <Link to="/forgot-password" title="forgot password" className="text-xs font-semibold text-primary hover:text-primary/80 transition-all">Forgot your password?</Link>
+                    <Link to="/forgot-password/" title="forgot password" className="text-xs font-semibold text-primary hover:text-primary/80 transition-all">Forgot your password?</Link>
                   </div>
                   <div className="relative">
                     <Input
@@ -261,7 +261,7 @@ const Login = () => {
                 <div className="flex flex-col items-center gap-4 pt-4">
                   <p className="text-sm font-medium text-muted-foreground">
                     Don't have an account?{" "}
-                    <Link to="/signup" className="text-primary hover:underline transition-all font-bold">
+                    <Link to="/signup/" className="text-primary hover:underline transition-all font-bold">
                       Sign up
                     </Link>
                   </p>

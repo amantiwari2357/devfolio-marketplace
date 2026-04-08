@@ -2,6 +2,7 @@ import { Linkedin, Twitter, Instagram, Star, ArrowUpRight, MessageSquare } from 
 import { Button } from "@/components/ui/button";
 import logo from "../../../public/Images/logo.png";
 import { ReviewModal } from "@/components/modals/ReviewModal";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -13,16 +14,16 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-6 group">
-              <a href="/" className="flex flex-col items-start gap-4">
+              <Link to="/" className="flex flex-col items-start gap-4">
                 <img src={logo} alt="Devfolio Logo" className="h-10 md:h-12 w-auto group-hover:scale-105 transition-transform duration-300" />
-              </a>
+              </Link>
             </div>
             
             <p className="text-muted-foreground text-sm font-medium leading-relaxed mb-6 pr-4">
               Building the next generation of digital solutions for individuals and brands worldwide.
             </p>
 
-            <a href="/search" className="inline-block mt-2">
+            <Link to="/search/" className="inline-block mt-2">
               <Button 
                 variant="outline" 
                 className="rounded-xl border-primary/20 bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground font-semibold transition-all shadow-sm text-sm h-12 px-6"
@@ -30,7 +31,7 @@ const Footer = () => {
                 <Star className="w-4 h-4 mr-2 fill-current" />
                 Explore Elite Profiles
               </Button>
-            </a>
+            </Link>
           </div>
           
           {/* Quick Links */}
@@ -38,14 +39,14 @@ const Footer = () => {
             <h4 className="font-semibold text-sm mb-5 text-foreground">System Node</h4>
             <nav className="space-y-3">
               {["Use Cases", "Search", "Listing", "Pricing"].map((item) => (
-                <a 
+                <Link 
                   key={item}
-                  href={`/${item.toLowerCase().replace(" ", "-")}`} 
+                  to={`/${item.toLowerCase().replace(" ", "-")}/`} 
                   className="group flex items-center text-muted-foreground hover:text-primary transition-colors font-medium text-sm"
                 >
                   {item}
                   <ArrowUpRight className="w-3 h-3 ml-1 opacity-0 md:group-hover:opacity-100 transition-all -translate-y-0.5" />
-                </a>
+                </Link>
               ))}
             </nav>
           </div>
@@ -55,14 +56,14 @@ const Footer = () => {
             <h4 className="font-semibold text-sm mb-5 text-foreground">Identity Flow</h4>
             <nav className="space-y-3">
               {["About", "Blog", "Contact", "Terms", "Privacy"].map((item) => (
-                <a 
+                <Link 
                   key={item}
-                  href={`/${item.toLowerCase()}`} 
+                  to={`/${item.toLowerCase()}/`} 
                   className="group flex items-center text-muted-foreground hover:text-primary transition-colors font-medium text-sm"
                 >
                   {item}
                   <ArrowUpRight className="w-3 h-3 ml-1 opacity-0 md:group-hover:opacity-100 transition-all -translate-y-0.5" />
-                </a>
+                </Link>
               ))}
               <div className="pt-1">
                 <ReviewModal />

@@ -80,7 +80,7 @@ const SignUp = () => {
 
       // Auto-login and redirect to onboarding
       setTimeout(() => {
-        navigate("/onboarding");
+        navigate("/onboarding/");
       }, 1000);
     } catch (error: unknown) {
       const err = error as { response?: { data?: { message?: string } } };
@@ -225,15 +225,15 @@ const SignUp = () => {
 
                 <p className="text-xs text-center text-muted-foreground leading-relaxed">
                   By joining, you agree to our{" "}
-                  <Link to="/terms" className="text-primary font-bold hover:underline">Terms of Use</Link>{" "}
+                  <Link to="/terms/" className="text-primary font-bold hover:underline">Terms of Use</Link>{" "}
                   and{" "}
-                  <Link to="/privacy" className="text-primary font-bold hover:underline">Privacy Policy</Link>.
+                  <Link to="/privacy/" className="text-primary font-bold hover:underline">Privacy Policy</Link>.
                 </p>
 
                 <div className="pt-4 border-t border-border/50 text-center">
                   <p className="text-sm font-medium text-muted-foreground">
                     Already have an account?{" "}
-                    <Link to="/login" className="text-primary font-bold hover:underline">Log in</Link>
+                    <Link to="/login/" className="text-primary font-bold hover:underline">Log in</Link>
                   </p>
                 </div>
               </form>

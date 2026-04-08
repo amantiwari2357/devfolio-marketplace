@@ -19,7 +19,7 @@ const BlogDetail = () => {
         setPost(foundPost);
         window.scrollTo(0, 0);
       } else {
-        navigate("/blog");
+        navigate("/blog/");
       }
     }
   }, [id, navigate]);
@@ -120,7 +120,7 @@ const BlogDetail = () => {
           
           <Button 
             variant="ghost" 
-            onClick={() => navigate("/blog")}
+            onClick={() => navigate("/blog/")}
             className="mb-8 pl-0 hover:bg-transparent text-muted-foreground hover:text-foreground group transition-all font-semibold text-sm"
           >
             <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />

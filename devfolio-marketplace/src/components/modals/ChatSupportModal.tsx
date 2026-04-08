@@ -23,7 +23,7 @@ const PREDEFINED_QUESTIONS = [
   { 
     id: "q1", 
     question: "How do I create a service?", 
-    answer: "Creating a service is easy! Just go to your [Dashboard](/dashboard) and click on the 'Create Service' button in the top right. Follow the setup wizard to list your expertise." 
+    answer: "Creating a service is easy! Just go to your [Dashboard](/dashboard/) and click on the 'Create Service' button in the top right. Follow the setup wizard to list your expertise." 
   },
   { 
     id: "q2", 
@@ -33,7 +33,7 @@ const PREDEFINED_QUESTIONS = [
   { 
     id: "q3", 
     question: "How do I connect my calendar?", 
-    answer: "You can sync your Google or Outlook calendar in the [Settings](/settings) section under 'Integrations'. This helps automate your booking availability." 
+    answer: "You can sync your Google or Outlook calendar in the [Settings](/settings/) section under 'Integrations'. This helps automate your booking availability." 
   },
   { 
     id: "q4", 
