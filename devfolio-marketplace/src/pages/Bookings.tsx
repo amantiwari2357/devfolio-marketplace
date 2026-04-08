@@ -64,7 +64,7 @@ const Bookings = () => {
         <AppSidebar activePath="/bookings" />
 
         {/* Main Schedule Core */}
-        <main className="flex-1 bg-background relative selection:bg-primary selection:text-primary-foreground">
+        <main id="root-main-content" className="flex-1 bg-background relative selection:bg-primary selection:text-primary-foreground">
           <div className="p-6 md:p-16">
           {/* Background blurs */}
           <div className="absolute top-0 right-0 -z-10 w-2/3 h-2/3 bg-primary/2 opacity-30 blur-[180px] rounded-full animate-pulse" />

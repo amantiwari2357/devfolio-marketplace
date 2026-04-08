@@ -20,7 +20,7 @@ const Index = () => {
         description="The premier marketplace for the global creator economy. Build, launch, and scale your digital future with elite mentors and world-class services." 
       />
       <Header />
-      <main className="relative overflow-hidden">
+      <main id="root-main-content" className="relative overflow-hidden">
         {/* Architectural Mesh */}
         <div className="absolute top-0 right-0 -z-10 w-full h-[1000px] bg-gradient-to-b from-primary/5 to-transparent blur-[120px] pointer-events-none" />
         

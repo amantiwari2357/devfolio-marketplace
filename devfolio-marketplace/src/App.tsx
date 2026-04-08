@@ -47,12 +47,15 @@ const LoadingScreen = () => (
   </div>
 );
 
+import SkipLink from "./components/layout/SkipLink";
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <SkipLink />
         <TrailingSlashRedirect />
         <Suspense fallback={<LoadingScreen />}>
           <Routes>
