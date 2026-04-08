@@ -1,6 +1,7 @@
-import { Linkedin, Twitter, Instagram, Star, ArrowUpRight } from "lucide-react";
+import { Linkedin, Twitter, Instagram, Star, ArrowUpRight, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "../../../public/Images/logo.png";
+import { ReviewModal } from "@/components/modals/ReviewModal";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -63,6 +64,9 @@ const Footer = () => {
                   <ArrowUpRight className="w-3 h-3 ml-1 opacity-0 md:group-hover:opacity-100 transition-all -translate-y-0.5" />
                 </a>
               ))}
+              <div className="pt-1">
+                <ReviewModal />
+              </div>
             </nav>
           </div>
           

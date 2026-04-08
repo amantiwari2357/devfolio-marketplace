@@ -11,6 +11,8 @@ import {
   Sheet, 
   SheetContent, 
   SheetTrigger,
+  SheetTitle,
+  SheetDescription,
 } from "@/components/ui/sheet";
 import api from "@/services/api";
 import logo from "../../../public/Images/logo.png";
@@ -211,6 +213,10 @@ export const AppSidebar = ({ activePath }: { activePath: string }) => {
             </Button>
           </SheetTrigger>
           <SheetContent side="bottom" className="p-0 h-[85vh] bg-background/98 backdrop-blur-3xl border-t border-border/40 rounded-t-[32px]">
+            <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
+            <SheetDescription className="sr-only">
+              Access all dashboard features and creator tools from this menu.
+            </SheetDescription>
             <div className="w-12 h-1 bg-border/60 rounded-full mx-auto mt-3 mb-1" />
             <SidebarContent />
           </SheetContent>
