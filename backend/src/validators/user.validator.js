@@ -65,12 +65,22 @@ const validateServicesUpdate = [
   body('services')
     .isArray()
     .withMessage('Services must be an array'),
-  body('services.*.name')
+  body('services.*.title')
     .notEmpty()
-    .withMessage('Service name is required'),
+    .withMessage('Service title is required'),
   body('services.*.description')
     .notEmpty()
-    .withMessage('Service description is required')
+    .withMessage('Service description is required'),
+  body('services.*.price')
+    .optional()
+    .isNumeric()
+    .withMessage('Service price must be a number'),
+  body('services.*.category')
+    .optional()
+    .isString(),
+  body('services.*.features')
+    .optional()
+    .isArray()
 ];
 
 // WhatsApp update validation
@@ -81,11 +91,29 @@ const validateWhatsAppUpdate = [
     .withMessage('WhatsApp number must be 10 digits')
 ];
 
+// Portfolio update validation
+const validatePortfolioUpdate = [
+  body('portfolio')
+    .isArray()
+    .withMessage('Portfolio must be an array'),
+  body('portfolio.*.title')
+    .notEmpty()
+    .withMessage('Project title is required'),
+  body('portfolio.*.description')
+    .notEmpty()
+    .withMessage('Project description is required'),
+  body('portfolio.*.imageUrl').optional().isString(),
+  body('portfolio.*.liveUrl').optional().isString(),
+  body('portfolio.*.githubUrl').optional().isString(),
+  body('portfolio.*.technologies').optional().isArray()
+];
+
 module.exports = {
   validateSignup,
   validateLogin,
   validateProfileUpdate,
   validateAvailabilityUpdate,
   validateServicesUpdate,
-  validateWhatsAppUpdate
+  validateWhatsAppUpdate,
+  validatePortfolioUpdate
 };

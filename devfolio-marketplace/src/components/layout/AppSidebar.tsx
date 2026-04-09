@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { 
-  Calendar, TrendingUp, Settings, 
-  Home as HomeIcon, BookOpen, MessageSquare, 
+import {
+  Calendar, TrendingUp, Settings,
+  Home as HomeIcon, BookOpen, MessageSquare,
   LogOut, Menu, Search, X, Bell, Star,
   PlusCircle, User, Globe, FileText, Zap,
   BarChart2, ShoppingBag, ChevronRight
 } from "lucide-react";
-import { 
-  Sheet, 
-  SheetContent, 
+import {
+  Sheet,
+  SheetContent,
   SheetTrigger,
   SheetTitle,
   SheetDescription,
@@ -77,13 +77,12 @@ export const AppSidebar = ({ activePath }: { activePath: string }) => {
     return (
       <a
         href={item.href}
-        className={`flex items-center gap-3 px-4 py-3 rounded-2xl font-bold transition-all duration-200 group relative ${
-          isActive
+        className={`flex items-center gap-3 px-4 py-3 rounded-2xl font-bold transition-all duration-200 group relative ${isActive
             ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
-            : isMobile 
+            : isMobile
               ? "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
               : "text-muted-foreground hover:bg-secondary/60 hover:text-foreground"
-        }`}
+          }`}
       >
         <div className={`flex-shrink-0 ${isActive ? "text-primary-foreground" : "group-hover:scale-110 transition-transform"}`}>
           {item.icon}
@@ -101,15 +100,6 @@ export const AppSidebar = ({ activePath }: { activePath: string }) => {
 
   const SidebarContent = ({ isMobile }: { isMobile?: boolean }) => (
     <div className={`flex flex-col h-full py-6 px-4 ${isMobile ? 'bg-white' : ''}`}>
-      {/* Logo */}
-      <a href="/" className="flex items-center justify-center mb-6 px-2 group">
-        <img 
-          src={logo} 
-          alt="Devfolio Logo" 
-          className="h-20 w-auto group-hover:scale-105 transition-transform duration-300 drop-shadow-md" 
-        />
-      </a>
-
       {/* Search Bar */}
       <div className={`relative mb-6 transition-all ${searchFocused ? "ring-2 ring-primary/30 rounded-2xl" : ""}`}>
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
@@ -120,11 +110,10 @@ export const AppSidebar = ({ activePath }: { activePath: string }) => {
           onChange={(e) => setSearchQuery(e.target.value)}
           onFocus={() => setSearchFocused(true)}
           onBlur={() => setSearchFocused(false)}
-          className={`w-full h-11 rounded-2xl border transition-all placeholder:text-muted-foreground/60 text-sm font-bold pl-10 pr-9 focus:outline-none ${
-            isMobile 
-              ? "bg-slate-100/80 border-slate-200 focus:bg-white text-slate-900" 
+          className={`w-full h-11 rounded-2xl border transition-all placeholder:text-muted-foreground/60 text-sm font-bold pl-10 pr-9 focus:outline-none ${isMobile
+              ? "bg-slate-100/80 border-slate-200 focus:bg-white text-slate-900"
               : "bg-secondary/40 border-border/40 focus:bg-secondary/60 text-foreground"
-          }`}
+            }`}
         />
         {searchQuery && (
           <button onClick={() => setSearchQuery("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
@@ -185,11 +174,10 @@ export const AppSidebar = ({ activePath }: { activePath: string }) => {
 
       {/* User Profile Footer */}
       <div className={`pt-4 mt-4 border-t space-y-2 ${isMobile ? 'border-slate-200' : 'border-border/30'}`}>
-        <a href="/profile" className={`flex items-center gap-3 p-3 rounded-2xl border transition-all cursor-pointer group ${
-          isMobile 
-            ? "bg-slate-50 border-slate-200 hover:border-primary/30 hover:bg-white text-slate-900" 
+        <a href="/profile" className={`flex items-center gap-3 p-3 rounded-2xl border transition-all cursor-pointer group ${isMobile
+            ? "bg-slate-50 border-slate-200 hover:border-primary/30 hover:bg-white text-slate-900"
             : "bg-secondary/30 border-border/20 hover:border-primary/30 hover:bg-secondary/50"
-        }`}>
+          }`}>
           <div className="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center font-bold text-base shadow-lg group-hover:scale-105 transition-transform flex-shrink-0">
             {user?.firstName?.[0]?.toUpperCase() || 'U'}
           </div>
@@ -202,9 +190,8 @@ export const AppSidebar = ({ activePath }: { activePath: string }) => {
         <Button
           onClick={handleLogout}
           variant="ghost"
-          className={`w-full h-11 flex items-center gap-3 px-4 rounded-xl font-bold transition-all justify-start text-sm border-none ${
-            isMobile ? "text-red-500 hover:bg-red-50" : "text-destructive/70 hover:bg-destructive/10 hover:text-destructive"
-          }`}
+          className={`w-full h-11 flex items-center gap-3 px-4 rounded-xl font-bold transition-all justify-start text-sm border-none ${isMobile ? "text-red-500 hover:bg-red-50" : "text-destructive/70 hover:bg-destructive/10 hover:text-destructive"
+            }`}
         >
           <LogOut className="w-4 h-4" />
           Log Out

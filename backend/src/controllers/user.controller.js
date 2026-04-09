@@ -246,7 +246,7 @@ const updateServices = async (req, res) => {
     const user = await User.findByIdAndUpdate(
       userId,
       {
-        services: services || [{ name: 'Discovery Call', description: 'A 30-minute introductory session to understand your needs and discuss how I can help you achieve your goals.' }],
+        services: services || [{ title: 'Discovery Call', description: 'A 30-minute introductory session to understand your needs and discuss how I can help you achieve your goals.' }],
         currentStep: 4
       },
       { new: true }
@@ -299,6 +299,35 @@ const updateWhatsApp = async (req, res) => {
     });
   } catch (error) {
     console.error('Update WhatsApp error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// Update Portfolio
+const updatePortfolio = async (req, res) => {
+  try {
+    const { portfolio } = req.body;
+    const userId = req.user.userId;
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { portfolio },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({
+      message: 'Portfolio updated successfully',
+      user: {
+        id: user._id,
+        currentStep: user.currentStep
+      }
+    });
+  } catch (error) {
+    console.error('Update portfolio error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -516,6 +545,7 @@ module.exports = {
   updateAvailability,
   updateServices,
   updateWhatsApp,
+  updatePortfolio,
   getProfile,
   getAllUsers,
   login,

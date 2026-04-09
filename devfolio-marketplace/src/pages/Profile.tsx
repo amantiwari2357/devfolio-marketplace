@@ -14,7 +14,7 @@ import {
   Mail, MapPin, Globe, Phone, Edit, Send, 
   CheckCircle2, ChevronDown, ChevronUp, Bell, 
   Eye, Activity, Sparkles, User as UserIcon, 
-  ShieldCheck, Zap, Layers, Rocket
+  ShieldCheck, Zap, Layers, Rocket, Plus, Trash, Github
 } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -29,6 +29,54 @@ const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
+  const [isAddProjectOpen, setIsAddProjectOpen] = useState(false);
+  const [isSubmittingProject, setIsSubmittingProject] = useState(false);
+  const [newProject, setNewProject] = useState({
+    title: "",
+    description: "",
+    liveUrl: "",
+    githubUrl: "",
+    technologies: ""
+  });
+
+  const handleAddProject = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) return;
+    
+    setIsSubmittingProject(true);
+    try {
+      const updatedPortfolio = [
+        ...(user.portfolio || []),
+        {
+          ...newProject,
+          technologies: newProject.technologies.split(',').map(t => t.trim()).filter(Boolean)
+        }
+      ];
+      
+      await userAPI.updatePortfolio({ portfolio: updatedPortfolio });
+      setUser({ ...user, portfolio: updatedPortfolio });
+      setIsAddProjectOpen(false);
+      setNewProject({ title: "", description: "", liveUrl: "", githubUrl: "", technologies: "" });
+      toast.success("Project added successfully!");
+    } catch (error) {
+      toast.error("Failed to add project");
+    } finally {
+      setIsSubmittingProject(false);
+    }
+  };
+
+  const handleDeleteProject = async (index: number) => {
+    if (!user || !user.portfolio) return;
+    
+    try {
+      const updatedPortfolio = user.portfolio.filter((_, i) => i !== index);
+      await userAPI.updatePortfolio({ portfolio: updatedPortfolio });
+      setUser({ ...user, portfolio: updatedPortfolio });
+      toast.success("Project removed.");
+    } catch (error) {
+      toast.error("Failed to remove project");
+    }
+  };
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -96,7 +144,6 @@ const Profile = () => {
                             src={(user as any).imageUrl}
                             alt="Architect Profile"
                             className="w-full h-full object-cover rounded-[36px]"
-                            fetchPriority="high"
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center bg-secondary/50 rounded-[28px] md:rounded-[36px]">
@@ -220,6 +267,100 @@ const Profile = () => {
                   >
                     <OnboardingForm user={user} onSuccess={() => setIsOnboardingOpen(false)} />
                   </CardContent>
+               </Card>
+            </div>
+
+            {/* Portfolio Showcase Segment */}
+            <div className="mt-10 animate-slide-up" style={{ animationDelay: '100ms' }}>
+               <Card className="rounded-[40px] bg-secondary/10 border-border/50 p-6 md:p-10 relative overflow-hidden group">
+                  <header className="mb-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+                     <h2 className="text-2xl md:text-3xl font-black tracking-tight text-foreground flex items-center gap-3 italic uppercase">
+                        <Rocket className="w-6 h-6 text-primary" />
+                        Portfolio Showcase
+                     </h2>
+                     <Dialog open={isAddProjectOpen} onOpenChange={setIsAddProjectOpen}>
+                       <DialogTrigger asChild>
+                         <Button className="h-12 px-6 rounded-xl bg-primary text-primary-foreground font-black text-xs uppercase tracking-widest gap-2 shadow-lg hover:scale-105 transition-transform">
+                           <Plus className="w-4 h-4" />
+                           Add Project
+                         </Button>
+                       </DialogTrigger>
+                       <DialogContent className="sm:max-w-[600px] bg-background/95 backdrop-blur-xl border-border/50 rounded-[32px] p-6 md:p-8">
+                         <DialogHeader>
+                           <DialogTitle className="text-xl font-black italic uppercase">Add New Project</DialogTitle>
+                           <DialogDescription>Showcase your best work to potential clients.</DialogDescription>
+                         </DialogHeader>
+                         <form onSubmit={handleAddProject} className="space-y-6 mt-4">
+                           <div className="space-y-2">
+                             <Label className="text-xs font-bold ml-1">Project Title *</Label>
+                             <Input required value={newProject.title} onChange={e => setNewProject({...newProject, title: e.target.value})} className="rounded-xl h-12 bg-secondary/50" placeholder="e.g. E-Commerce Dashboard" />
+                           </div>
+                           <div className="space-y-2">
+                             <Label className="text-xs font-bold ml-1">Description *</Label>
+                             <Textarea required value={newProject.description} onChange={e => setNewProject({...newProject, description: e.target.value})} className="rounded-xl min-h-[100px] bg-secondary/50" placeholder="Describe the project..." />
+                           </div>
+                           <div className="grid grid-cols-2 gap-4">
+                             <div className="space-y-2">
+                               <Label className="text-xs font-bold ml-1">Live URL</Label>
+                               <Input value={newProject.liveUrl} onChange={e => setNewProject({...newProject, liveUrl: e.target.value})} className="rounded-xl h-12 bg-secondary/50" placeholder="https://" />
+                             </div>
+                             <div className="space-y-2">
+                               <Label className="text-xs font-bold ml-1">GitHub URL</Label>
+                               <Input value={newProject.githubUrl} onChange={e => setNewProject({...newProject, githubUrl: e.target.value})} className="rounded-xl h-12 bg-secondary/50" placeholder="https://github.com/" />
+                             </div>
+                           </div>
+                           <div className="space-y-2">
+                             <Label className="text-xs font-bold ml-1">Technologies (Comma separated)</Label>
+                             <Input value={newProject.technologies} onChange={e => setNewProject({...newProject, technologies: e.target.value})} className="rounded-xl h-12 bg-secondary/50" placeholder="React, Node.js, Tailwind" />
+                           </div>
+                           <DialogFooter>
+                             <Button type="submit" disabled={isSubmittingProject} className="w-full h-12 rounded-xl font-black text-xs uppercase tracking-widest mt-2">{isSubmittingProject ? "Saving..." : "Save Project"}</Button>
+                           </DialogFooter>
+                         </form>
+                       </DialogContent>
+                     </Dialog>
+                  </header>
+
+                  {user?.portfolio && user.portfolio.length > 0 ? (
+                    <div className="grid md:grid-cols-2 gap-6">
+                      {user.portfolio.map((project, index) => (
+                        <div key={index} className="p-6 rounded-[24px] bg-background/50 border border-border/40 hover:border-primary/50 transition-all group/card relative">
+                          <Button variant="ghost" size="icon" onClick={() => handleDeleteProject(index)} className="absolute top-4 right-4 h-8 w-8 rounded-full text-destructive/50 hover:text-destructive hover:bg-destructive/10 opacity-0 group-hover/card:opacity-100 transition-opacity">
+                            <Trash className="w-4 h-4" />
+                          </Button>
+                          <h3 className="text-xl font-bold tracking-tight mb-2 pr-8">{project.title}</h3>
+                          <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{project.description}</p>
+                          
+                          {project.technologies && project.technologies.length > 0 && (
+                            <div className="flex flex-wrap gap-2 mb-6">
+                              {project.technologies.slice(0, 4).map(tech => (
+                                <span key={tech} className="px-3 py-1 rounded-full bg-secondary/80 text-[10px] font-bold uppercase tracking-wider">{tech}</span>
+                              ))}
+                            </div>
+                          )}
+
+                          <div className="flex items-center gap-3 pt-4 border-t border-border/40">
+                            {project.liveUrl && (
+                              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs font-bold text-primary hover:underline hover:underline-offset-4">
+                                <Globe className="w-3.5 h-3.5" /> Live Demo
+                              </a>
+                            )}
+                            {project.githubUrl && (
+                              <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors ml-auto">
+                                <Github className="w-3.5 h-3.5" /> Source
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center p-12 rounded-[24px] bg-background/50 border border-dashed border-border/50">
+                      <Rocket className="w-12 h-12 text-muted-foreground/30 mx-auto mb-4" />
+                      <h3 className="text-lg font-bold text-foreground mb-2">No Projects Yet</h3>
+                      <p className="text-sm text-muted-foreground">Add your first project to start building your portfolio showcase.</p>
+                    </div>
+                  )}
                </Card>
             </div>
           </div>

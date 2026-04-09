@@ -60,7 +60,6 @@ const VerifyEmail = () => {
             src={logo} 
             alt="Devfolio Logo" 
             className="h-24 md:h-32 w-auto group-hover:scale-105 transition-transform duration-500"
-            fetchPriority="high"
           />
           <span className="text-2xl font-bold tracking-tight text-foreground group-hover:text-primary transition-all">
             devfoliomarketplace<span className="text-primary">.com</span>

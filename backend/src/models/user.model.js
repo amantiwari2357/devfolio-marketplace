@@ -62,14 +62,25 @@ const userSchema = new mongoose.Schema({
 
   // Step 3: Services
   services: [{
-    name: {
+    title: {
       type: String,
       default: "Discovery Call"
     },
     description: {
       type: String,
       default: "A 30-minute introductory session to understand your needs and discuss how I can help you achieve your goals."
-    }
+    },
+    price: {
+      type: Number,
+      default: 0
+    },
+    category: {
+      type: String,
+      default: "consultation"
+    },
+    features: [{
+      type: String
+    }]
   }],
 
   // Step 4: WhatsApp
@@ -77,6 +88,36 @@ const userSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
+
+  // Step 5: Portfolio Projects
+  portfolio: [{
+    title: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    description: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    imageUrl: {
+      type: String,
+      trim: true
+    },
+    liveUrl: {
+      type: String,
+      trim: true
+    },
+    githubUrl: {
+      type: String,
+      trim: true
+    },
+    technologies: [{
+      type: String,
+      trim: true
+    }]
+  }],
 
   // Email verification
   isEmailVerified: {

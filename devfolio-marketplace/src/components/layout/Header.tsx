@@ -81,7 +81,7 @@ const Header = () => {
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-8">
             <a href="/" className="flex items-center gap-2">
-              <img src={logo} alt="Devfolio Logo" width={160} height={44} className="h-10 w-auto" fetchpriority="high" />
+              <img src={logo} alt="Devfolio Logo" width={160} height={44} className="h-10 w-auto" fetchPriority="high" />
             </a>
           </div>
           <div className="w-20 h-8 bg-muted animate-pulse rounded"></div>
@@ -95,7 +95,7 @@ const Header = () => {
       <div className="container mx-auto px-4 h-20 flex items-center justify-between gap-4">
         <div className="flex items-center gap-12">
           <a href="/" className="flex items-center gap-4 group">
-            <img src={logo} alt="Devfolio Logo" width={160} height={44} className="h-10 md:h-12 w-auto group-hover:scale-105 transition-transform duration-300" fetchpriority="high" />
+            <img src={logo} alt="Devfolio Logo" width={160} height={44} className="h-10 md:h-12 w-auto group-hover:scale-105 transition-transform duration-300" fetchPriority="high" />
           </a>
 
           <nav className="hidden md:flex items-center gap-10" aria-label="Main navigation">

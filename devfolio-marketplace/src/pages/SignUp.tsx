@@ -112,7 +112,6 @@ const SignUp = () => {
                     src={logo}
                     alt="Devfolio Logo"
                     className="h-40 w-auto group-hover:scale-105 transition-transform duration-300"
-                    fetchPriority="high"
                   />
                 </Link> */}
                 <h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-3 text-foreground">

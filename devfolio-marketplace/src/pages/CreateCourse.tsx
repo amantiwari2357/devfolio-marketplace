@@ -33,8 +33,11 @@ const CreateCourse = () => {
     const fetchProfile = async () => {
       try {
         await api.get('/auth/profile');
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error fetching profile:', error);
+        if (error.response && error.response.status === 401) {
+          window.location.href = '/login';
+        }
       } finally {
         setLoading(false);
       }
@@ -65,8 +68,13 @@ const CreateCourse = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.title || !formData.description || !formData.price) {
+    if (!formData.title || !formData.description || !formData.price || !formData.category) {
       toast.error("Please fill in all required fields.");
+      return;
+    }
+    
+    if (formData.features.filter(f => f.text.trim() !== "").length === 0) {
+      toast.error("Please add at least one deliverable feature.");
       return;
     }
 
@@ -253,7 +261,7 @@ const CreateCourse = () => {
                         <Zap className="w-4 h-4 fill-primary" />
                         <span className="text-[10px] font-bold uppercase tracking-widest">Creator Advantage</span>
                      </div>
-                     <h2 className="text-2xl font-bold tracking-tight leading-none uppercase italic">Earn More <span className="text-primary NOT-italic">Directly.</span></h2>
+                     <h2 className="text-2xl font-bold tracking-tight leading-none uppercase italic">Earn More <span className="text-primary not-italic">Directly.</span></h2>
                   </div>
                   
                   <div className="grid sm:grid-cols-2 gap-6 relative z-10">

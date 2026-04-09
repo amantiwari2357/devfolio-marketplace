@@ -14,6 +14,16 @@ export interface Service {
   description: string;
 }
 
+export interface PortfolioProject {
+  _id?: string;
+  title: string;
+  description: string;
+  imageUrl?: string;
+  liveUrl?: string;
+  githubUrl?: string;
+  technologies?: string[];
+}
+
 export interface User {
   _id: string;
   id: string;
@@ -31,6 +41,7 @@ export interface User {
   currentStep?: number;
   availability?: Availability[];
   services?: Service[];
+  portfolio?: PortfolioProject[];
   createdAt?: string;
   updatedAt?: string;
 }
@@ -83,6 +94,10 @@ export const userAPI = {
       description: string;
     }>;
   }) => api.put('/users/services', data),
+
+  updatePortfolio: (data: {
+    portfolio: PortfolioProject[];
+  }) => api.put('/users/portfolio', data),
 
   updateWhatsApp: (data: {
     whatsappNumber?: string;

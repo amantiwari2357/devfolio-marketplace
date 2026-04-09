@@ -66,7 +66,7 @@ const Dashboard = () => {
           <div className="absolute top-0 right-0 -z-10 w-2/3 h-1/2 bg-primary/2 opacity-30 blur-[150px] rounded-full" />
           <div className="absolute bottom-0 left-0 -z-10 w-1/2 h-1/2 bg-secondary/2 opacity-20 blur-[150px] rounded-full" />
           
-          <div className="p-4 md:p-6 lg:p-10 xl:p-16">
+          <div className="p-4 md:p-6 lg:p-8 xl:p-10">
             <div className="max-w-[1300px] mx-auto space-y-8 md:space-y-16">
               <header className="flex flex-col xl:flex-row xl:items-end justify-between gap-10 animate-slide-up">
                 <div className="space-y-4">
@@ -74,17 +74,17 @@ const Dashboard = () => {
                     <Activity className="w-4 h-4 md:w-5 md:h-5 text-primary/80" />
                     <span className="text-xs font-semibold uppercase tracking-wider">Dashboard Overview</span>
                   </div>
-                  <h1 className="text-3xl md:text-5xl lg:text-6xl font-black tracking-tight text-foreground leading-none lowercase italic">
+                  <h1 className="text-2xl md:text-4xl lg:text-5xl font-black tracking-tight text-foreground leading-none lowercase italic">
                     Welcome back, <br className="hidden md:block" /><span className="text-primary not-italic">{user?.firstName || 'Creator'}.</span>
                   </h1>
-                  <p className="text-sm md:text-lg text-muted-foreground font-bold italic leading-relaxed tracking-tight">Accessing core modules and performance telemetry.</p>
+                  <p className="text-xs md:text-base text-muted-foreground font-bold italic leading-relaxed tracking-tight">Accessing core modules and performance telemetry.</p>
                 </div>
                 <div className="flex flex-wrap items-center gap-4">
-                  <Button onClick={() => navigate('/profile')} variant="outline" className="h-12 md:h-14 rounded-xl px-6 font-bold bg-secondary/10 border-border/40 gap-3 hover:bg-secondary/20 transition-all text-sm shadow-sm">
+                  <Button onClick={() => navigate('/profile')} variant="outline" className="h-10 md:h-12 rounded-xl px-4 md:px-6 font-bold bg-secondary/10 border-border/40 gap-2 hover:bg-secondary/20 transition-all text-xs md:text-sm shadow-sm">
                     <ExternalLink className="w-4 h-4" />
                     View Public Profile
                   </Button>
-                  <Button onClick={() => navigate('/createcourse')} className="h-12 md:h-14 rounded-xl px-8 font-bold bg-primary text-primary-foreground shadow-lg hover:scale-105 active:scale-95 transition-all text-sm">
+                  <Button onClick={() => navigate('/createcourse')} className="h-10 md:h-12 rounded-xl px-6 font-bold bg-primary text-primary-foreground shadow-lg hover:scale-105 active:scale-95 transition-all text-xs md:text-sm">
                     Create Service
                   </Button>
                 </div>
@@ -92,51 +92,51 @@ const Dashboard = () => {
 
               {/* Grid Widgets */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 animate-slide-up" style={{ animationDelay: '100ms' }}>
-                <Card className="p-6 sm:p-10 md:p-14 relative overflow-hidden group shadow-2xl border-border/40 bg-secondary/5 backdrop-blur-xl rounded-[32px]">
+                <Card className="p-6 md:p-8 relative overflow-hidden group shadow-xl border-border/40 bg-secondary/5 backdrop-blur-xl rounded-[24px]">
                   <div className="absolute top-0 right-0 p-12 opacity-0 group-hover:opacity-10 transition-all duration-1000 translate-x-8 translate-y-[-8px] group-hover:translate-x-0 group-hover:translate-y-0 pointer-events-none">
                     <Rocket className="w-56 h-56 text-primary" />
                   </div>
-                  <div className="relative z-10 space-y-10">
+                  <div className="relative z-10 space-y-8">
                      <div className="space-y-4">
                         <div className="flex items-center gap-3 text-primary">
                            <Zap className="w-4 h-4 fill-primary" />
                            <span className="text-[10px] font-black uppercase tracking-[0.4em] italic">Profile Completion</span>
                         </div>
-                        <h2 className="text-2xl font-black tracking-tighter text-foreground italic uppercase">Complete Profile.</h2>
-                        <p className="text-base md:text-lg font-bold italic text-muted-foreground/60 leading-relaxed tracking-tight">Finish setting up your creator profile to increase your visibility and trust with clients.</p>
+                        <h2 className="text-xl font-black tracking-tighter text-foreground italic uppercase">Complete Profile.</h2>
+                        <p className="text-sm md:text-base font-bold italic text-muted-foreground/60 leading-relaxed tracking-tight">Finish setting up your creator profile to increase your visibility and trust with clients.</p>
                      </div>
-                    <div className="space-y-5">
-                      <div className="flex items-center gap-5 p-6 rounded-[24px] bg-background/50 border border-border/20 group/item hover:border-primary/40 transition-all cursor-pointer">
-                        <div className="p-3 rounded-2xl bg-primary/20 text-primary shadow-inner group-hover/item:scale-110 transition-transform">
-                          <CheckCircle2 className="w-6 h-6 stroke-[3]" />
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-4 p-4 md:p-5 rounded-2xl bg-background/50 border border-border/20 group/item hover:border-primary/40 transition-all cursor-pointer">
+                        <div className="p-2.5 rounded-xl bg-primary/20 text-primary shadow-inner group-hover/item:scale-110 transition-transform">
+                          <CheckCircle2 className="w-5 h-5 stroke-[3]" />
                         </div>
                         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground italic opacity-80">Connect your calendar</span>
                       </div>
-                      <div className="flex items-center gap-5 p-6 rounded-[24px] bg-background/30 border border-border/10 group/item hover:border-primary/30 transition-all cursor-pointer">
-                        <div className="w-12 h-12 rounded-2xl border-2 border-border/50 shadow-inner flex items-center justify-center group-hover/item:border-primary/30 transition-all">
+                      <div className="flex items-center gap-4 p-4 md:p-5 rounded-2xl bg-background/30 border border-border/10 group/item hover:border-primary/30 transition-all cursor-pointer">
+                        <div className="w-10 h-10 rounded-xl border-2 border-border/50 shadow-inner flex items-center justify-center group-hover/item:border-primary/30 transition-all">
                            <div className="w-2.5 h-2.5 rounded-full bg-border group-hover/item:bg-primary transition-all" />
                         </div>
                         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground italic opacity-40">Add your expertise and skills</span>
                       </div>
                     </div>
-                    <Button onClick={() => navigate('/settings')} className="w-full h-14 rounded-xl font-bold bg-foreground text-background hover:scale-[1.02] active:scale-95 transition-all text-sm shadow-xl border-none mt-4">
+                    <Button onClick={() => navigate('/settings')} className="w-full h-12 rounded-xl font-bold bg-foreground text-background hover:scale-[1.02] active:scale-95 transition-all text-xs shadow-lg border-none mt-4">
                       Update Profile Details
                     </Button>
                   </div>
                 </Card>
 
-                <Card className="p-6 sm:p-10 md:p-14 bg-primary/5 border-primary/20 relative overflow-hidden group shadow-2xl rounded-[32px]">
+                <Card className="p-6 md:p-8 bg-primary/5 border-primary/20 relative overflow-hidden group shadow-xl rounded-[24px]">
                   <div className="absolute top-0 right-0 p-12 opacity-0 group-hover:opacity-10 transition-all duration-1000 translate-x-8 translate-y-[-8px] group-hover:translate-x-0 group-hover:translate-y-0 pointer-events-none">
                     <Layers className="w-56 h-56 text-primary" />
                   </div>
-                  <div className="relative z-10 space-y-10">
+                  <div className="relative z-10 space-y-8">
                      <div className="space-y-4">
                         <div className="flex items-center gap-3 text-primary">
                            <Layers className="w-4 h-4 fill-primary" />
                            <span className="text-[10px] font-black uppercase tracking-[0.4em] italic">Global Community</span>
                         </div>
-                        <h2 className="text-2xl font-black tracking-tighter text-foreground italic uppercase">Global Network.</h2>
-                        <p className="text-base md:text-lg font-bold italic text-muted-foreground/60 leading-relaxed tracking-tight">Connect with other top creators and see how they showcase their expertise globally.</p>
+                        <h2 className="text-xl font-black tracking-tighter text-foreground italic uppercase">Global Network.</h2>
+                        <p className="text-sm md:text-base font-bold italic text-muted-foreground/60 leading-relaxed tracking-tight">Connect with other top creators and see how they showcase their expertise globally.</p>
                      </div>
                     <div className="flex items-center justify-between gap-4">
                       <div className="flex -space-x-4">
@@ -147,7 +147,7 @@ const Dashboard = () => {
                         ))}
                       </div>
                       <div className="text-right">
-                        <p className="text-2xl font-black italic text-foreground tracking-tighter">1.2K+</p>
+                        <p className="text-xl font-black italic text-foreground tracking-tighter">1.2K+</p>
                         <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest opacity-40">Global Experts</p>
                       </div>
                     </div>
@@ -162,7 +162,7 @@ const Dashboard = () => {
                         </div>
                       ))}
                     </div>
-                    <Button onClick={() => navigate('/listing')} className="w-full h-14 rounded-xl font-bold bg-primary text-primary-foreground hover:scale-[1.02] active:scale-95 transition-all text-sm shadow-xl shadow-primary/20 border-none mt-4">
+                    <Button onClick={() => navigate('/listing')} className="w-full h-12 rounded-xl font-bold bg-primary text-primary-foreground hover:scale-[1.02] active:scale-95 transition-all text-xs shadow-lg shadow-primary/20 border-none mt-4">
                       Explore Market Listing
                     </Button>
                   </div>
@@ -176,15 +176,15 @@ const Dashboard = () => {
                     <Zap className="w-4 h-4 fill-primary" />
                     NEW CREATOR PROGRAM
                   </div>
-                  <h2 className="text-3xl sm:text-4xl md:text-6xl font-black tracking-tighter leading-[0.8] italic uppercase">
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter leading-none italic uppercase">
                     LAUNCH YOUR <span className="text-primary italic-none group-hover:rotate-3 transition-transform block lg:inline-block">COURSE.</span>
                   </h2>
-                  <p className="text-base sm:text-lg md:text-xl text-foreground font-bold italic max-w-xl leading-relaxed tracking-tight">Scale your earnings to ₹10K+ monthly with <span className="text-primary font-black underline underline-offset-[12px] decoration-primary/30">Zero Commission Fees.</span></p>
+                  <p className="text-sm sm:text-base md:text-lg text-foreground font-bold italic max-w-xl leading-relaxed tracking-tight">Scale your earnings to ₹10K+ monthly with <span className="text-primary font-black underline underline-offset-8 decoration-primary/30">Zero Commission Fees.</span></p>
                 </div>
                 <div className="lg:col-span-2 flex flex-col xl:flex-row gap-8 items-center justify-center lg:justify-end">
-                  <Button onClick={() => navigate('/createcourse')} className="h-16 px-10 rounded-2xl font-bold text-lg bg-primary text-primary-foreground shadow-xl shadow-primary/30 hover:scale-105 active:scale-95 transition-all border-none group/btn">
+                  <Button onClick={() => navigate('/createcourse')} className="h-12 px-8 rounded-xl font-bold text-base bg-primary text-primary-foreground shadow-lg shadow-primary/30 hover:scale-105 active:scale-95 transition-all border-none group/btn">
                     Get Started Now
-                    <ChevronRight className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" />
+                    <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </div>
               </div>
@@ -193,8 +193,8 @@ const Dashboard = () => {
               <div className="space-y-12 pb-20">
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                   <div className="space-y-2">
-                    <h3 className="text-xs font-black uppercase tracking-[0.4em] text-primary italic">Live Metrics</h3>
-                    <h2 className="text-3xl font-black tracking-tighter italic uppercase underline decoration-primary/30 underline-offset-8">Engagement Core.</h2>
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-primary italic">Live Metrics</h3>
+                    <h2 className="text-2xl font-black tracking-tighter italic uppercase underline decoration-primary/30 underline-offset-4">Engagement Core.</h2>
                   </div>
                   <div className="flex items-center gap-2 p-2 rounded-xl bg-secondary/10 border border-border/40 backdrop-blur-md">
                      {[ '24h', '7d', '30d' ].map((t, i) => (
@@ -205,7 +205,7 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                <Card className="p-6 sm:p-10 md:p-16 rounded-[48px] bg-secondary/5 border-border/40 shadow-2xl overflow-hidden relative group">
+                <Card className="p-6 md:p-10 rounded-[32px] bg-secondary/5 border-border/40 shadow-xl overflow-hidden relative group">
                   <div className="absolute top-0 right-0 p-12 opacity-[0.02] pointer-events-none group-hover:scale-110 transition-transform duration-[2000ms]">
                     <Activity className="w-[500px] h-[500px]" />
                   </div>
@@ -221,11 +221,11 @@ const Dashboard = () => {
                              <span className="text-[10px] font-bold uppercase tracking-widest">{metric.label}</span>
                           </div>
                            <div className="flex flex-col sm:flex-row sm:items-end gap-2">
-                             <span className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter text-foreground italic leading-none">
+                             <span className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tighter text-foreground italic leading-none">
                                {metric.prefix}<CountUp end={metric.value} duration={2.5} separator="," />
                              </span>
-                             <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 mb-2">
-                                <TrendingUp className="w-6 h-6" />
+                             <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 mb-1">
+                                <TrendingUp className="w-5 h-5" />
                              </div>
                           </div>
                           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground opacity-40 italic">+12.4% from last telemetry cycle</p>
@@ -235,9 +235,9 @@ const Dashboard = () => {
                   <div className="mt-16 pt-16 border-t border-border/20 flex flex-col md:flex-row items-center justify-between gap-8">
                      <div className="space-y-2 text-center md:text-left">
                         <h4 className="text-sm font-black italic tracking-wide text-foreground uppercase">Neural Insights Generated</h4>
-                        <p className="text-base text-muted-foreground font-medium leading-relaxed">Detailed metrics will begin showing up here once you have traffic or complete your first session.</p>
+                        <p className="text-sm text-muted-foreground font-medium leading-relaxed">Detailed metrics will begin showing up here once you have traffic or complete your first session.</p>
                      </div>
-                     <Button variant="outline" className="h-12 md:h-14 rounded-xl px-10 font-bold text-sm bg-secondary/10 border-border/40 hover:bg-foreground hover:text-background transition-all shadow-sm">
+                     <Button variant="outline" className="h-10 md:h-12 rounded-xl px-8 font-bold text-xs bg-secondary/10 border-border/40 hover:bg-foreground hover:text-background transition-all shadow-sm">
                         Refresh Data
                      </Button>
                   </div>

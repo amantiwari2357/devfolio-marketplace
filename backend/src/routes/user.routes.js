@@ -8,7 +8,8 @@ const {
   validateProfileUpdate,
   validateAvailabilityUpdate,
   validateServicesUpdate,
-  validateWhatsAppUpdate
+  validateWhatsAppUpdate,
+  validatePortfolioUpdate
 } = require('../validators/user.validator');
 
 // Public routes
@@ -28,6 +29,7 @@ router.get('/profile', userController.getProfile);
 router.put('/profile', validateProfileUpdate, userController.updateProfile);
 router.put('/availability', validateAvailabilityUpdate, userController.updateAvailability);
 router.put('/services', validateServicesUpdate, userController.updateServices);
+router.put('/portfolio', validatePortfolioUpdate, userController.updatePortfolio);
 router.put('/whatsapp', validateWhatsAppUpdate, userController.updateWhatsApp);
 
 // Onboarding request routes used by frontend profile page
