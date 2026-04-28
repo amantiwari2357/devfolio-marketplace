@@ -23,11 +23,11 @@ const profiles = [
   },
 
   {
-    name: "Shivam Rajput",
-    role: "Sco Expert",
+    name: "Ankit Shukla",
+    role: "Kautilyan",
     badge: "100acress.com",
     color: "bg-card-green",
-    linkedin: "https://www.linkedin.com/in/shivam-rajput-12345678/"
+    linkedin: "https://www.linkedin.com/in/ankit-shukla-979303252?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
   },
 
 ];
