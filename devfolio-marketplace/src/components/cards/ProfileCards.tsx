@@ -15,11 +15,11 @@ const profiles = [
     linkedin: "www.linkedin.com/in/iamanmishra"
   },
   {
-    name: "Vivek Jhaa",
+    name: "Anmol Upadhyay",
     role: "Full Stack Developer",
-    badge: "100acress.com",
+    badge: "Web source",
     color: "bg-card-yellow",
-    linkedin: "www.linkedin.com/in/vivek-narayan-4157271b7"
+    linkedin: ""
   },
 
   {
