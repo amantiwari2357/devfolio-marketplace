@@ -7,28 +7,6 @@ const profiles = [
     color: "bg-card-green",
     linkedin: "https://www.linkedin.com/in/aman-tiwari-7a87323b4?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
   },
-  {
-    name: "Aman Mishra",
-    role: "Full Stack Developer",
-    badge: "75way Technology",
-    color: "bg-card-pink",
-    linkedin: "www.linkedin.com/in/iamanmishra"
-  },
-  {
-    name: "Anmol Upadhyay",
-    role: "Full Stack Developer",
-    badge: "Web source",
-    color: "bg-card-yellow",
-    linkedin: ""
-  },
-
-  {
-    name: "Ankit Shukla",
-    role: "SDE-1",
-    badge: "Kautilyan",
-    color: "bg-card-green",
-    linkedin: "https://www.linkedin.com/in/ankit-shukla-979303252?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
-  },
 
 ];
 
