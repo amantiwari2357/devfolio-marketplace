@@ -38,7 +38,7 @@ const Contact = () => {
             {[
               { id: 'email', icon: <Mail className="w-6 h-6" />, title: "Email Support", sub: "Standard response in <12h", val: "support@devfoliomarketplace.com", href: "mailto:devfoliomarketplace@gmail.com" },
               { id: 'chat', icon: <MessageSquare className="w-6 h-6" />, title: "Live Chat", sub: "Priority access", isChat: true },
-              { id: 'phone', icon: <Phone className="w-6 h-6" />, title: "Direct Hotline", sub:  val: href: "tel:9031359720" },
+              
             ].map((item, i) => (
               <Card key={i} className="neural-card p-8 md:p-10 text-center space-y-6 shadow-md relative overflow-hidden group">
                 <div className="mx-auto w-16 h-16 rounded-2xl bg-secondary/50 flex items-center justify-center text-primary mb-4 shadow-sm group-hover:scale-105 group-hover:rotate-6 transition-all">
