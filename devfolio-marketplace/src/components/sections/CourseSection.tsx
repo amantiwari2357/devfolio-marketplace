@@ -128,7 +128,7 @@ const CourseSection = () => {
                   <p className="text-[10px] md:text-xs font-semibold uppercase tracking-wider opacity-70">Years Tenure</p>
                 </div>
                 <div className="text-center space-y-2">
-                  <div className="text-3xl md:text-5xl font-bold text-primary tracking-tight">24/7</div>
+                  <div className="text-3xl md:text-5xl font-bold text-primary tracking-tight"></div>
                   <p className="text-[10px] md:text-xs font-semibold uppercase tracking-wider opacity-70">Global Relay</p>
                 </div>
               </div>
