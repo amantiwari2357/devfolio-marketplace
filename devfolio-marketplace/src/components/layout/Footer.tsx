@@ -76,7 +76,7 @@ const Footer = () => {
             <h3 className="font-semibold text-sm mb-5 text-foreground">Frequency Connect</h3>
             <div className="space-y-6">
               <p className="text-muted-foreground text-sm font-medium leading-relaxed">
-                GURGAON SECTOR 39, INDIA<br/>
+                Online<br/>
                 <a href="tel:9031359720" className="text-foreground hover:text-primary transition-colors block mt-2">+91 9031359720</a>
                 <a href="mailto:devfoliomarketplace@gmail.com" className="text-foreground hover:text-primary transition-colors block mt-1">support@devfoliomarketplace.com</a>
               </p>
